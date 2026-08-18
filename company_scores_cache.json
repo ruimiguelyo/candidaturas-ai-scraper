@@ -272,13 +272,6 @@
     "reviews": "40 Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
   },
-  "sevensendersgmbh": {
-    "platform": "Teamlyzer",
-    "score": "5.0/5",
-    "numeric": 5.0,
-    "reviews": "0 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/sevenair-academy"
-  },
   "peraton": {
     "score": "3.5/5",
     "numeric": 3.5,
@@ -331,13 +324,6 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
     "teamlyzer_checked_at": 1787052469
   },
-  "unity": {
-    "platform": "Teamlyzer",
-    "score": "5.0/5",
-    "numeric": 5.0,
-    "reviews": "0 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/unity"
-  },
   "scaleai": {
     "score": "3.7/5",
     "numeric": 3.7,
@@ -359,20 +345,6 @@
     "reviews": "Glassdoor Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
   },
-  "zebratechnologies": {
-    "platform": "Teamlyzer",
-    "score": "2.6/5",
-    "numeric": 2.6,
-    "reviews": "19 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/wedo-technologies"
-  },
-  "tortexperts": {
-    "platform": "Teamlyzer",
-    "score": "3.4/5",
-    "numeric": 3.4,
-    "reviews": "14 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/equal-experts-portugal"
-  },
   "agilityfeat": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
@@ -387,13 +359,6 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sprinto",
     "teamlyzer_checked_at": 1787053728
-  },
-  "brightenconsulting": {
-    "platform": "Teamlyzer",
-    "score": "2.6/5",
-    "numeric": 2.6,
-    "reviews": "9 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/procensus"
   },
   "cotiviti": {
     "platform": "Glassdoor",
@@ -554,13 +519,6 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Pavebank"
   },
-  "colibridigital": {
-    "platform": "Teamlyzer",
-    "score": "3.4/5",
-    "numeric": 3.4,
-    "reviews": "25 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/anchorage"
-  },
   "careerswift": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
@@ -610,20 +568,6 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Parvana"
   },
-  "grupoclave": {
-    "platform": "Teamlyzer",
-    "score": "5.0/5",
-    "numeric": 5.0,
-    "reviews": "0 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/grupo-clave"
-  },
-  "oneimpression": {
-    "platform": "Teamlyzer",
-    "score": "4.5/5",
-    "numeric": 4.5,
-    "reviews": "34 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/seven-one-tech-hub"
-  },
   "teladochealth": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
@@ -667,33 +611,12 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=HiredBuddy"
   },
-  "ensemblehealthpartners": {
-    "platform": "Teamlyzer",
-    "score": "2.5/5",
-    "numeric": 2.5,
-    "reviews": "8 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/future-healtcare"
-  },
   "corinthiancapital": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Corinthian%20Capital"
-  },
-  "cambiumlearninggroup": {
-    "platform": "Teamlyzer",
-    "score": "5.0/5",
-    "numeric": 5.0,
-    "reviews": "0 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/further-learning-group"
-  },
-  "pradeepitconsultingservicespvtltd": {
-    "platform": "Teamlyzer",
-    "score": "2.2/5",
-    "numeric": 2.2,
-    "reviews": "62 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/dellent-consulting"
   },
   "kitro": {
     "platform": "Glassdoor",
@@ -731,13 +654,6 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Phygtl%2C",
     "teamlyzer_checked_at": 1787053730
-  },
-  "analyticalmechanicsassociatesinc": {
-    "platform": "Teamlyzer",
-    "score": "5.0/5",
-    "numeric": 5.0,
-    "reviews": "0 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/alexandre-law-firm-associates"
   },
   "swiftly": {
     "platform": "Glassdoor",
@@ -845,13 +761,6 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
     "teamlyzer_checked_at": 1787052465
-  },
-  "ithouseglobalbusinesssolutions": {
-    "platform": "Teamlyzer",
-    "score": "3.0/5",
-    "numeric": 3.0,
-    "reviews": "6 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/global-blue"
   },
   "yellowipe": {
     "platform": "Teamlyzer",

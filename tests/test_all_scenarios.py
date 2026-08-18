@@ -74,7 +74,7 @@ def make_job(title, company="Example", **kwargs):
         job_id=kwargs.pop("job_id", title),
         title=title,
         company=company,
-        location="Portugal",
+        location=kwargs.pop("location", "Portugal"),
         job_url=kwargs.pop("job_url", f"https://jobs.example/{title.replace(' ', '-') }"),
         **kwargs,
     )
@@ -159,6 +159,18 @@ class TestAllScenarios(unittest.TestCase):
 
         asyncio.run(check())
 
+    def test_teamlyzer_rejects_partial_name_matches(self):
+        self.assertEqual(
+            CompanyRanker._company_similarity("Cambium Learning Group", "Further Learning Group"),
+            0.0,
+        )
+        self.assertEqual(
+            CompanyRanker._company_similarity(
+                "Analytical Mechanics Associates, Inc.", "Alexandre Law Firm Associates"
+            ),
+            0.0,
+        )
+
     def test_stale_glassdoor_cache_is_revalidated_against_teamlyzer(self):
         async def check():
             CompanyRanker._cache["neotalentconclusion"] = {
@@ -235,6 +247,17 @@ class TestAllScenarios(unittest.TestCase):
         self.assertLess(email.index("Junior AI 4.4"), email.index("Junior AI 4.2"))
         self.assertLess(email.index("Junior AI 4.2"), email.index("Junior AI 3.1"))
         self.assertLess(email.index("Junior AI 3.1"), email.index("Junior AI 0"))
+
+    def test_email_keeps_location_sections(self):
+        data = [
+            make_job("Remote AI Intern", "Remote Co", location="Worldwide", modality="100% Remote").model_dump(),
+            make_job("Hybrid AI Intern", "Lisbon Co", location="Lisbon", modality="Hybrid").model_dump(),
+            make_job("Other AI Intern", "Porto Co", location="Porto", modality="On-site").model_dump(),
+        ]
+        email = generate_html_email(data)
+        self.assertIn("100% Remoto", email)
+        self.assertIn("Lisboa &amp; Região", email)
+        self.assertIn("Outras Localizações", email)
 
     def test_deduplication_keeps_distinct_urls(self):
         first = make_job("Junior AI Engineer", job_id="1", job_url="https://jobs.example/a")

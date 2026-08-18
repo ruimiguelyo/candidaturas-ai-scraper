@@ -36,6 +36,21 @@ def generate_html_email(jobs: list) -> str:
         ),
     )
 
+    # Keep the original report sections while preserving rating order inside
+    # each section. This is easier to scan on mobile and in long reports.
+    lisbon_jobs = []
+    remote_jobs = []
+    other_jobs = []
+    for job in ordered_jobs:
+        location = str(job.get("location", "")).lower()
+        modality = str(job.get("modality", "")).lower()
+        if any(place in location for place in ("lisbon", "lisboa", "oeiras", "albarraque")):
+            lisbon_jobs.append(job)
+        elif "remote" in modality or "remoto" in modality or "100% remote" in location:
+            remote_jobs.append(job)
+        else:
+            other_jobs.append(job)
+
     def safe_text(value, fallback="") -> str:
         return escape(str(value if value is not None else fallback))
 
@@ -70,12 +85,12 @@ def generate_html_email(jobs: list) -> str:
             if "ai" in category.lower():
                 category_badge = (
                     '<span style="background-color: #ede9fe; color: #6d28d9; font-size: 11px; '
-                    'font-weight: 700; padding: 3px 8px; border-radius: 6px;">IA &amp; ML</span>'
+                    'font-weight: 700; padding: 3px 8px; border-radius: 6px;">🤖 IA &amp; ML</span>'
                 )
             else:
                 category_badge = (
                     '<span style="background-color: #e0f2fe; color: #0369a1; font-size: 11px; '
-                    'font-weight: 700; padding: 3px 8px; border-radius: 6px;">TOP-TIER SWE</span>'
+                    'font-weight: 700; padding: 3px 8px; border-radius: 6px;">⚡ TOP-TIER SWE</span>'
                 )
 
             score = safe_text(job.get("company_score")) if job.get("company_score") else ""
@@ -87,13 +102,13 @@ def generate_html_email(jobs: list) -> str:
                 if "teamlyzer" in ranking_url.lower():
                     rating_badge = f"""
                     <a href="{ranking_url}" target="_blank" rel="noopener" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
-                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> -&gt;
+                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
                     </a>
                     """
                 else:
                     rating_badge = f"""
                     <a href="{ranking_url}" target="_blank" rel="noopener" style="background-color: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
-                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> -&gt;
+                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
                     </a>
                     """
             elif score:
@@ -123,11 +138,11 @@ def generate_html_email(jobs: list) -> str:
                 <div style="margin: 0 0 12px 0; color: #475569; font-size: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
                     <span><strong>Empresa:</strong> <span style="color: #0f172a; font-weight: 700; font-size: 15px;">{safe_text(job.get('company'))}</span></span>
                     <span>{rating_badge}</span>
-                    <span>- <strong>Local:</strong> {safe_text(job.get('location'))}</span>
+                    <span>• <strong>Local:</strong> {safe_text(job.get('location'))}</span>
                 </div>
                 <div style="text-align: right; margin-top: 10px;">
                     <a href="{job_url}" target="_blank" rel="noopener" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; display: inline-block;">
-                        Ver Vaga &amp; Candidatar -&gt;
+                        Ver Vaga &amp; Candidatar ➔
                     </a>
                 </div>
             </div>
@@ -157,8 +172,14 @@ def generate_html_email(jobs: list) -> str:
                 </div>
             </div>
 
-            <div class="section-title">Vagas qualificadas por rating</div>
-            {render_cards(ordered_jobs)}
+            <div class="section-title">📍 Lisboa &amp; Região (Híbrido / Presencial)</div>
+            {render_cards(lisbon_jobs)}
+
+            <div class="section-title">🌐 100% Remoto (Nacional &amp; Internacional)</div>
+            {render_cards(remote_jobs)}
+
+            <div class="section-title">🇵🇹 Outras Localizações em Portugal &amp; Traineeships</div>
+            {render_cards(other_jobs)}
 
             <div class="footer">
                 <p>Relatorio gerado em {safe_text(now_str)} pelo teu <strong>AI &amp; Top-Tech Job Aggregator</strong>.</p>

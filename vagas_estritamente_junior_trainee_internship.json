@@ -1,153 +1,6 @@
 [
   {
     "source": "Himalayas",
-    "job_id": "computer-science-engineering-intern-computer-vision-applications",
-    "title": "Computer Science/Engineering Intern - Computer Vision Applications",
-    "company": "Analytical Mechanics Associates, Inc.",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/analytical-mechanics-associates-inc/jobs/computer-science-engineering-intern-computer-vision-applications",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": "USD 23.1 - 33.5",
-    "post_date": "16/08/2026",
-    "company_score": "★ 5.0/5 (Teamlyzer)",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/alexandre-law-firm-associates",
-    "rating_score": 5.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "Job Description: AMA is currently accepting applications for a Computer Science/Engineering intern to support work in our Hampton, VA location.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "graduate-research-scientist-intern",
-    "title": "Graduate Research Scientist intern",
-    "company": "Analytical Mechanics Associates, Inc.",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/analytical-mechanics-associates-inc/jobs/graduate-research-scientist-intern",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "14/08/2026",
-    "company_score": "★ 5.0/5 (Teamlyzer)",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/alexandre-law-firm-associates",
-    "rating_score": 5.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "Job Description: AMA is seeking a graduate‑level Research Scientist intern to support cryospheric remote‑sensing research at NASA Langley Research Center (LaRC), contributing to a feasibility study that integrates multi‑angle polarimetry, radiative transfer modeling, and machine‑learning‑based retrievals to advance instrument concept development for future Earth‑observing missions.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "machine-learning-intern",
-    "title": "Machine Learning Intern",
-    "company": "Cambium Learning Group",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/cambium-learning-group/jobs/machine-learning-intern",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "14/08/2026",
-    "company_score": "★ 5.0/5 (Teamlyzer)",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/further-learning-group",
-    "rating_score": 5.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "Cambium Learning® Group is an award-winning educational technology solutions leader dedicated to helping all students reach their potential through individualized and differentiated instruction.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "junior-ai-software-engineer",
-    "title": "Junior AI Software Engineer",
-    "company": "Grupo Clave",
-    "location": "Spain",
-    "job_url": "https://himalayas.app/companies/grupo-clave/jobs/junior-ai-software-engineer",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": "EUR 25,000 - 35,000",
-    "post_date": "19/07/2026",
-    "company_score": "★ 5.0/5 (Teamlyzer)",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/grupo-clave",
-    "rating_score": 5.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "En Grupo Clave, colaboramos con una compañía tecnológica que está impulsando el desarrollo de soluciones avanzadas de inteligencia artificial para entornos empresariales.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "working-student-ai-process-automation-f-m-x",
-    "title": "Working Student AI & Process Automation (f/m/x)",
-    "company": "Seven Senders GmbH",
-    "location": "Germany",
-    "job_url": "https://himalayas.app/companies/seven-senders-gmbh/jobs/working-student-ai-process-automation-f-m-x",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "04/07/2026",
-    "company_score": "★ 5.0/5 (Teamlyzer)",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/sevenair-academy",
-    "rating_score": 5.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "AI is one of our top strategic priorities at Seven Senders, and we are serious about making it real.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "ml-infrastructure-engineer-early-career-internship",
-    "title": "ML Infrastructure Engineer - (Early Career/Internship)",
-    "company": "Unity",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/unity/jobs/ml-infrastructure-engineer-early-career-internship",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": "USD 112,700 - 169,000",
-    "post_date": "01/07/2026",
-    "company_score": "★ 5.0/5 (Teamlyzer)",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/unity",
-    "rating_score": 5.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "The opportunity Unity Vector builds an offline ML platform that powers insight, experimentation, attribution, and AI-driven decision-making across the company.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "ai-generalist-intern",
-    "title": "AI Generalist Intern",
-    "company": "One Impression",
-    "location": "India",
-    "job_url": "https://himalayas.app/companies/one-impression/jobs/ai-generalist-intern",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "17/08/2026",
-    "company_score": "★ 4.5/5 (Teamlyzer)",
-    "company_reviews": "34 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/seven-one-tech-hub",
-    "rating_score": 4.5,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "About HexCodedHexCoded is an AI video studio: you should be able to make anything you can imagine.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
     "job_id": "ai-native-software-engineer-early-career-africa",
     "title": "AI-Native Software Engineer - Early Career - Africa",
     "company": "ChainGPT",
@@ -165,7 +18,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "AI-Native Software Engineer - Early CareerLocation: Remote — global applications welcome; please apply via the region closest to you Company: ChainGPT Type: Full-TimeAbout ChainGPTChainGPT is a fast-moving Web3 and AI company building products at the intersection of blockchain infrastructure, token ecosystems, and intelligent automation.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -186,7 +39,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "AI-Native Software Engineer - Early CareerLocation: Remote — global applications welcome; please apply via the region closest to you Company: ChainGPT Type: Full-TimeAbout ChainGPTChainGPT is a fast-moving Web3 and AI company building products at the intersection of blockchain infrastructure, token ecosystems, and intelligent automation.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "LinkedIn",
@@ -207,7 +60,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:41"
+    "fetched_at": "2026-08-18 11:57:18"
   },
   {
     "source": "Jobicy",
@@ -228,7 +81,28 @@
     "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": "<p><strong>Overview of the role</strong></p>\n<p>We’re on a mission to modernize insurance, making it simpler, more accessible, and customer-first. The insurance industry is a $1T market that’s remained largely untouched by the digital revolution, and PolicyMe is here to change that. As a remote-first, Toronto-based startup with big ambitions, we’re building the future of insurance in Canada and beyond.</p>\n<p>We're building a groundbreaking new product line that will transform the insurance broker experience through AI and machine learning. As an AI-Driven Full Stack Engineer, you'll be part of a team charting new territory - designing and implementing intelligent systems that automate manual processes and unlock powerful data-driven insights.</p>\n<p>You will work across the stack, contributing to front end, back end, and AI/ML initiatives, while also participating in architecture discussions, release planning, and company-wide engineering initiatives. Our core stack includes <strong>Python, React, Redux, PostgreSQL, n8n, LangChain/LangGraph and AWS</strong>, and we are always open to adopting new tools and technologies that help us deliver better results.</p>\n<h3>What you'll be doing:</h3>\n<ul>\n<li>Develop full stack features for our AI-powered web application using Python, React, Redux, PostgreSQL and AWS</li>\n<li>Integrate AI models and APIs for tasks like document processing, data extraction, recommendation engines etc.</li>\n<li>Work closely with Sr. Engineers experienced in AI to seamlessly integrate models into production</li>\n<li>Stay current on emerging AI technologies/frameworks and explore new applications</li>\n<li>Build scalable, reliable backend services to fuel our AI workflows</li>\n<li>Create intuitive user experiences that surface AI-powered capabilities</li>\n<li>Participate in architecture planning, code reviews, and ideation sessions</li>\n<li>Take ownership of feature development end-to-end (once ramped up), coordinating with QA and other teams</li>\n<li>Engage in cross-team communication to help unblock dependencies and improve release flow</li>\n<li>Share ideas during quarterly planning to help shape what we build next</li>\n<li>Participate in company-wide initiatives such as hackathons, engineering guilds, and AI tooling experiments</li>\n</ul>\n<h3>What we are looking for:</h3>\n<ul>\n<li>Strong full-stack development skills with the ability to work across backend and frontend using <strong>Python, React, Redux, PostgreSQL, and AWS</strong></li>\n<li>Familiarity with AI/ML concepts from coursework, side projects, or work experience</li>\n<li>Passion for building intelligent applications that solve real-world problems</li>\n<li>Eagerness to learn, embrace ambiguity, and continually upskill in a rapidly evolving space</li>\n<li>Hands-on experience or projects interacting with AI APIs/models (e.g. prompt engineering)</li>\n<li>Self-starter with a career-driven mindset who thrives in an environment with autonomy and accountability</li>\n<li>Collaborative team player with low ego who is open to feedback and eager to help others</li>\n<li>Detail-oriented approach to problem-solving, especially in complex domains</li>\n</ul>\n<h3>Why join us:</h3>\n<ul>\n<li>Generous PTO - 20 vacation days</li>\n<li>Access to stock options and a comprehensive benefits plan</li>\n<li>A remote-first team with company paid, in-person socials and the option to work from our Toronto-based office</li>\n<li>Resources to help your professional development, including an L&amp;D budget, performance reviews twice a year and ongoing feedback to ensure you reach your highest potential</li>\n<li>Work with an empathetic, high-performing team in a flexible, results-oriented environment</li>\n<li><strong>Compensation: </strong>The total cash compensation for this role is <strong>$85,000 - $115,000 CAD</strong>, based on experience. In addition, there is a competitive bonus program and opportunity for equity. We’ll walk through the details together during the interview.</li>\n</ul>\n<h3>Compensation</h3>\n<h3>Additional Information</h3>\n<p><strong>About PolicyMe</strong></p>\n<p>At PolicyMe, we are Canada’s leading digital insurance solution, offering straightforward and affordable financial protection for families from coast to coast. Our product suite includes Life Insurance, Critical Illness Insurance, and Health &amp; Dental Insurance, all tailored to Canadians' evolving needs. We also offer B2B2C solutions, partnering with organizations to provide seamless digital insurance options. Founded by a team of insurance experts and technology entrepreneurs, PolicyMe is committed to making insurance simpler and more accessible. Since our launch in 2018, we have grown exponentially, selling over $10 billion in insurance coverage to Canadians.</p>\n<p>We are proud of the team we’ve built and are excited for those that are yet to join us. We operate with a remote-first culture, attracting top talent from across Canada. If you’re looking for a fast-paced, collaborative environment, working alongside incredibly ambitious yet humble humans, we may be the right place for you! To learn more, visit <a href=\"http://www.policyme.com/\" rel=\"nofollow ugc noopener\" target=\"_blank\">www.policyme.com</a>.</p>\n<p><strong>Additional Notes</strong></p>\n<p><strong>- Job Vacancy:</strong> This role reflects growth in our team and expanded operational scope. We’re hiring to support increasing demand and continue delivering an exceptional customer experience.</p>\n<p><strong>- Commitment to Equal Opportunity:</strong> PolicyMe is an equal opportunity employer. We welcome applicants of all backgrounds and provide fair consideration regardless of race, colour, religion, sex, sexual orientation, gender identity, national origin, or disability.</p>\n<p><strong>- Accessibility Statement:</strong> We are committed to providing an accessible hiring experience. If you require accommodations during the application process, please indicate this in the “Additional Information” section of your application.</p>\n<p><em>We thank all applicants for their interest, however, only those selected for an interview will be contacted.</em></p>",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4452408104",
+    "title": "Software Engineer Intern (Fall 2026)",
+    "company": "Cloudflare",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/software-engineer-intern-fall-2026-at-cloudflare-4452408104",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "1 week ago",
+    "company_score": "★ 4.2/5 (Teamlyzer)",
+    "company_reviews": "16 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/cloudflare",
+    "rating_score": 4.2,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "Himalayas",
@@ -249,7 +123,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Cresta unlocks the true potential of the customer experience, turning every conversation into a competitive advantage.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Jobicy",
@@ -270,28 +144,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "<p>Cresta unlocks the true potential of the customer experience, turning every conversation into a competitive advantage. Cresta’s unified AI platform combines conversational AI agents, real-time human agent augmentation, and comprehensive conversation intelligence to drive revenue and efficiency gains across every channel. The world’s leading companies, including United Airlines, Cox Communications, and Marriott, use Cresta to power world-class customer experiences every day. </p>\n<p>Born from the Stanford AI Lab, Cresta has raised more than $270 million from the world’s leading investors, including a16z, Greylock, and Sequoia. Cresta’s leadership includes some of the leading minds in AI today. Our CEO, <a href=\"https://www.linkedin.com/in/pingwu/\" rel=\"nofollow ugc noopener\" target=\"_blank\">Ping Wu</a>, founded and led Google's Contact Center AI and Vertex AI platforms before joining Cresta to build the future of AI-driven customer experiences.</p>\n<p>Over the next few years, AI is going to redefine how people all over the world interact with businesses every day. Come build that future at Cresta.</p>\n<p>Cresta is on a mission to turn every customer conversation into a competitive advantage by unlocking the true potential of the contact center. Our platform combines the best of AI and human intelligence to help contact centers discover customer insights and behavioral best practices, automate conversations and inefficient processes, and empower every team member to work smarter and faster. Born from the prestigious Stanford AI lab, Cresta's co-founder and chairman is<a href=\"https://www.linkedin.com/in/sebastian-thrun-59a0b273/\" rel=\"nofollow ugc noopener\" target=\"_blank\"> Sebastian Thrun</a>, the genius behind Google X, Waymo, Udacity, and more. Our leadership also includes CEO,<a href=\"https://www.linkedin.com/in/pingwu/\" rel=\"nofollow ugc noopener\" target=\"_blank\"> Ping Wu</a>, the co-founder of Google Contact Center AI and Vertex AI platform,<a href=\"https://www.linkedin.com/in/tianlinshi/\" rel=\"nofollow ugc noopener\" target=\"_blank\"> and co-founder, Tim Shi</a>, an early member of Open AI.</p>\n<p>Join us on this thrilling journey to revolutionize the workforce with AI. The future of work is here, and it's at Cresta.</p>\n\n<h3><strong>About the role:</strong></h3>\n<p>We are looking for a motivated Data Science Intern to join our team. This role offers hands-on experience working with real-world data, building models, and supporting data-driven decision-making. You will collaborate with data scientists, engineers, and business stakeholders to solve meaningful problems.</p>\n<p><strong>What You'll Do </strong>:</p>\n<ul>\n<li>Collect, clean, and preprocess structured and unstructured data</li>\n<li>Perform exploratory data analysis to identify trends and insights</li>\n<li>Build and evaluate machine learning models under guidance</li>\n<li>Develop data visualizations and dashboards to communicate findings</li>\n<li>Assist in deploying models and monitoring their performance</li>\n<li>Work with large datasets using tools like Python, SQL, and cloud platforms</li>\n<li>Document processes, experiments, and results clearly</li>\n<li>Participate in team demos, feedback sessions, and learning opportunities.</li>\n<li>This role provides mentorship and exposure to customer-facing technical problem solving in a fast-moving AI/Product environment.</li>\n</ul>\n<h3><strong>What We're Looking For:</strong></h3>\n<ul>\n<li>Enrolled in a Bachelor’s or Master’s degree program in Computer Science, Engineering, or a related field.</li>\n<li>Experience writing code in <strong>Python</strong> (or another general-purpose language).</li>\n<li>Strong interest in artificial intelligence, machine learning, or software engineering.</li>\n<li>Basic understanding of statistics and machine learning concepts</li>\n<li>Familiarity with libraries such as <strong>Pandas, NumPy, Scikit-learn, or TensorFlow/PyTorch</strong></li>\n<li>Experience with SQL and working with databases</li>\n<li>Strong analytical and problem-solving skills</li>\n<li>Excellent communication skills and willingness to collaborate with teammates and customers.</li>\n</ul>\n<p><strong>Nice-to-Haves</strong></p>\n<ul>\n<li>Experience with data visualization tools (e.g., Tableau, Power BI, Matplotlib, Seaborn)</li>\n<li>Familiarity with cloud platforms (AWS, GCP, or Azure)</li>\n<li>Knowledge of version control (Git)</li>\n<li>Exposure to big data tools (Spark, Hadoop) is a plus</li>\n</ul>\n<p>This posting will be used to fill a newly-created role.</p>\n<p>We have noticed a rise in recruiting impersonations across the industry, where scammers attempt to access candidates' personal and financial information through fake interviews and offers. All Cresta recruiting email communications will always come from the @cresta.ai domain. Any outreach claiming to be from Cresta via other sources should be ignored. If you are uncertain whether you have been contacted by an official Cresta employee, reach out to recruiting@cresta.com.</p>",
-    "fetched_at": "2026-08-18 11:48:44"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4439024812",
-    "title": "Oferta de emprego: Junior Back-End Developer (Recém-licenciado)",
-    "company": "Caixa Mágica Software",
-    "location": "Lisbon, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/oferta-de-emprego-junior-back-end-developer-rec%C3%A9m-licenciado-at-caixa-m%C3%A1gica-software-4439024812",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "1 month ago",
-    "company_score": "★ 4.1/5 (Teamlyzer)",
-    "company_reviews": "26 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/caixa-magica",
-    "rating_score": 4.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -312,7 +165,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "🌟Join KEYRUS and transform the future with us!  🌟 Who are we?",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -333,7 +186,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Join Tether and Shape the Future of Digital Finance At Tether, we’re not just building products, we’re pioneering a global financial revolution.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "LinkedIn",
@@ -354,7 +207,49 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:16"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4436328353",
+    "title": "Software Developer Trainee (IEFP)",
+    "company": "Euronext",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/software-developer-trainee-iefp-at-euronext-4436328353",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "1 week ago",
+    "company_score": "★ 3.9/5 (Teamlyzer)",
+    "company_reviews": "15 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/euronext",
+    "rating_score": 3.9,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:19"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4431244429",
+    "title": "Software Developer/Data Engineer Trainee (IEFP)",
+    "company": "Euronext",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/software-developer-data-engineer-trainee-iefp-at-euronext-4431244429",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "3 weeks ago",
+    "company_score": "★ 3.9/5 (Teamlyzer)",
+    "company_reviews": "15 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/euronext",
+    "rating_score": 3.9,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "Himalayas",
@@ -375,7 +270,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Job Description: DataRobot delivers AI that maximizes impact and minimizes business risk.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "LinkedIn",
@@ -396,7 +291,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:18"
   },
   {
     "source": "LinkedIn",
@@ -417,7 +312,28 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:16"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4446763988",
+    "title": "AI Product Engineer Intern",
+    "company": "HAVI TechHUB",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/ai-product-engineer-intern-at-havi-techhub-4446763988",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2 weeks ago",
+    "company_score": "★ 3.6/5 (Teamlyzer)",
+    "company_reviews": "8 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/havi-portugal",
+    "rating_score": 3.6,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:18"
   },
   {
     "source": "LinkedIn",
@@ -438,7 +354,7 @@
     "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "ITJobs.pt",
@@ -459,7 +375,7 @@
     "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -472,7 +388,7 @@
     "seniority": "Junior / Trainee / Internship",
     "is_remote": true,
     "salary": null,
-    "post_date": "19/06/2026",
+    "post_date": "20/06/2026",
     "company_score": "★ 3.5/5 (Glassdoor)",
     "company_reviews": "1.7k Reviews",
     "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Peraton",
@@ -480,7 +396,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "ResponsibilitiesPeraton is seeking motivated Generative AI Engineering Interns (Graduate) supporting Internal Research and Development (IRAD) initiatives focused on AI/ML-driven platforms for Operations in the Information Environment (OIE).",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -501,7 +417,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Build the Next Generation of AI Products with TensorOps TensorOps is an applied machine learning and artificial intelligence studio helping organizations worldwide plan, design, train, and deploy production-grade ML systems.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "LinkedIn",
@@ -522,7 +438,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:16"
   },
   {
     "source": "LinkedIn",
@@ -543,91 +459,70 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "junior-applied-ai-engineer",
-    "title": "Junior Applied AI Engineer",
-    "company": "Colibri Digital",
-    "location": "United Kingdom",
-    "job_url": "https://himalayas.app/companies/colibri-digital/jobs/junior-applied-ai-engineer",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "14/07/2026",
-    "company_score": "★ 3.4/5 (Teamlyzer)",
-    "company_reviews": "25 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/anchorage",
-    "rating_score": 3.4,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "We’re looking for an Applied AI Engineer to support the design and delivery of AI-powered systems for our clients.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "jr-ai-automation-engineer",
-    "title": "Jr. AI Automation Engineer",
-    "company": "Tort Experts",
-    "location": "Colombia",
-    "job_url": "https://himalayas.app/companies/tort-experts/jobs/jr-ai-automation-engineer",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "24/07/2026",
-    "company_score": "★ 3.4/5 (Teamlyzer)",
-    "company_reviews": "14 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/equal-experts-portugal",
-    "rating_score": 3.4,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "About Tort Experts At Tort Experts, we are redefining the landscape of performance marketing in the legal sector.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:17"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4408518729",
-    "title": "Gen AI Trainee Program",
-    "company": "Santander",
-    "location": "Lisboa, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/gen-ai-trainee-program-at-santander-4408518729",
+    "job_id": "4454558421",
+    "title": "Extracurricular Internship: Infrastructure & DevOps Engineer (f/m/div.)",
+    "company": "Bosch Home Comfort Portugal",
+    "location": "Aveiro, Aveiro, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/extracurricular-internship-infrastructure-devops-engineer-f-m-div-at-bosch-home-comfort-portugal-4454558421",
     "modality": "On-site / Hybrid",
     "seniority": "Junior / Trainee / Internship",
     "is_remote": false,
     "salary": null,
     "post_date": "3 days ago",
-    "company_score": "★ 3.2/5 (Teamlyzer)",
-    "company_reviews": "45 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/santander-totta",
-    "rating_score": 3.2,
-    "category": "AI / ML",
+    "company_score": "★ 3.4/5 (Teamlyzer)",
+    "company_reviews": "185 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/bosch",
+    "rating_score": 3.4,
+    "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4408745937",
-    "title": "Junior Software Engineer",
-    "company": "Critical Manufacturing",
-    "location": "Maia, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-software-engineer-at-critical-manufacturing-4408745937",
+    "job_id": "4437433043",
+    "title": "Summer Business Analyst Intern - Tech & AI",
+    "company": "McKinsey & Company",
+    "location": "Lisbon, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/summer-business-analyst-intern-tech-ai-at-mckinsey-company-4437433043",
     "modality": "On-site / Hybrid",
     "seniority": "Junior / Trainee / Internship",
     "is_remote": false,
     "salary": null,
-    "post_date": "3 months ago",
+    "post_date": "2 hours ago",
+    "company_score": "★ 3.3/5 (Teamlyzer)",
+    "company_reviews": "17 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/mckinsey-company",
+    "rating_score": 3.3,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:18"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4449012753",
+    "title": "Software Engineering Curricular Internship",
+    "company": "Fujitsu",
+    "location": "Greater Braga Area",
+    "job_url": "https://pt.linkedin.com/jobs/view/software-engineering-curricular-internship-at-fujitsu-4449012753",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "5 days ago",
     "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "160 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/critical-manufacturing",
+    "company_reviews": "110 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/fujitsu",
     "rating_score": 3.1,
     "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "LinkedIn",
@@ -648,91 +543,7 @@
     "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4430948490",
-    "title": "AI & Data Engineer Trainee (NAM Portugal)",
-    "company": "Nordea Asset Management Portugal",
-    "location": "Oeiras, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ai-data-engineer-trainee-nam-portugal-at-nordea-asset-management-portugal-4430948490",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2 weeks ago",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "1 Review",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4435103558",
-    "title": "Junior AI Implementation Specialist (NAM Portugal)",
-    "company": "Nordea Asset Management Portugal",
-    "location": "Oeiras, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-ai-implementation-specialist-nam-portugal-at-nordea-asset-management-portugal-4435103558",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "6 days ago",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "1 Review",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:41"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418826647",
-    "title": "Graduate Programme 2027: Data Scientist and Analyst",
-    "company": "Revolut",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-data-scientist-and-analyst-at-revolut-4418826647",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2 weeks ago",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "54 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418834449",
-    "title": "Graduate Programme 2027: Data Scientist and Analyst",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-data-scientist-and-analyst-at-revolut-4418834449",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2 weeks ago",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "54 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "LinkedIn",
@@ -753,7 +564,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:18"
   },
   {
     "source": "LinkedIn",
@@ -774,28 +585,70 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:18"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4453122298",
-    "title": "EHS Data & AI Trainee (f/m/div)",
-    "company": "Infineon Technologies",
-    "location": "Maia, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ehs-data-ai-trainee-f-m-div-at-infineon-technologies-4453122298",
+    "job_id": "4418827668",
+    "title": "Internship Programme 2027: Software Engineer (iOS)",
+    "company": "Revolut",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-ios-at-revolut-4418827668",
     "modality": "On-site / Hybrid",
     "seniority": "Junior / Trainee / Internship",
     "is_remote": false,
     "salary": null,
-    "post_date": "5 days ago",
-    "company_score": "★ 2.9/5 (Teamlyzer)",
-    "company_reviews": "11 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/infineon-technologies-portugal",
-    "rating_score": 2.9,
-    "category": "AI / ML",
+    "post_date": "2 weeks ago",
+    "company_score": "★ 3.1/5 (Teamlyzer)",
+    "company_reviews": "54 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
+    "rating_score": 3.1,
+    "category": "Top-Tier Software Engineering",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:19"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4418828662",
+    "title": "Internship Programme 2027: Software Engineer (Java)",
+    "company": "Revolut",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-java-at-revolut-4418828662",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2 weeks ago",
+    "company_score": "★ 3.1/5 (Teamlyzer)",
+    "company_reviews": "54 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
+    "rating_score": 3.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:19"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4418843133",
+    "title": "Internship Programme 2027: Software Engineer (Python)",
+    "company": "Revolut",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-python-at-revolut-4418843133",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2 weeks ago",
+    "company_score": "★ 3.1/5 (Teamlyzer)",
+    "company_reviews": "54 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
+    "rating_score": 3.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "LinkedIn",
@@ -816,7 +669,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:16"
   },
   {
     "source": "LinkedIn",
@@ -837,7 +690,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:17"
   },
   {
     "source": "Himalayas",
@@ -858,49 +711,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "About the Program The Scale AI Technical Advisor Specialist (Part-Time Internship) role is a summer semester opportunity designed for university students, ideally with experience in competitive coding, mathematics, and STEM disciplines.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "summer-internship-2026-srb-computer-vision",
-    "title": "Summer Internship 2026 (SRB) - Computer Vision",
-    "company": "Zebra Technologies",
-    "location": "Serbia",
-    "job_url": "https://himalayas.app/companies/zebra-technologies/jobs/summer-internship-2026-srb-computer-vision",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "15/08/2026",
-    "company_score": "★ 2.6/5 (Teamlyzer)",
-    "company_reviews": "19 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/wedo-technologies",
-    "rating_score": 2.6,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "Overview:At Zebra, we are a community of innovators who come together to create new ways of working.",
-    "fetched_at": "2026-08-18 11:48:43"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "data-scientist-intern",
-    "title": "Data Scientist Intern",
-    "company": "Ensemble Health Partners",
-    "location": "Australia, Canada, Denmark, Germany, Ireland, Netherlands, Norway, Sweden, United Kingdom, United States",
-    "job_url": "https://himalayas.app/companies/ensemble-health-partners/jobs/data-scientist-intern",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "23/07/2026",
-    "company_score": "★ 2.5/5 (Teamlyzer)",
-    "company_reviews": "8 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/future-healtcare",
-    "rating_score": 2.5,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "Thank you for considering a career at Ensemble! Ensemble is a leading provider of technology-enabled revenue cycle management solutions for health systems, including hospitals and affiliated physician groups.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "ITJobs.pt",
@@ -921,7 +732,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "LinkedIn",
@@ -942,28 +753,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "junior-full-stack-ai-engineer",
-    "title": "Junior Full-Stack AI Engineer",
-    "company": "PradeepIT Consulting Services Pvt Ltd",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/pradeepit-consulting-services-pvt-ltd/jobs/junior-full-stack-ai-engineer",
-    "modality": "100% Remote",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "28/06/2026",
-    "company_score": "★ 2.2/5 (Teamlyzer)",
-    "company_reviews": "62 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/dellent-consulting",
-    "rating_score": 2.2,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": "About PradeepITAccelerate your career with PradeepITPradeepIT is one of the largest, globally recognized IT Consulting firm to connect India's deeply vetted talent team to global customer.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:18"
   },
   {
     "source": "Himalayas",
@@ -984,7 +774,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "1komma5°At 1KOMMA5°, we pursue a clear vision: Living on wind and sunlight forever for free.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1005,7 +795,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "DescriptionContract hours: Full timeLocation: Remote (within 2 hours of London timezone) Salary: €25k - €30k depending on experience About AdzunaAdzuna is a job search engine that lists every job, everywhere.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1026,7 +816,91 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Junior Data EngineerLocation: Remote in LatamJob Type: Full-Time Employee or Contractor Benefits: Local employment in country of residence with all afforded benefits (if hired as employee) We’re looking for a Junior Data Engineer to support our data infrastructure and learn from experienced engineers.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "computer-science-engineering-intern-computer-vision-applications",
+    "title": "Computer Science/Engineering Intern - Computer Vision Applications",
+    "company": "Analytical Mechanics Associates, Inc.",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/analytical-mechanics-associates-inc/jobs/computer-science-engineering-intern-computer-vision-applications",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": "USD 23.1 - 33.5",
+    "post_date": "16/08/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "Job Description: AMA is currently accepting applications for a Computer Science/Engineering intern to support work in our Hampton, VA location.",
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "graduate-research-scientist-intern",
+    "title": "Graduate Research Scientist intern",
+    "company": "Analytical Mechanics Associates, Inc.",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/analytical-mechanics-associates-inc/jobs/graduate-research-scientist-intern",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "14/08/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "Job Description: AMA is seeking a graduate‑level Research Scientist intern to support cryospheric remote‑sensing research at NASA Langley Research Center (LaRC), contributing to a feasibility study that integrates multi‑angle polarimetry, radiative transfer modeling, and machine‑learning‑based retrievals to advance instrument concept development for future Earth‑observing missions.",
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "machine-learning-intern",
+    "title": "Machine Learning Intern",
+    "company": "Cambium Learning Group",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/cambium-learning-group/jobs/machine-learning-intern",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "14/08/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "Cambium Learning® Group is an award-winning educational technology solutions leader dedicated to helping all students reach their potential through individualized and differentiated instruction.",
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "junior-applied-ai-engineer",
+    "title": "Junior Applied AI Engineer",
+    "company": "Colibri Digital",
+    "location": "United Kingdom",
+    "job_url": "https://himalayas.app/companies/colibri-digital/jobs/junior-applied-ai-engineer",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "14/07/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "We’re looking for an Applied AI Engineer to support the design and delivery of AI-powered systems for our clients.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1047,7 +921,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "OverviewThis internship centers on researching and developing advanced healthcare informatics solutions with a specialization in Agentic AI—AI systems capable of autonomous reasoning, decision-making, and goal-directed behavior.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1068,7 +942,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "📅 Start date• Q3 2026 - from September, 3-month notice period accepted 🏡 Contract type• Permanent contract (CDI), full-time • Seniority: Junior (0-2 years of experience) 🌍 Location• Hybrid (Lausanne) or 100% Remote (Europe) 💼 About the roleDotWorld is a fast-growing Venture Builder and SaaS Studio, operating several subscription SaaS products at scale.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1089,7 +963,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Drivetrain is on a mission to empower businesses to make better decisions.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1110,7 +984,28 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Drivetrain is on a mission to empower businesses to make better decisions.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "data-scientist-intern",
+    "title": "Data Scientist Intern",
+    "company": "Ensemble Health Partners",
+    "location": "Australia, Canada, Denmark, Germany, Ireland, Netherlands, Norway, Sweden, United Kingdom, United States",
+    "job_url": "https://himalayas.app/companies/ensemble-health-partners/jobs/data-scientist-intern",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "23/07/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "Thank you for considering a career at Ensemble! Ensemble is a leading provider of technology-enabled revenue cycle management solutions for health systems, including hospitals and affiliated physician groups.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1131,7 +1026,28 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "This is a remote position. At FlexiSAF, we are passionate about reinventing learning, nurturing talent, and inspiring individuals to make positive career decisions.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "junior-ai-software-engineer",
+    "title": "Junior AI Software Engineer",
+    "company": "Grupo Clave",
+    "location": "Spain",
+    "job_url": "https://himalayas.app/companies/grupo-clave/jobs/junior-ai-software-engineer",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": "EUR 25,000 - 35,000",
+    "post_date": "19/07/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "En Grupo Clave, colaboramos con una compañía tecnológica que está impulsando el desarrollo de soluciones avanzadas de inteligencia artificial para entornos empresariales.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "RemoteOK",
@@ -1189,8 +1105,8 @@
       "stats",
       "internship"
     ],
-    "description_snippet": "<p><strong>About HiredBuddy</strong></p><p>At <strong>HiredBuddy</strong>, we connect domain specialists and subject-matter experts with leading AI research labs to shape and train the next generation of artificial intelligence. We focus on high-quality data annotation, RLHF (Reinforcement Learning from Human Feedback), and model evaluation across various domains, ranging from STEM and software engineering to linguistics and data science.</p><p><strong>Position Overview</strong></p><p>We are seeking a detail-oriented, highly analytical <strong>Junior Data Analyst</strong> based in the United States to join our growing remote team. In this role, you will play a crucial part in monitoring dataset quality, analyzing annotator performance metrics, optimizing labeling pipelines, and delivering insights that improve our AI training data pipelines.</p><p>This is an ideal role for an early-career analyst passionate about the intersection of data, machine learning, and AI operations.</p><p><strong>Key Responsibilities</strong></p><ul><li><strong>Data Quality Assurance:</strong> Audit, clean, and validate large datasets generated by our network of AI trainers and domain experts to ensure high precision and adherence to guidelines.</li><li><strong>Performance &amp; Metrics Tracking:</strong> Analyze annotator accuracy, turnaround times, and throughput using SQL, Python, and BI dashboards to help optimize operations.</li><li><strong>Pipeline Optimization:</strong> Collaborate with cross-functional teams (Operations, AI Specialists, and Product) to identify bottlenecks in data labeling pipelines and recommend data-driven solutions.</li><li><strong>Reporting &amp; Dashboards:</strong> Build, maintain, and update daily/weekly operational reports and dashboards for internal stakeholders and client leads.</li><li><strong>Guideline Calibration:</strong> Analyze edge cases and error patterns in dataset outputs to help refine project annotation instructions and rubrics.</li></ul><p><strong>Qualifications &amp; Skills</strong></p><ul><li><strong>Education:</strong> Bachelorâs degree in Data Analytics, Computer Science, Statistics, Information Systems, or a related quantitative field (or equivalent practical experience).</li><li><strong>Technical Skills:</strong></li><li>Proficiency with <strong>SQL</strong> for data querying, aggregation, and analysis.</li><li>Practical knowledge of <strong>Python</strong> or <strong>R</strong> for data manipulation (e.g., Pandas, NumPy).</li><li>Experience with visualization tools like <strong>Tableau, Power BI, or Looker</strong>.</li><li>Advanced Excel / Google Sheets skills (Pivot tables, VLOOKUP/XLOOKUP, complex formulas).</li><li><strong>Analytical Mindset:</strong> Strong problem-solving skills with a high degree of attention to detail when working with complex datasets.</li><li><strong>Communication:</strong> Ability to clearly translate data findings into actionable insights for non-technical team members.</li><li><strong>Work Authorization:</strong> Must be legally authorized to work in the United States.</li></ul><p><strong>Nice-to-Haves</strong></p><ul><li>Familiarity with <strong>AI/ML concepts</strong>, data annotation workflows, or RLHF (Reinforcement Learning from Human Feedback).</li><li>Prior experience or internship experience in an operations-focused analyst role.</li></ul><p><strong>What We Offer</strong></p><ul><li><strong>100% Remote Flexibility:</strong> Work from anywhere in the US.</li><li><strong>Cutting-Edge Industry Exposure:</strong> Gain hands-on experience at the forefront of AI model training and evaluation.</li><li><strong>Growth Opportunities:</strong> Direct mentorship and opportunities to advance within a fast-growing tech environment.</li><li><strong>Competitive Compensation:</strong> Hourly/Salaried rate commensurate with experience.</li></ul><p><br></p><br/><br/>Please mention the word **AMICABLY** and tag RMTM1LjIzMi4yMjQuMTE3 when applying to show you read the job post completely (#RMTM1LjIzMi4yMjQuMTE3). This is a beta feature to avoid spam applicants. Companies can search these words to find applicants that read this and see they're human.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "description_snippet": "<p><strong>About HiredBuddy</strong></p><p>At <strong>HiredBuddy</strong>, we connect domain specialists and subject-matter experts with leading AI research labs to shape and train the next generation of artificial intelligence. We focus on high-quality data annotation, RLHF (Reinforcement Learning from Human Feedback), and model evaluation across various domains, ranging from STEM and software engineering to linguistics and data science.</p><p><strong>Position Overview</strong></p><p>We are seeking a detail-oriented, highly analytical <strong>Junior Data Analyst</strong> based in the United States to join our growing remote team. In this role, you will play a crucial part in monitoring dataset quality, analyzing annotator performance metrics, optimizing labeling pipelines, and delivering insights that improve our AI training data pipelines.</p><p>This is an ideal role for an early-career analyst passionate about the intersection of data, machine learning, and AI operations.</p><p><strong>Key Responsibilities</strong></p><ul><li><strong>Data Quality Assurance:</strong> Audit, clean, and validate large datasets generated by our network of AI trainers and domain experts to ensure high precision and adherence to guidelines.</li><li><strong>Performance &amp; Metrics Tracking:</strong> Analyze annotator accuracy, turnaround times, and throughput using SQL, Python, and BI dashboards to help optimize operations.</li><li><strong>Pipeline Optimization:</strong> Collaborate with cross-functional teams (Operations, AI Specialists, and Product) to identify bottlenecks in data labeling pipelines and recommend data-driven solutions.</li><li><strong>Reporting &amp; Dashboards:</strong> Build, maintain, and update daily/weekly operational reports and dashboards for internal stakeholders and client leads.</li><li><strong>Guideline Calibration:</strong> Analyze edge cases and error patterns in dataset outputs to help refine project annotation instructions and rubrics.</li></ul><p><strong>Qualifications &amp; Skills</strong></p><ul><li><strong>Education:</strong> Bachelorâs degree in Data Analytics, Computer Science, Statistics, Information Systems, or a related quantitative field (or equivalent practical experience).</li><li><strong>Technical Skills:</strong></li><li>Proficiency with <strong>SQL</strong> for data querying, aggregation, and analysis.</li><li>Practical knowledge of <strong>Python</strong> or <strong>R</strong> for data manipulation (e.g., Pandas, NumPy).</li><li>Experience with visualization tools like <strong>Tableau, Power BI, or Looker</strong>.</li><li>Advanced Excel / Google Sheets skills (Pivot tables, VLOOKUP/XLOOKUP, complex formulas).</li><li><strong>Analytical Mindset:</strong> Strong problem-solving skills with a high degree of attention to detail when working with complex datasets.</li><li><strong>Communication:</strong> Ability to clearly translate data findings into actionable insights for non-technical team members.</li><li><strong>Work Authorization:</strong> Must be legally authorized to work in the United States.</li></ul><p><strong>Nice-to-Haves</strong></p><ul><li>Familiarity with <strong>AI/ML concepts</strong>, data annotation workflows, or RLHF (Reinforcement Learning from Human Feedback).</li><li>Prior experience or internship experience in an operations-focused analyst role.</li></ul><p><strong>What We Offer</strong></p><ul><li><strong>100% Remote Flexibility:</strong> Work from anywhere in the US.</li><li><strong>Cutting-Edge Industry Exposure:</strong> Gain hands-on experience at the forefront of AI model training and evaluation.</li><li><strong>Growth Opportunities:</strong> Direct mentorship and opportunities to advance within a fast-growing tech environment.</li><li><strong>Competitive Compensation:</strong> Hourly/Salaried rate commensurate with experience.</li></ul><p><br></p><br/><br/>Please mention the word **AMICABLY** and tag RMjAwMTo4YTA6NzJjOTpmYjAwOjU1OWY6MjUyNjplMmMzOmI0NGM= when applying to show you read the job post completely (#RMjAwMTo4YTA6NzJjOTpmYjAwOjU1OWY6MjUyNjplMmMzOmI0NGM=). This is a beta feature to avoid spam applicants. Companies can search these words to find applicants that read this and see they're human.",
+    "fetched_at": "2026-08-18 11:57:21"
   },
   {
     "source": "ITJobs.pt",
@@ -1211,28 +1127,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4444981779",
-    "title": "Junior AI & Market Intelligence Analyst",
-    "company": "JOFEBAR",
-    "location": "Matosinhos, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-ai-market-intelligence-analyst-at-jofebar-4444981779",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "3 weeks ago",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=JOFEBAR",
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:40"
+    "fetched_at": "2026-08-18 11:57:19"
   },
   {
     "source": "Himalayas",
@@ -1253,7 +1148,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "AI Engineering & Product Innovation InternshipWork Arrangement: Remote About the RoleWe are offering a hands-on internship for students eager to explore the intersection of AI engineering, automation, and product innovation.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1274,7 +1169,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "EnLogicalis Spainestamos buscando un Data Engineer DataStage Junior.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1295,7 +1190,28 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "This is a remote position. Interesujesz się sztuczną inteligencją i chcesz rozpocząć karierę w jednej z najszybciej rozwijających się dziedzin IT?",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "ai-generalist-intern",
+    "title": "AI Generalist Intern",
+    "company": "One Impression",
+    "location": "India",
+    "job_url": "https://himalayas.app/companies/one-impression/jobs/ai-generalist-intern",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "17/08/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "About HexCodedHexCoded is an AI video studio: you should be able to make anything you can imagine.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1316,7 +1232,28 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "This is a remote position. We are hiring smart, analytical freshers and early‑career engineers for a Junior AI & Data Engineer role.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "junior-full-stack-ai-engineer",
+    "title": "Junior Full-Stack AI Engineer",
+    "company": "PradeepIT Consulting Services Pvt Ltd",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/pradeepit-consulting-services-pvt-ltd/jobs/junior-full-stack-ai-engineer",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "28/06/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "About PradeepITAccelerate your career with PradeepITPradeepIT is one of the largest, globally recognized IT Consulting firm to connect India's deeply vetted talent team to global customer.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1337,7 +1274,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "DescriptionAt Sequoia Connect, we are a Talent-First Technology Ecosystem that redefines how elite professionals interact with the global digital landscape.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1350,7 +1287,7 @@
     "seniority": "Junior / Trainee / Internship",
     "is_remote": true,
     "salary": null,
-    "post_date": "12/08/2026",
+    "post_date": "13/08/2026",
     "company_score": "🔍 Glassdoor",
     "company_reviews": "Pesquisa Global",
     "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Sequoia%20Connect",
@@ -1358,7 +1295,28 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "DescriptionAt Sequoia Connect, we are a Talent-First Technology Ecosystem that redefines how elite professionals interact with the global digital landscape.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "working-student-ai-process-automation-f-m-x",
+    "title": "Working Student AI & Process Automation (f/m/x)",
+    "company": "Seven Senders GmbH",
+    "location": "Germany",
+    "job_url": "https://himalayas.app/companies/seven-senders-gmbh/jobs/working-student-ai-process-automation-f-m-x",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "04/07/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "AI is one of our top strategic priorities at Seven Senders, and we are serious about making it real.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1379,7 +1337,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "This is a remote position. SiliconCedars offers 4-month internship in Artificial Intelligence, with a focus on Generative AI (GenAI) and Agentic AI, including hands-on projects and development using Python, LangChain, and LLM APIs.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1400,7 +1358,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Smule has been on a mission to bring the world together through music since 2008.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1421,7 +1379,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Smule has been on a mission to bring the world together through music since 2008.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1442,7 +1400,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Smule has been on a mission to bring the world together through music since 2008.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1463,7 +1421,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Project – the aim you’ll haveYou will join an agile, international team of experienced developers and testers (Poland/UK) working on a strategic transformation of the IT ecosystem for a leading travel industry company.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1484,7 +1442,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Sprinto is an AI-native GRC platform that helps organisations manage risks, audits, vendor oversight, and continuous monitoring from a single connected platform.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1505,7 +1463,7 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "Swiftly is the AI platform purpose-built for retail, serving retailers, wholesalers, and brands.",
-    "fetched_at": "2026-08-18 11:48:44"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1526,49 +1484,49 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "En Teamcubation creemos que la tecnología transforma empresas, pero también transforma personas.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
-    "source": "LinkedIn",
-    "job_id": "4448193068",
-    "title": "Estágio/Internship (Análise Dados/Data Science)",
-    "company": "Vale do Lobo Golf & Beach Resort",
-    "location": "Faro, Faro, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/est%C3%A1gio-internship-an%C3%A1lise-dados-data-science-at-vale-do-lobo-golf-beach-resort-4448193068",
-    "modality": "On-site / Hybrid",
+    "source": "Himalayas",
+    "job_id": "jr-ai-automation-engineer",
+    "title": "Jr. AI Automation Engineer",
+    "company": "Tort Experts",
+    "location": "Colombia",
+    "job_url": "https://himalayas.app/companies/tort-experts/jobs/jr-ai-automation-engineer",
+    "modality": "100% Remote",
     "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
+    "is_remote": true,
     "salary": null,
-    "post_date": "2 weeks ago",
+    "post_date": "24/07/2026",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
     "category": "AI / ML",
     "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "description_snippet": "About Tort Experts At Tort Experts, we are redefining the landscape of performance marketing in the legal sector.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
-    "source": "LinkedIn",
-    "job_id": "4444476564",
-    "title": "Automation and AI Trainee",
-    "company": "Viatris",
-    "location": "Lisboa, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/automation-and-ai-trainee-at-viatris-4444476564",
-    "modality": "On-site / Hybrid",
+    "source": "Himalayas",
+    "job_id": "ml-infrastructure-engineer-early-career-internship",
+    "title": "ML Infrastructure Engineer - (Early Career/Internship)",
+    "company": "Unity",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/unity/jobs/ml-infrastructure-engineer-early-career-internship",
+    "modality": "100% Remote",
     "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "4 days ago",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
+    "is_remote": true,
+    "salary": "USD 112,700 - 169,000",
+    "post_date": "01/07/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
     "rating_score": 0.0,
     "category": "AI / ML",
     "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 11:48:42"
+    "description_snippet": "The opportunity Unity Vector builds an offline ML platform that powers insight, experimentation, attribution, and AI-driven decision-making across the company.",
+    "fetched_at": "2026-08-18 11:57:20"
   },
   {
     "source": "Himalayas",
@@ -1589,6 +1547,27 @@
     "category": "AI / ML",
     "tags": [],
     "description_snippet": "We are looking for a Research Scientist Intern to push the state of the art of our AI models.",
-    "fetched_at": "2026-08-18 11:48:43"
+    "fetched_at": "2026-08-18 11:57:20"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "summer-internship-2026-srb-computer-vision",
+    "title": "Summer Internship 2026 (SRB) - Computer Vision",
+    "company": "Zebra Technologies",
+    "location": "Serbia",
+    "job_url": "https://himalayas.app/companies/zebra-technologies/jobs/summer-internship-2026-srb-computer-vision",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "15/08/2026",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "description_snippet": "Overview:At Zebra, we are a community of innovators who come together to create new ways of working.",
+    "fetched_at": "2026-08-18 11:57:20"
   }
 ]

@@ -7,7 +7,6 @@ import tempfile
 import time
 import unicodedata
 import urllib.parse
-from difflib import SequenceMatcher
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import bs4
@@ -142,6 +141,49 @@ class CompanyRanker:
         return checked_at > 0 and time.time() - checked_at < cls.TEAMLYZER_RECHECK_SECONDS
 
     @classmethod
+    def _trusted_teamlyzer_cache(cls, company_name: str, cached: ScoreResult) -> bool:
+        """Rejeita resultados antigos que parecem perfis aleatorios sem reviews."""
+        try:
+            numeric = float(cached.get("numeric", 0) or 0)
+        except (TypeError, ValueError):
+            numeric = 0.0
+        reviews = str(cached.get("reviews", ""))
+        if numeric >= 5.0 and re.search(r"\b0\s+reviews?\b", reviews, re.IGNORECASE):
+            return False
+
+        matched_name = str(cached.get("matched_name", "")).strip()
+        if matched_name and not cached.get("alias_match"):
+            return cls._company_similarity(company_name, matched_name) >= 0.8
+        return True
+
+    @classmethod
+    def _legacy_teamlyzer_cache_is_plausible(cls, company_name: str, cached: ScoreResult) -> bool:
+        """Verifica rapidamente cache antiga sem fazer uma chamada de rede."""
+        if not cls._trusted_teamlyzer_cache(company_name, cached):
+            return False
+        url = str(cached.get("url", ""))
+        slug_match = re.search(r"/companies/([^/?#]+)", url)
+        if not slug_match:
+            return False
+        slug = slug_match.group(1).lower()
+        expected_tokens = set(cls._normalize_name(company_name).split())
+        slug_tokens = set(re.findall(r"[a-z0-9]+", cls._strip_accents(slug).lower()))
+        if expected_tokens and expected_tokens.issubset(slug_tokens):
+            return True
+
+        expected_compact = cls._cache_key(company_name)
+        slug_compact = re.sub(r"[^a-z0-9]", "", cls._strip_accents(slug).lower())
+        if expected_compact and (
+            expected_compact == slug_compact
+            or expected_compact in slug_compact
+            or slug_compact in expected_compact
+        ):
+            return True
+
+        special_slug = cls._special_alias_slug(company_name)
+        return bool(special_slug and special_slug == slug)
+
+    @classmethod
     def _name_variants(cls, company_name: str) -> List[str]:
         """Gera consultas exatas e consultas progressivamente menos especificas."""
         original = " ".join(str(company_name).split()).strip()
@@ -230,11 +272,13 @@ class CompanyRanker:
 
         expected_tokens = set(expected_normalized.split())
         candidate_tokens = set(candidate_normalized.split())
-        overlap = len(expected_tokens & candidate_tokens) / max(len(expected_tokens), 1)
-        sequence = SequenceMatcher(None, expected_normalized, candidate_normalized).ratio()
-        if expected_normalized in candidate_normalized or candidate_normalized in expected_normalized:
-            sequence = max(sequence, 0.8)
-        return max(overlap, sequence)
+        # Nao aceitar nomes apenas porque partilham uma palavra generica
+        # ("Learning", "One", "Associates", etc.). O perfil tem de conter todos
+        # os tokens significativos do nome procurado; sufixos secundários ja foram
+        # removidos por _normalize_name.
+        if expected_tokens.issubset(candidate_tokens):
+            return 0.85
+        return 0.0
 
     @classmethod
     def _is_teamlyzer_profile_url(cls, url: str) -> bool:
@@ -342,12 +386,19 @@ class CompanyRanker:
             visible_reviews = soup.select_one(".label_rating_font")
             reviews_text = visible_reviews.get_text(" ", strip=True) if visible_reviews else "Sem reviews"
 
+        # Uma nota agregada com zero reviews e um artefacto comum de perfis
+        # irrelevantes devolvidos pelo autocomplete. Nao publicar essa nota.
+        if score_match and reviews_text.lower() in {"0 reviews", "0 review"}:
+            return None
+
         return {
             "platform": "Teamlyzer",
             "score": score,
             "numeric": numeric,
             "reviews": reviews_text,
             "url": canonical_url,
+            "matched_name": profile_name,
+            "alias_match": allow_alias,
         }
 
     @classmethod
@@ -513,12 +564,25 @@ class CompanyRanker:
         cls.load_cache()
         cache_key = cls._cache_key(company_name)
         cached = cls._cache.get(cache_key)
+        legacy_teamlyzer_cache = None
 
         # Um Teamlyzer validado pode ser reutilizado. Um Glassdoor antigo tem de
         # passar novamente pelo Teamlyzer para corrigir perfis que entretanto foram
         # criados ou que antes falharam por causa de um nome composto.
         if isinstance(cached, dict) and str(cached.get("platform", "")).lower() == "teamlyzer":
-            return cached
+            if not cached.get("matched_name"):
+                # Entradas criadas pela versao antiga nao guardavam o nome que foi
+                # validado. Nao sao confiaveis: revalidar evita perpetuar um perfil
+                # de outra empresa encontrado por uma palavra em comum.
+                if cls._legacy_teamlyzer_cache_is_plausible(company_name, cached):
+                    return cached
+                cached = None
+                cls._cache.pop(cache_key, None)
+            elif cls._trusted_teamlyzer_cache(company_name, cached):
+                return cached
+            else:
+                cls._cache.pop(cache_key, None)
+                cached = None
         if isinstance(cached, dict) and cls._teamlyzer_was_checked_recently(cached):
             return cached
 
@@ -526,7 +590,9 @@ class CompanyRanker:
             teamlyzer_result = await cls.fetch_dynamic_teamlyzer(company_name, client)
         except TeamlyzerUnavailable as error:
             logger.warning("Teamlyzer indisponivel para %s: %s", company_name, error)
-            return cached if isinstance(cached, dict) else None
+            if isinstance(cached, dict):
+                return cached
+            return legacy_teamlyzer_cache
 
         if teamlyzer_result:
             cls._cache[cache_key] = teamlyzer_result
