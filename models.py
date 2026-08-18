@@ -10,7 +10,7 @@ class JobPost(BaseModel):
     location: str
     job_url: str
     modality: str = "Unknown"  # Remote, Hybrid, On-site
-    seniority: str = "Junior / Entry"
+    seniority: Optional[str] = None
     is_remote: bool = False
     salary: Optional[str] = None
     post_date: Optional[str] = None
@@ -20,10 +20,12 @@ class JobPost(BaseModel):
 
     @field_validator("seniority", mode="before")
     @classmethod
-    def convert_seniority(cls, v: Any) -> str:
+    def convert_seniority(cls, v: Any) -> Optional[str]:
+        if v is None:
+            return None
         if isinstance(v, list):
             return ", ".join(str(x) for x in v)
-        return str(v) if v is not None else "Junior / Entry"
+        return str(v)
 
     @field_validator("post_date", mode="before")
     @classmethod

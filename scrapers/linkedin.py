@@ -53,7 +53,6 @@ class LinkedInScraper:
                             break
 
                         try:
-                            # Isolamento de erro por card individual
                             title_tag = card.find("h3", class_="base-search-card__title")
                             company_tag = card.find("h4", class_="base-search-card__subtitle")
                             loc_tag = card.find("span", class_="job-search-card__location")
@@ -86,7 +85,7 @@ class LinkedInScraper:
                                 modality=modality,
                                 is_remote=is_remote,
                                 post_date=post_date,
-                                seniority="Junior / Trainee / Entry"
+                                seniority=None
                             ))
                         except Exception as card_err:
                             logger.debug(f"LinkedIn item parse skipped: {card_err}")

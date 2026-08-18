@@ -21,7 +21,6 @@ class LandingJobsScraper:
                 res = await client.get(self.BASE_URL, params=params)
                 if res.status_code == 200:
                     soup = BeautifulSoup(res.text, "html.parser")
-                    # Landing.jobs job cards
                     job_cards = soup.find_all("article") or soup.find_all("div", class_="job-card")
                     for card in job_cards[:limit]:
                         try:
@@ -46,7 +45,7 @@ class LandingJobsScraper:
                                 job_url=full_url,
                                 modality="Hybrid / Remote",
                                 is_remote=True,
-                                seniority="Junior / Entry"
+                                seniority=None
                             ))
                         except Exception as parse_err:
                             logger.debug(f"Landing.jobs item skipped: {parse_err}")
