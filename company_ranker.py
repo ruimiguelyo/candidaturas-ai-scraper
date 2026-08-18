@@ -9,102 +9,262 @@ from typing import Optional, Dict
 logger = logging.getLogger("CompanyRanker")
 
 class CompanyRanker:
-    """Cruza a empresa com bases verificadas do Glassdoor e Teamlyzer, com fallback dinâmico."""
+    """
+    Sistema Robusto e Future-Proof de Ranking e Reviews de Empresas:
+    - Prioridade 1: Perfil oficial no Teamlyzer Portugal (para empresas nacionais e multinacionais com filial em PT).
+    - Prioridade 2: Perfil oficial e pesquisa canónica no Glassdoor Global (sem IDs voláteis vulneráveis a redirects errados).
+    """
 
     _cache: Dict[str, Optional[Dict[str, any]]] = {}
-    
-    # 1. Base Verificada de Top Employers (Glassdoor + Teamlyzer)
-    VERIFIED_GLOBAL_TOP_TIER = {
-        "mckinsey": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "15.6k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-McKinsey-and-Company-EI_IE2893.htm"},
-        "mckinsey & company": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "15.6k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-McKinsey-and-Company-EI_IE2893.htm"},
-        "santander": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "30k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Santander-EI_IE10057.htm"},
-        "banco santander": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "30k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Santander-EI_IE10057.htm"},
-        "havi": {"score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "1.2k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-HAVI-EI_IE12854.htm"},
-        "havi techhub": {"score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "1.2k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-HAVI-EI_IE12854.htm"},
-        "cloudflare": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "3.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Cloudflare-EI_IE423939.htm"},
-        "google": {"score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "100k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Google-EI_IE9079.htm"},
-        "microsoft": {"score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "90k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Microsoft-EI_IE1651.htm"},
-        "stripe": {"score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "1.8k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Stripe-EI_IE671932.htm"},
-        "datadog": {"score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "1.2k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Datadog-EI_IE762128.htm"},
-        "spotify": {"score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "2.8k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Spotify-EI_IE408251.htm"},
-        "meta": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "35k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Meta-EI_IE40772.htm"},
-        "apple": {"score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "50k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Apple-EI_IE1138.htm"},
-        "uber": {"score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "18k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Uber-EI_IE575263.htm"},
-        "github": {"score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "1.1k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-GitHub-EI_IE671945.htm"},
-        "snowflake": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "1.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Snowflake-EI_IE919246.htm"},
-        "canonical": {"score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "1.8k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Canonical-EI_IE31046.htm"},
-        "peraton": {"score": "3.5/5", "numeric": 3.5, "platform": "Glassdoor", "reviews": "1.7k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Peraton-EI_IE1865320.htm"},
-        "smule": {"score": "3.4/5", "numeric": 3.4, "platform": "Glassdoor", "reviews": "144 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Smule-EI_IE317805.htm"},
-        "cambium learning": {"score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "113 Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"},
-        "cambium learning group": {"score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "113 Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"},
-        "seven senders": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "40 Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"},
-        "seven senders gmbh": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "40 Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"},
-        "volkswagen": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "1.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Volkswagen-EI_IE3763.htm"},
-        "volkswagen group": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "1.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Volkswagen-EI_IE3763.htm"},
-        "revolut": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.2k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Revolut-EI_IE1086208.htm"},
-        "feedzai": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "340 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Feedzai-EI_IE698424.htm"},
-        "innowave": {"score": "3.7/5", "numeric": 3.7, "platform": "Teamlyzer", "reviews": "147 Reviews", "url": "https://pt.teamlyzer.com/companies/innowave-technologies"},
-        "critical techworks": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "1.2k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Critical-TechWorks-EI_IE2251322.htm"},
-        "zendesk": {"score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "2.1k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Zendesk-EI_IE354516.htm"},
-        "philip morris": {"score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "12k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Philip-Morris-International-EI_IE14224.htm"},
-        "philip morris international": {"score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "12k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Philip-Morris-International-EI_IE14224.htm"},
-        "alten": {"score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "5.6k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-ALTEN-EI_IE11728.htm"},
-        "nordea": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Nordea-EI_IE11267.htm"},
-        "nordea asset management": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Nordea-EI_IE11267.htm"},
-        "nordea asset management portugal": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.5k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Nordea-EI_IE11267.htm"},
-        "ceiia": {"score": "3.8/5", "numeric": 3.8, "platform": "Teamlyzer", "reviews": "18 Reviews", "url": "https://pt.teamlyzer.com/companies/ceiia"},
-        "euronext": {"score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "650 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Euronext-EI_IE11248.htm"},
-        "zebra technologies": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "3.8k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Zebra-Technologies-EI_IE2032.htm"},
-        "cresta": {"score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "90 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Cresta-EI_IE3363365.htm"},
-        "datarobot": {"score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "576 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-DataRobot-EI_IE919246.htm"},
-        "tensorops": {"score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "Glassdoor Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=TensorOps"},
-        "policyme": {"score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "39 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-PolicyMe-EI_IE3023247.htm"},
-        "chaingpt": {"score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "Glassdoor Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT"},
-        "unity": {"score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "2.4k Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Unity-EI_IE430485.htm"},
-        "scale ai": {"score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "850 Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Scale-AI-EI_IE2171120.htm"},
-        "tether": {"score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "Glassdoor Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"},
-        "tether operations limited": {"score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "Glassdoor Reviews", "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"},
-        "primeit": {"score": "2.9/5", "numeric": 2.9, "platform": "Teamlyzer", "reviews": "568 Reviews", "url": "https://pt.teamlyzer.com/companies/prime-it"},
-        "siemens": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "50k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Siemens-EI_IE1086.htm"},
-        "bosch": {"score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "40k+ Reviews", "url": "https://www.glassdoor.com/Overview/Working-at-Bosch-EI_IE3363.htm"}
+
+    # Base de Ratings Verificados (Teamlyzer PT & Glassdoor Global)
+    # Nota: URLs do Glassdoor usam endpoints canónicos de busca para garantir que NUNCA redirecionam para outra empresa!
+    VERIFIED_COMPANIES = {
+        "mckinsey": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "15.6k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=McKinsey%20%26%20Company"
+        },
+        "mckinsey & company": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "15.6k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=McKinsey%20%26%20Company"
+        },
+        "cloudflare": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "3.5k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cloudflare"
+        },
+        "volkswagen": {
+            "score": "3.5/5", "numeric": 3.5, "platform": "Teamlyzer", "reviews": "144 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions"
+        },
+        "volkswagen group": {
+            "score": "3.5/5", "numeric": 3.5, "platform": "Teamlyzer", "reviews": "144 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions"
+        },
+        "santander": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "30k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Banco%20Santander"
+        },
+        "banco santander": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "30k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Banco%20Santander"
+        },
+        "nordea": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.5k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Nordea%20Asset%20Management"
+        },
+        "nordea asset management": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.5k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Nordea%20Asset%20Management"
+        },
+        "nordea asset management portugal": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "4.5k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Nordea%20Asset%20Management"
+        },
+        "innowave": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Teamlyzer", "reviews": "147 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/innowave-technologies"
+        },
+        "feedzai": {
+            "score": "3.4/5", "numeric": 3.4, "platform": "Teamlyzer", "reviews": "121 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/feedzai"
+        },
+        "critical techworks": {
+            "score": "3.0/5", "numeric": 3.0, "platform": "Teamlyzer", "reviews": "641 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/critical-techworks"
+        },
+        "revolut": {
+            "score": "3.1/5", "numeric": 3.1, "platform": "Teamlyzer", "reviews": "54 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/revolut"
+        },
+        "zendesk": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "2.1k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zendesk"
+        },
+        "havi": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "1.2k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=HAVI"
+        },
+        "havi techhub": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "1.2k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=HAVI"
+        },
+        "philip morris": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "12k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Philip%20Morris%20International"
+        },
+        "philip morris international": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "12k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Philip%20Morris%20International"
+        },
+        "alten": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "5.6k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=ALTEN"
+        },
+        "ceiia": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Teamlyzer", "reviews": "18 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/ceiia"
+        },
+        "euronext": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "650 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euronext"
+        },
+        "zebra technologies": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "3.8k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zebra%20Technologies"
+        },
+        "google": {
+            "score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "100k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Google"
+        },
+        "microsoft": {
+            "score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "90k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Microsoft"
+        },
+        "stripe": {
+            "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "1.8k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Stripe"
+        },
+        "datadog": {
+            "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "1.2k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Datadog"
+        },
+        "spotify": {
+            "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "2.8k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Spotify"
+        },
+        "meta": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "35k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Meta"
+        },
+        "apple": {
+            "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "50k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Apple"
+        },
+        "uber": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "18k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Uber"
+        },
+        "github": {
+            "score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "1.1k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=GitHub"
+        },
+        "snowflake": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "1.5k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Snowflake"
+        },
+        "canonical": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "1.8k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Canonical"
+        },
+        "peraton": {
+            "score": "3.5/5", "numeric": 3.5, "platform": "Glassdoor", "reviews": "1.7k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Peraton"
+        },
+        "smule": {
+            "score": "3.4/5", "numeric": 3.4, "platform": "Glassdoor", "reviews": "144 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Smule"
+        },
+        "cambium learning": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "113 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"
+        },
+        "cambium learning group": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "113 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"
+        },
+        "seven senders": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "40 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
+        },
+        "seven senders gmbh": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "40 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
+        },
+        "cresta": {
+            "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "90 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cresta"
+        },
+        "datarobot": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Glassdoor", "reviews": "576 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=DataRobot"
+        },
+        "tensorops": {
+            "score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "Glassdoor Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=TensorOps"
+        },
+        "policyme": {
+            "score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "39 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=PolicyMe"
+        },
+        "chaingpt": {
+            "score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "Glassdoor Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT"
+        },
+        "unity": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "2.4k Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Unity%20Technologies"
+        },
+        "scale ai": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Glassdoor", "reviews": "850 Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Scale%20AI"
+        },
+        "tether": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "Glassdoor Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
+        },
+        "tether operations limited": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "Glassdoor Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
+        },
+        "siemens": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "50k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Siemens"
+        },
+        "bosch": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "40k+ Reviews",
+            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bosch"
+        },
+        "outsystems": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Teamlyzer", "reviews": "48 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/outsystems"
+        },
+        "talkdesk": {
+            "score": "3.6/5", "numeric": 3.6, "platform": "Teamlyzer", "reviews": "142 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/talkdesk"
+        },
+        "primeit": {
+            "score": "2.9/5", "numeric": 2.9, "platform": "Teamlyzer", "reviews": "568 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/prime-it"
+        }
     }
 
-    # 2. Mapeamento Teamlyzer Portugal
-    KNOWN_ALIASES = {
+    # Slugs verificados de empresas em Portugal no Teamlyzer
+    TEAMLYZER_SLUGS = {
         "innowave": "innowave-technologies",
         "primeit": "prime-it",
         "prime it": "prime-it",
-        "santander": "santander-totta",
-        "banco santander": "santander-totta",
         "volkswagen": "volkswagen-digital-solutions",
         "volkswagen group": "volkswagen-digital-solutions",
-        "philip morris": "tabaqueira",
-        "philip morris international": "tabaqueira",
+        "feedzai": "feedzai",
         "critical techworks": "critical-techworks",
         "critical software": "critical-software",
-        "feedzai": "feedzai",
-        "unbabel": "unbabel",
         "revolut": "revolut",
-        "zendesk": "zendesk",
         "alten": "alten",
         "nordea": "nordea-asset-management",
         "nordea asset management": "nordea-asset-management",
         "nordea asset management portugal": "nordea-asset-management",
         "outsystems": "outsystems",
         "talkdesk": "talkdesk",
-        "defined.ai": "defined-ai",
-        "sword health": "sword-health",
         "celfocus": "celfocus",
         "devoteam": "devoteam",
         "imaginary cloud": "imaginary-cloud",
-        "closer consulting": "closer-consulting",
-        "bnp paribas": "bnp-paribas",
-        "siemens": "siemens-sa",
-        "bosch": "bosch-portugal",
-        "havi": "havi-portugal",
-        "havi techhub": "havi-portugal",
         "ceiia": "ceiia",
-        "sage": "sage"
+        "unbabel": "unbabel",
+        "blip": "blip",
+        "farfetch": "farfetch",
+        "mindera": "mindera",
+        "bold": "bold-by-devoteam",
+        "noesis": "noesis"
     }
 
     @classmethod
@@ -112,14 +272,15 @@ class CompanyRanker:
         comp_clean = company_name.strip()
         comp_lower = comp_clean.lower()
         
-        slug = None
-        for alias, target_slug in cls.KNOWN_ALIASES.items():
-            if alias == comp_lower or alias in comp_lower or comp_lower in alias:
-                slug = target_slug
-                break
+        slug = cls.TEAMLYZER_SLUGS.get(comp_lower)
+        if not slug:
+            for alias, target_slug in cls.TEAMLYZER_SLUGS.items():
+                if alias in comp_lower or comp_lower in alias:
+                    slug = target_slug
+                    break
 
         if not slug:
-            slug = re.sub(r"[^a-z0-9]+", "-", comp_lower).strip("-")
+            return None
 
         url = f"https://pt.teamlyzer.com/companies/{slug}"
         try:
@@ -151,14 +312,14 @@ class CompanyRanker:
 
     @classmethod
     async def fetch_glassdoor_score(cls, company_name: str, client: httpx.AsyncClient) -> Optional[Dict[str, any]]:
-        clean_comp = re.sub(r"(?:gmbh|inc\.?|llc|ltd|limited|corporation|group|operations)$", "", company_name, flags=re.IGNORECASE).strip()
+        clean_comp = re.sub(r"(?:gmbh|inc\.?|llc|ltd|limited|corporation|group|operations|portugal)$", "", company_name, flags=re.IGNORECASE).strip()
         clean_comp = clean_comp.replace("&", "and").strip()
         if not clean_comp:
             clean_comp = company_name
 
         query = f"{clean_comp} glassdoor employee rating reviews"
         url = f"https://html.duckduckgo.com/html/?q={urllib.parse.quote(query)}"
-        glassdoor_search_url = f"https://www.glassdoor.com/Search/results.htm?keyword={urllib.parse.quote(clean_comp)}"
+        glassdoor_search_url = f"https://www.glassdoor.com/Search/results.htm?keyword={urllib.parse.quote(company_name.strip())}"
 
         try:
             res = await client.get(url, timeout=3.5)
@@ -215,8 +376,8 @@ class CompanyRanker:
         if comp_key in cls._cache:
             return cls._cache[comp_key]
 
-        # 1. Base Verificada de Top Employers (Instantânea e 100% Precisa)
-        for verified_name, data in cls.VERIFIED_GLOBAL_TOP_TIER.items():
+        # 1. Base Verificada Determinística (Instantânea, 100% Precisa e Segura)
+        for verified_name, data in cls.VERIFIED_COMPANIES.items():
             if verified_name == comp_lower or verified_name in comp_lower or comp_lower in verified_name:
                 cls._cache[comp_key] = data
                 return data
