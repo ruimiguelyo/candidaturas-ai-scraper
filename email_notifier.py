@@ -114,23 +114,25 @@ def generate_html_email(jobs: list) -> str:
 def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_internship.json", csv_path: str = "vagas_estritamente_junior_trainee_internship.csv"):
     smtp_user = os.getenv("SMTP_USER")
     smtp_pass = os.getenv("SMTP_PASS")
-    receiver = os.getenv("RECEIVER_EMAIL", "ruimiguelsa.stb@gmail.com")
-    smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-    smtp_port = int(os.getenv("SMTP_PORT", 587))
+    receiver = os.getenv("RECEIVER_EMAIL") or "ruimiguelsa.stb@gmail.com"
+    smtp_server = os.getenv("SMTP_SERVER") or "smtp.gmail.com"
+    
+    smtp_port_raw = os.getenv("SMTP_PORT")
+    smtp_port = int(smtp_port_raw.strip()) if (smtp_port_raw and smtp_port_raw.strip().isdigit()) else 587
 
     if not (smtp_user and smtp_pass):
-        logger.info("Env vars SMTP_USER/SMTP_PASS não configuradas. O email não foi enviado (configura os secrets no GitHub para ativar).")
+        print("Aviso: Env vars SMTP_USER/SMTP_PASS não configuradas. O envio de email foi ignorado.")
         return
 
     if not os.path.exists(json_path):
-        logger.error(f"Ficheiro {json_path} não encontrado.")
+        print(f"Erro: Ficheiro {json_path} não encontrado.")
         return
 
     with open(json_path, "r", encoding="utf-8") as f:
         jobs = json.load(f)
 
     if not jobs:
-        logger.info("Nenhuma vaga encontrada hoje para envio de email.")
+        print("Aviso: Nenhuma vaga encontrada hoje para envio de email.")
         return
 
     subject = f"🎯 [Vagas IA] {len(jobs)} Novas Vagas Junior/Trainee - {datetime.now().strftime('%d/%m/%Y')}"
@@ -147,22 +149,26 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
 
     # Anexar CSV
     if os.path.exists(csv_path):
-        with open(csv_path, "rb") as f:
-            part = MIMEBase("application", "octet-stream")
-            part.set_payload(f.read())
-        encoders.encode_base64(part)
-        part.add_header("Content-Disposition", f"attachment; filename={os.path.basename(csv_path)}")
-        msg.attach(part)
+        try:
+            with open(csv_path, "rb") as f:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(f.read())
+            encoders.encode_base64(part)
+            part.add_header("Content-Disposition", f"attachment; filename={os.path.basename(csv_path)}")
+            msg.attach(part)
+        except Exception as e:
+            print(f"Aviso ao anexar CSV: {e}")
 
     try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
+        print(f"A ligar a {smtp_server}:{smtp_port} para envio de email a {receiver}...")
+        server = smtplib.SMTP(smtp_server, smtp_port, timeout=20)
         server.starttls()
         server.login(smtp_user, smtp_pass)
         server.send_message(msg)
         server.quit()
-        logger.info(f"Email enviado com sucesso para {receiver} com {len(jobs)} vagas!")
+        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas!")
     except Exception as e:
-        logger.error(f"Falha ao enviar email via SMTP: {e}")
+        print(f"Erro ao enviar email via SMTP: {e}")
 
 if __name__ == "__main__":
     send_daily_email()
