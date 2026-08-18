@@ -28,6 +28,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Validar regras de negócio
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
       - name: Executar Agregador de Vagas e Enviar Email
         env:
           SMTP_USER: ${{ secrets.SMTP_USER }}
@@ -42,5 +45,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add vagas_estritamente_junior_trainee_internship.csv vagas_estritamente_junior_trainee_internship.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto: Atualizacao diaria de vagas IA [$(date +'%Y-%m-%d')]" && git push)
+          git add company_scores_cache.json vagas_estritamente_junior_trainee_internship.csv vagas_estritamente_junior_trainee_internship.json
+          if git diff --cached --quiet; then
+            echo "Sem alterações para publicar."
+          else
+            git commit -m "Auto: Atualizacao diaria de vagas IA [$(date +'%Y-%m-%d')]"
+            git push
+          fi

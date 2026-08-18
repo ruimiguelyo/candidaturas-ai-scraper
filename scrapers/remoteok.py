@@ -18,17 +18,24 @@ class RemoteOKScraper:
                     data = res.json()
                     valid_items = [i for i in data if isinstance(i, dict) and "id" in i]
                     for item in valid_items[:limit]:
+                        title = item.get("position", "")
+                        job_url = item.get("url", "")
+                        if not title or not job_url:
+                            continue
+                        raw_tags = item.get("tags", []) or []
+                        tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
                         results.append(JobPost(
                             source="RemoteOK",
                             job_id=str(item.get("id")),
-                            title=item.get("position", ""),
+                            title=title,
                             company=item.get("company", "N/A"),
                             location="100% Remote",
-                            job_url=item.get("url", ""),
+                            job_url=job_url,
                             modality="100% Remote",
                             is_remote=True,
-                            tags=item.get("tags", []),
-                            post_date=item.get("date")
+                            tags=tags,
+                            post_date=item.get("date"),
+                            description_snippet=item.get("description", "")
                         ))
             except Exception as e:
                 logger.error(f"RemoteOK error: {e}")

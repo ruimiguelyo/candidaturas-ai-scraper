@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, field_validator
-from typing import Optional, List, Union, Any
+from typing import Optional, List, Any
 from datetime import datetime
+from urllib.parse import urlsplit, urlunsplit
 
 class JobPost(BaseModel):
     source: str
@@ -40,6 +41,20 @@ class JobPost(BaseModel):
         return str(v)
 
     def deduplication_key(self) -> str:
-        clean_company = "".join(c for c in self.company.lower() if c.isalnum())
-        clean_title = "".join(c for c in self.title.lower() if c.isalnum())
-        return f"{clean_company}_{clean_title}"
+        """Prefere a identidade da oferta e nao empresa+titulo apenas."""
+        if self.job_url:
+            try:
+                parsed = urlsplit(self.job_url.strip())
+                if parsed.netloc and parsed.path:
+                    canonical_url = urlunsplit(
+                        (parsed.scheme.lower(), parsed.netloc.lower(), parsed.path.rstrip("/"), "", "")
+                    )
+                    return f"url:{canonical_url}"
+            except ValueError:
+                pass
+
+        clean_source = "".join(c for c in self.source.casefold() if c.isalnum())
+        clean_id = "".join(c for c in self.job_id.casefold() if c.isalnum())
+        clean_company = "".join(c for c in self.company.casefold() if c.isalnum())
+        clean_title = "".join(c for c in self.title.casefold() if c.isalnum())
+        return f"job:{clean_source}:{clean_id}:{clean_company}:{clean_title}"

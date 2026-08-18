@@ -17,6 +17,13 @@ class ArbeitnowScraper:
                 if res.status_code == 200:
                     data = res.json().get("data", [])
                     for item in data[:limit]:
+                        raw_remote = item.get("remote", False)
+                        is_remote = raw_remote is True or str(raw_remote).strip().lower() in {
+                            "1",
+                            "true",
+                            "yes",
+                            "remote",
+                        }
                         raw_date = item.get("created_at")
                         if isinstance(raw_date, (int, float)):
                             try:
@@ -26,6 +33,9 @@ class ArbeitnowScraper:
                         else:
                             post_date = str(raw_date) if raw_date else "Recente"
 
+                        raw_tags = item.get("tags", []) or []
+                        tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
+
                         results.append(JobPost(
                             source="Arbeitnow",
                             job_id=str(item.get("slug", "")),
@@ -33,10 +43,11 @@ class ArbeitnowScraper:
                             company=item.get("company_name", "N/A"),
                             location=item.get("location", "Remote / Europe"),
                             job_url=item.get("url", ""),
-                            modality="Remote" if item.get("remote") else "Hybrid / On-site",
-                            is_remote=item.get("remote", True),
+                            modality="Remote" if is_remote else "Hybrid / On-site",
+                            is_remote=is_remote,
                             post_date=post_date,
-                            tags=item.get("tags", [])
+                            tags=tags,
+                            description_snippet=item.get("description", "") or item.get("job_description", "")
                         ))
             except Exception as e:
                 logger.error(f"Arbeitnow error: {e}")

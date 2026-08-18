@@ -305,14 +305,15 @@
     "numeric": 3.8,
     "platform": "Glassdoor",
     "reviews": "576 Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=DataRobot"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=DataRobot",
+    "teamlyzer_checked_at": 1787052470
   },
   "tensorops": {
-    "score": "4.4/5",
-    "numeric": 4.4,
-    "platform": "Glassdoor",
-    "reviews": "Glassdoor Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=TensorOps"
+    "platform": "Teamlyzer",
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "reviews": "8 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/tensorops"
   },
   "policyme": {
     "score": "4.3/5",
@@ -326,7 +327,8 @@
     "numeric": 4.3,
     "platform": "Glassdoor",
     "reviews": "Glassdoor Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
+    "teamlyzer_checked_at": 1787052469
   },
   "unity": {
     "score": "3.9/5",
@@ -364,11 +366,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zebra%20Technologies"
   },
   "tortexperts": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tort%20Experts"
+    "platform": "Teamlyzer",
+    "score": "3.4/5",
+    "numeric": 3.4,
+    "reviews": "14 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/equal-experts-portugal"
   },
   "agilityfeat": {
     "platform": "Glassdoor",
@@ -385,11 +387,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sprinto"
   },
   "brightenconsulting": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Brighten%20Consulting"
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "9 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/procensus"
   },
   "cotiviti": {
     "platform": "Glassdoor",
@@ -434,11 +436,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seeka%20Technology"
   },
   "keyrus": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Keyrus"
+    "platform": "Teamlyzer",
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "reviews": "58 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/keyrus"
   },
   "kgstechnologygroupinc": {
     "platform": "Glassdoor",
@@ -452,7 +454,8 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=SiliconCedars"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=SiliconCedars",
+    "teamlyzer_checked_at": 1787052470
   },
   "waymark": {
     "platform": "Glassdoor",
@@ -466,21 +469,23 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
+    "teamlyzer_checked_at": 1787052469
   },
   "adzuna": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna",
+    "teamlyzer_checked_at": 1787052469
   },
   "crossjoinsolutions": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Crossjoin%20Solutions"
+    "platform": "Teamlyzer",
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "reviews": "90 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/crossjoin"
   },
   "menaalliances": {
     "platform": "Glassdoor",
@@ -508,14 +513,15 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
+    "teamlyzer_checked_at": 1787052468
   },
   "criticalmanufacturing": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Critical%20Manufacturing"
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "160 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/critical-manufacturing"
   },
   "ritual": {
     "platform": "Glassdoor",
@@ -546,11 +552,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Pavebank"
   },
   "colibridigital": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Colibri%20Digital"
+    "platform": "Teamlyzer",
+    "score": "3.4/5",
+    "numeric": 3.4,
+    "reviews": "25 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/anchorage"
   },
   "careerswift": {
     "platform": "Glassdoor",
@@ -581,11 +587,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Experian"
   },
   "dellent": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dellent"
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "62 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/dellent-consulting"
   },
   "softwaremind": {
     "platform": "Glassdoor",
@@ -602,18 +608,18 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Parvana"
   },
   "grupoclave": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Clave"
+    "platform": "Teamlyzer",
+    "score": "5.0/5",
+    "numeric": 5.0,
+    "reviews": "0 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/grupo-clave"
   },
   "oneimpression": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=One%20Impression"
+    "platform": "Teamlyzer",
+    "score": "4.5/5",
+    "numeric": 4.5,
+    "reviews": "34 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/seven-one-tech-hub"
   },
   "teladochealth": {
     "platform": "Glassdoor",
@@ -637,11 +643,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Drivetrain"
   },
   "innovationengineeringhub": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Innovation%20and%20Engineering%20HUB"
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "4 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub"
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -679,18 +685,19 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"
   },
   "pradeepitconsultingservicespvtltd": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=PradeepIT%20Consulting%20Services%20Pvt"
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "62 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/dellent-consulting"
   },
   "kitro": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO",
+    "teamlyzer_checked_at": 1787052465
   },
   "overtminds": {
     "platform": "Glassdoor",
@@ -721,11 +728,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Phygtl%2C"
   },
   "analyticalmechanicsassociatesinc": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Analytical%20Mechanics%20Associates%2C"
+    "platform": "Teamlyzer",
+    "score": "5.0/5",
+    "numeric": 5.0,
+    "reviews": "0 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/alexandre-law-firm-associates"
   },
   "swiftly": {
     "platform": "Glassdoor",
@@ -742,11 +749,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Caixa%20M%C3%A1gica%20Software"
   },
   "scale": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Scale"
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "1 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/nscale"
   },
   "entando": {
     "platform": "Glassdoor",
@@ -756,11 +763,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Entando"
   },
   "sage": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sage"
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/sage-portugal"
   },
   "logicalisspain": {
     "platform": "Glassdoor",
@@ -784,18 +791,19 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Vocal%20Media"
   },
   "itdsportugal": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ITDS"
+    "platform": "Teamlyzer",
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "reviews": "84 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/itds-portugal"
   },
   "improvebytech": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech",
+    "teamlyzer_checked_at": 1787052468
   },
   "sequoiaconnect": {
     "platform": "Glassdoor",
@@ -812,11 +820,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dotworld"
   },
   "neotalentconclusion": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Neotalent%20Conclusion"
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "22 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/neotalent"
   },
   "ceiiacentreofengineeringandproductdevelopment": {
     "platform": "Glassdoor",
@@ -830,20 +838,43 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
+    "teamlyzer_checked_at": 1787052465
   },
   "ithouseglobalbusinesssolutions": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=IT%20House%20-%20Global%20Business%20Solutions"
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "6 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/global-blue"
   },
   "yellowipe": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "6 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/yellowipe"
+  },
+  "caixamagicasoftware": {
+    "platform": "Teamlyzer",
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "reviews": "26 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/caixa-magica"
+  },
+  "boschhomecomfortportugal": {
+    "platform": "Teamlyzer",
+    "score": "3.4/5",
+    "numeric": 3.4,
+    "reviews": "185 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/bosch"
+  },
+  "mvst": {
     "platform": "Glassdoor",
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=YellowIpe"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
+    "teamlyzer_checked_at": 1787052467
   }
 }

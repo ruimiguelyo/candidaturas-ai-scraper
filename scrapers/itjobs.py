@@ -81,6 +81,7 @@ class ITJobsScraper:
                         date_str = None
                         salary = None
                         is_remote = False
+                        modality = "On-site / Hybrid"
 
                         if parent:
                             # 1. Extração do Nome da Empresa

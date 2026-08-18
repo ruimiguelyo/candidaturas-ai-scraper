@@ -1,137 +1,246 @@
 import asyncio
-import unittest
-import sys
 import os
+import sys
+import unittest
+from unittest.mock import AsyncMock, patch
 
-# Fix paths
+import httpx
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from models import JobPost
-from filter_engine import JobFilterEngine
 from company_ranker import CompanyRanker
-from scrapers.itjobs import ITJobsScraper
-from scrapers.himalayas import HimalayasScraper
-from scrapers.jobicy import JobicyScraper
-from scrapers.arbeitnow import ArbeitnowScraper
-from scrapers.remoteok import RemoteOKScraper
+from email_notifier import generate_html_email
+from filter_engine import JobFilterEngine
+from main import sort_jobs_by_rating
+from models import JobPost
+
+
+class FakeResponse:
+    def __init__(self, status_code=200, text="", payload=None, url=None):
+        self.status_code = status_code
+        self.text = text
+        self._payload = payload
+        self.url = url or "https://pt.teamlyzer.com/companies/example"
+
+    def json(self):
+        if self._payload is None:
+            raise ValueError("no json fixture")
+        return self._payload
+
+
+TEAMLYZER_PROFILE = """
+<html>
+  <head>
+    <link rel="canonical" href="https://pt.teamlyzer.com/companies/neotalent">
+  </head>
+  <body>
+    <div class="company_header_basic_info"><h1 class="reduce-h1">Neotalent Conclusion</h1></div>
+    <span itemprop="aggregateRating">
+      <meta itemprop="ratingValue" content="2.5">
+      <meta itemprop="reviewCount" content="22">
+    </span>
+  </body>
+</html>
+"""
+
+
+class TeamlyzerFixtureClient:
+    def __init__(self):
+        self.calls = []
+
+    async def get(self, url, **kwargs):
+        self.calls.append(url)
+        if "/users/autocomplete_company/v2/" in url:
+            return FakeResponse(payload={"results": [{"name": "Neotalent Conclusion", "slug": "neotalent"}]})
+        if url.endswith("/companies/neotalent"):
+            return FakeResponse(text=TEAMLYZER_PROFILE, url=url)
+        return FakeResponse(status_code=404, url=url)
+
+
+class EmptyTeamlyzerClient:
+    def __init__(self):
+        self.calls = []
+
+    async def get(self, url, **kwargs):
+        self.calls.append(url)
+        if "/users/autocomplete_company/v2/" in url:
+            return FakeResponse(payload={"results": []}, url=url)
+        return FakeResponse(status_code=404, url=url)
+
+
+def make_job(title, company="Example", **kwargs):
+    return JobPost(
+        source="Test",
+        job_id=kwargs.pop("job_id", title),
+        title=title,
+        company=company,
+        location="Portugal",
+        job_url=kwargs.pop("job_url", f"https://jobs.example/{title.replace(' ', '-') }"),
+        **kwargs,
+    )
+
 
 class TestAllScenarios(unittest.TestCase):
+    def setUp(self):
+        self.original_cache = CompanyRanker._cache
+        self.original_cache_loaded = CompanyRanker._cache_loaded
+        CompanyRanker._cache = {}
+        CompanyRanker._cache_loaded = True
 
-    def test_01_strictly_entry_level_ai_accepted(self):
-        """Testa se todos os cargos de IA/ML estritamente Junior/Trainee/Intern são aceites."""
-        test_cases = [
-            ("Junior AI Engineer", "TensorOps"),
-            ("Gen AI Trainee", "Euronext"),
-            ("Machine Learning Intern", "Zendesk"),
-            ("NLP Junior Research Scientist", "Priberam"),
-            ("Data Science Intern (Customer Success)", "Cresta"),
-            ("Estágio Profissional Inteligência Artificial", "Empresa PT"),
-            ("AI Engineer Trainee [m/f/d]", "Siemens"),
-            ("Summer Business Analyst Intern - Tech & AI", "McKinsey"),
-            ("Junior Applied AI Engineer", "Colibri"),
-            ("AI-Native Software Engineer - Early Career", "ChainGPT")
+    def tearDown(self):
+        CompanyRanker._cache = self.original_cache
+        CompanyRanker._cache_loaded = self.original_cache_loaded
+
+    def test_strict_entry_level_ai_titles_are_accepted(self):
+        titles = [
+            "Junior AI Engineer",
+            "Gen AI Trainee",
+            "Machine Learning Intern",
+            "NLP Junior Research Scientist",
+            "Data Science Internship",
+            "Estágio Profissional em Inteligência Artificial",
+            "AI Engineer Trainee",
+            "Graduate Data Scientist",
+            "Early Career AI Engineer",
+            "Bolsa de Investigação em Machine Learning",
         ]
+        for title in titles:
+            result = JobFilterEngine.pre_filter_job(make_job(title))
+            self.assertIsNotNone(result, title)
+            self.assertEqual(result[0].category, "AI / ML")
 
-        for title, company in test_cases:
-            job = JobPost(source="Test", job_id="1", title=title, company=company, location="Portugal", job_url="https://example.com")
-            res = JobFilterEngine.pre_filter_job(job)
-            self.assertIsNotNone(res, f"Deveria ter aceite a vaga de IA: {title} @ {company}")
-            valid_job, category = res
-            self.assertEqual(valid_job.category, "AI / ML", f"Categoria incorreta para {title}")
-
-    def test_02_top_tier_swe_accepted_only_if_high_rating(self):
-        """Testa se vagas de Software Engineering só entram se a empresa tiver rating >= 3.1."""
-        # Caso A: Cloudflare (Rating 4.2 no Teamlyzer) -> DEVE ENTRAR
-        job_cloudflare = JobPost(source="Test", job_id="cf", title="Software Engineer Intern (Fall 2026)", company="Cloudflare", location="Lisbon, Portugal", job_url="https://example.com")
-        res_cf = JobFilterEngine.pre_filter_job(job_cloudflare)
-        self.assertIsNotNone(res_cf)
-        job_cf_filtered, _ = res_cf
-        self.assertEqual(job_cf_filtered.category, "Top-Tier Software Engineering")
-
-        # Caso B: Consultora Desconhecida / Rating 0.0 -> DEVE SER REJEITADA NO PIPELINE
-        job_unknown = JobPost(source="Test", job_id="unk", title="Junior Software Engineer", company="Consultora Desconhecida Sem Score", location="Lisbon", job_url="https://example.com")
-        res_unk = JobFilterEngine.pre_filter_job(job_unknown)
-        self.assertIsNotNone(res_unk)
-        job_unk_filtered, _ = res_unk
-        # No main.py, como job.rating_score < 3.1, é descartado
-        self.assertEqual(job_unk_filtered.rating_score, 0.0)
-
-    def test_03_strict_exclusions_and_blacklist(self):
-        """Testa se Deloitte, Senior, Lead, Mid-Level e cargos sem termo de junior são rejeitados."""
-        rejected_cases = [
-            ("Junior AI Engineer", "Deloitte"),  # Deloitte estritamente na blacklist
-            ("Deloitte Junior Consultant", "Deloitte"),
-            ("Senior AI Engineer", "Google"),  # Senior
-            ("Lead Machine Learning Engineer", "Revolut"),  # Lead
-            ("Principal Data Scientist", "Stripe"),  # Principal
-            ("Mid-Level AI Developer", "Empresa"),  # Mid-Level
-            ("AI Engineer", "Empresa"),  # Sem Junior/Trainee/Intern no título
-            ("Machine Learning Specialist", "Empresa"),  # Sem Junior/Trainee/Intern
-            ("Director of Artificial Intelligence", "Empresa")  # Director
+    def test_title_marker_is_mandatory_and_exclusions_always_win(self):
+        rejected = [
+            ("AI Engineer", "Example"),
+            ("Research Scientist", "Example"),
+            ("Professional AI Engineer", "Example"),
+            ("Junior Program Manager, AI Studio", "Example"),
+            ("Junior AI Engineer / Senior AI Engineer", "Example"),
+            ("Junior AI Lead", "Example"),
+            ("Junior Data Scientist", "Deloitte"),
+            ("Junior Software Engineer (JR/PL)", "Example"),
+            ("Mid-Level AI Developer", "Example"),
+            ("Director of Artificial Intelligence", "Example"),
         ]
+        for title, company in rejected:
+            self.assertIsNone(JobFilterEngine.pre_filter_job(make_job(title, company)), title)
 
-        for title, company in rejected_cases:
-            job = JobPost(source="Test", job_id="rej", title=title, company=company, location="Portugal", job_url="https://example.com")
-            res = JobFilterEngine.pre_filter_job(job)
-            self.assertIsNone(res, f"Deveria ter REJEITADO: {title} @ {company}")
+    def test_swe_description_cannot_bypass_rating_rule(self):
+        job = make_job(
+            "Software Engineer Intern",
+            description_snippet="Work on a platform powered by artificial intelligence.",
+            tags=["AI"],
+        )
+        result = JobFilterEngine.pre_filter_job(job)
+        self.assertIsNotNone(result)
+        self.assertEqual(result[0].category, "Top-Tier Software Engineering")
+        job.rating_score = 3.0
+        self.assertFalse(JobFilterEngine.is_eligible_after_rating(job))
+        job.rating_score = 3.1
+        self.assertTrue(JobFilterEngine.is_eligible_after_rating(job))
 
-    def test_04_teamlyzer_priority_over_glassdoor(self):
-        """Testa se empresas com perfil em Portugal usam estritamente o Teamlyzer."""
+    def test_ai_is_eligible_without_rating(self):
+        job = make_job("Junior AI Engineer")
+        result = JobFilterEngine.pre_filter_job(job)
+        self.assertIsNotNone(result)
+        self.assertTrue(JobFilterEngine.is_eligible_after_rating(result[0]))
+
+    def test_dynamic_teamlyzer_resolves_compound_name(self):
         async def check():
-            sample_jobs = [
-                JobPost(source="T", job_id="1", title="Junior AI", company="Cloudflare", location="Lisbon", job_url="http://a"),
-                JobPost(source="T", job_id="2", title="Junior AI", company="Fujitsu", location="Lisbon", job_url="http://a"),
-                JobPost(source="T", job_id="3", title="Junior AI", company="InnoWave", location="Lisbon", job_url="http://a"),
-                JobPost(source="T", job_id="4", title="Junior AI", company="Volkswagen Group", location="Lisbon", job_url="http://a"),
-                JobPost(source="T", job_id="5", title="Junior AI", company="Santander", location="Lisbon", job_url="http://a"),
-                JobPost(source="T", job_id="6", title="Junior AI", company="Nordea Asset Management", location="Lisbon", job_url="http://a"),
-            ]
-            await CompanyRanker.enrich_jobs_async(sample_jobs)
-            for j in sample_jobs:
-                self.assertIn("Teamlyzer", j.company_score, f"Deveria usar Teamlyzer para {j.company}")
-                self.assertTrue(j.teamlyzer_url.startswith("https://pt.teamlyzer.com/companies/"), f"URL inválida para {j.company}: {j.teamlyzer_url}")
+            client = TeamlyzerFixtureClient()
+            with patch.object(CompanyRanker, "save_cache"):
+                score = await CompanyRanker.fetch_dynamic_teamlyzer("Neotalent Conclusion", client)
+            self.assertEqual(score["platform"], "Teamlyzer")
+            self.assertEqual(score["numeric"], 2.5)
+            self.assertEqual(score["reviews"], "22 Reviews")
+            self.assertEqual(score["url"], "https://pt.teamlyzer.com/companies/neotalent")
+            self.assertTrue(any("autocomplete_company/v2" in call for call in client.calls))
+            self.assertTrue(any(call.endswith("/companies/neotalent") for call in client.calls))
 
         asyncio.run(check())
 
-    def test_05_glassdoor_fallback_for_us_remote(self):
-        """Testa se empresas 100% remotas/US sem perfil PT usam Glassdoor de forma segura."""
+    def test_stale_glassdoor_cache_is_revalidated_against_teamlyzer(self):
         async def check():
-            sample_jobs = [
-                JobPost(source="T", job_id="1", title="Junior AI", company="Stripe", location="Remote", job_url="http://a"),
-                JobPost(source="T", job_id="2", title="Junior AI", company="Peraton", location="Remote", job_url="http://a"),
-                JobPost(source="T", job_id="3", title="Junior AI", company="Seven Senders", location="Remote", job_url="http://a"),
-            ]
-            await CompanyRanker.enrich_jobs_async(sample_jobs)
-            for j in sample_jobs:
-                self.assertIn("Glassdoor", j.company_score, f"Deveria usar Glassdoor para {j.company}")
-                self.assertTrue(j.teamlyzer_url.startswith("https://www.glassdoor.com/Search/results.htm?keyword="), f"URL Glassdoor inválida para {j.company}")
+            CompanyRanker._cache["neotalentconclusion"] = {
+                "platform": "Glassdoor",
+                "score": "Ver Reviews",
+                "numeric": 0.0,
+                "reviews": "Pesquisa Global",
+                "url": "https://www.glassdoor.com/Search/results.htm?keyword=Neotalent%20Conclusion",
+            }
+            client = TeamlyzerFixtureClient()
+            with patch.object(CompanyRanker, "save_cache"):
+                score = await CompanyRanker.get_score_async("Neotalent Conclusion", client)
+            self.assertEqual(score["platform"], "Teamlyzer")
+            self.assertEqual(CompanyRanker._cache["neotalentconclusion"]["url"], score["url"])
 
-    def test_06_descending_rating_sort(self):
-        """Testa se a ordenação decrescente por rating funciona com 100% de precisão."""
+        asyncio.run(check())
+
+    def test_glassdoor_is_fallback_only_after_teamlyzer_miss(self):
+        async def check():
+            client = EmptyTeamlyzerClient()
+            glassdoor_html = """
+            <div class="result">
+              <a class="result__a" href="https://www.glassdoor.com/Overview/Acme-Overview-E1.htm">Acme</a>
+              <a class="result__snippet">Company rating of 4.2 out of 5 stars from 100 company reviews</a>
+            </div>
+            """
+
+            async def get_with_glassdoor(url, **kwargs):
+                client.calls.append(url)
+                if "duckduckgo.com" in url:
+                    return FakeResponse(text=glassdoor_html, url=url)
+                if "/users/autocomplete_company/v2/" in url:
+                    return FakeResponse(payload={"results": []}, url=url)
+                return FakeResponse(status_code=404, url=url)
+
+            client.get = get_with_glassdoor
+            with patch.object(CompanyRanker, "save_cache"):
+                score = await CompanyRanker.get_score_async("Acme", client)
+            self.assertEqual(score["platform"], "Glassdoor")
+            self.assertEqual(score["numeric"], 4.2)
+            self.assertTrue(score["url"].startswith("https://www.glassdoor.com/Search/results.htm?keyword="))
+            teamlyzer_calls = [call for call in client.calls if "teamlyzer.com" in call]
+            glassdoor_calls = [call for call in client.calls if "duckduckgo.com" in call]
+            self.assertTrue(teamlyzer_calls)
+            self.assertTrue(glassdoor_calls)
+
+        asyncio.run(check())
+
+    def test_teamlyzer_error_does_not_falsely_trigger_glassdoor(self):
+        async def check():
+            class OfflineClient:
+                async def get(self, url, **kwargs):
+                    raise httpx.ReadTimeout("offline")
+
+            with patch.object(CompanyRanker, "fetch_dynamic_glassdoor", new_callable=AsyncMock) as glassdoor:
+                score = await CompanyRanker.get_score_async("Unknown Company", OfflineClient())
+            self.assertIsNone(score)
+            glassdoor.assert_not_awaited()
+
+        asyncio.run(check())
+
+    def test_sorting_is_descending_and_email_preserves_it(self):
         jobs = [
-            JobPost(source="T", job_id="1", title="J1", company="Company 3.1", location="L", job_url="http://a", rating_score=3.1),
-            JobPost(source="T", job_id="2", title="J2", company="Company 4.4", location="L", job_url="http://a", rating_score=4.4),
-            JobPost(source="T", job_id="3", title="J3", company="Company 3.8", location="L", job_url="http://a", rating_score=3.8),
-            JobPost(source="T", job_id="4", title="J4", company="Company 4.2", location="L", job_url="http://a", rating_score=4.2),
-            JobPost(source="T", job_id="5", title="J5", company="Company 0.0", location="L", job_url="http://a", rating_score=0.0),
+            make_job("Junior AI 3.1", "Beta", rating_score=3.1),
+            make_job("Junior AI 4.4", "Alpha", rating_score=4.4),
+            make_job("Junior AI 0", "Omega", rating_score=0.0),
+            make_job("Junior AI 4.2", "Gamma", rating_score=4.2),
         ]
+        ordered = sort_jobs_by_rating(jobs)
+        self.assertEqual([job.rating_score for job in ordered], [4.4, 4.2, 3.1, 0.0])
 
-        jobs.sort(key=lambda x: (x.rating_score, x.company), reverse=True)
-        scores = [j.rating_score for j in jobs]
-        self.assertEqual(scores, [4.4, 4.2, 3.8, 3.1, 0.0], "A lista deve estar estritamente ordenada por ordem decrescente!")
+        data = [job.model_dump() for job in jobs]
+        email = generate_html_email(data)
+        self.assertLess(email.index("Junior AI 4.4"), email.index("Junior AI 4.2"))
+        self.assertLess(email.index("Junior AI 4.2"), email.index("Junior AI 3.1"))
+        self.assertLess(email.index("Junior AI 3.1"), email.index("Junior AI 0"))
 
-    def test_07_itjobs_scraper_smoke(self):
-        """Testa se o scraper do ITJobs.pt retorna ofertas estruturadas válidas."""
-        async def check():
-            scraper = ITJobsScraper()
-            jobs = await scraper.fetch("junior", max_pages=1)
-            self.assertGreater(len(jobs), 0, "ITJobs deveria retornar pelo menos 1 vaga.")
-            for j in jobs:
-                self.assertTrue(j.job_url.startswith("https://www.itjobs.pt/oferta/"), f"URL inválida do ITJobs: {j.job_url}")
-                self.assertIsNotNone(j.title)
-                self.assertIsNotNone(j.company)
+    def test_deduplication_keeps_distinct_urls(self):
+        first = make_job("Junior AI Engineer", job_id="1", job_url="https://jobs.example/a")
+        second = make_job("Junior AI Engineer", job_id="2", job_url="https://jobs.example/b")
+        self.assertNotEqual(first.deduplication_key(), second.deduplication_key())
 
-        asyncio.run(check())
 
 if __name__ == "__main__":
     unittest.main()

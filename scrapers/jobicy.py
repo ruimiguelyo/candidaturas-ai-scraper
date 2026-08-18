@@ -18,17 +18,25 @@ class JobicyScraper:
                     jobs = data.get("jobs", [])
                     for item in jobs:
                         level = item.get("jobLevel", "")
+                        title = item.get("jobTitle", "")
+                        job_url = item.get("url", "")
+                        if not title or not job_url:
+                            continue
+                        raw_tags = item.get("jobTags", []) or item.get("tags", []) or []
+                        tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
                         results.append(JobPost(
                             source="Jobicy",
                             job_id=str(item.get("id", "")),
-                            title=item.get("jobTitle", ""),
+                            title=title,
                             company=item.get("companyName", "N/A"),
                             location=item.get("jobGeo", "100% Remote"),
-                            job_url=item.get("url", ""),
+                            job_url=job_url,
                             modality="100% Remote",
                             is_remote=True,
                             seniority="Junior / Trainee / Internship" if "entry" in level.lower() or "junior" in level.lower() else level,
-                            post_date=item.get("pubDate")
+                            post_date=item.get("pubDate"),
+                            tags=tags,
+                            description_snippet=item.get("jobDescription", "") or item.get("description", "")
                         ))
             except Exception as e:
                 logger.error(f"Jobicy error: {e}")

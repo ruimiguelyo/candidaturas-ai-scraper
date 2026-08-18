@@ -10,6 +10,7 @@ import asyncio
 import logging
 import csv
 import json
+import math
 from typing import List
 import pandas as pd
 from rich.console import Console
@@ -29,6 +30,24 @@ from email_notifier import send_daily_email
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 console = Console(force_terminal=True, legacy_windows=False)
+
+OUTPUT_CSV = "vagas_estritamente_junior_trainee_internship.csv"
+OUTPUT_JSON = "vagas_estritamente_junior_trainee_internship.json"
+
+
+def sort_jobs_by_rating(jobs: List[JobPost]) -> List[JobPost]:
+    """Ordenacao unica usada pelo terminal, exports e email."""
+    def rating(job: JobPost) -> float:
+        try:
+            value = float(job.rating_score or 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+        return value if math.isfinite(value) else 0.0
+
+    return sorted(
+        jobs,
+        key=lambda job: (-rating(job), job.company.casefold(), job.title.casefold(), job.job_url),
+    )
 
 class AIJobPipeline:
     def __init__(self):
@@ -99,12 +118,25 @@ class AIJobPipeline:
             self.remoteok.fetch("junior", limit=40)
         ]
 
-        raw_responses = await asyncio.gather(*tasks, return_exceptions=True)
+        # Evita abrir dezenas de ligações simultaneas aos portais, sem perder a
+        # recolha paralela entre fontes.
+        semaphore = asyncio.Semaphore(8)
+
+        async def run_limited(task):
+            async with semaphore:
+                return await task
+
+        raw_responses = await asyncio.gather(
+            *(run_limited(task) for task in tasks),
+            return_exceptions=True,
+        )
 
         all_jobs: List[JobPost] = []
-        for res in raw_responses:
+        for source_index, res in enumerate(raw_responses, start=1):
             if isinstance(res, list):
                 all_jobs.extend(res)
+            elif isinstance(res, Exception):
+                logger.warning("Fonte de vagas %s falhou: %s", source_index, res)
 
         # Pré-filtro: Deduplicação e separação
         seen_keys = set()
@@ -128,27 +160,16 @@ class AIJobPipeline:
         # Regra de Elegibilidade:
         # - Vagas de IA/ML: Entram sempre (desde que Junior/Trainee/Intern)
         # - Vagas de Software Engineering Geral: Entram APENAS se o rating da empresa for >= 3.1
-        final_jobs: List[JobPost] = []
-        for job in candidates:
-            if job.category == "AI / ML":
-                final_jobs.append(job)
-            elif job.category == "Top-Tier Software Engineering":
-                if job.rating_score >= 3.1:
-                    final_jobs.append(job)
-                else:
-                    # Ignora vagas de SWE geral de empresas com rating < 3.1 ou desconhecidas
-                    continue
+        final_jobs = [job for job in candidates if JobFilterEngine.is_eligible_after_rating(job)]
 
         # ORDENAÇÃO: Da empresa com MAIOR rating (ex: 4.4, 4.2, 3.7) até à menor / sem rating
-        final_jobs.sort(key=lambda x: (x.rating_score, x.company), reverse=True)
+        final_jobs = sort_jobs_by_rating(final_jobs)
 
         console.print(f"[bold green]Total de vagas qualificadas (Ordenadas por Rating):[/bold green] {len(final_jobs)}\n")
         return final_jobs
 
     def export_and_display(self, jobs: List[JobPost]):
-        if not jobs:
-            console.print("[yellow]Nenhuma vaga passou pelo filtro nesta execução.[/yellow]")
-            return
+        jobs = sort_jobs_by_rating(jobs)
 
         table = Table(title="VAGAS QUALIFICADAS (ORDENADAS POR RATING DE EMPRESA)", show_lines=True)
         table.add_column("Score", style="bold yellow", width=16)
@@ -175,17 +196,21 @@ class AIJobPipeline:
 
         console.print(table)
 
-        # Exportar CSV e JSON
-        csv_filename = "vagas_estritamente_junior_trainee_internship.csv"
+        # Exportar CSV e JSON mesmo quando a recolha nao devolve resultados. Assim,
+        # uma execucao vazia nunca publica dados antigos como se fossem atuais.
+        csv_filename = OUTPUT_CSV
         df = pd.DataFrame(data_rows)
         df.to_csv(csv_filename, index=False, quoting=csv.QUOTE_NONNUMERIC)
 
-        json_filename = "vagas_estritamente_junior_trainee_internship.json"
+        json_filename = OUTPUT_JSON
         with open(json_filename, "w", encoding="utf-8") as f:
             json.dump(data_rows, f, ensure_ascii=False, indent=2)
 
-        console.print(f"\n[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {csv_filename}")
-        console.print(f"[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {json_filename}")
+        if not jobs:
+            console.print("[yellow]Nenhuma vaga passou pelo filtro nesta execução.[/yellow]")
+        else:
+            console.print(f"\n[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {csv_filename}")
+            console.print(f"[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {json_filename}")
 
         # Disparo de Email Notifier se configurado
         send_daily_email(json_filename, csv_filename)

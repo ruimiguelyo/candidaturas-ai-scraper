@@ -35,11 +35,17 @@ class HimalayasScraper:
                         min_sal = item.get("minSalary")
                         max_sal = item.get("maxSalary")
                         curr = item.get("currency", "USD")
-                        salary_str = f"{curr} {min_sal:,} - {max_sal:,}" if (min_sal and max_sal) else None
+                        salary_str = f"{curr} {min_sal:,} - {max_sal:,}" if (
+                            isinstance(min_sal, (int, float)) and isinstance(max_sal, (int, float))
+                        ) else None
 
                         # Localização / Restrições
                         restrictions = item.get("locationRestrictions", [])
-                        loc_desc = ", ".join(restrictions) if restrictions else "Worldwide Remote"
+                        if isinstance(restrictions, str):
+                            restrictions = [restrictions]
+                        if not isinstance(restrictions, list):
+                            restrictions = []
+                        loc_desc = ", ".join(str(value) for value in restrictions if value) or "Worldwide Remote"
 
                         # Formatação de Data (Unix Timestamp -> DD/MM/YYYY)
                         raw_pub = item.get("pubDate")
