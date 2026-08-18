@@ -9,6 +9,7 @@ import httpx
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from company_ranker import CompanyRanker
+from hiring_intelligence import HiringIntelligence, empty_outreach
 from email_notifier import generate_html_email
 from filter_engine import JobFilterEngine
 from main import sort_jobs_by_rating
@@ -263,6 +264,113 @@ class TestAllScenarios(unittest.TestCase):
         first = make_job("Junior AI Engineer", job_id="1", job_url="https://jobs.example/a")
         second = make_job("Junior AI Engineer", job_id="2", job_url="https://jobs.example/b")
         self.assertNotEqual(first.deduplication_key(), second.deduplication_key())
+
+    def test_hiring_intelligence_disabled_flag(self):
+        """Testa se com HIRING_INTELLIGENCE_ENABLED=false o pipeline nao altera nada."""
+        jobs = [make_job("Junior AI Engineer", "Acme")]
+        with patch.dict(os.environ, {"HIRING_INTELLIGENCE_ENABLED": "false"}):
+            asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
+        self.assertIsNone(jobs[0].human_outreach)
+
+    def test_hiring_intelligence_no_results_returns_empty_outreach(self):
+        """Testa se a ausencia de resultados devolve o schema correto de target nao encontrado."""
+        job = make_job("Junior AI Engineer", "Unknown Company")
+        profile = {"name": "Rui", "projects": [], "skills": ["Python"]}
+        with patch.object(HiringIntelligence, "search_public_web", return_value=[]):
+            outreach = asyncio.run(HiringIntelligence.enrich_single_job(job, profile))
+        self.assertFalse(outreach["target_found"])
+        self.assertEqual(outreach["target_type"], "NONE")
+        self.assertEqual(outreach["confidence"], "NONE")
+        self.assertEqual(outreach["outreach_recommendation"], "NO")
+
+    def test_hiring_intelligence_high_confidence_hiring_manager(self):
+        """Testa se um Engineering Manager na area e localizacao corretas recebe HIGH confidence e YES."""
+        job = make_job("Junior AI Engineer", "TechCorp", location="Lisbon, Portugal")
+        profile = {
+            "name": "Rui Miguel",
+            "projects": [{"name": "RAG & Semantic Search Pipeline", "description": "built RAG"}],
+            "skills": ["Python", "PyTorch", "FastAPI"]
+        }
+        fake_search_results = [{
+            "title": "Alexandre Santos - Head of AI & Machine Learning - TechCorp | LinkedIn",
+            "link": "https://pt.linkedin.com/in/alexandre-santos-tech",
+            "snippet": "Leading AI and Machine Learning Engineering team at TechCorp Lisbon. We are hiring engineers."
+        }]
+        with patch.object(HiringIntelligence, "search_public_web", return_value=fake_search_results):
+            outreach = asyncio.run(HiringIntelligence.enrich_single_job(job, profile))
+        self.assertTrue(outreach["target_found"])
+        self.assertEqual(outreach["target_type"], "HIRING_MANAGER")
+        self.assertEqual(outreach["name"], "Alexandre Santos")
+        self.assertEqual(outreach["confidence"], "HIGH")
+        self.assertEqual(outreach["outreach_recommendation"], "YES")
+        self.assertIsNotNone(outreach["suggested_message"])
+        self.assertIn("Alexandre", outreach["suggested_message"])
+
+    def test_hiring_intelligence_recruiter_fallback(self):
+        """Testa se quando nao ha hiring manager, encontra um recruiter tecnico com fallback."""
+        job = make_job("Junior AI Engineer", "TechCorp", location="Portugal")
+        profile = {"name": "Rui", "projects": [], "skills": ["Python"]}
+
+        def fake_search(query, max_results=3):
+            if "Technical Recruiter" in query:
+                return [{
+                    "title": "Mariana Costa - Technical Recruiter - TechCorp | LinkedIn",
+                    "link": "https://pt.linkedin.com/in/mariana-costa-recruiter",
+                    "snippet": "Technical Recruiter at TechCorp Portugal hiring AI and Software Engineers."
+                }]
+            return []
+
+        with patch.object(HiringIntelligence, "search_public_web", side_effect=fake_search):
+            outreach = asyncio.run(HiringIntelligence.enrich_single_job(job, profile))
+        self.assertTrue(outreach["target_found"])
+        self.assertEqual(outreach["target_type"], "RECRUITER")
+        self.assertEqual(outreach["name"], "Mariana Costa")
+        self.assertIn(outreach["confidence"], ("HIGH", "MEDIUM"))
+
+    def test_hiring_intelligence_max_lookups_and_order_preservation(self):
+        """Testa se MAX_HIRING_LOOKUPS enriquece apenas as primeiras N vagas sem alterar a ordem."""
+        jobs = [make_job(f"Job {i}", f"Company {i}", rating_score=float(10 - i)) for i in range(8)]
+        original_order = [j.title for j in jobs]
+
+        with patch.dict(os.environ, {"MAX_HIRING_LOOKUPS": "3"}):
+            with patch.object(HiringIntelligence, "enrich_single_job", return_value={"target_found": False}):
+                asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
+
+        self.assertEqual([j.title for j in jobs], original_order, "A ordem das vagas NUNCA deve ser alterada!")
+        self.assertIsNotNone(jobs[0].human_outreach)
+        self.assertIsNotNone(jobs[1].human_outreach)
+        self.assertIsNotNone(jobs[2].human_outreach)
+        self.assertIsNone(jobs[3].human_outreach)
+        self.assertIsNone(jobs[4].human_outreach)
+
+    def test_hiring_intelligence_fail_open_on_exception(self):
+        """Testa se qualquer excecao de rede/parser e tratada silenciosamente sem abortar."""
+        jobs = [make_job("Junior AI Engineer", "Acme")]
+        with patch.object(HiringIntelligence, "enrich_single_job", side_effect=RuntimeError("Network failure")):
+            asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
+        self.assertIsNotNone(jobs[0].human_outreach)
+        self.assertFalse(jobs[0].human_outreach["target_found"])
+
+    def test_email_renders_outreach_block_when_present(self):
+        """Testa se o template de email renderiza o bloco estatico de outreach quando encontrado."""
+        job = make_job("Junior AI Engineer", "InnoWave", rating_score=4.2).model_dump()
+        job["human_outreach"] = {
+            "target_found": True,
+            "target_type": "HIRING_MANAGER",
+            "name": "Alexandre Santos",
+            "current_title": "Head of AI",
+            "profile_url": "https://linkedin.com/in/alexandre-santos",
+            "confidence": "HIGH",
+            "outreach_recommendation": "YES",
+            "evidence": ["Lidera a equipa de AI na InnoWave."],
+            "personalization_hook": "A equipa trabalha em RAG.",
+            "suggested_message": "Hi Alexandre — I applied today for the Junior AI Engineer position."
+        }
+        email = generate_html_email([job])
+        self.assertIn("Alexandre Santos", email)
+        self.assertIn("LIKELY HIRING TARGET", email)
+        self.assertIn("Confidence: HIGH", email)
+        self.assertIn("Suggested LinkedIn Message", email)
 
 
 if __name__ == "__main__":

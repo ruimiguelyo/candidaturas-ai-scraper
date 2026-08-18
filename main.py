@@ -26,6 +26,7 @@ from scrapers.jobicy import JobicyScraper
 from scrapers.landing_jobs import LandingJobsScraper
 from filter_engine import JobFilterEngine
 from company_ranker import CompanyRanker
+from hiring_intelligence import HiringIntelligence
 from email_notifier import send_daily_email
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -164,6 +165,10 @@ class AIJobPipeline:
 
         # ORDENAÇÃO: Da empresa com MAIOR rating (ex: 4.4, 4.2, 3.7) até à menor / sem rating
         final_jobs = sort_jobs_by_rating(final_jobs)
+
+        # Enriquecimento opcional: Hiring Manager Intelligence (apenas para as vagas de topo, mantendo a ordenação)
+        console.print("[yellow]A processar Hiring Manager Intelligence para as vagas de topo...[/yellow]")
+        await HiringIntelligence.enrich_jobs_async(final_jobs)
 
         console.print(f"[bold green]Total de vagas qualificadas (Ordenadas por Rating):[/bold green] {len(final_jobs)}\n")
         return final_jobs

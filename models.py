@@ -22,6 +22,7 @@ class JobPost(BaseModel):
     category: str = "AI / ML"                  # "AI / ML" ou "Top-Tier Software Engineering"
     tags: List[str] = Field(default_factory=list)
     description_snippet: Optional[str] = None
+    human_outreach: Optional[dict] = None      # Hiring Manager Intelligence outreach enrichment
     fetched_at: str = Field(default_factory=lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
 
     @field_validator("seniority", mode="before")

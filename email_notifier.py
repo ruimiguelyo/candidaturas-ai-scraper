@@ -124,6 +124,40 @@ def generate_html_email(jobs: list) -> str:
                 </span>
                 """
 
+            # Bloco opcional estático de Hiring Intelligence (apenas se target_found == True)
+            outreach = job.get("human_outreach")
+            outreach_html = ""
+            if outreach and isinstance(outreach, dict) and outreach.get("target_found"):
+                target_name = safe_text(outreach.get("name") or "Contact")
+                target_title = safe_text(outreach.get("current_title") or "Engineering Management")
+                target_confidence = safe_text(outreach.get("confidence", "MEDIUM"))
+                profile_link = safe_url(outreach.get("profile_url"))
+                hook = safe_text(outreach.get("personalization_hook") or "")
+                evidence_list = outreach.get("evidence", [])
+                evidence_text = safe_text(evidence_list[0]) if (evidence_list and isinstance(evidence_list, list)) else "Lidera/recruta na área técnica correspondente."
+                suggested_msg = safe_text(outreach.get("suggested_message") or "")
+
+                conf_badge = "#16a34a" if target_confidence == "HIGH" else "#d97706"
+
+                profile_btn = f'<a href="{profile_link}" target="_blank" rel="noopener" style="color: #2563eb; font-weight: 600; text-decoration: underline; font-size: 12px; margin-left: 6px;">Ver Perfil LinkedIn ➔</a>' if profile_link else ""
+
+                msg_block = f"""
+                <div style="margin-top: 8px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-family: monospace; font-size: 12px; color: #1e293b; white-space: pre-wrap;">{suggested_msg}</div>
+                """ if suggested_msg else ""
+
+                outreach_html = f"""
+                <div style="margin: 12px 0; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid {conf_badge}; border-radius: 6px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
+                        <span style="font-size: 13px; font-weight: 700; color: #0f172a;">👤 LIKELY HIRING TARGET: {target_name} <span style="font-weight: normal; color: #64748b;">({target_title})</span></span>
+                        <span style="font-size: 10px; font-weight: 800; color: {conf_badge}; text-transform: uppercase; background: #ffffff; border: 1px solid {conf_badge}; padding: 2px 6px; border-radius: 4px;">Confidence: {target_confidence}</span>
+                    </div>
+                    <div style="font-size: 12px; color: #475569; margin-bottom: 4px;"><strong>Why:</strong> {evidence_text} {profile_btn}</div>
+                    {f'<div style="font-size: 12px; color: #475569; margin-bottom: 4px;"><strong>Hook:</strong> {hook}</div>' if hook else ''}
+                    {f'<div style="font-size: 11px; font-weight: 700; color: #334155; margin-top: 8px;">Suggested LinkedIn Message:</div>' if suggested_msg else ''}
+                    {msg_block}
+                </div>
+                """
+
             cards_html += f"""
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
@@ -140,6 +174,7 @@ def generate_html_email(jobs: list) -> str:
                     <span>{rating_badge}</span>
                     <span>• <strong>Local:</strong> {safe_text(job.get('location'))}</span>
                 </div>
+                {outreach_html}
                 <div style="text-align: right; margin-top: 10px;">
                     <a href="{job_url}" target="_blank" rel="noopener" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; display: inline-block;">
                         Ver Vaga &amp; Candidatar ➔

@@ -38,6 +38,8 @@ jobs:
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          HIRING_INTELLIGENCE_ENABLED: "true"
+          MAX_HIRING_LOOKUPS: "10"
         run: |
           python main.py
 

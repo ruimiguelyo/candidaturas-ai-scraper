@@ -1,0 +1,45 @@
+{
+  "name": "Rui Miguel Coimbra de Sá",
+  "location": "Lisboa, Portugal",
+  "linkedin": "https://www.linkedin.com/in/ruimiguelsa",
+  "github": "https://github.com/ruimiguelyo",
+  "education": [
+    {
+      "degree": "Engenharia Informática / Inteligência Artificial",
+      "institution": "Ensino Superior (Portugal)",
+      "status": "Finalista / Recém-Licenciado"
+    }
+  ],
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "PyTorch",
+    "TensorFlow",
+    "Scikit-learn",
+    "Generative AI",
+    "LLMs",
+    "RAG (Retrieval-Augmented Generation)",
+    "Vector Databases",
+    "LangChain",
+    "FastAPI",
+    "Docker",
+    "Git",
+    "SQL",
+    "Data Pipelines",
+    "REST APIs"
+  ],
+  "projects": [
+    {
+      "name": "Autonomous AI Job & Market Intelligence Aggregator",
+      "description": "Desenvolvimento de pipeline de dados assíncrono em Python para agregação, filtragem estrita e enriquecimento de reputação de empresas com CI/CD no GitHub Actions.",
+      "technologies": ["Python", "AsyncIO", "BeautifulSoup", "Curl-cffi", "Pydantic", "GitHub Actions"]
+    },
+    {
+      "name": "RAG & Semantic Search Pipeline",
+      "description": "Construção de uma pipeline de Retrieval-Augmented Generation para pesquisa semântica e avaliação de respostas com busca vetorial e FastAPI.",
+      "technologies": ["Python", "FastAPI", "Vector Search", "LLMs", "RAG", "Embeddings"]
+    }
+  ],
+  "experience": []
+}
