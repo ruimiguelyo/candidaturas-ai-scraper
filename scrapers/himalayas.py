@@ -1,5 +1,6 @@
 import logging
 from typing import List
+from datetime import datetime
 import httpx
 from models import JobPost
 
@@ -17,22 +18,42 @@ class HimalayasScraper:
                     data = res.json()
                     jobs = data.get("jobs", [])
                     for item in jobs:
-                        slug = item.get("slug", "")
                         title = item.get("title", "")
                         company = item.get("companyName", "N/A")
-                        url = item.get("applicationUrl") or f"https://himalayas.app/jobs/{slug}"
                         
+                        # O URL direto de candidatura no Himalayas vem em 'applicationLink' ou 'guid'
+                        url = item.get("applicationLink") or item.get("guid")
+                        if not url:
+                            company_slug = item.get("companySlug", "")
+                            job_slug = item.get("slug", "")
+                            if company_slug and job_slug:
+                                url = f"https://himalayas.app/companies/{company_slug}/jobs/{job_slug}"
+                            else:
+                                url = "https://himalayas.app/jobs"
+
+                        # Formatação do Salário
                         min_sal = item.get("minSalary")
                         max_sal = item.get("maxSalary")
                         curr = item.get("currency", "USD")
                         salary_str = f"{curr} {min_sal:,} - {max_sal:,}" if (min_sal and max_sal) else None
 
+                        # Localização / Restrições
                         restrictions = item.get("locationRestrictions", [])
                         loc_desc = ", ".join(restrictions) if restrictions else "Worldwide Remote"
 
+                        # Formatação de Data (Unix Timestamp -> DD/MM/YYYY)
+                        raw_pub = item.get("pubDate")
+                        if isinstance(raw_pub, (int, float)):
+                            try:
+                                post_date = datetime.fromtimestamp(raw_pub).strftime("%d/%m/%Y")
+                            except Exception:
+                                post_date = "Recente"
+                        else:
+                            post_date = str(raw_pub) if raw_pub else "Recente"
+
                         results.append(JobPost(
                             source="Himalayas",
-                            job_id=str(item.get("id", slug)),
+                            job_id=str(item.get("id", url.split("/")[-1])),
                             title=title,
                             company=company,
                             location=loc_desc,
@@ -40,8 +61,7 @@ class HimalayasScraper:
                             modality="100% Remote",
                             is_remote=True,
                             salary=salary_str,
-                            post_date=item.get("pubDate"),
-                            seniority=item.get("seniority", "Junior / Entry"),
+                            post_date=post_date,
                             description_snippet=item.get("excerpt", "")
                         ))
             except Exception as e:

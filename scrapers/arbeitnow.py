@@ -1,5 +1,6 @@
 import logging
 from typing import List
+from datetime import datetime
 import httpx
 from models import JobPost
 
@@ -16,6 +17,15 @@ class ArbeitnowScraper:
                 if res.status_code == 200:
                     data = res.json().get("data", [])
                     for item in data[:limit]:
+                        raw_date = item.get("created_at")
+                        if isinstance(raw_date, (int, float)):
+                            try:
+                                post_date = datetime.fromtimestamp(raw_date).strftime("%d/%m/%Y")
+                            except Exception:
+                                post_date = "Recente"
+                        else:
+                            post_date = str(raw_date) if raw_date else "Recente"
+
                         results.append(JobPost(
                             source="Arbeitnow",
                             job_id=str(item.get("slug", "")),
@@ -25,7 +35,7 @@ class ArbeitnowScraper:
                             job_url=item.get("url", ""),
                             modality="Remote" if item.get("remote") else "Hybrid / On-site",
                             is_remote=item.get("remote", True),
-                            post_date=item.get("created_at"),
+                            post_date=post_date,
                             tags=item.get("tags", [])
                         ))
             except Exception as e:
