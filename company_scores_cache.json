@@ -273,18 +273,19 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
   },
   "sevensendersgmbh": {
-    "score": "3.8/5",
-    "numeric": 3.8,
-    "platform": "Glassdoor",
-    "reviews": "40 Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
+    "platform": "Teamlyzer",
+    "score": "5.0/5",
+    "numeric": 5.0,
+    "reviews": "0 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/sevenair-academy"
   },
   "peraton": {
     "score": "3.5/5",
     "numeric": 3.5,
     "platform": "Glassdoor",
     "reviews": "1.7k Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Peraton"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Peraton",
+    "teamlyzer_checked_at": 1787053730
   },
   "stripe": {
     "score": "4.2/5",
@@ -331,11 +332,11 @@
     "teamlyzer_checked_at": 1787052469
   },
   "unity": {
-    "score": "3.9/5",
-    "numeric": 3.9,
-    "platform": "Glassdoor",
-    "reviews": "2.4k Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Unity%20Technologies"
+    "platform": "Teamlyzer",
+    "score": "5.0/5",
+    "numeric": 5.0,
+    "reviews": "0 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/unity"
   },
   "scaleai": {
     "score": "3.7/5",
@@ -359,11 +360,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
   },
   "zebratechnologies": {
-    "score": "4.1/5",
-    "numeric": 4.1,
-    "platform": "Glassdoor",
-    "reviews": "3.8k Reviews",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zebra%20Technologies"
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "19 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/wedo-technologies"
   },
   "tortexperts": {
     "platform": "Teamlyzer",
@@ -384,7 +385,8 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sprinto"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sprinto",
+    "teamlyzer_checked_at": 1787053728
   },
   "brightenconsulting": {
     "platform": "Teamlyzer",
@@ -398,7 +400,8 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti",
+    "teamlyzer_checked_at": 1787053728
   },
   "csg": {
     "platform": "Glassdoor",
@@ -640,7 +643,8 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Drivetrain"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Drivetrain",
+    "teamlyzer_checked_at": 1787053728
   },
   "innovationengineeringhub": {
     "platform": "Teamlyzer",
@@ -664,11 +668,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=HiredBuddy"
   },
   "ensemblehealthpartners": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Ensemble%20Health%20Partners"
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "8 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/future-healtcare"
   },
   "corinthiancapital": {
     "platform": "Glassdoor",
@@ -678,11 +682,11 @@
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Corinthian%20Capital"
   },
   "cambiumlearninggroup": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"
+    "platform": "Teamlyzer",
+    "score": "5.0/5",
+    "numeric": 5.0,
+    "reviews": "0 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/further-learning-group"
   },
   "pradeepitconsultingservicespvtltd": {
     "platform": "Teamlyzer",
@@ -725,7 +729,8 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Phygtl%2C"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Phygtl%2C",
+    "teamlyzer_checked_at": 1787053730
   },
   "analyticalmechanicsassociatesinc": {
     "platform": "Teamlyzer",
@@ -876,5 +881,20 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
     "teamlyzer_checked_at": 1787052467
+  },
+  "infineontechnologies": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "11 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/infineon-technologies-portugal"
+  },
+  "jofebar": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=JOFEBAR",
+    "teamlyzer_checked_at": 1787053729
   }
 }
