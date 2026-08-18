@@ -41,16 +41,21 @@ class AIJobPipeline:
         self.landing_jobs = LandingJobsScraper()
 
     async def run(self) -> List[JobPost]:
-        console.print("[bold cyan]>>> A recolher vagas Junior / Trainee / Internship (IA/ML + Software Engineering em Top Tech)...[/bold cyan]\n")
+        console.print("[bold cyan]>>> A recolher vagas Junior / Trainee / Internship (IA/ML + Top Tech SWE)...[/bold cyan]\n")
 
         tasks = [
             # 1. LinkedIn Portugal (IA/ML + Top Tech Internships)
             self.linkedin.fetch("Junior AI Engineer", "Portugal", total_wanted=30),
+            self.linkedin.fetch("AI Engineer Trainee", "Portugal", total_wanted=30),
+            self.linkedin.fetch("AI Trainee", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Gen AI Trainee", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Artificial Intelligence Trainee", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Machine Learning Trainee", "Portugal", total_wanted=30),
             self.linkedin.fetch("Junior Machine Learning Engineer", "Portugal", total_wanted=30),
             self.linkedin.fetch("AI Intern", "Portugal", total_wanted=30),
             self.linkedin.fetch("AI Internship", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Machine Learning Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Gen AI Trainee", "Portugal", total_wanted=30),
+            self.linkedin.fetch("NLP Junior", "Portugal", total_wanted=30),
+            self.linkedin.fetch("NLP Intern", "Portugal", total_wanted=30),
             self.linkedin.fetch("Junior Data Scientist", "Portugal", total_wanted=30),
             self.linkedin.fetch("Data Science Intern", "Portugal", total_wanted=30),
             self.linkedin.fetch("Software Engineer Intern", "Portugal", total_wanted=30),
@@ -60,16 +65,19 @@ class AIJobPipeline:
             self.linkedin.fetch("Junior AI", "Lisbon, Portugal", total_wanted=30),
             self.linkedin.fetch("Software Intern", "Lisbon, Portugal", total_wanted=30),
 
-            # 2. Landing.jobs (Portugal Tech Hub)
+            # 2. ITJobs Portugal (Mercado Português / Bolsas / IEFP)
+            self.itjobs.fetch("junior", max_pages=2),
+            self.itjobs.fetch("inteligencia artificial", max_pages=2),
+            self.itjobs.fetch("machine learning", max_pages=2),
+            self.itjobs.fetch("estagio", max_pages=2),
+            self.itjobs.fetch("ai engineer", max_pages=2),
+            self.itjobs.fetch("nlp", max_pages=2),
+
+            # 3. Landing.jobs (Portugal Tech Hub)
             self.landing_jobs.fetch("ai", limit=30),
             self.landing_jobs.fetch("machine learning", limit=30),
             self.landing_jobs.fetch("junior software", limit=30),
             self.landing_jobs.fetch("intern", limit=30),
-
-            # 3. ITJobs Portugal
-            self.itjobs.fetch("junior", limit=50),
-            self.itjobs.fetch("estagio", limit=50),
-            self.itjobs.fetch("ai", limit=50),
 
             # 4. Himalayas (Global Remote)
             self.himalayas.fetch("Junior AI", limit=40),
