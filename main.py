@@ -24,6 +24,7 @@ from scrapers.itjobs import ITJobsScraper
 from scrapers.jobicy import JobicyScraper
 from scrapers.landing_jobs import LandingJobsScraper
 from filter_engine import JobFilterEngine
+from email_notifier import send_daily_email
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 console = Console(force_terminal=True, legacy_windows=False)
@@ -148,6 +149,9 @@ class AIJobPipeline:
 
         console.print(f"\n[bold green]Ficheiro atualizado:[/bold green] {csv_filename}")
         console.print(f"[bold green]Ficheiro atualizado:[/bold green] {json_filename}")
+
+        # Disparo de Email Notifier se configurado
+        send_daily_email(json_filename, csv_filename)
 
 if __name__ == "__main__":
     pipeline = AIJobPipeline()
