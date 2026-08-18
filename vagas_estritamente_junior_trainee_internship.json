@@ -11,12 +11,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "1 month ago",
-    "company_score": "★ 3.4/5",
-    "company_reviews": "147 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/innowave-technologies",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=InnoWave",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -30,12 +30,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "5 days ago",
-    "company_score": "★ 3.0/5",
-    "company_reviews": "8 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/tensorops",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=TensorOps",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -49,12 +49,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "1 week ago",
-    "company_score": "★ 3.1/5",
-    "company_reviews": "4 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Innovation%20%26%20Engineering%20HUB",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -68,12 +68,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "3 weeks ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Euronext",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -87,126 +87,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "4 weeks ago",
-    "company_score": "★ 3.4/5",
-    "company_reviews": "144 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Volkswagen",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4446763988",
-    "title": "AI Product Engineer Intern",
-    "company": "HAVI TechHUB",
-    "location": "Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ai-product-engineer-intern-at-havi-techhub-4446763988",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2 weeks ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4449213043",
-    "title": "Machine Learning Engineering Intern",
-    "company": "Zendesk",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/machine-learning-engineering-intern-at-zendesk-4449213043",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "1 week ago",
-    "company_score": "★ 3.1/5",
-    "company_reviews": "3 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/zendesk",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4454037679",
-    "title": "Digital Innovation Manufacturing AI Intern",
-    "company": "Philip Morris International",
-    "location": "Albarraque, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/digital-innovation-manufacturing-ai-intern-at-philip-morris-international-4454037679",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "4 days ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4432245211",
-    "title": "AI & Business Intelligence internship M/F",
-    "company": "ALTEN",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ai-business-intelligence-internship-m-f-at-alten-4432245211",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "1 month ago",
-    "company_score": "★ 3.0/5",
-    "company_reviews": "20 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/alten",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4419049784",
-    "title": "Internship Programme 2027: Data Scientist and Analyst",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-data-scientist-and-analyst-at-revolut-4419049784",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2 weeks ago",
-    "company_score": "★ 3.1/5",
-    "company_reviews": "54 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4437433043",
-    "title": "Summer Business Analyst Intern - Tech & AI",
-    "company": "McKinsey & Company",
-    "location": "Lisbon, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/summer-business-analyst-intern-tech-ai-at-mckinsey-company-4437433043",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior / Trainee / Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2 weeks ago",
-    "company_score": "★ 3.3/5",
-    "company_reviews": "17 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/mckinsey-company",
-    "tags": [],
-    "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:05"
   },
   {
     "source": "LinkedIn",
@@ -220,31 +106,50 @@
     "is_remote": false,
     "salary": null,
     "post_date": "3 days ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4433887516",
-    "title": "AI-Native Software Engineer - Early Career - Europe",
-    "company": "ChainGPT",
+    "job_id": "4449213043",
+    "title": "Machine Learning Engineering Intern",
+    "company": "Zendesk",
     "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ai-native-software-engineer-early-career-europe-at-chaingpt-4433887516",
+    "job_url": "https://pt.linkedin.com/jobs/view/machine-learning-engineering-intern-at-zendesk-4449213043",
     "modality": "On-site / Hybrid",
     "seniority": "Junior / Trainee / Internship",
     "is_remote": false,
     "salary": null,
-    "post_date": "1 month ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "post_date": "1 week ago",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Zendesk",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:31"
+    "fetched_at": "2026-08-18 02:01:04"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4419066093",
+    "title": "Internship Programme 2027: Data Scientist and Analyst",
+    "company": "Revolut",
+    "location": "Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-data-scientist-and-analyst-at-revolut-4419066093",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2 weeks ago",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Revolut",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -257,13 +162,13 @@
     "seniority": "Junior / Trainee / Internship",
     "is_remote": false,
     "salary": null,
-    "post_date": "8 hours ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "post_date": "9 hours ago",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Sage",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -277,12 +182,31 @@
     "is_remote": false,
     "salary": null,
     "post_date": "3 weeks ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Euronext",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:04"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4432245211",
+    "title": "AI & Business Intelligence internship M/F",
+    "company": "ALTEN",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/ai-business-intelligence-internship-m-f-at-alten-4432245211",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "1 month ago",
+    "company_score": "★ 2.3/5 (Teamlyzer)",
+    "company_reviews": "20 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/alten",
+    "tags": [],
+    "description_snippet": null,
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -296,12 +220,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "5 days ago",
-    "company_score": "★ 3.1/5",
-    "company_reviews": "1 Review",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Nordea%20Asset%20Management%20Portugal",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:05"
   },
   {
     "source": "LinkedIn",
@@ -315,12 +239,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "2 days ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Santander",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -334,12 +258,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "2 weeks ago",
-    "company_score": "★ 3.1/5",
-    "company_reviews": "1 Review",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Nordea%20Asset%20Management%20Portugal",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -353,12 +277,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "2 weeks ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Vale%20do%20Lobo%20Golf%20%26%20Beach%20Resort",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:04"
   },
   {
     "source": "LinkedIn",
@@ -372,12 +296,12 @@
     "is_remote": false,
     "salary": null,
     "post_date": "2 weeks ago",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Revolut",
     "tags": [],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:05"
   },
   {
     "source": "Himalayas",
@@ -391,12 +315,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "14/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
     "tags": [],
     "description_snippet": "This is a remote position. Interesujesz się sztuczną inteligencją i chcesz rozpocząć karierę w jednej z najszybciej rozwijających się dziedzin IT?",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -410,12 +334,12 @@
     "is_remote": true,
     "salary": "EUR 25,000 - 35,000",
     "post_date": "19/07/2026",
-    "company_score": "★ 3.4/5",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/grupo-clave",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Clave",
     "tags": [],
     "description_snippet": "En Grupo Clave, colaboramos con una compañía tecnológica que está impulsando el desarrollo de soluciones avanzadas de inteligencia artificial para entornos empresariales.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -429,12 +353,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "14/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Colibri%20Digital",
     "tags": [],
     "description_snippet": "We’re looking for an Applied AI Engineer to support the design and delivery of AI-powered systems for our clients.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -448,12 +372,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "20/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
     "tags": [],
     "description_snippet": "En Teamcubation creemos que la tecnología transforma empresas, pero también transforma personas.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -467,12 +391,31 @@
     "is_remote": true,
     "salary": "EUR 25,000 - 30,000",
     "post_date": "04/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna",
     "tags": [],
     "description_snippet": "DescriptionContract hours: Full timeLocation: Remote (within 2 hours of London timezone) Salary: €25k - €30k depending on experience About AdzunaAdzuna is a job search engine that lists every job, everywhere.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "ai-native-software-engineer-early-career-europe",
+    "title": "AI-Native Software Engineer - Early Career - Europe",
+    "company": "ChainGPT",
+    "location": "Poland",
+    "job_url": "https://himalayas.app/companies/chaingpt/jobs/ai-native-software-engineer-early-career-europe",
+    "modality": "100% Remote",
+    "seniority": "Junior / Trainee / Internship",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "02/07/2026",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
+    "tags": [],
+    "description_snippet": "AI-Native Software Engineer - Early CareerLocation: Remote — global applications welcome; please apply via the region closest to you Company: ChainGPT Type: Full-TimeAbout ChainGPTChainGPT is a fast-moving Web3 and AI company building products at the intersection of blockchain infrastructure, token ecosystems, and intelligent automation.",
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -486,12 +429,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "24/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Tort%20Experts",
     "tags": [],
     "description_snippet": "About Tort Experts At Tort Experts, we are redefining the landscape of performance marketing in the legal sector.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -505,12 +448,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "28/06/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=PradeepIT%20Consulting%20Services%20Pvt",
     "tags": [],
     "description_snippet": "About PradeepITAccelerate your career with PradeepITPradeepIT is one of the largest, globally recognized IT Consulting firm to connect India's deeply vetted talent team to global customer.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -524,12 +467,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "01/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
     "tags": [],
     "description_snippet": "AI-Native Software Engineer - Early CareerLocation: Remote — global applications welcome; please apply via the region closest to you Company: ChainGPT Type: Full-TimeAbout ChainGPTChainGPT is a fast-moving Web3 and AI company building products at the intersection of blockchain infrastructure, token ecosystems, and intelligent automation.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -543,12 +486,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "24/06/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=SiliconCedars",
     "tags": [],
     "description_snippet": "This is a remote position. SiliconCedars offers 4-month internship in Artificial Intelligence, with a focus on Generative AI (GenAI) and Agentic AI, including hands-on projects and development using Python, LangChain, and LLM APIs.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -562,12 +505,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "29/06/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Scale",
     "tags": [],
     "description_snippet": "About the Program The Scale AI Technical Advisor Specialist (Part-Time Internship) role is a summer semester opportunity designed for university students, ideally with experience in competitive coding, mathematics, and STEM disciplines.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -581,12 +524,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "18/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=DataRobot",
     "tags": [],
     "description_snippet": "Job Description: DataRobot delivers AI that maximizes impact and minimizes business risk.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -600,12 +543,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "17/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=One%20Impression",
     "tags": [],
     "description_snippet": "About HexCodedHexCoded is an AI video studio: you should be able to make anything you can imagine.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -619,12 +562,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "19/06/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti",
     "tags": [],
     "description_snippet": "OverviewThe Generative AI Research Engineer Intern conducts primary and secondary research of advanced and emerging healthcare informatics technology with a focus on Generative AI and emerging Artificial General Intelligence technology for healthcare treatment, payment, and operations use cases.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -638,12 +581,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "08/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Sprinto",
     "tags": [],
     "description_snippet": "Sprinto is an AI-native GRC platform that helps organisations manage risks, audits, vendor oversight, and continuous monitoring from a single connected platform.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -657,12 +600,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "01/08/2026",
-    "company_score": "★ 3.0/5",
+    "company_score": "★ 3.0/5 (Teamlyzer)",
     "company_reviews": "58 Reviews",
     "teamlyzer_url": "https://pt.teamlyzer.com/companies/keyrus",
     "tags": [],
     "description_snippet": "🌟Join KEYRUS and transform the future with us!  🌟 Who are we?",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -676,12 +619,12 @@
     "is_remote": true,
     "salary": "USD 23.1 - 33.5",
     "post_date": "16/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Analytical%20Mechanics%20Associates%2C",
     "tags": [],
     "description_snippet": "Job Description: AMA is currently accepting applications for a Computer Science/Engineering intern to support work in our Hampton, VA location.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -695,12 +638,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "25/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti",
     "tags": [],
     "description_snippet": "OverviewThis internship centers on researching and developing advanced healthcare informatics solutions with a specialization in Agentic AI—AI systems capable of autonomous reasoning, decision-making, and goal-directed behavior.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -714,12 +657,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "04/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Drivetrain",
     "tags": [],
     "description_snippet": "Drivetrain is on a mission to empower businesses to make better decisions.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -733,12 +676,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "15/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Zebra%20Technologies",
     "tags": [],
     "description_snippet": "Overview:At Zebra, we are a community of innovators who come together to create new ways of working.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -752,12 +695,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "04/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders",
     "tags": [],
     "description_snippet": "AI is one of our top strategic priorities at Seven Senders, and we are serious about making it real.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -770,13 +713,13 @@
     "seniority": "Junior / Trainee / Internship",
     "is_remote": true,
     "salary": null,
-    "post_date": "19/06/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "post_date": "20/06/2026",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Peraton",
     "tags": [],
     "description_snippet": "ResponsibilitiesPeraton is seeking motivated Generative AI Engineering Interns (Graduate) supporting Internal Research and Development (IRAD) initiatives focused on AI/ML-driven platforms for Operations in the Information Environment (OIE).",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -790,12 +733,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "03/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=JWay%20Group%2C",
     "tags": [],
     "description_snippet": "AI Engineering & Product Innovation InternshipWork Arrangement: Remote About the RoleWe are offering a hands-on internship for students eager to explore the intersection of AI engineering, automation, and product innovation.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -809,12 +752,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "17/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Smule%2C",
     "tags": [],
     "description_snippet": "Smule has been on a mission to bring the world together through music since 2008.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -828,12 +771,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "14/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning",
     "tags": [],
     "description_snippet": "Cambium Learning® Group is an award-winning educational technology solutions leader dedicated to helping all students reach their potential through individualized and differentiated instruction.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -847,12 +790,12 @@
     "is_remote": true,
     "salary": "USD 112,700 - 169,000",
     "post_date": "01/07/2026",
-    "company_score": "★ 3.0/5",
-    "company_reviews": "0 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/unity",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Unity",
     "tags": [],
     "description_snippet": "The opportunity Unity Vector builds an offline ML platform that powers insight, experimentation, attribution, and AI-driven decision-making across the company.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -866,12 +809,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "23/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Ensemble%20Health%20Partners",
     "tags": [],
     "description_snippet": "Thank you for considering a career at Ensemble! Ensemble is a leading provider of technology-enabled revenue cycle management solutions for health systems, including hospitals and affiliated physician groups.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -885,12 +828,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "19/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=FlexiSAF%20Edusoft",
     "tags": [],
     "description_snippet": "This is a remote position. At FlexiSAF, we are passionate about reinventing learning, nurturing talent, and inspiring individuals to make positive career decisions.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -904,12 +847,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "10/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Cresta",
     "tags": [],
     "description_snippet": "Cresta unlocks the true potential of the customer experience, turning every conversation into a competitive advantage.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -923,12 +866,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "30/07/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations",
     "tags": [],
     "description_snippet": "Join Tether and Shape the Future of Digital Finance At Tether, we’re not just building products, we’re pioneering a global financial revolution.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -942,12 +885,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "16/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Overt%20Minds",
     "tags": [],
     "description_snippet": "This is a remote position. We are hiring smart, analytical freshers and early‑career engineers for a Junior AI & Data Engineer role.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "Himalayas",
@@ -961,12 +904,12 @@
     "is_remote": true,
     "salary": null,
     "post_date": "12/08/2026",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Swiftly",
     "tags": [],
     "description_snippet": "Swiftly is the AI platform purpose-built for retail, serving retailers, wholesalers, and brands.",
-    "fetched_at": "2026-08-18 01:57:29"
+    "fetched_at": "2026-08-18 02:01:03"
   },
   {
     "source": "RemoteOK",
@@ -980,9 +923,9 @@
     "is_remote": true,
     "salary": null,
     "post_date": "2026-07-28T20:34:39+00:00",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=HiredBuddy",
     "tags": [
       "testing",
       "education",
@@ -1023,6 +966,6 @@
       "internship"
     ],
     "description_snippet": null,
-    "fetched_at": "2026-08-18 01:57:30"
+    "fetched_at": "2026-08-18 02:01:04"
   }
 ]

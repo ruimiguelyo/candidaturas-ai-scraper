@@ -46,27 +46,36 @@ def generate_html_email(jobs: list) -> str:
                 "Arbeitnow": "#ea580c"
             }.get(source, "#475569")
 
-            # Teamlyzer Rating Badge
+            # Ranking Badge (Teamlyzer ou Glassdoor)
             score = j.get("company_score")
             reviews = j.get("company_reviews")
-            teamlyzer_url = j.get("teamlyzer_url")
+            ranking_url = j.get("teamlyzer_url")
 
-            if score and teamlyzer_url:
-                rating_badge = f"""
-                <a href="{teamlyzer_url}" target="_blank" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center;">
-                    {score} ({reviews}) ➔
-                </a>
-                """
+            if score and ranking_url:
+                if "teamlyzer" in ranking_url.lower():
+                    # Badge Dourado do Teamlyzer
+                    rating_badge = f"""
+                    <a href="{ranking_url}" target="_blank" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
+                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
+                    </a>
+                    """
+                else:
+                    # Badge Verde do Glassdoor
+                    rating_badge = f"""
+                    <a href="{ranking_url}" target="_blank" style="background-color: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-decoration: none; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
+                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
+                    </a>
+                    """
             elif score:
                 rating_badge = f"""
-                <span style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: bold; padding: 3px 8px; border-radius: 6px;">
+                <span style="background-color: #f1f5f9; color: #334155; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px;">
                     {score}
                 </span>
                 """
             else:
                 rating_badge = """
                 <span style="color: #94a3b8; font-size: 11px; font-style: italic;">
-                    Sem rating PT
+                    Sem rating
                 </span>
                 """
 
@@ -111,7 +120,7 @@ def generate_html_email(jobs: list) -> str:
         <div class="container">
             <div class="header">
                 <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">🎯 Relatório Diário de Vagas de IA</h1>
-                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">Exclusivo: <strong>Junior | Trainee | Internship</strong> (com Scores Teamlyzer)</p>
+                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">Exclusivo: <strong>Junior | Trainee | Internship</strong> (com Rankings Teamlyzer + Glassdoor)</p>
                 <div style="margin-top: 14px; display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 14px; border-radius: 20px; font-size: 13px;">
                     ✨ <strong>{total_jobs} vagas qualificadas</strong> encontradas em {now_str}
                 </div>
@@ -128,7 +137,7 @@ def generate_html_email(jobs: list) -> str:
 
             <div class="footer">
                 <p>Relatório gerado automaticamente pelo teu <strong>AI Job Aggregator</strong> no GitHub Actions.</p>
-                <p>Scores e avaliações cruzados com o <strong>Teamlyzer Portugal</strong>.</p>
+                <p>Rankings e reviews cruzados via <strong>Teamlyzer Portugal</strong> (empresas nacionais) e <strong>Glassdoor Global</strong> (empresas internacionais).</p>
                 <p>Ficheiro CSV completo anexado a este email.</p>
             </div>
         </div>
@@ -161,7 +170,7 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
         print("Aviso: Nenhuma vaga encontrada hoje para envio de email.")
         return
 
-    subject = f"🎯 [Vagas IA] {len(jobs)} Novas Vagas Junior/Trainee (com Reviews) - {datetime.now().strftime('%d/%m/%Y')}"
+    subject = f"🎯 [Vagas IA] {len(jobs)} Novas Vagas Junior/Trainee (Rankings Teamlyzer + Glassdoor) - {datetime.now().strftime('%d/%m/%Y')}"
     html_content = generate_html_email(jobs)
 
     msg = MIMEMultipart("mixed")
@@ -192,7 +201,7 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
         server.login(smtp_user, smtp_pass)
         server.send_message(msg)
         server.quit()
-        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas e scores Teamlyzer!")
+        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas e scores Teamlyzer/Glassdoor!")
     except Exception as e:
         print(f"Erro ao enviar email via SMTP: {e}")
 
