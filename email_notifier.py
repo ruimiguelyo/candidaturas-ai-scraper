@@ -24,7 +24,7 @@ def generate_html_email(jobs: list) -> str:
         title = j.get("title", "").lower()
         mod = j.get("modality", "").lower()
 
-        if "lisbon" in loc or "lisboa" in loc or "oeiras" in loc:
+        if "lisbon" in loc or "lisboa" in loc or "oeiras" in loc or "albarraque" in loc:
             lisbon_jobs.append(j)
         elif "remote" in mod or "remoto" in mod or "100% remote" in loc:
             remote_jobs.append(j)
@@ -46,6 +46,30 @@ def generate_html_email(jobs: list) -> str:
                 "Arbeitnow": "#ea580c"
             }.get(source, "#475569")
 
+            # Teamlyzer Rating Badge
+            score = j.get("company_score")
+            reviews = j.get("company_reviews")
+            teamlyzer_url = j.get("teamlyzer_url")
+
+            if score and teamlyzer_url:
+                rating_badge = f"""
+                <a href="{teamlyzer_url}" target="_blank" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center;">
+                    {score} ({reviews}) ➔
+                </a>
+                """
+            elif score:
+                rating_badge = f"""
+                <span style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: bold; padding: 3px 8px; border-radius: 6px;">
+                    {score}
+                </span>
+                """
+            else:
+                rating_badge = """
+                <span style="color: #94a3b8; font-size: 11px; font-style: italic;">
+                    Sem rating PT
+                </span>
+                """
+
             cards_html += f"""
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
@@ -55,11 +79,12 @@ def generate_html_email(jobs: list) -> str:
                     </div>
                     <span style="color: #94a3b8; font-size: 12px;">{j.get('post_date') or 'Recente'}</span>
                 </div>
-                <h3 style="margin: 8px 0 4px 0; font-size: 17px; color: #0f172a; font-weight: 700;">{j.get('title')}</h3>
-                <p style="margin: 0 0 12px 0; color: #475569; font-size: 14px;">
-                    <strong>Empresa:</strong> <span style="color: #10b981; font-weight: 600;">{j.get('company')}</span> | 
-                    <strong>Local:</strong> {j.get('location')}
-                </p>
+                <h3 style="margin: 8px 0 6px 0; font-size: 17px; color: #0f172a; font-weight: 700;">{j.get('title')}</h3>
+                <div style="margin: 0 0 12px 0; color: #475569; font-size: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+                    <span><strong>Empresa:</strong> <span style="color: #0f172a; font-weight: 600;">{j.get('company')}</span></span>
+                    <span>{rating_badge}</span>
+                    <span>• <strong>Local:</strong> {j.get('location')}</span>
+                </div>
                 <div style="text-align: right; margin-top: 10px;">
                     <a href="{j.get('job_url')}" target="_blank" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; display: inline-block;">
                         Ver Vaga & Candidatar ➔
@@ -86,7 +111,7 @@ def generate_html_email(jobs: list) -> str:
         <div class="container">
             <div class="header">
                 <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">🎯 Relatório Diário de Vagas de IA</h1>
-                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">Exclusivo: <strong>Junior | Trainee | Internship</strong></p>
+                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">Exclusivo: <strong>Junior | Trainee | Internship</strong> (com Scores Teamlyzer)</p>
                 <div style="margin-top: 14px; display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 14px; border-radius: 20px; font-size: 13px;">
                     ✨ <strong>{total_jobs} vagas qualificadas</strong> encontradas em {now_str}
                 </div>
@@ -103,7 +128,8 @@ def generate_html_email(jobs: list) -> str:
 
             <div class="footer">
                 <p>Relatório gerado automaticamente pelo teu <strong>AI Job Aggregator</strong> no GitHub Actions.</p>
-                <p>Ficheiro CSV com a lista completa anexado a este email.</p>
+                <p>Scores e avaliações cruzados com o <strong>Teamlyzer Portugal</strong>.</p>
+                <p>Ficheiro CSV completo anexado a este email.</p>
             </div>
         </div>
     </body>
@@ -135,7 +161,7 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
         print("Aviso: Nenhuma vaga encontrada hoje para envio de email.")
         return
 
-    subject = f"🎯 [Vagas IA] {len(jobs)} Novas Vagas Junior/Trainee - {datetime.now().strftime('%d/%m/%Y')}"
+    subject = f"🎯 [Vagas IA] {len(jobs)} Novas Vagas Junior/Trainee (com Reviews) - {datetime.now().strftime('%d/%m/%Y')}"
     html_content = generate_html_email(jobs)
 
     msg = MIMEMultipart("mixed")
@@ -166,7 +192,7 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
         server.login(smtp_user, smtp_pass)
         server.send_message(msg)
         server.quit()
-        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas!")
+        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas e scores Teamlyzer!")
     except Exception as e:
         print(f"Erro ao enviar email via SMTP: {e}")
 

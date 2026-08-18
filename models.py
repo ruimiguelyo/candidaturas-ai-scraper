@@ -14,6 +14,9 @@ class JobPost(BaseModel):
     is_remote: bool = False
     salary: Optional[str] = None
     post_date: Optional[str] = None
+    company_score: Optional[str] = None        # Ex: "★ 3.5/5"
+    company_reviews: Optional[str] = None      # Ex: "144 Reviews"
+    teamlyzer_url: Optional[str] = None        # Link direto para as reviews no Teamlyzer
     tags: List[str] = Field(default_factory=list)
     description_snippet: Optional[str] = None
     fetched_at: str = Field(default_factory=lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))

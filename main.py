@@ -24,6 +24,7 @@ from scrapers.itjobs import ITJobsScraper
 from scrapers.jobicy import JobicyScraper
 from scrapers.landing_jobs import LandingJobsScraper
 from filter_engine import JobFilterEngine
+from company_ranker import CompanyRanker
 from email_notifier import send_daily_email
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -108,6 +109,9 @@ class AIJobPipeline:
                 seen_keys.add(key)
                 strictly_filtered.append(valid_job)
 
+        console.print("[yellow]A cruzar empresas em paralelo com o ranking e reviews do Teamlyzer...[/yellow]")
+        await CompanyRanker.enrich_jobs_async(strictly_filtered)
+
         console.print(f"[bold green]Total de vagas 100% Junior / Trainee / Internship confirmadas:[/bold green] {len(strictly_filtered)}\n")
         return strictly_filtered
 
@@ -117,19 +121,22 @@ class AIJobPipeline:
             return
 
         table = Table(title="VAGAS: JUNIOR / TRAINEE / INTERNSHIP EM IA & ML", show_lines=True)
-        table.add_column("Fonte", style="cyan", width=12)
-        table.add_column("Título do Cargo", style="bold white", width=34)
-        table.add_column("Empresa", style="green", width=20)
-        table.add_column("Localização", style="magenta", width=20)
-        table.add_column("Regime", style="yellow", width=12)
-        table.add_column("Link de Candidatura", style="blue", width=42)
+        table.add_column("Fonte", style="cyan", width=10)
+        table.add_column("Título do Cargo", style="bold white", width=30)
+        table.add_column("Empresa", style="green", width=18)
+        table.add_column("Score Teamlyzer", style="bold yellow", width=16)
+        table.add_column("Localização", style="magenta", width=18)
+        table.add_column("Regime", style="yellow", width=10)
+        table.add_column("Link de Candidatura", style="blue", width=36)
 
         data_rows = []
         for j in jobs:
+            score_display = f"{j.company_score} ({j.company_reviews})" if j.company_score else "Sem rating PT"
             table.add_row(
                 j.source,
                 j.title,
                 j.company,
+                score_display,
                 j.location,
                 j.modality,
                 j.job_url
@@ -147,8 +154,8 @@ class AIJobPipeline:
         with open(json_filename, "w", encoding="utf-8") as f:
             json.dump(data_rows, f, ensure_ascii=False, indent=2)
 
-        console.print(f"\n[bold green]Ficheiro atualizado:[/bold green] {csv_filename}")
-        console.print(f"[bold green]Ficheiro atualizado:[/bold green] {json_filename}")
+        console.print(f"\n[bold green]Ficheiro atualizado com scores:[/bold green] {csv_filename}")
+        console.print(f"[bold green]Ficheiro atualizado com scores:[/bold green] {json_filename}")
 
         # Disparo de Email Notifier se configurado
         send_daily_email(json_filename, csv_filename)
