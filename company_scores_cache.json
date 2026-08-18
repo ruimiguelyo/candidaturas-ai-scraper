@@ -1,0 +1,758 @@
+{
+  "cloudflare": {
+    "score": "4.2/5",
+    "numeric": 4.2,
+    "platform": "Teamlyzer",
+    "reviews": "16 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/cloudflare"
+  },
+  "fujitsu": {
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "platform": "Teamlyzer",
+    "reviews": "110 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/fujitsu"
+  },
+  "fujitsuportugal": {
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "platform": "Teamlyzer",
+    "reviews": "110 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/fujitsu"
+  },
+  "innowave": {
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "platform": "Teamlyzer",
+    "reviews": "147 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/innowave-technologies"
+  },
+  "innowavetechnologies": {
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "platform": "Teamlyzer",
+    "reviews": "147 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/innowave-technologies"
+  },
+  "volkswagen": {
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "platform": "Teamlyzer",
+    "reviews": "144 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions"
+  },
+  "volkswagengroup": {
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "platform": "Teamlyzer",
+    "reviews": "144 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions"
+  },
+  "santander": {
+    "score": "3.2/5",
+    "numeric": 3.2,
+    "platform": "Teamlyzer",
+    "reviews": "45 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/santander-totta"
+  },
+  "bancosantander": {
+    "score": "3.2/5",
+    "numeric": 3.2,
+    "platform": "Teamlyzer",
+    "reviews": "45 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/santander-totta"
+  },
+  "nordea": {
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "platform": "Teamlyzer",
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/nordea-asset-management"
+  },
+  "nordeaassetmanagement": {
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "platform": "Teamlyzer",
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/nordea-asset-management"
+  },
+  "nordeaassetmanagementportugal": {
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "platform": "Teamlyzer",
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/nordea-asset-management"
+  },
+  "mckinsey": {
+    "score": "3.3/5",
+    "numeric": 3.3,
+    "platform": "Teamlyzer",
+    "reviews": "17 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/mckinsey-company"
+  },
+  "mckinseycompany": {
+    "score": "3.3/5",
+    "numeric": 3.3,
+    "platform": "Teamlyzer",
+    "reviews": "17 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/mckinsey-company"
+  },
+  "havi": {
+    "score": "3.6/5",
+    "numeric": 3.6,
+    "platform": "Teamlyzer",
+    "reviews": "8 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/havi-portugal"
+  },
+  "havitechhub": {
+    "score": "3.6/5",
+    "numeric": 3.6,
+    "platform": "Teamlyzer",
+    "reviews": "8 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/havi-portugal"
+  },
+  "feedzai": {
+    "score": "3.4/5",
+    "numeric": 3.4,
+    "platform": "Teamlyzer",
+    "reviews": "121 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/feedzai"
+  },
+  "criticaltechworks": {
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "platform": "Teamlyzer",
+    "reviews": "641 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/critical-techworks"
+  },
+  "criticalsoftware": {
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "platform": "Teamlyzer",
+    "reviews": "120 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/critical-software"
+  },
+  "revolut": {
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "platform": "Teamlyzer",
+    "reviews": "54 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/revolut"
+  },
+  "ceiia": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Teamlyzer",
+    "reviews": "18 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/ceiia"
+  },
+  "zendesk": {
+    "score": "4.0/5",
+    "numeric": 4.0,
+    "platform": "Teamlyzer",
+    "reviews": "8 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/zendesk"
+  },
+  "euronext": {
+    "score": "3.9/5",
+    "numeric": 3.9,
+    "platform": "Teamlyzer",
+    "reviews": "15 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/euronext"
+  },
+  "philipmorris": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Teamlyzer",
+    "reviews": "15 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/tabaqueira"
+  },
+  "philipmorrisinternational": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Teamlyzer",
+    "reviews": "15 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/tabaqueira"
+  },
+  "alten": {
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "platform": "Teamlyzer",
+    "reviews": "20 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/alten"
+  },
+  "outsystems": {
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "platform": "Teamlyzer",
+    "reviews": "48 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/outsystems"
+  },
+  "talkdesk": {
+    "score": "3.6/5",
+    "numeric": 3.6,
+    "platform": "Teamlyzer",
+    "reviews": "142 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/talkdesk"
+  },
+  "primeit": {
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "platform": "Teamlyzer",
+    "reviews": "568 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/prime-it"
+  },
+  "siemens": {
+    "score": "3.6/5",
+    "numeric": 3.6,
+    "platform": "Teamlyzer",
+    "reviews": "65 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/siemens-sa"
+  },
+  "bosch": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Teamlyzer",
+    "reviews": "110 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/bosch-portugal"
+  },
+  "mindera": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Teamlyzer",
+    "reviews": "95 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/mindera"
+  },
+  "blip": {
+    "score": "3.9/5",
+    "numeric": 3.9,
+    "platform": "Teamlyzer",
+    "reviews": "115 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/blip"
+  },
+  "google": {
+    "score": "4.4/5",
+    "numeric": 4.4,
+    "platform": "Teamlyzer",
+    "reviews": "5 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/google"
+  },
+  "microsoft": {
+    "score": "4.3/5",
+    "numeric": 4.3,
+    "platform": "Teamlyzer",
+    "reviews": "12 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/microsoft"
+  },
+  "datadog": {
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "platform": "Teamlyzer",
+    "reviews": "4 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/datadog"
+  },
+  "cisco": {
+    "score": "4.0/5",
+    "numeric": 4.0,
+    "platform": "Teamlyzer",
+    "reviews": "18 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/cisco"
+  },
+  "nokia": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Teamlyzer",
+    "reviews": "45 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/nokia"
+  },
+  "sevensenders": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Glassdoor",
+    "reviews": "40 Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
+  },
+  "sevensendersgmbh": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Glassdoor",
+    "reviews": "40 Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seven%20Senders"
+  },
+  "peraton": {
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "platform": "Glassdoor",
+    "reviews": "1.7k Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Peraton"
+  },
+  "stripe": {
+    "score": "4.2/5",
+    "numeric": 4.2,
+    "platform": "Glassdoor",
+    "reviews": "1.8k Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Stripe"
+  },
+  "cresta": {
+    "score": "4.2/5",
+    "numeric": 4.2,
+    "platform": "Glassdoor",
+    "reviews": "90 Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cresta"
+  },
+  "datarobot": {
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "platform": "Glassdoor",
+    "reviews": "576 Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=DataRobot"
+  },
+  "tensorops": {
+    "score": "4.4/5",
+    "numeric": 4.4,
+    "platform": "Glassdoor",
+    "reviews": "Glassdoor Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=TensorOps"
+  },
+  "policyme": {
+    "score": "4.3/5",
+    "numeric": 4.3,
+    "platform": "Glassdoor",
+    "reviews": "39 Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=PolicyMe"
+  },
+  "chaingpt": {
+    "score": "4.3/5",
+    "numeric": 4.3,
+    "platform": "Glassdoor",
+    "reviews": "Glassdoor Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT"
+  },
+  "unity": {
+    "score": "3.9/5",
+    "numeric": 3.9,
+    "platform": "Glassdoor",
+    "reviews": "2.4k Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Unity%20Technologies"
+  },
+  "scaleai": {
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "platform": "Glassdoor",
+    "reviews": "850 Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Scale%20AI"
+  },
+  "tether": {
+    "score": "4.0/5",
+    "numeric": 4.0,
+    "platform": "Glassdoor",
+    "reviews": "Glassdoor Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
+  },
+  "tetheroperationslimited": {
+    "score": "4.0/5",
+    "numeric": 4.0,
+    "platform": "Glassdoor",
+    "reviews": "Glassdoor Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
+  },
+  "zebratechnologies": {
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "platform": "Glassdoor",
+    "reviews": "3.8k Reviews",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zebra%20Technologies"
+  },
+  "tortexperts": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tort%20Experts"
+  },
+  "agilityfeat": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=AgilityFeat"
+  },
+  "sprinto": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sprinto"
+  },
+  "brightenconsulting": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Brighten%20Consulting"
+  },
+  "cotiviti": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti"
+  },
+  "csg": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=CSG"
+  },
+  "xpertdevelopment": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Xpert%20Development"
+  },
+  "rupenetpayments": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Rupenet%20Payments"
+  },
+  "projectx": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Project%20X"
+  },
+  "seekatechnology": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seeka%20Technology"
+  },
+  "keyrus": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Keyrus"
+  },
+  "kgstechnologygroupinc": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=KGS%20Technology%20Group"
+  },
+  "siliconcedars": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=SiliconCedars"
+  },
+  "waymark": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Waymark"
+  },
+  "teamcubation": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation"
+  },
+  "adzuna": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna"
+  },
+  "crossjoinsolutions": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Crossjoin%20Solutions"
+  },
+  "menaalliances": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=MENA%20Alliances"
+  },
+  "skillonnet": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=SkillOnNet"
+  },
+  "havocai": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=HavocAI"
+  },
+  "look4it": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT"
+  },
+  "criticalmanufacturing": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Critical%20Manufacturing"
+  },
+  "ritual": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Ritual"
+  },
+  "flexisafedusoft": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=FlexiSAF%20Edusoft"
+  },
+  "freelancerprox": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Freelancerprox"
+  },
+  "pavebank": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Pavebank"
+  },
+  "colibridigital": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Colibri%20Digital"
+  },
+  "careerswift": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Careerswift"
+  },
+  "cisive": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cisive"
+  },
+  "lumion": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Lumion"
+  },
+  "experian": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Experian"
+  },
+  "dellent": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dellent"
+  },
+  "softwaremind": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Software%20Mind"
+  },
+  "parvana": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Parvana"
+  },
+  "grupoclave": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Clave"
+  },
+  "oneimpression": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=One%20Impression"
+  },
+  "teladochealth": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teladoc%20Health"
+  },
+  "jwaygroupinc": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=JWay%20Group%2C"
+  },
+  "drivetrain": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Drivetrain"
+  },
+  "innovationengineeringhub": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Innovation%20and%20Engineering%20HUB"
+  },
+  "smuleinc": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Smule%2C"
+  },
+  "hiredbuddy": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=HiredBuddy"
+  },
+  "ensemblehealthpartners": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Ensemble%20Health%20Partners"
+  },
+  "corinthiancapital": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Corinthian%20Capital"
+  },
+  "cambiumlearninggroup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cambium%20Learning"
+  },
+  "pradeepitconsultingservicespvtltd": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=PradeepIT%20Consulting%20Services%20Pvt"
+  },
+  "kitro": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO"
+  },
+  "overtminds": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Overt%20Minds"
+  },
+  "accesspay": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=AccessPay"
+  },
+  "clarityai": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Clarity%20AI"
+  },
+  "phygtlinc": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Phygtl%2C"
+  },
+  "analyticalmechanicsassociatesinc": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Analytical%20Mechanics%20Associates%2C"
+  },
+  "swiftly": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Swiftly"
+  },
+  "caixamgicasoftware": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Caixa%20M%C3%A1gica%20Software"
+  },
+  "scale": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Scale"
+  },
+  "entando": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Entando"
+  }
+}
