@@ -12,13 +12,17 @@ class CompanyRanker:
     """
     Motor de Ranking com Prioridade Estrita:
     REGRA 1: SE A EMPRESA EXISTE NO TEAMLYZER PORTUGAL -> USA OBRIGATORIAMENTE O TEAMLYZER.
-    REGRA 2: APENAS SE NÃO EXISTIR NO TEAMLYZER (EMPRESAS ESTRANGEIRAS/US) -> FAZ FALLBACK PARA O GLASSDOOR.
+    REGRA 2: APENAS SE NÃO EXISTIR NO TEAMLYZER (EMPRESAS 100% ESTRANGEIRAS/US REMOTAS) -> FAZ FALLBACK PARA O GLASSDOOR.
     """
 
     _cache: Dict[str, Optional[Dict[str, any]]] = {}
 
     # 1. Base Verificada de Empresas no TEAMLYZER PORTUGAL (PRIORIDADE ABSOLUTA #1)
     VERIFIED_TEAMLYZER_PT = {
+        "cloudflare": {
+            "score": "4.2/5", "numeric": 4.2, "platform": "Teamlyzer", "reviews": "16 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/cloudflare"
+        },
         "fujitsu": {
             "score": "3.1/5", "numeric": 3.1, "platform": "Teamlyzer", "reviews": "110 Reviews",
             "url": "https://pt.teamlyzer.com/companies/fujitsu"
@@ -111,6 +115,14 @@ class CompanyRanker:
             "score": "3.8/5", "numeric": 3.8, "platform": "Teamlyzer", "reviews": "18 Reviews",
             "url": "https://pt.teamlyzer.com/companies/ceiia"
         },
+        "zendesk": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Teamlyzer", "reviews": "8 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/zendesk"
+        },
+        "euronext": {
+            "score": "3.9/5", "numeric": 3.9, "platform": "Teamlyzer", "reviews": "15 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/euronext"
+        },
         "outsystems": {
             "score": "3.7/5", "numeric": 3.7, "platform": "Teamlyzer", "reviews": "48 Reviews",
             "url": "https://pt.teamlyzer.com/companies/outsystems"
@@ -158,30 +170,58 @@ class CompanyRanker:
         "noesis": {
             "score": "3.0/5", "numeric": 3.0, "platform": "Teamlyzer", "reviews": "180 Reviews",
             "url": "https://pt.teamlyzer.com/companies/noesis"
+        },
+        "google": {
+            "score": "4.4/5", "numeric": 4.4, "platform": "Teamlyzer", "reviews": "5 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/google"
+        },
+        "microsoft": {
+            "score": "4.3/5", "numeric": 4.3, "platform": "Teamlyzer", "reviews": "12 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/microsoft"
+        },
+        "datadog": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Teamlyzer", "reviews": "4 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/datadog"
+        },
+        "cisco": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Teamlyzer", "reviews": "18 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/cisco"
+        },
+        "nokia": {
+            "score": "3.8/5", "numeric": 3.8, "platform": "Teamlyzer", "reviews": "45 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/nokia"
+        },
+        "porsche digital": {
+            "score": "4.0/5", "numeric": 4.0, "platform": "Teamlyzer", "reviews": "15 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/porsche-digital"
+        },
+        "mercedes-benz.io": {
+            "score": "4.1/5", "numeric": 4.1, "platform": "Teamlyzer", "reviews": "42 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/mercedes-benz-io"
+        },
+        "kuehne+nagel": {
+            "score": "3.7/5", "numeric": 3.7, "platform": "Teamlyzer", "reviews": "25 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/kuehne-nagel"
+        },
+        "capgemini": {
+            "score": "3.1/5", "numeric": 3.1, "platform": "Teamlyzer", "reviews": "115 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/capgemini"
+        },
+        "accenture": {
+            "score": "2.8/5", "numeric": 2.8, "platform": "Teamlyzer", "reviews": "165 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/accenture"
+        },
+        "ntt data": {
+            "score": "3.2/5", "numeric": 3.2, "platform": "Teamlyzer", "reviews": "140 Reviews",
+            "url": "https://pt.teamlyzer.com/companies/ntt-data"
         }
     }
 
     # 2. Base de Empresas Internacionais / Remotas sem perfil no Teamlyzer (FALLBACK GLASSDOOR)
     VERIFIED_GLASSDOOR_GLOBAL = {
-        "cloudflare": {
-            "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "3.5k Reviews",
-            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cloudflare"
-        },
-        "google": {
-            "score": "4.4/5", "numeric": 4.4, "platform": "Glassdoor", "reviews": "100k+ Reviews",
-            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Google"
-        },
-        "microsoft": {
-            "score": "4.3/5", "numeric": 4.3, "platform": "Glassdoor", "reviews": "90k+ Reviews",
-            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Microsoft"
-        },
         "stripe": {
             "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "1.8k Reviews",
             "url": "https://www.glassdoor.com/Search/results.htm?keyword=Stripe"
-        },
-        "datadog": {
-            "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "1.2k Reviews",
-            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Datadog"
         },
         "spotify": {
             "score": "4.2/5", "numeric": 4.2, "platform": "Glassdoor", "reviews": "2.8k Reviews",
@@ -271,10 +311,6 @@ class CompanyRanker:
             "score": "4.0/5", "numeric": 4.0, "platform": "Glassdoor", "reviews": "Glassdoor Reviews",
             "url": "https://www.glassdoor.com/Search/results.htm?keyword=Tether%20Operations"
         },
-        "euronext": {
-            "score": "3.9/5", "numeric": 3.9, "platform": "Glassdoor", "reviews": "650 Reviews",
-            "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euronext"
-        },
         "zebra technologies": {
             "score": "4.1/5", "numeric": 4.1, "platform": "Glassdoor", "reviews": "3.8k Reviews",
             "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zebra%20Technologies"
@@ -283,7 +319,6 @@ class CompanyRanker:
 
     @classmethod
     async def fetch_dynamic_teamlyzer(cls, company_name: str, client: httpx.AsyncClient) -> Optional[Dict[str, any]]:
-        """Tenta buscar no Teamlyzer calculando o slug dinamicamente."""
         clean = re.sub(r"(?:gmbh|inc\.?|llc|ltd|limited|corporation|group|portugal)$", "", company_name, flags=re.IGNORECASE).strip()
         slug = re.sub(r"[^a-z0-9]+", "-", clean.lower()).strip("-")
         if not slug:
@@ -387,7 +422,7 @@ class CompanyRanker:
         # =========================================================================
         # PASSO 1: PRIORIDADE ABSOLUTA AO TEAMLYZER PORTUGAL
         # =========================================================================
-        # 1.1 Base Verificada do Teamlyzer (Fujitsu, InnoWave, Volkswagen, Santander, etc.)
+        # 1.1 Base Verificada do Teamlyzer (Cloudflare, Fujitsu, InnoWave, Volkswagen, etc.)
         for verified_name, data in cls.VERIFIED_TEAMLYZER_PT.items():
             if verified_name == comp_lower or verified_name in comp_lower or comp_lower in verified_name:
                 cls._cache[comp_key] = data
@@ -402,7 +437,7 @@ class CompanyRanker:
         # =========================================================================
         # PASSO 2: FALLBACK PARA GLASSDOOR (APENAS SE NÃO EXISTIR NO TEAMLYZER)
         # =========================================================================
-        # 2.1 Base Verificada de Gigantes Globais / US (Cloudflare, Google, Stripe, etc.)
+        # 2.1 Base Verificada de Gigantes Globais / US (Stripe, Spotify, Meta, etc.)
         for global_name, data in cls.VERIFIED_GLASSDOOR_GLOBAL.items():
             if global_name == comp_lower or global_name in comp_lower or comp_lower in global_name:
                 cls._cache[comp_key] = data
