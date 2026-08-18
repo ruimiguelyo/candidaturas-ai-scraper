@@ -41,29 +41,30 @@ class AIJobPipeline:
         self.landing_jobs = LandingJobsScraper()
 
     async def run(self) -> List[JobPost]:
-        console.print("[bold cyan]>>> A recolher vagas Junior / Trainee / Internship (LinkedIn, Landing.jobs, Himalayas, ITJobs, Jobicy, Arbeitnow, RemoteOK)...[/bold cyan]\n")
+        console.print("[bold cyan]>>> A recolher vagas Junior / Trainee / Internship (IA/ML + Software Engineering em Top Tech)...[/bold cyan]\n")
 
         tasks = [
-            # 1. LinkedIn Portugal & Remote
+            # 1. LinkedIn Portugal (IA/ML + Top Tech Internships)
             self.linkedin.fetch("Junior AI Engineer", "Portugal", total_wanted=30),
             self.linkedin.fetch("Junior Machine Learning Engineer", "Portugal", total_wanted=30),
             self.linkedin.fetch("AI Intern", "Portugal", total_wanted=30),
             self.linkedin.fetch("AI Internship", "Portugal", total_wanted=30),
             self.linkedin.fetch("Machine Learning Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Machine Learning Trainee", "Portugal", total_wanted=30),
             self.linkedin.fetch("Gen AI Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("AI Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Estágio Inteligência Artificial", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Estágio Machine Learning", "Portugal", total_wanted=30),
             self.linkedin.fetch("Junior Data Scientist", "Portugal", total_wanted=30),
             self.linkedin.fetch("Data Science Intern", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Software Engineer Intern", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Software Engineering Intern", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Systems Engineer Intern", "Portugal", total_wanted=30),
+            self.linkedin.fetch("Junior Software Engineer", "Portugal", total_wanted=30),
             self.linkedin.fetch("Junior AI", "Lisbon, Portugal", total_wanted=30),
-            self.linkedin.fetch("AI Intern", "Lisbon, Portugal", total_wanted=30),
+            self.linkedin.fetch("Software Intern", "Lisbon, Portugal", total_wanted=30),
 
             # 2. Landing.jobs (Portugal Tech Hub)
             self.landing_jobs.fetch("ai", limit=30),
             self.landing_jobs.fetch("machine learning", limit=30),
-            self.landing_jobs.fetch("junior", limit=30),
+            self.landing_jobs.fetch("junior software", limit=30),
+            self.landing_jobs.fetch("intern", limit=30),
 
             # 3. ITJobs Portugal
             self.itjobs.fetch("junior", limit=50),
@@ -74,16 +75,18 @@ class AIJobPipeline:
             self.himalayas.fetch("Junior AI", limit=40),
             self.himalayas.fetch("AI Intern", limit=40),
             self.himalayas.fetch("Machine Learning Intern", limit=40),
-            self.himalayas.fetch("Junior Machine Learning", limit=40),
+            self.himalayas.fetch("Software Engineer Intern", limit=40),
+            self.himalayas.fetch("Junior Software Engineer", limit=40),
             self.himalayas.fetch("Junior Data", limit=40),
 
             # 5. Jobicy (Remote)
             self.jobicy.fetch("ai", count=30),
-            self.jobicy.fetch("data", count=30),
+            self.jobicy.fetch("software engineer", count=30),
+            self.jobicy.fetch("intern", count=30),
 
             # 6. Arbeitnow & RemoteOK
             self.arbeitnow.fetch("junior machine learning", limit=40),
-            self.arbeitnow.fetch("ai intern", limit=40),
+            self.arbeitnow.fetch("software engineer intern", limit=40),
             self.remoteok.fetch("intern", limit=40),
             self.remoteok.fetch("junior", limit=40)
         ]
@@ -95,48 +98,67 @@ class AIJobPipeline:
             if isinstance(res, list):
                 all_jobs.extend(res)
 
-        # Filtragem Estrita
+        # Pré-filtro: Deduplicação e separação
         seen_keys = set()
-        strictly_filtered: List[JobPost] = []
+        candidates: List[JobPost] = []
 
         for job in all_jobs:
-            valid_job = JobFilterEngine.filter_job(job)
-            if not valid_job:
+            filter_res = JobFilterEngine.pre_filter_job(job)
+            if not filter_res:
                 continue
 
+            valid_job, domain_type = filter_res
             key = valid_job.deduplication_key()
             if key not in seen_keys:
                 seen_keys.add(key)
-                strictly_filtered.append(valid_job)
+                candidates.append(valid_job)
 
-        console.print("[yellow]A cruzar empresas em paralelo com o ranking e reviews do Teamlyzer...[/yellow]")
-        await CompanyRanker.enrich_jobs_async(strictly_filtered)
+        # Cruzamento assíncrono com Teamlyzer e Glassdoor
+        console.print("[yellow]A cruzar empresas em paralelo com scores do Teamlyzer e Glassdoor...[/yellow]")
+        await CompanyRanker.enrich_jobs_async(candidates)
 
-        console.print(f"[bold green]Total de vagas 100% Junior / Trainee / Internship confirmadas:[/bold green] {len(strictly_filtered)}\n")
-        return strictly_filtered
+        # Regra de Elegibilidade:
+        # - Vagas de IA/ML: Entram sempre (desde que Junior/Trainee/Intern)
+        # - Vagas de Software Engineering Geral: Entram APENAS se o rating da empresa for >= 3.1
+        final_jobs: List[JobPost] = []
+        for job in candidates:
+            if job.category == "AI / ML":
+                final_jobs.append(job)
+            elif job.category == "Top-Tier Software Engineering":
+                if job.rating_score >= 3.1:
+                    final_jobs.append(job)
+                else:
+                    # Ignora vagas de SWE geral de empresas com rating < 3.1 ou desconhecidas
+                    continue
+
+        # ORDENAÇÃO: Da empresa com MAIOR rating (ex: 4.4, 4.2, 3.7) até à menor / sem rating
+        final_jobs.sort(key=lambda x: (x.rating_score, x.company), reverse=True)
+
+        console.print(f"[bold green]Total de vagas qualificadas (Ordenadas por Rating):[/bold green] {len(final_jobs)}\n")
+        return final_jobs
 
     def export_and_display(self, jobs: List[JobPost]):
         if not jobs:
-            console.print("[yellow]Nenhuma vaga passou pelo filtro estrito nesta execução.[/yellow]")
+            console.print("[yellow]Nenhuma vaga passou pelo filtro nesta execução.[/yellow]")
             return
 
-        table = Table(title="VAGAS: JUNIOR / TRAINEE / INTERNSHIP EM IA & ML", show_lines=True)
-        table.add_column("Fonte", style="cyan", width=10)
-        table.add_column("Título do Cargo", style="bold white", width=30)
+        table = Table(title="VAGAS QUALIFICADAS (ORDENADAS POR RATING DE EMPRESA)", show_lines=True)
+        table.add_column("Score", style="bold yellow", width=16)
         table.add_column("Empresa", style="green", width=18)
-        table.add_column("Score Teamlyzer", style="bold yellow", width=16)
+        table.add_column("Título do Cargo", style="bold white", width=30)
+        table.add_column("Categoria", style="cyan", width=12)
         table.add_column("Localização", style="magenta", width=18)
         table.add_column("Regime", style="yellow", width=10)
         table.add_column("Link de Candidatura", style="blue", width=36)
 
         data_rows = []
         for j in jobs:
-            score_display = f"{j.company_score} ({j.company_reviews})" if j.company_score else "Sem rating PT"
+            score_display = f"{j.company_score} ({j.company_reviews})" if j.company_score else "Sem rating"
             table.add_row(
-                j.source,
-                j.title,
-                j.company,
                 score_display,
+                j.company,
+                j.title,
+                j.category,
                 j.location,
                 j.modality,
                 j.job_url
@@ -154,8 +176,8 @@ class AIJobPipeline:
         with open(json_filename, "w", encoding="utf-8") as f:
             json.dump(data_rows, f, ensure_ascii=False, indent=2)
 
-        console.print(f"\n[bold green]Ficheiro atualizado com scores:[/bold green] {csv_filename}")
-        console.print(f"[bold green]Ficheiro atualizado com scores:[/bold green] {json_filename}")
+        console.print(f"\n[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {csv_filename}")
+        console.print(f"[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {json_filename}")
 
         # Disparo de Email Notifier se configurado
         send_daily_email(json_filename, csv_filename)

@@ -14,9 +14,11 @@ class JobPost(BaseModel):
     is_remote: bool = False
     salary: Optional[str] = None
     post_date: Optional[str] = None
-    company_score: Optional[str] = None        # Ex: "★ 3.5/5"
-    company_reviews: Optional[str] = None      # Ex: "144 Reviews"
-    teamlyzer_url: Optional[str] = None        # Link direto para as reviews no Teamlyzer
+    company_score: Optional[str] = None        # Ex: "★ 3.7/5"
+    company_reviews: Optional[str] = None      # Ex: "147 Reviews"
+    teamlyzer_url: Optional[str] = None        # Link direto para as reviews
+    rating_score: float = 0.0                  # Nota numérica para ordenação (ex: 4.1, 3.7, 3.1)
+    category: str = "AI / ML"                  # "AI / ML" ou "Top-Tier Software Engineering"
     tags: List[str] = Field(default_factory=list)
     description_snippet: Optional[str] = None
     fetched_at: str = Field(default_factory=lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))

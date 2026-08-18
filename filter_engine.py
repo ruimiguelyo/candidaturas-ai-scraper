@@ -1,9 +1,9 @@
 import re
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from models import JobPost
 
 class JobFilterEngine:
-    # 1. Palavras-chave estritas de IA / ML
+    # 1. Palavras-chave estritas de IA / Machine Learning / Data Science / GenAI
     AI_KEYWORDS = [
         r"\bai\b", r"\bml\b", r"\bnlp\b", r"\brag\b", r"\bllm\b", r"\bllms\b",
         r"\bartificial intelligence\b", r"\binteligência artificial\b", r"\binteligencia artificial\b",
@@ -14,7 +14,17 @@ class JobFilterEngine:
         r"\btransformers?\b", r"\bprompt engineer(ing)?\b", r"\bmlops\b", r"\bai engineer(ing)?\b"
     ]
 
-    # 2. OBRIGATÓRIO NO TÍTULO: O Título TEM de ter um destes termos explícitos
+    # 2. Palavras-chave de Engenharia de Software / Sistemas / Backend / Cloud (para empresas de topo > 3.1)
+    SOFTWARE_ENG_KEYWORDS = [
+        r"\bsoftware engineer(ing)?\b", r"\bengenheiro de software\b",
+        r"\bsoftware developer\b", r"\bdesenvolvedor de software\b",
+        r"\bsystems engineer(ing)?\b", r"\bengenheiro de sistemas\b",
+        r"\bbackend\b", r"\bback-end\b", r"\bfullstack\b", r"\bfull-stack\b",
+        r"\bcloud engineer(ing)?\b", r"\bdevops\b", r"\binfrastructure\b",
+        r"\bqa engineer(ing)?\b", r"\bsoftware development\b"
+    ]
+
+    # 3. OBRIGATÓRIO NO TÍTULO: O Título TEM de ter um destes termos explícitos
     STRICT_TITLE_KEYWORDS = [
         r"\bjunior\b", r"\bjr\.?\b", r"\btrainee\b", r"\bintern(ship)?\b",
         r"\bestágio\b", r"\bestagio\b", r"\bestagiário\b", r"\bestagiario\b",
@@ -22,7 +32,7 @@ class JobFilterEngine:
         r"\bbolseiro\b"
     ]
 
-    # 3. EXCLUSÕES: Nunca permitir estes termos
+    # 4. EXCLUSÕES: Nunca permitir estes termos
     EXCLUDE_KEYWORDS = [
         r"\bdeloitte\b", r"\bsenior\b", r"\bsr\.?\b", r"\blead\b", r"\bprincipal\b",
         r"\bstaff\b", r"\bdirector\b", r"\bhead of\b", r"\bvp\b", r"\bmanager\b",
@@ -39,9 +49,16 @@ class JobFilterEngine:
         return False
 
     @classmethod
+    def is_software_eng_related(cls, text: str) -> bool:
+        text_lower = text.lower()
+        for pattern in cls.SOFTWARE_ENG_KEYWORDS:
+            if re.search(pattern, text_lower):
+                return True
+        return False
+
+    @classmethod
     def has_strictly_entry_level_title(cls, title: str) -> bool:
         title_lower = title.lower()
-        # EXIGÊNCIA ABSOLUTA: O título tem de conter uma das palavras estritas
         for pattern in cls.STRICT_TITLE_KEYWORDS:
             if re.search(pattern, title_lower):
                 return True
@@ -63,21 +80,28 @@ class JobFilterEngine:
         return False
 
     @classmethod
-    def filter_job(cls, job: JobPost) -> Optional[JobPost]:
+    def pre_filter_job(cls, job: JobPost) -> Optional[Tuple[JobPost, str]]:
+        """Pré-filtra o cargo e categoriza entre IA/ML ou Software Engineering Geral."""
         title_text = job.title.strip()
 
         # 1. Se tiver termos de exclusão (Deloitte, Senior, Mid, etc.), REJEITA
         if cls.is_excluded(title_text, job.company):
             return None
 
-        # 2. SE O TÍTULO NÃO CONTER JUNIOR/TRAINEE/INTERN/ESTÁGIO/GRADUATE -> REJEITA 100%
+        # 2. OBRIGATÓRIO: O título tem de conter Junior/Trainee/Intern/Estágio/Graduate
         if not cls.has_strictly_entry_level_title(title_text):
             return None
 
-        # 3. Tem de ser IA / Machine Learning / Data Science / GenAI
         full_text = f"{job.title} {job.description_snippet or ''} {' '.join(job.tags)}"
-        if not cls.is_ai_related(full_text):
-            return None
 
-        job.seniority = "Junior / Trainee / Internship"
-        return job
+        # 3. Classificação
+        if cls.is_ai_related(full_text):
+            job.category = "AI / ML"
+            job.seniority = "Junior / Trainee / Internship"
+            return (job, "AI")
+        elif cls.is_software_eng_related(full_text):
+            job.category = "Top-Tier Software Engineering"
+            job.seniority = "Junior / Trainee / Internship"
+            return (job, "SWE")
+
+        return None

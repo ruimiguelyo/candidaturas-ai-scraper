@@ -14,7 +14,7 @@ def generate_html_email(jobs: list) -> str:
     now_str = datetime.now().strftime("%d/%m/%Y às %H:%M")
     total_jobs = len(jobs)
 
-    # Agrupar por modalidade / localização
+    # Agrupar por modalidade / localização mantendo a ordenação por rating (já ordenada do maior para o menor)
     lisbon_jobs = []
     remote_jobs = []
     other_jobs = []
@@ -46,23 +46,26 @@ def generate_html_email(jobs: list) -> str:
                 "Arbeitnow": "#ea580c"
             }.get(source, "#475569")
 
-            # Ranking Badge (Teamlyzer ou Glassdoor)
+            # Category Badge
+            cat = j.get("category", "AI / ML")
+            cat_badge = """<span style="background-color: #ede9fe; color: #6d28d9; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;">🤖 IA & ML</span>""" if "ai" in cat.lower() else """<span style="background-color: #e0f2fe; color: #0369a1; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;">⚡ TOP-TIER SWE</span>"""
+
+            # Ranking Badge
             score = j.get("company_score")
             reviews = j.get("company_reviews")
             ranking_url = j.get("teamlyzer_url")
+            rating_num = float(j.get("rating_score", 0.0))
 
             if score and ranking_url:
                 if "teamlyzer" in ranking_url.lower():
-                    # Badge Dourado do Teamlyzer
                     rating_badge = f"""
-                    <a href="{ranking_url}" target="_blank" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
+                    <a href="{ranking_url}" target="_blank" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
                         <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
                     </a>
                     """
                 else:
-                    # Badge Verde do Glassdoor
                     rating_badge = f"""
-                    <a href="{ranking_url}" target="_blank" style="background-color: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-decoration: none; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
+                    <a href="{ranking_url}" target="_blank" style="background-color: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
                         <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
                     </a>
                     """
@@ -84,13 +87,14 @@ def generate_html_email(jobs: list) -> str:
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                     <div>
                         <span style="background-color: {source_badge_color}; color: white; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-transform: uppercase;">{source}</span>
-                        <span style="background-color: #f1f5f9; color: #334155; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; margin-left: 6px;">{j.get('modality', 'Híbrido/Remoto')}</span>
+                        {cat_badge}
+                        <span style="background-color: #f1f5f9; color: #334155; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; margin-left: 4px;">{j.get('modality', 'Híbrido/Remoto')}</span>
                     </div>
                     <span style="color: #94a3b8; font-size: 12px;">{j.get('post_date') or 'Recente'}</span>
                 </div>
                 <h3 style="margin: 8px 0 6px 0; font-size: 17px; color: #0f172a; font-weight: 700;">{j.get('title')}</h3>
                 <div style="margin: 0 0 12px 0; color: #475569; font-size: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
-                    <span><strong>Empresa:</strong> <span style="color: #0f172a; font-weight: 600;">{j.get('company')}</span></span>
+                    <span><strong>Empresa:</strong> <span style="color: #0f172a; font-weight: 700; font-size: 15px;">{j.get('company')}</span></span>
                     <span>{rating_badge}</span>
                     <span>• <strong>Local:</strong> {j.get('location')}</span>
                 </div>
@@ -119,10 +123,10 @@ def generate_html_email(jobs: list) -> str:
     <body>
         <div class="container">
             <div class="header">
-                <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">🎯 Relatório Diário de Vagas de IA</h1>
-                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">Exclusivo: <strong>Junior | Trainee | Internship</strong> (com Rankings Teamlyzer + Glassdoor)</p>
+                <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">🎯 Vagas Junior, Trainee & Internships</h1>
+                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">IA/ML + Top-Tier Software Engineering (Ordenadas por Rating da Empresa)</p>
                 <div style="margin-top: 14px; display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 14px; border-radius: 20px; font-size: 13px;">
-                    ✨ <strong>{total_jobs} vagas qualificadas</strong> encontradas em {now_str}
+                    ✨ <strong>{total_jobs} vagas qualificadas</strong> ordenadas pelo maior score (Teamlyzer / Glassdoor)
                 </div>
             </div>
 
@@ -136,8 +140,8 @@ def generate_html_email(jobs: list) -> str:
             {render_cards(other_jobs)}
 
             <div class="footer">
-                <p>Relatório gerado automaticamente pelo teu <strong>AI Job Aggregator</strong> no GitHub Actions.</p>
-                <p>Rankings e reviews cruzados via <strong>Teamlyzer Portugal</strong> (empresas nacionais) e <strong>Glassdoor Global</strong> (empresas internacionais).</p>
+                <p>Relatório gerado automaticamente pelo teu <strong>AI & Top-Tech Job Aggregator</strong> no GitHub Actions.</p>
+                <p>Ordenação decrescente: Vagas de empresas com melhor rating aparecem sempre no topo.</p>
                 <p>Ficheiro CSV completo anexado a este email.</p>
             </div>
         </div>
@@ -170,11 +174,11 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
         print("Aviso: Nenhuma vaga encontrada hoje para envio de email.")
         return
 
-    subject = f"🎯 [Vagas IA] {len(jobs)} Novas Vagas Junior/Trainee (Rankings Teamlyzer + Glassdoor) - {datetime.now().strftime('%d/%m/%Y')}"
+    subject = f"🎯 [Vagas Top Tech] {len(jobs)} Vagas Junior/Internship Ordenadas por Rating - {datetime.now().strftime('%d/%m/%Y')}"
     html_content = generate_html_email(jobs)
 
     msg = MIMEMultipart("mixed")
-    msg["From"] = f"AI Job Finder <{smtp_user}>"
+    msg["From"] = f"Top-Tech Job Finder <{smtp_user}>"
     msg["To"] = receiver
     msg["Subject"] = subject
 
@@ -201,7 +205,7 @@ def send_daily_email(json_path: str = "vagas_estritamente_junior_trainee_interns
         server.login(smtp_user, smtp_pass)
         server.send_message(msg)
         server.quit()
-        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas e scores Teamlyzer/Glassdoor!")
+        print(f"✨ SUCESSO: Email enviado com sucesso para {receiver} com {len(jobs)} vagas ordenadas por rating!")
     except Exception as e:
         print(f"Erro ao enviar email via SMTP: {e}")
 
