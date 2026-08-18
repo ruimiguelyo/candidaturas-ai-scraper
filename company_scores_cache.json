@@ -823,5 +823,32 @@
     "url": "https://pt.teamlyzer.com/companies/salsify",
     "matched_name": "Salsify",
     "alias_match": false
+  },
+  "miniclip": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "27 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/miniclip-games",
+    "matched_name": "Miniclip",
+    "alias_match": false
+  },
+  "pwcportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "53 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/pwc",
+    "matched_name": "PwC Portugal",
+    "alias_match": false
+  },
+  "emagine": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "61 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/emagine-portugal",
+    "matched_name": "Emagine (antiga Boost IT)",
+    "alias_match": false
   }
 }
