@@ -805,5 +805,14 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JOFEBAR",
     "teamlyzer_checked_at": 1787053729
+  },
+  "orbcom": {
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "13 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/orbcom",
+    "matched_name": "Orbcom",
+    "alias_match": false
   }
 }
