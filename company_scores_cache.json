@@ -322,7 +322,7 @@
     "platform": "Glassdoor",
     "reviews": "Glassdoor Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
-    "teamlyzer_checked_at": 1787052469
+    "teamlyzer_checked_at": 1787218588
   },
   "scaleai": {
     "score": "3.7/5",
@@ -438,7 +438,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
-    "teamlyzer_checked_at": 1787052469
+    "teamlyzer_checked_at": 1787218591
   },
   "adzuna": {
     "platform": "Glassdoor",
@@ -446,7 +446,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna",
-    "teamlyzer_checked_at": 1787052469
+    "teamlyzer_checked_at": 1787218591
   },
   "crossjoinsolutions": {
     "platform": "Teamlyzer",
@@ -482,7 +482,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
-    "teamlyzer_checked_at": 1787052468
+    "teamlyzer_checked_at": 1787218588
   },
   "criticalmanufacturing": {
     "platform": "Teamlyzer",
@@ -724,7 +724,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech",
-    "teamlyzer_checked_at": 1787052468
+    "teamlyzer_checked_at": 1787218587
   },
   "sequoiaconnect": {
     "platform": "Glassdoor",
@@ -760,7 +760,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
-    "teamlyzer_checked_at": 1787052465
+    "teamlyzer_checked_at": 1787218587
   },
   "yellowipe": {
     "platform": "Teamlyzer",
@@ -849,6 +849,15 @@
     "reviews": "61 Reviews",
     "url": "https://pt.teamlyzer.com/companies/emagine-portugal",
     "matched_name": "Emagine (antiga Boost IT)",
+    "alias_match": false
+  },
+  "olisipo": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "68 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/olisipo",
+    "matched_name": "Olisipo",
     "alias_match": false
   }
 }
