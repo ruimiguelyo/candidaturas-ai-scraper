@@ -322,7 +322,7 @@
     "platform": "Glassdoor",
     "reviews": "Glassdoor Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
-    "teamlyzer_checked_at": 1787218588
+    "teamlyzer_checked_at": 1787305113
   },
   "scaleai": {
     "score": "3.7/5",
@@ -438,7 +438,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
-    "teamlyzer_checked_at": 1787218591
+    "teamlyzer_checked_at": 1787305117
   },
   "adzuna": {
     "platform": "Glassdoor",
@@ -446,7 +446,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna",
-    "teamlyzer_checked_at": 1787218591
+    "teamlyzer_checked_at": 1787305117
   },
   "crossjoinsolutions": {
     "platform": "Teamlyzer",
@@ -482,7 +482,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
-    "teamlyzer_checked_at": 1787218588
+    "teamlyzer_checked_at": 1787305116
   },
   "criticalmanufacturing": {
     "platform": "Teamlyzer",
@@ -724,7 +724,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech",
-    "teamlyzer_checked_at": 1787218587
+    "teamlyzer_checked_at": 1787305114
   },
   "sequoiaconnect": {
     "platform": "Glassdoor",
@@ -760,7 +760,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
-    "teamlyzer_checked_at": 1787218587
+    "teamlyzer_checked_at": 1787305114
   },
   "yellowipe": {
     "platform": "Teamlyzer",
@@ -789,7 +789,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
-    "teamlyzer_checked_at": 1787052467
+    "teamlyzer_checked_at": 1787305114
   },
   "infineontechnologies": {
     "platform": "Teamlyzer",
@@ -804,7 +804,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JOFEBAR",
-    "teamlyzer_checked_at": 1787053729
+    "teamlyzer_checked_at": 1787305113
   },
   "orbcom": {
     "platform": "Teamlyzer",
@@ -858,6 +858,24 @@
     "reviews": "68 Reviews",
     "url": "https://pt.teamlyzer.com/companies/olisipo",
     "matched_name": "Olisipo",
+    "alias_match": false
+  },
+  "smartconsulting": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "209 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/smart-consulting",
+    "matched_name": "Smart Consulting",
+    "alias_match": false
+  },
+  "farfetch": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "420 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/farfetch",
+    "matched_name": "Farfetch",
     "alias_match": false
   }
 }
