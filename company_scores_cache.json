@@ -300,7 +300,7 @@
     "platform": "Glassdoor",
     "reviews": "576 Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=DataRobot",
-    "teamlyzer_checked_at": 1787052470
+    "teamlyzer_checked_at": 1787390900
   },
   "tensorops": {
     "platform": "Teamlyzer",
@@ -423,7 +423,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SiliconCedars",
-    "teamlyzer_checked_at": 1787052470
+    "teamlyzer_checked_at": 1787390900
   },
   "waymark": {
     "platform": "Glassdoor",
@@ -624,7 +624,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO",
-    "teamlyzer_checked_at": 1787052465
+    "teamlyzer_checked_at": 1787390896
   },
   "overtminds": {
     "platform": "Glassdoor",
@@ -702,7 +702,8 @@
     "score": "Ver Reviews",
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=1KOMMA5%CB%9A"
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=1KOMMA5%CB%9A",
+    "teamlyzer_checked_at": 1787390896
   },
   "vocalmedia": {
     "platform": "Glassdoor",
@@ -877,5 +878,29 @@
     "url": "https://pt.teamlyzer.com/companies/farfetch",
     "matched_name": "Farfetch",
     "alias_match": false
+  },
+  "trengo": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Trengo",
+    "teamlyzer_checked_at": 1787390896
+  },
+  "shakers": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Shakers",
+    "teamlyzer_checked_at": 1787390897
+  },
+  "quantanite": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Quantanite",
+    "teamlyzer_checked_at": 1787390900
   }
 }
