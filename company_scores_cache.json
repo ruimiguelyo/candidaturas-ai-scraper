@@ -322,7 +322,7 @@
     "platform": "Glassdoor",
     "reviews": "Glassdoor Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
-    "teamlyzer_checked_at": 1787305113
+    "teamlyzer_checked_at": 1787477403
   },
   "scaleai": {
     "score": "3.7/5",
@@ -438,7 +438,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
-    "teamlyzer_checked_at": 1787305117
+    "teamlyzer_checked_at": 1787477407
   },
   "adzuna": {
     "platform": "Glassdoor",
@@ -446,7 +446,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Adzuna",
-    "teamlyzer_checked_at": 1787305117
+    "teamlyzer_checked_at": 1787477407
   },
   "crossjoinsolutions": {
     "platform": "Teamlyzer",
@@ -482,7 +482,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
-    "teamlyzer_checked_at": 1787305116
+    "teamlyzer_checked_at": 1787477406
   },
   "criticalmanufacturing": {
     "platform": "Teamlyzer",
@@ -624,7 +624,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO",
-    "teamlyzer_checked_at": 1787390896
+    "teamlyzer_checked_at": 1787477403
   },
   "overtminds": {
     "platform": "Glassdoor",
@@ -703,7 +703,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=1KOMMA5%CB%9A",
-    "teamlyzer_checked_at": 1787390896
+    "teamlyzer_checked_at": 1787477407
   },
   "vocalmedia": {
     "platform": "Glassdoor",
@@ -725,7 +725,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech",
-    "teamlyzer_checked_at": 1787305114
+    "teamlyzer_checked_at": 1787477403
   },
   "sequoiaconnect": {
     "platform": "Glassdoor",
@@ -761,7 +761,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
-    "teamlyzer_checked_at": 1787305114
+    "teamlyzer_checked_at": 1787477404
   },
   "yellowipe": {
     "platform": "Teamlyzer",
@@ -790,7 +790,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
-    "teamlyzer_checked_at": 1787305114
+    "teamlyzer_checked_at": 1787477403
   },
   "infineontechnologies": {
     "platform": "Teamlyzer",
@@ -893,7 +893,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Shakers",
-    "teamlyzer_checked_at": 1787390897
+    "teamlyzer_checked_at": 1787477403
   },
   "quantanite": {
     "platform": "Glassdoor",
@@ -902,5 +902,14 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Quantanite",
     "teamlyzer_checked_at": 1787390900
+  },
+  "canonical": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "2 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/canonical",
+    "matched_name": "Canonical",
+    "alias_match": false
   }
 }
