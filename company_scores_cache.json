@@ -322,7 +322,7 @@
     "platform": "Glassdoor",
     "reviews": "Glassdoor Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
-    "teamlyzer_checked_at": 1787477403
+    "teamlyzer_checked_at": 1787565015
   },
   "scaleai": {
     "score": "3.7/5",
@@ -438,7 +438,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
-    "teamlyzer_checked_at": 1787477407
+    "teamlyzer_checked_at": 1787565018
   },
   "adzuna": {
     "platform": "Glassdoor",
@@ -482,7 +482,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
-    "teamlyzer_checked_at": 1787477406
+    "teamlyzer_checked_at": 1787565015
   },
   "criticalmanufacturing": {
     "platform": "Teamlyzer",
@@ -624,7 +624,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO",
-    "teamlyzer_checked_at": 1787477403
+    "teamlyzer_checked_at": 1787565014
   },
   "overtminds": {
     "platform": "Glassdoor",
@@ -703,7 +703,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=1KOMMA5%CB%9A",
-    "teamlyzer_checked_at": 1787477407
+    "teamlyzer_checked_at": 1787565018
   },
   "vocalmedia": {
     "platform": "Glassdoor",
@@ -725,7 +725,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech",
-    "teamlyzer_checked_at": 1787477403
+    "teamlyzer_checked_at": 1787565014
   },
   "sequoiaconnect": {
     "platform": "Glassdoor",
@@ -761,7 +761,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
-    "teamlyzer_checked_at": 1787477404
+    "teamlyzer_checked_at": 1787565014
   },
   "yellowipe": {
     "platform": "Teamlyzer",
@@ -893,7 +893,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Shakers",
-    "teamlyzer_checked_at": 1787477403
+    "teamlyzer_checked_at": 1787565014
   },
   "quantanite": {
     "platform": "Glassdoor",
@@ -910,6 +910,15 @@
     "reviews": "2 Reviews",
     "url": "https://pt.teamlyzer.com/companies/canonical",
     "matched_name": "Canonical",
+    "alias_match": false
+  },
+  "uniplaces": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "17 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/uniplaces",
+    "matched_name": "Uniplaces",
     "alias_match": false
   }
 }
