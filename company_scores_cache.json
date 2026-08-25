@@ -790,7 +790,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
-    "teamlyzer_checked_at": 1787477403
+    "teamlyzer_checked_at": 1787650619
   },
   "infineontechnologies": {
     "platform": "Teamlyzer",
@@ -901,7 +901,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Quantanite",
-    "teamlyzer_checked_at": 1787390900
+    "teamlyzer_checked_at": 1787650624
   },
   "canonical": {
     "platform": "Teamlyzer",
@@ -920,5 +920,22 @@
     "url": "https://pt.teamlyzer.com/companies/uniplaces",
     "matched_name": "Uniplaces",
     "alias_match": false
+  },
+  "motorolasolutions": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "2 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/motorola-solutions",
+    "matched_name": "Motorola Solutions",
+    "alias_match": false
+  },
+  "concurrences": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Concurrences",
+    "teamlyzer_checked_at": 1787650620
   }
 }
