@@ -322,7 +322,7 @@
     "platform": "Glassdoor",
     "reviews": "Glassdoor Reviews",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ChainGPT",
-    "teamlyzer_checked_at": 1787737406
+    "teamlyzer_checked_at": 1787859593
   },
   "scaleai": {
     "score": "3.7/5",
@@ -438,7 +438,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Teamcubation",
-    "teamlyzer_checked_at": 1787737408
+    "teamlyzer_checked_at": 1787859595
   },
   "adzuna": {
     "platform": "Glassdoor",
@@ -624,7 +624,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=KITRO",
-    "teamlyzer_checked_at": 1787737406
+    "teamlyzer_checked_at": 1787859592
   },
   "overtminds": {
     "platform": "Glassdoor",
@@ -725,7 +725,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ImproveByTech",
-    "teamlyzer_checked_at": 1787737406
+    "teamlyzer_checked_at": 1787859595
   },
   "sequoiaconnect": {
     "platform": "Glassdoor",
@@ -761,7 +761,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
-    "teamlyzer_checked_at": 1787737406
+    "teamlyzer_checked_at": 1787859593
   },
   "yellowipe": {
     "platform": "Teamlyzer",
@@ -790,7 +790,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
-    "teamlyzer_checked_at": 1787737405
+    "teamlyzer_checked_at": 1787859593
   },
   "infineontechnologies": {
     "platform": "Teamlyzer",
@@ -936,6 +936,32 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Concurrences",
-    "teamlyzer_checked_at": 1787650620
+    "teamlyzer_checked_at": 1787859596
+  },
+  "timwetech": {
+    "platform": "Teamlyzer",
+    "score": "2.1/5",
+    "numeric": 2.1,
+    "reviews": "48 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/timwe",
+    "matched_name": "TIMWETECH",
+    "alias_match": false
+  },
+  "volkswagengroupdigitalsolutionsportugal": {
+    "platform": "Teamlyzer",
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "reviews": "145 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions",
+    "matched_name": "Volkswagen Group Digital Solutions [Portugal]",
+    "alias_match": false
+  },
+  "alongside": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Alongside",
+    "teamlyzer_checked_at": 1787859594
   }
 }
