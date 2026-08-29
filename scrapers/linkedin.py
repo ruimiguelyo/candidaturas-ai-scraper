@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from typing import List, Optional
+from typing import List
 from bs4 import BeautifulSoup
 from curl_cffi.requests import AsyncSession
 from models import JobPost
@@ -35,12 +35,12 @@ class LinkedInScraper:
                     res = await session.get(self.BASE_URL, params=params, timeout=self.timeout)
 
                     if res.status_code == 429:
-                        logger.warning("LinkedIn: 429 Too Many Requests (Rate limit atingido). Pausando...")
-                        break
+                        raise RuntimeError("LinkedIn respondeu HTTP 429 (limite de pedidos)")
 
                     if res.status_code != 200:
-                        logger.warning(f"LinkedIn: Retornou status {res.status_code} na página start={start}")
-                        break
+                        raise RuntimeError(
+                            f"LinkedIn respondeu HTTP {res.status_code} na página start={start}"
+                        )
 
                     soup = BeautifulSoup(res.text, "html.parser")
                     cards = soup.find_all("li")
@@ -96,6 +96,6 @@ class LinkedInScraper:
 
                 except Exception as req_err:
                     logger.error(f"LinkedIn request error at start={start}: {req_err}")
-                    break
+                    raise
 
         return results

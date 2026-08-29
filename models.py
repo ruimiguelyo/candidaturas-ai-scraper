@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List, Any
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.parse import urlsplit, urlunsplit
 
 class JobPost(BaseModel):
@@ -21,9 +21,11 @@ class JobPost(BaseModel):
     rating_score: float = 0.0                  # Nota numérica para ordenação (ex: 4.1, 3.7, 3.1)
     category: str = "AI / ML"                  # "AI / ML" ou "Top-Tier Software Engineering"
     tags: List[str] = Field(default_factory=list)
+    location_compatibility: str = "unknown"     # confirmed, conditional, unlikely, unknown
+    location_notes: List[str] = Field(default_factory=list)
     description_snippet: Optional[str] = None
     human_outreach: Optional[dict] = None      # Hiring Manager Intelligence outreach enrichment
-    fetched_at: str = Field(default_factory=lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
+    fetched_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
     @field_validator("seniority", mode="before")
     @classmethod

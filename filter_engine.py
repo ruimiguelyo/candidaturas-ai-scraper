@@ -1,4 +1,5 @@
 import math
+import os
 import re
 from typing import Optional, Tuple
 
@@ -77,6 +78,7 @@ class JobFilterEngine:
     # A exclusao e sempre aplicada, mesmo quando o titulo tambem diz Junior.
     EXCLUDE_KEYWORDS = [
         r"\bsenior\b",
+        r"\bs[eé]nior\b",
         r"\bsr\.?\b",
         r"\blead\b",
         r"\bprincipal\b",
@@ -88,6 +90,23 @@ class JobFilterEngine:
         r"\bhead\s+of\b",
         r"\bmanager\b",
         r"\bgerente\b",
+        # AI may describe the product or market rather than the work. These
+        # functions are intentionally excluded from this technical-job feed.
+        r"\baccount executive\b",
+        r"\bbusiness analyst\b",
+        r"\bbusiness development\b",
+        r"\bcommercial\b",
+        r"\bcommunications?\b",
+        r"\bcontent\b",
+        r"\bcounsel\b",
+        r"\bgo[- ]to[- ]market\b",
+        r"\bgtm\b",
+        r"\bhuman resources\b",
+        r"\blegal\b",
+        r"\bmarketing\b",
+        r"\bmentor\b",
+        r"\boperations\b",
+        r"\bsales\b",
     ]
 
     @staticmethod
@@ -116,6 +135,55 @@ class JobFilterEngine:
         ):
             return True
         return cls._matches_any(title_text, cls.EXCLUDE_KEYWORDS)
+
+    @classmethod
+    def annotate_location_compatibility(cls, job: JobPost) -> None:
+        """Describe likely compatibility from Portugal without inventing work authorization."""
+        location = str(job.location or "").casefold()
+        if cls._matches_any(
+            location,
+            [r"\bportugal\b", r"\blisbo[an]\b", r"\bporto\b", r"\bcoimbra\b", r"\bbraga\b", r"\baveiro\b"],
+        ):
+            job.location_compatibility = "confirmed"
+            job.location_notes = ["A localização anunciada inclui Portugal."]
+        elif cls._matches_any(location, [r"\bworldwide\b", r"\bglobal\b", r"\banywhere\b"]):
+            job.location_compatibility = "conditional"
+            job.location_notes = ["Remoto global; confirmar contrato, fuso horário e autorização de trabalho."]
+        elif cls._matches_any(
+            location,
+            [
+                r"\beurope\b",
+                r"\beuropean union\b",
+                r"\bemea\b",
+                r"\beu\b",
+                r"\baustria\b",
+                r"\bbelgium\b",
+                r"\bdenmark\b",
+                r"\bfinland\b",
+                r"\bfrance\b",
+                r"\bgermany\b",
+                r"\bireland\b",
+                r"\bitaly\b",
+                r"\bnetherlands\b",
+                r"\bnorway\b",
+                r"\bpoland\b",
+                r"\bspain\b",
+                r"\bsweden\b",
+                r"\bswitzerland\b",
+                r"\bunited kingdom\b",
+            ],
+        ):
+            job.location_compatibility = "conditional"
+            job.location_notes = ["A região anunciada inclui potencialmente Portugal; confirmar países aceites."]
+        elif job.is_remote and cls._matches_any(location, [r"\bremote\b", r"\bremot[oa]\b"]):
+            job.location_compatibility = "conditional"
+            job.location_notes = ["Remoto, mas sem países elegíveis confirmados."]
+        elif location and location not in {"unknown", "n/a", "na"}:
+            job.location_compatibility = "unlikely"
+            job.location_notes = ["A localização parece restrita fora da Europa; verificar antes de investir tempo."]
+        else:
+            job.location_compatibility = "unknown"
+            job.location_notes = ["Compatibilidade geográfica não confirmada."]
 
     @classmethod
     def _classify_title(cls, title: str, tags: list) -> Optional[str]:
@@ -152,15 +220,25 @@ class JobFilterEngine:
         if domain_type == "AI":
             job.category = "AI / ML"
             job.seniority = "Junior / Trainee / Internship"
+            cls.annotate_location_compatibility(job)
             return job, domain_type
         if domain_type == "SWE":
             job.category = "Top-Tier Software Engineering"
             job.seniority = "Junior / Trainee / Internship"
+            cls.annotate_location_compatibility(job)
             return job, domain_type
         return None
 
     @staticmethod
     def is_eligible_after_rating(job: JobPost) -> bool:
+        include_unlikely = os.getenv("INCLUDE_UNLIKELY_LOCATIONS", "false").strip().casefold() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+        if job.location_compatibility == "unlikely" and not include_unlikely:
+            return False
         if job.category == "AI / ML":
             return True
         try:

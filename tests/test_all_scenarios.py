@@ -9,7 +9,7 @@ import httpx
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from company_ranker import CompanyRanker
-from hiring_intelligence import HiringIntelligence, empty_outreach
+from hiring_intelligence import HiringIntelligence
 from email_notifier import generate_html_email
 from filter_engine import JobFilterEngine
 from main import sort_jobs_by_rating
@@ -284,7 +284,7 @@ class TestAllScenarios(unittest.TestCase):
         self.assertEqual(outreach["outreach_recommendation"], "NO")
 
     def test_hiring_intelligence_high_confidence_hiring_manager(self):
-        """Testa se um Engineering Manager na area e localizacao corretas recebe HIGH confidence e YES."""
+        """Um contacto plausível continua pendente de verificação humana."""
         job = make_job("Junior AI Engineer", "TechCorp", location="Lisbon, Portugal")
         profile = {
             "name": "Rui Miguel",
@@ -302,9 +302,11 @@ class TestAllScenarios(unittest.TestCase):
         self.assertEqual(outreach["target_type"], "HIRING_MANAGER")
         self.assertEqual(outreach["name"], "Alexandre Santos")
         self.assertEqual(outreach["confidence"], "HIGH")
-        self.assertEqual(outreach["outreach_recommendation"], "YES")
+        self.assertEqual(outreach["outreach_recommendation"], "VERIFY_FIRST")
+        self.assertEqual(outreach["verification_status"], "PENDING")
         self.assertIsNotNone(outreach["suggested_message"])
         self.assertIn("Alexandre", outreach["suggested_message"])
+        self.assertNotIn("I applied", outreach["suggested_message"])
 
     def test_hiring_intelligence_recruiter_fallback(self):
         """Testa se quando nao ha hiring manager, encontra um recruiter tecnico com fallback."""
@@ -332,7 +334,10 @@ class TestAllScenarios(unittest.TestCase):
         jobs = [make_job(f"Job {i}", f"Company {i}", rating_score=float(10 - i)) for i in range(8)]
         original_order = [j.title for j in jobs]
 
-        with patch.dict(os.environ, {"MAX_HIRING_LOOKUPS": "3"}):
+        with patch.dict(
+            os.environ,
+            {"MAX_HIRING_LOOKUPS": "3", "HIRING_INTELLIGENCE_ENABLED": "true"},
+        ):
             with patch.object(HiringIntelligence, "enrich_single_job", return_value={"target_found": False}):
                 asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
 
@@ -346,8 +351,9 @@ class TestAllScenarios(unittest.TestCase):
     def test_hiring_intelligence_fail_open_on_exception(self):
         """Testa se qualquer excecao de rede/parser e tratada silenciosamente sem abortar."""
         jobs = [make_job("Junior AI Engineer", "Acme")]
-        with patch.object(HiringIntelligence, "enrich_single_job", side_effect=RuntimeError("Network failure")):
-            asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
+        with patch.dict(os.environ, {"HIRING_INTELLIGENCE_ENABLED": "true"}):
+            with patch.object(HiringIntelligence, "enrich_single_job", side_effect=RuntimeError("Network failure")):
+                asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
         self.assertIsNotNone(jobs[0].human_outreach)
         self.assertFalse(jobs[0].human_outreach["target_found"])
 
@@ -361,16 +367,17 @@ class TestAllScenarios(unittest.TestCase):
             "current_title": "Head of AI",
             "profile_url": "https://linkedin.com/in/alexandre-santos",
             "confidence": "HIGH",
-            "outreach_recommendation": "YES",
-            "evidence": ["Lidera a equipa de AI na InnoWave."],
-            "personalization_hook": "A equipa trabalha em RAG.",
-            "suggested_message": "Hi Alexandre — I applied today for the Junior AI Engineer position."
+            "verification_status": "PENDING",
+            "outreach_recommendation": "VERIFY_FIRST",
+            "evidence": ["O resultado de pesquisa menciona AI e InnoWave; confirmar no perfil."],
+            "personalization_hook": "A vaga trabalha com RAG.",
+            "suggested_message": "Hi Alexandre — I came across the Junior AI Engineer opening at InnoWave."
         }
         email = generate_html_email([job])
         self.assertIn("Alexandre Santos", email)
-        self.assertIn("LIKELY HIRING TARGET", email)
-        self.assertIn("Confidence: HIGH", email)
-        self.assertIn("Suggested LinkedIn Message", email)
+        self.assertIn("UNVERIFIED CONTACT", email)
+        self.assertIn("Search confidence: HIGH", email)
+        self.assertIn("verify the person and role before use", email)
 
 
 if __name__ == "__main__":

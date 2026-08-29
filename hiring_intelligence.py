@@ -3,28 +3,31 @@ import json
 import logging
 import os
 import re
+import unicodedata
 import urllib.parse
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
 from models import JobPost
 
 logger = logging.getLogger("HiringIntelligence")
 
-CANDIDATE_PROFILE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "candidate_profile.json")
+DEFAULT_CANDIDATE_PROFILE_FILE = os.path.abspath("candidate_profile.local.json")
 
 
 def is_hiring_intelligence_enabled() -> bool:
-    """Verifica se a flag HIRING_INTELLIGENCE_ENABLED está ativa (default: true)."""
-    val = os.getenv("HIRING_INTELLIGENCE_ENABLED", "true").strip().lower()
+    """Verifica se a pesquisa privada foi ativada explicitamente (default: false)."""
+    val = os.getenv("HIRING_INTELLIGENCE_ENABLED", "false").strip().lower()
     return val in ("true", "1", "yes", "on")
 
 
 def get_max_hiring_lookups() -> int:
     """Limite de pesquisas por execução (default: 10)."""
     try:
-        return int(os.getenv("MAX_HIRING_LOOKUPS", "10").strip())
+        value = int(os.getenv("MAX_HIRING_LOOKUPS", "10").strip())
     except (ValueError, TypeError):
         return 10
+    return max(0, min(value, 50))
 
 
 def empty_outreach() -> Dict[str, Any]:
@@ -37,6 +40,7 @@ def empty_outreach() -> Dict[str, Any]:
         "company": None,
         "profile_url": None,
         "confidence": "NONE",
+        "verification_status": "NOT_FOUND",
         "outreach_recommendation": "NO",
         "evidence": [],
         "personalization_hook": None,
@@ -51,17 +55,61 @@ class HiringIntelligence:
     através de pesquisa pública sem custos (100% gratuita, €0).
     """
 
+    COMPANY_SUFFIXES = {
+        "and",
+        "company",
+        "corp",
+        "corporation",
+        "group",
+        "inc",
+        "international",
+        "limited",
+        "llc",
+        "ltd",
+        "portugal",
+        "sa",
+    }
+
+    @staticmethod
+    def _normalize_text(value: str) -> str:
+        decomposed = unicodedata.normalize("NFKD", str(value or ""))
+        without_accents = "".join(char for char in decomposed if not unicodedata.combining(char))
+        return " ".join(re.findall(r"[a-z0-9]+", without_accents.casefold().replace("&", " and ")))
+
+    @classmethod
+    def _result_mentions_company(cls, parsed: Dict[str, Any], company: str) -> bool:
+        expected_tokens = [
+            token
+            for token in cls._normalize_text(company).split()
+            if token not in cls.COMPANY_SUFFIXES
+        ]
+        if not expected_tokens:
+            return False
+        result_tokens = set(
+            cls._normalize_text(
+                " ".join(
+                    str(parsed.get(field, ""))
+                    for field in ("search_title", "current_title", "snippet")
+                )
+            ).split()
+        )
+        return set(expected_tokens).issubset(result_tokens)
+
     @classmethod
     def load_candidate_profile(cls) -> Optional[Dict[str, Any]]:
-        """Carrega o perfil factual do candidato a partir de candidate_profile.json."""
-        if not os.path.exists(CANDIDATE_PROFILE_FILE):
-            logger.warning("candidate_profile.json não encontrado. Enriquecimento de outreach ignorado.")
+        """Carrega um perfil local/privado, nunca o exportando para os datasets."""
+        profile_path = os.getenv("CANDIDATE_PROFILE_FILE", DEFAULT_CANDIDATE_PROFILE_FILE)
+        if not os.path.exists(profile_path):
+            logger.warning(
+                "Perfil privado do candidato não encontrado em %s. Outreach ignorado.",
+                profile_path,
+            )
             return None
         try:
-            with open(CANDIDATE_PROFILE_FILE, "r", encoding="utf-8") as f:
+            with open(profile_path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
-            logger.warning("Erro ao carregar candidate_profile.json: %s", e)
+            logger.warning("Erro ao carregar o perfil privado do candidato: %s", e)
             return None
 
     @classmethod
@@ -136,16 +184,26 @@ class HiringIntelligence:
         if len(name.split()) > 5 or any(w in name.lower() for w in ["jobs", "vagas", "careers", "linkedin", "overview"]):
             return None
 
-        # Limpar URL do LinkedIn para formato canónico
-        clean_url = link.split("?")[0] if link else None
-        if clean_url and "linkedin.com/in/" not in clean_url:
-            clean_url = None
+        # Aceitar apenas um perfil pessoal real do LinkedIn. A implementação
+        # anterior devolvia o URL original mesmo quando era de outro domínio.
+        try:
+            parsed_url = urllib.parse.urlparse(link)
+        except ValueError:
+            return None
+        hostname = (parsed_url.hostname or "").casefold()
+        if not (hostname == "linkedin.com" or hostname.endswith(".linkedin.com")):
+            return None
+        profile_path = parsed_url.path.rstrip("/")
+        if not re.fullmatch(r"/in/[^/?#]+", profile_path):
+            return None
+        clean_url = urllib.parse.urlunsplit(("https", hostname, profile_path, "", ""))
 
         return {
             "name": name,
             "current_title": current_title,
             "snippet": snippet,
-            "profile_url": clean_url or link,
+            "profile_url": clean_url,
+            "search_title": raw_title,
         }
 
     @classmethod
@@ -172,8 +230,14 @@ class HiringIntelligence:
                 if not parsed:
                     continue
 
-                title_lower = (parsed["current_title"] + " " + parsed["snippet"]).lower()
-                company_lower = company_clean.lower()
+                if not cls._result_mentions_company(parsed, company_clean):
+                    continue
+
+                # A função de gestão tem de estar no título atual. Palavras soltas
+                # no snippet podem descrever outra pessoa ou uma vaga e não servem
+                # para atribuir um cargo ao resultado.
+                title_lower = parsed["current_title"].lower()
+                context_lower = f"{parsed['current_title']} {parsed['snippet']}".lower()
 
                 # Verifica se a pessoa tem cargo relevante de gestão de engenharia
                 is_manager = any(m in title_lower for m in [
@@ -188,22 +252,24 @@ class HiringIntelligence:
                 if is_manager and not is_distant_exec:
                     # Avaliação de Confiança
                     signals = 0
-                    if domain.lower() in title_lower:
+                    if domain.lower() in context_lower:
                         signals += 2
-                        evidence.append(f"Cargo diretamente ligado à área da vaga ({domain}).")
-                    if any(loc in title_lower for loc in ["portugal", "lisbon", "porto", "remote"]):
+                        evidence.append(f"O resultado público menciona a área {domain}.")
+                    if any(loc in context_lower for loc in ["portugal", "lisbon", "porto", "remote"]):
                         signals += 1
-                        evidence.append("Localização compatível com a posição anunciada.")
-                    if any(w in title_lower for w in ["hiring", "team", "lead", "building", "engineer"]):
+                        evidence.append("O resultado público menciona uma localização compatível.")
+                    if any(w in context_lower for w in ["hiring", "team", "lead", "building", "engineer"]):
                         signals += 1
-                        evidence.append("Sinais públicos de gestão e liderança técnica na equipa.")
+                        evidence.append("O resultado público contém sinais de liderança técnica.")
 
                     if signals >= 2:
                         confidence = "HIGH"
                     else:
                         confidence = "MEDIUM"
 
-                    evidence.append(f"Atua como {parsed['current_title']} na empresa {company_clean}.")
+                    evidence.append(
+                        f"O título/snippet da pesquisa menciona {parsed['current_title']} e {company_clean}; confirmar no perfil."
+                    )
                     return "HIRING_MANAGER", parsed, confidence, evidence
 
         # 2. TENTATIVA 2: Fallback para Recruiter Técnico relevante
@@ -219,16 +285,22 @@ class HiringIntelligence:
                 if not parsed:
                     continue
 
-                title_lower = (parsed["current_title"] + " " + parsed["snippet"]).lower()
+                if not cls._result_mentions_company(parsed, company_clean):
+                    continue
+
+                title_lower = parsed["current_title"].lower()
+                context_lower = f"{parsed['current_title']} {parsed['snippet']}".lower()
                 is_recruiter = any(rec in title_lower for rec in [
                     "technical recruiter", "tech recruiter", "talent acquisition partner",
                     "engineering recruiter", "technical talent partner"
                 ])
 
                 if is_recruiter:
-                    evidence.append(f"Recrutador(a) técnico(a) identificado(a) na empresa {company_clean}.")
-                    if any(loc in title_lower for loc in ["portugal", "lisbon", "porto", "emea", "remote"]):
-                        evidence.append("Foco em recrutamento técnico na região relevante.")
+                    evidence.append(
+                        f"O título/snippet da pesquisa menciona recrutamento técnico e {company_clean}; confirmar no perfil."
+                    )
+                    if any(loc in context_lower for loc in ["portugal", "lisbon", "porto", "emea", "remote"]):
+                        evidence.append("O resultado público menciona a região relevante.")
                         confidence = "HIGH"
                     else:
                         confidence = "MEDIUM"
@@ -245,33 +317,33 @@ class HiringIntelligence:
         projects = profile.get("projects", [])
         skills = profile.get("skills", [])
 
-        proof = ""
-        hook = ""
+        # Prefer an explicit project from the user-maintained profile. The text is
+        # derived only from its name and technologies; no experience or deployment
+        # claim is inferred merely from a skill appearing in a list.
+        job_terms = set(cls._normalize_text(f"{job.title} {domain} {' '.join(tech_list)}").split())
+        ranked_projects = []
+        for project in projects:
+            project_terms = set(
+                cls._normalize_text(
+                    f"{project.get('name', '')} {project.get('description', '')} "
+                    f"{' '.join(project.get('technologies', []) or [])}"
+                ).split()
+            )
+            ranked_projects.append((len(job_terms & project_terms), project))
 
-        # 1. Tentar encontrar projeto relevante
-        if "rag" in f"{job.title} {domain}".lower() or any(t.lower() in ["rag", "llms", "fastapi"] for t in tech_list):
-            for proj in projects:
-                if "rag" in proj.get("name", "").lower() or "semantic" in proj.get("name", "").lower():
-                    proof = "built an end-to-end RAG and semantic search pipeline using FastAPI and vector search"
-                    hook = f"The team's focus on {domain} and modern AI architectures aligns directly with my recent hands-on RAG implementation."
-                    break
+        if ranked_projects:
+            _, project = max(ranked_projects, key=lambda item: item[0])
+            project_name = str(project.get("name") or "a practical software project")
+            technologies = [str(value) for value in (project.get("technologies") or []) if value]
+            technology_text = ", ".join(technologies[:3])
+            proof = f"building the {project_name} project"
+            if technology_text:
+                proof += f" with {technology_text}"
+        else:
+            selected_skills = [str(value) for value in skills if value]
+            proof = "hands-on learning in " + ", ".join(selected_skills[:3]) if selected_skills else "practical software projects"
 
-        if not proof:
-            for proj in projects:
-                if "aggregator" in proj.get("name", "").lower() or "autonomous" in proj.get("name", "").lower():
-                    proof = "developed an asynchronous data pipeline in Python with automated scraping, strict regex filtering, and CI/CD"
-                    hook = f"The requirements for {job.title} match my experience building production-ready Python pipelines and data scraping workflows."
-                    break
-
-        # 2. Fallback para competências factuais do perfil
-        if not proof:
-            if "Python" in skills and "PyTorch" in skills:
-                proof = "implemented machine learning pipelines in Python and PyTorch with Docker deployment"
-                hook = f"The technical stack for {job.title} directly matches my core Python and ML background."
-            else:
-                proof = "developed practical software and AI projects in Python with a focus on clean engineering"
-                hook = f"The responsibilities described for the {job.title} role strongly overlap with my background."
-
+        hook = f"the role's focus on {domain} overlaps with my current projects and toolkit"
         return hook, proof
 
     @classmethod
@@ -279,6 +351,7 @@ class HiringIntelligence:
         cls,
         name: str,
         job_title: str,
+        company: str,
         target_type: str,
         hook: str,
         proof: str,
@@ -293,13 +366,13 @@ class HiringIntelligence:
 
         first_name = name.split()[0].title() if name else "there"
 
-        # Mensagem elegante e de baixa pressão
+        # Rascunho factual: descobrir uma vaga não significa que a candidatura já
+        # foi submetida. O destinatário também permanece por verificar.
         message = (
-            f"Hi {first_name} — I applied for the {job_title} position today.\n\n"
-            f"I saw the work your team is doing in this area. "
-            f"I recently {proof}, so the overlap with the vacancy stood out to me.\n\n"
-            f"I wanted to introduce myself directly after submitting my official application. "
-            f"Thanks for taking a look!"
+            f"Hi {first_name} — I came across the {job_title} opening at {company}.\n\n"
+            f"It caught my attention because {hook}. My background includes {proof}.\n\n"
+            "If you are close to this team, I would appreciate any insight into what it values "
+            "in junior candidates. Thank you!"
         )
         return message
 
@@ -333,6 +406,7 @@ class HiringIntelligence:
             msg = cls.generate_suggested_message(
                 target_data.get("name", ""),
                 job.title,
+                job.company,
                 target_type,
                 hook,
                 proof,
@@ -347,11 +421,13 @@ class HiringIntelligence:
             "company": job.company,
             "profile_url": target_data.get("profile_url"),
             "confidence": confidence,
-            "outreach_recommendation": outreach_rec,
+            "verification_status": "PENDING",
+            "outreach_recommendation": "VERIFY_FIRST",
             "evidence": evidence,
             "personalization_hook": hook,
             "candidate_proof": proof,
             "suggested_message": msg,
+            "checked_at": datetime.now(timezone.utc).isoformat(),
         }
 
     @classmethod

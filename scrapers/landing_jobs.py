@@ -19,6 +19,8 @@ class LandingJobsScraper:
             try:
                 params = {"q": query, "page": 1}
                 res = await client.get(self.BASE_URL, params=params)
+                if res.status_code != 200:
+                    raise RuntimeError(f"Landing.jobs respondeu HTTP {res.status_code}")
                 if res.status_code == 200:
                     soup = BeautifulSoup(res.text, "html.parser")
                     job_cards = soup.find_all("article") or soup.find_all("div", class_="job-card")
@@ -72,4 +74,5 @@ class LandingJobsScraper:
                             continue
             except Exception as e:
                 logger.error(f"Landing.jobs error: {e}")
+                raise
         return results

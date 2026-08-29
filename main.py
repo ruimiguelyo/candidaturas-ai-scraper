@@ -1,18 +1,21 @@
-import sys
+import argparse
+import json
 import os
+import sys
 
 # Fix Windows console UTF-8 encoding
 if sys.platform == "win32":
-    sys.stdout.reconfigure(encoding="utf-8")
-    sys.stderr.reconfigure(encoding="utf-8")
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
 
 import asyncio
 import logging
-import csv
-import json
 import math
+from collections import Counter
+from pathlib import Path
 from typing import List
-import pandas as pd
 from rich.console import Console
 from rich.table import Table
 
@@ -28,12 +31,16 @@ from filter_engine import JobFilterEngine
 from company_ranker import CompanyRanker
 from hiring_intelligence import HiringIntelligence
 from email_notifier import send_daily_email
+from exporter import export_public_jobs
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+logger = logging.getLogger("AIJobPipeline")
 console = Console(force_terminal=True, legacy_windows=False)
 
-OUTPUT_CSV = "vagas_estritamente_junior_trainee_internship.csv"
-OUTPUT_JSON = "vagas_estritamente_junior_trainee_internship.json"
+OUTPUT_CSV_NAME = "vagas_estritamente_junior_trainee_internship.csv"
+OUTPUT_JSON_NAME = "vagas_estritamente_junior_trainee_internship.json"
+MIN_SUCCESSFUL_REQUEST_RATIO = 0.25
+MIN_HEALTHY_SOURCES = 2
 
 
 def sort_jobs_by_rating(jobs: List[JobPost]) -> List[JobPost]:
@@ -49,6 +56,24 @@ def sort_jobs_by_rating(jobs: List[JobPost]) -> List[JobPost]:
         jobs,
         key=lambda job: (-rating(job), job.company.casefold(), job.title.casefold(), job.job_url),
     )
+
+
+def select_new_jobs(jobs: List[JobPost], previous_json_path: Path | str) -> List[JobPost]:
+    """Compare with the last snapshot so the daily digest does not repeat every job."""
+    previous_path = Path(previous_json_path)
+    if not previous_path.exists():
+        return list(jobs)
+    try:
+        previous_rows = json.loads(previous_path.read_text(encoding="utf-8"))
+        previous_keys = {
+            JobPost.model_validate(row).deduplication_key()
+            for row in previous_rows
+            if isinstance(row, dict)
+        }
+    except (OSError, json.JSONDecodeError, ValueError, TypeError) as error:
+        logger.warning("Snapshot anterior inválido; o digest incluirá todas as vagas: %s", error)
+        return list(jobs)
+    return [job for job in jobs if job.deduplication_key() not in previous_keys]
 
 class AIJobPipeline:
     def __init__(self):
@@ -110,7 +135,7 @@ class AIJobPipeline:
             # 5. Jobicy (Remote)
             self.jobicy.fetch("ai", count=30),
             self.jobicy.fetch("software engineer", count=30),
-            self.jobicy.fetch("intern", count=30),
+            self.jobicy.fetch(None, count=30),
 
             # 6. Arbeitnow & RemoteOK
             self.arbeitnow.fetch("junior machine learning", limit=40),
@@ -119,25 +144,89 @@ class AIJobPipeline:
             self.remoteok.fetch("junior", limit=40)
         ]
 
+        task_sources = (
+            ["LinkedIn"] * 19
+            + ["ITJobs.pt"] * 6
+            + ["Landing.jobs"] * 4
+            + ["Himalayas"] * 6
+            + ["Jobicy"] * 3
+            + ["Arbeitnow"] * 2
+            + ["RemoteOK"] * 2
+        )
+        if len(task_sources) != len(tasks):
+            raise RuntimeError("O plano de pesquisas e os respetivos nomes de fonte ficaram dessincronizados.")
+
         # Evita abrir dezenas de ligações simultaneas aos portais, sem perder a
         # recolha paralela entre fontes.
         semaphore = asyncio.Semaphore(8)
+        source_semaphores = {
+            "LinkedIn": asyncio.Semaphore(3),
+            "ITJobs.pt": asyncio.Semaphore(2),
+        }
 
-        async def run_limited(task):
+        async def run_limited(source, task):
             async with semaphore:
-                return await task
+                source_semaphore = source_semaphores.get(source)
+                try:
+                    if source_semaphore is None:
+                        return source, await task, None
+                    async with source_semaphore:
+                        return source, await task, None
+                except Exception as error:
+                    return source, [], error
 
         raw_responses = await asyncio.gather(
-            *(run_limited(task) for task in tasks),
-            return_exceptions=True,
+            *(run_limited(source, task) for source, task in zip(task_sources, tasks)),
         )
 
         all_jobs: List[JobPost] = []
-        for source_index, res in enumerate(raw_responses, start=1):
-            if isinstance(res, list):
-                all_jobs.extend(res)
-            elif isinstance(res, Exception):
-                logger.warning("Fonte de vagas %s falhou: %s", source_index, res)
+        successful_requests: Counter[str] = Counter()
+        failed_requests: Counter[str] = Counter()
+        jobs_by_source: Counter[str] = Counter()
+        last_errors: dict[str, str] = {}
+
+        for source, jobs, error in raw_responses:
+            if error is not None:
+                failed_requests[source] += 1
+                last_errors[source] = str(error)
+                continue
+            successful_requests[source] += 1
+            jobs_by_source[source] += len(jobs)
+            all_jobs.extend(jobs)
+
+        if not successful_requests:
+            raise RuntimeError(
+                "Todas as fontes falharam. Os últimos ficheiros válidos foram preservados e o email não foi enviado."
+            )
+
+        health_table = Table(title="SAÚDE DAS FONTES", show_lines=False)
+        health_table.add_column("Fonte")
+        health_table.add_column("Pesquisas OK", justify="right")
+        health_table.add_column("Falhas", justify="right")
+        health_table.add_column("Vagas brutas", justify="right")
+        for source in dict.fromkeys(task_sources):
+            health_table.add_row(
+                source,
+                str(successful_requests[source]),
+                str(failed_requests[source]),
+                str(jobs_by_source[source]),
+            )
+        console.print(health_table)
+        for source, failure_count in failed_requests.items():
+            logger.warning(
+                "%s: %s pesquisa(s) falharam; último erro: %s",
+                source,
+                failure_count,
+                last_errors[source],
+            )
+
+        minimum_requests = max(1, math.ceil(len(tasks) * MIN_SUCCESSFUL_REQUEST_RATIO))
+        if len(successful_requests) < MIN_HEALTHY_SOURCES or sum(successful_requests.values()) < minimum_requests:
+            raise RuntimeError(
+                "A recolha ficou abaixo do limiar de saúde "
+                f"({len(successful_requests)} fontes e {sum(successful_requests.values())}/{len(tasks)} pesquisas OK). "
+                "Os últimos ficheiros válidos foram preservados e o email não foi enviado."
+            )
 
         # Pré-filtro: Deduplicação e separação
         seen_keys = set()
@@ -173,8 +262,17 @@ class AIJobPipeline:
         console.print(f"[bold green]Total de vagas qualificadas (Ordenadas por Rating):[/bold green] {len(final_jobs)}\n")
         return final_jobs
 
-    def export_and_display(self, jobs: List[JobPost]):
+    def export_and_display(
+        self,
+        jobs: List[JobPost],
+        output_dir: Path | str = Path("."),
+        notify_mode: str | None = None,
+    ):
         jobs = sort_jobs_by_rating(jobs)
+        output_directory = Path(output_dir)
+        csv_path = output_directory / OUTPUT_CSV_NAME
+        json_path = output_directory / OUTPUT_JSON_NAME
+        new_jobs = select_new_jobs(jobs, json_path)
 
         table = Table(title="VAGAS QUALIFICADAS (ORDENADAS POR RATING DE EMPRESA)", show_lines=True)
         table.add_column("Score", style="bold yellow", width=16)
@@ -182,10 +280,10 @@ class AIJobPipeline:
         table.add_column("Título do Cargo", style="bold white", width=30)
         table.add_column("Categoria", style="cyan", width=12)
         table.add_column("Localização", style="magenta", width=18)
+        table.add_column("Compat.", style="cyan", width=11)
         table.add_column("Regime", style="yellow", width=10)
         table.add_column("Link de Candidatura", style="blue", width=36)
 
-        data_rows = []
         for j in jobs:
             score_display = f"{j.company_score} ({j.company_reviews})" if j.company_score else "Sem rating"
             table.add_row(
@@ -194,33 +292,81 @@ class AIJobPipeline:
                 j.title,
                 j.category,
                 j.location,
+                j.location_compatibility,
                 j.modality,
                 j.job_url
             )
-            data_rows.append(j.model_dump())
 
         console.print(table)
 
-        # Exportar CSV e JSON mesmo quando a recolha nao devolve resultados. Assim,
-        # uma execucao vazia nunca publica dados antigos como se fossem atuais.
-        csv_filename = OUTPUT_CSV
-        df = pd.DataFrame(data_rows)
-        df.to_csv(csv_filename, index=False, quoting=csv.QUOTE_NONNUMERIC)
-
-        json_filename = OUTPUT_JSON
-        with open(json_filename, "w", encoding="utf-8") as f:
-            json.dump(data_rows, f, ensure_ascii=False, indent=2)
+        # Public exports exclude private outreach data and third-party description
+        # bodies. The private in-memory rows are used only for an explicitly
+        # requested notification and are never written to the repository.
+        export_public_jobs(jobs, csv_path, json_path)
 
         if not jobs:
             console.print("[yellow]Nenhuma vaga passou pelo filtro nesta execução.[/yellow]")
         else:
-            console.print(f"\n[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {csv_filename}")
-            console.print(f"[bold green]Ficheiro atualizado e ordenado por rating:[/bold green] {json_filename}")
+            console.print(f"\n[bold green]Ficheiro público atualizado:[/bold green] {csv_path}")
+            console.print(f"[bold green]Ficheiro público atualizado:[/bold green] {json_path}")
+            console.print(f"[bold cyan]Vagas novas desde o snapshot anterior:[/bold cyan] {len(new_jobs)}")
 
-        # Disparo de Email Notifier se configurado
-        send_daily_email(json_filename, csv_filename)
+        if notify_mode:
+            notification_jobs = jobs if notify_mode == "all" else new_jobs
+            delivered = send_daily_email(
+                str(json_path),
+                str(csv_path),
+                jobs=[job.model_dump() for job in notification_jobs],
+                new_only=notify_mode == "new",
+            )
+            if not delivered:
+                raise RuntimeError("A notificação por email foi pedida, mas não foi entregue.")
 
-if __name__ == "__main__":
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Recolhe e filtra vagas técnicas entry-level sem efetuar candidaturas automaticamente."
+    )
+    parser.add_argument(
+        "--output-dir",
+        default=os.getenv("OUTPUT_DIR", "."),
+        help="Diretório dos exports públicos (predefinição: diretório atual).",
+    )
+    notification_group = parser.add_mutually_exclusive_group()
+    notification_group.add_argument(
+        "--notify",
+        action="store_true",
+        help="Envia por email apenas as vagas novas desde o último snapshot.",
+    )
+    notification_group.add_argument(
+        "--notify-all",
+        action="store_true",
+        help="Envia todas as vagas atuais, mesmo que já existissem no snapshot anterior.",
+    )
+    parser.add_argument(
+        "--outreach",
+        action="store_true",
+        help="Ativa a pesquisa privada de contactos; exige um perfil local e verificação humana.",
+    )
+    parser.add_argument(
+        "--log-level",
+        choices=("DEBUG", "INFO", "WARNING", "ERROR"),
+        default=os.getenv("LOG_LEVEL", "WARNING").upper(),
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    logging.getLogger().setLevel(args.log_level)
+    if args.outreach:
+        os.environ["HIRING_INTELLIGENCE_ENABLED"] = "true"
+
     pipeline = AIJobPipeline()
     jobs = asyncio.run(pipeline.run())
-    pipeline.export_and_display(jobs)
+    notify_mode = "all" if args.notify_all else ("new" if args.notify else None)
+    pipeline.export_and_display(jobs, output_dir=args.output_dir, notify_mode=notify_mode)
+
+
+if __name__ == "__main__":
+    main()

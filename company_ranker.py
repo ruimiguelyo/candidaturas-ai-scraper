@@ -15,7 +15,7 @@ import httpx
 
 logger = logging.getLogger("CompanyRanker")
 
-CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "company_scores_cache.json")
+CACHE_FILE = os.getenv("COMPANY_SCORE_CACHE_FILE", os.path.abspath("company_scores_cache.json"))
 ScoreResult = Dict[str, Any]
 
 
@@ -409,7 +409,7 @@ class CompanyRanker:
         try:
             response = await client.get(url, timeout=4.0, follow_redirects=True)
         except (httpx.RequestError, asyncio.TimeoutError) as error:
-            raise TeamlyzerUnavailable(str(error)) from error
+            raise TeamlyzerUnavailable(str(error) or type(error).__name__) from error
 
         status = int(getattr(response, "status_code", 0) or 0)
         if status in {403, 429} or status >= 500:
@@ -446,7 +446,7 @@ class CompanyRanker:
             try:
                 response = await client.get(endpoint, timeout=3.5)
             except (httpx.RequestError, asyncio.TimeoutError) as error:
-                raise TeamlyzerUnavailable(str(error)) from error
+                raise TeamlyzerUnavailable(str(error) or type(error).__name__) from error
 
             status = int(getattr(response, "status_code", 0) or 0)
             if status in {403, 429} or status >= 500:
@@ -494,6 +494,18 @@ class CompanyRanker:
         return cls.GLASSDOOR_SEARCH_URL.format(urllib.parse.quote(display_name, safe=""))
 
     @classmethod
+    def _glassdoor_result_matches_company(cls, company_name: str, text: str, url: str) -> bool:
+        """Reject ratings from a different company returned by web search."""
+        expected_tokens = set(cls._normalize_name(company_name).split())
+        if not expected_tokens:
+            return False
+        searchable = cls._strip_accents(
+            f"{text} {urllib.parse.unquote(str(url or ''))}"
+        ).casefold()
+        result_tokens = set(re.findall(r"[a-z0-9]+", searchable))
+        return expected_tokens.issubset(result_tokens)
+
+    @classmethod
     async def fetch_dynamic_glassdoor(
         cls, company_name: str, client: httpx.AsyncClient
     ) -> Optional[ScoreResult]:
@@ -520,6 +532,8 @@ class CompanyRanker:
                         continue
 
                     text = result.get_text(" ", strip=True)
+                    if not cls._glassdoor_result_matches_company(display_name, text, href):
+                        continue
                     rating_match = re.search(
                         r"rating\s+(?:of\s+)?([1-5](?:[.,][0-9])?)\s+out\s+of\s+5"
                         r"(?:\s+stars)?(?:[^\d]*(\d[\d,.]*[kK]?)\s+company\s+reviews)?",
@@ -575,11 +589,14 @@ class CompanyRanker:
                 # validado. Nao sao confiaveis: revalidar evita perpetuar um perfil
                 # de outra empresa encontrado por uma palavra em comum.
                 if cls._legacy_teamlyzer_cache_is_plausible(company_name, cached):
-                    return cached
-                cached = None
-                cls._cache.pop(cache_key, None)
+                    legacy_teamlyzer_cache = cached
+                else:
+                    cached = None
+                    cls._cache.pop(cache_key, None)
             elif cls._trusted_teamlyzer_cache(company_name, cached):
-                return cached
+                legacy_teamlyzer_cache = cached
+                if cls._teamlyzer_was_checked_recently(cached):
+                    return cached
             else:
                 cls._cache.pop(cache_key, None)
                 cached = None
@@ -595,6 +612,8 @@ class CompanyRanker:
             return legacy_teamlyzer_cache
 
         if teamlyzer_result:
+            teamlyzer_result = dict(teamlyzer_result)
+            teamlyzer_result["teamlyzer_checked_at"] = int(time.time())
             cls._cache[cache_key] = teamlyzer_result
             cls.save_cache()
             return teamlyzer_result
@@ -632,7 +651,7 @@ class CompanyRanker:
             company_names.setdefault(cls._cache_key(job.company), job.company)
 
         async with httpx.AsyncClient(headers=headers, follow_redirects=True) as client:
-            semaphore = asyncio.Semaphore(8)
+            semaphore = asyncio.Semaphore(4)
 
             async def lookup(name: str) -> Optional[ScoreResult]:
                 async with semaphore:

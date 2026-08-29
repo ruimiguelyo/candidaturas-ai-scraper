@@ -1,0 +1,27 @@
+{
+  "name": "Your name",
+  "location": "Lisbon, Portugal",
+  "linkedin": "https://www.linkedin.com/in/your-profile",
+  "github": "https://github.com/your-user",
+  "education": [
+    {
+      "degree": "Your degree",
+      "institution": "Your institution",
+      "status": "Current status"
+    }
+  ],
+  "skills": [
+    "Python",
+    "Machine Learning"
+  ],
+  "projects": [
+    {
+      "name": "A factual project name",
+      "description": "A factual, verifiable description used only to draft private outreach.",
+      "technologies": [
+        "Python"
+      ]
+    }
+  ],
+  "experience": []
+}

@@ -1,4 +1,5 @@
 import logging
+import re
 from typing import List
 from datetime import datetime
 import httpx
@@ -11,32 +12,41 @@ class ArbeitnowScraper:
 
     async def fetch(self, query: str, limit: int = 30) -> List[JobPost]:
         results: List[JobPost] = []
+        query_tokens = {token for token in re.findall(r"[a-z0-9]+", query.casefold()) if len(token) >= 3}
         async with httpx.AsyncClient(timeout=12) as client:
             try:
                 res = await client.get(self.BASE_URL, params={"search": query})
-                if res.status_code == 200:
-                    data = res.json().get("data", [])
-                    for item in data[:limit]:
-                        raw_remote = item.get("remote", False)
-                        is_remote = raw_remote is True or str(raw_remote).strip().lower() in {
-                            "1",
-                            "true",
-                            "yes",
-                            "remote",
-                        }
-                        raw_date = item.get("created_at")
-                        if isinstance(raw_date, (int, float)):
-                            try:
-                                post_date = datetime.fromtimestamp(raw_date).strftime("%d/%m/%Y")
-                            except Exception:
-                                post_date = "Recente"
-                        else:
-                            post_date = str(raw_date) if raw_date else "Recente"
+                if res.status_code != 200:
+                    raise RuntimeError(f"Arbeitnow respondeu HTTP {res.status_code}")
+                data = res.json().get("data", [])
+                for item in data[:limit]:
+                    searchable = " ".join(
+                        str(item.get(field, ""))
+                        for field in ("title", "description", "job_description", "tags")
+                    ).casefold()
+                    if query_tokens and not any(token in searchable for token in query_tokens):
+                        continue
+                    raw_remote = item.get("remote", False)
+                    is_remote = raw_remote is True or str(raw_remote).strip().lower() in {
+                        "1",
+                        "true",
+                        "yes",
+                        "remote",
+                    }
+                    raw_date = item.get("created_at")
+                    if isinstance(raw_date, (int, float)):
+                        try:
+                            post_date = datetime.fromtimestamp(raw_date).strftime("%d/%m/%Y")
+                        except Exception:
+                            post_date = "Recente"
+                    else:
+                        post_date = str(raw_date) if raw_date else "Recente"
 
-                        raw_tags = item.get("tags", []) or []
-                        tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
+                    raw_tags = item.get("tags", []) or []
+                    tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
 
-                        results.append(JobPost(
+                    results.append(
+                        JobPost(
                             source="Arbeitnow",
                             job_id=str(item.get("slug", "")),
                             title=item.get("title", ""),
@@ -47,8 +57,11 @@ class ArbeitnowScraper:
                             is_remote=is_remote,
                             post_date=post_date,
                             tags=tags,
-                            description_snippet=item.get("description", "") or item.get("job_description", "")
-                        ))
+                            description_snippet=item.get("description", "")
+                            or item.get("job_description", ""),
+                        )
+                    )
             except Exception as e:
                 logger.error(f"Arbeitnow error: {e}")
+                raise
         return results

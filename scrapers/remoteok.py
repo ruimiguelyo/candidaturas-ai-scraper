@@ -14,17 +14,19 @@ class RemoteOKScraper:
         async with httpx.AsyncClient(headers=headers, timeout=12) as client:
             try:
                 res = await client.get(self.BASE_URL, params={"tag": query})
-                if res.status_code == 200:
-                    data = res.json()
-                    valid_items = [i for i in data if isinstance(i, dict) and "id" in i]
-                    for item in valid_items[:limit]:
-                        title = item.get("position", "")
-                        job_url = item.get("url", "")
-                        if not title or not job_url:
-                            continue
-                        raw_tags = item.get("tags", []) or []
-                        tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
-                        results.append(JobPost(
+                if res.status_code != 200:
+                    raise RuntimeError(f"RemoteOK respondeu HTTP {res.status_code}")
+                data = res.json()
+                valid_items = [i for i in data if isinstance(i, dict) and "id" in i]
+                for item in valid_items[:limit]:
+                    title = item.get("position", "")
+                    job_url = item.get("url", "")
+                    if not title or not job_url:
+                        continue
+                    raw_tags = item.get("tags", []) or []
+                    tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
+                    results.append(
+                        JobPost(
                             source="RemoteOK",
                             job_id=str(item.get("id")),
                             title=title,
@@ -35,8 +37,10 @@ class RemoteOKScraper:
                             is_remote=True,
                             tags=tags,
                             post_date=item.get("date"),
-                            description_snippet=item.get("description", "")
-                        ))
+                            description_snippet=item.get("description", ""),
+                        )
+                    )
             except Exception as e:
                 logger.error(f"RemoteOK error: {e}")
+                raise
         return results

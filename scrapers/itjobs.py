@@ -1,7 +1,5 @@
-import asyncio
 import logging
 import re
-import urllib.parse
 from typing import List, Optional
 import bs4
 from curl_cffi.requests import AsyncSession
@@ -39,9 +37,13 @@ class ITJobsScraper:
 
                 try:
                     res = await session.get(self.SEARCH_URL, params=params, timeout=self.timeout)
-                    if res.status_code != 200:
-                        logger.warning(f"ITJobs retornou status {res.status_code} para '{search_term}' na pág {page}")
+                    if res.status_code == 404 and page > 1:
+                        # ITJobs uses 404 to signal that pagination ended.
                         break
+                    if res.status_code != 200:
+                        raise RuntimeError(
+                            f"ITJobs respondeu HTTP {res.status_code} para '{search_term}' na pág {page}"
+                        )
 
                     soup = bs4.BeautifulSoup(res.text, "html.parser")
                     
@@ -146,7 +148,7 @@ class ITJobsScraper:
 
                 except Exception as e:
                     logger.error(f"Erro ao raspar ITJobs.pt para '{search_term}': {e}")
-                    break
+                    raise
 
         logger.info(f"ITJobs.pt: '{search_term}' retornou {len(results)} ofertas.")
         return results

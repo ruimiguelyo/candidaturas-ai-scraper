@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 logger = logging.getLogger("EmailNotifier")
 
 
-def generate_html_email(jobs: list) -> str:
+def generate_html_email(jobs: list, count_label: str = "vagas qualificadas") -> str:
     now_str = datetime.now().strftime("%d/%m/%Y às %H:%M")
 
     def rating(job: dict) -> float:
@@ -97,6 +97,19 @@ def generate_html_email(jobs: list) -> str:
             reviews = safe_text(job.get("company_reviews")) if job.get("company_reviews") else ""
             ranking_url = safe_url(job.get("teamlyzer_url"))
             job_url = safe_url(job.get("job_url"))
+            location_compatibility = str(job.get("location_compatibility", "unknown")).lower()
+            location_label = {
+                "confirmed": "Localização compatível",
+                "conditional": "Localização a confirmar",
+                "unlikely": "Provavelmente incompatível",
+                "unknown": "Localização desconhecida",
+            }.get(location_compatibility, "Localização desconhecida")
+            location_color = {
+                "confirmed": "#15803d",
+                "conditional": "#b45309",
+                "unlikely": "#b91c1c",
+                "unknown": "#64748b",
+            }.get(location_compatibility, "#64748b")
 
             if score and ranking_url:
                 if "teamlyzer" in ranking_url.lower():
@@ -131,6 +144,7 @@ def generate_html_email(jobs: list) -> str:
                 target_name = safe_text(outreach.get("name") or "Contact")
                 target_title = safe_text(outreach.get("current_title") or "Engineering Management")
                 target_confidence = safe_text(outreach.get("confidence", "MEDIUM"))
+                verification_status = safe_text(outreach.get("verification_status", "PENDING"))
                 profile_link = safe_url(outreach.get("profile_url"))
                 hook = safe_text(outreach.get("personalization_hook") or "")
                 evidence_list = outreach.get("evidence", [])
@@ -148,12 +162,12 @@ def generate_html_email(jobs: list) -> str:
                 outreach_html = f"""
                 <div style="margin: 12px 0; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid {conf_badge}; border-radius: 6px; padding: 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a;">👤 LIKELY HIRING TARGET: {target_name} <span style="font-weight: normal; color: #64748b;">({target_title})</span></span>
-                        <span style="font-size: 10px; font-weight: 800; color: {conf_badge}; text-transform: uppercase; background: #ffffff; border: 1px solid {conf_badge}; padding: 2px 6px; border-radius: 4px;">Confidence: {target_confidence}</span>
+                        <span style="font-size: 13px; font-weight: 700; color: #0f172a;">👤 UNVERIFIED CONTACT: {target_name} <span style="font-weight: normal; color: #64748b;">({target_title})</span></span>
+                        <span style="font-size: 10px; font-weight: 800; color: {conf_badge}; text-transform: uppercase; background: #ffffff; border: 1px solid {conf_badge}; padding: 2px 6px; border-radius: 4px;">Search confidence: {target_confidence} · {verification_status}</span>
                     </div>
                     <div style="font-size: 12px; color: #475569; margin-bottom: 4px;"><strong>Why:</strong> {evidence_text} {profile_btn}</div>
                     {f'<div style="font-size: 12px; color: #475569; margin-bottom: 4px;"><strong>Hook:</strong> {hook}</div>' if hook else ''}
-                    {f'<div style="font-size: 11px; font-weight: 700; color: #334155; margin-top: 8px;">Suggested LinkedIn Message:</div>' if suggested_msg else ''}
+                    {'<div style="font-size: 11px; font-weight: 700; color: #334155; margin-top: 8px;">Draft — verify the person and role before use:</div>' if suggested_msg else ''}
                     {msg_block}
                 </div>
                 """
@@ -173,6 +187,7 @@ def generate_html_email(jobs: list) -> str:
                     <span><strong>Empresa:</strong> <span style="color: #0f172a; font-weight: 700; font-size: 15px;">{safe_text(job.get('company'))}</span></span>
                     <span>{rating_badge}</span>
                     <span>• <strong>Local:</strong> {safe_text(job.get('location'))}</span>
+                    <span style="color: {location_color}; font-size: 11px; font-weight: 700;">{safe_text(location_label)}</span>
                 </div>
                 {outreach_html}
                 <div style="text-align: right; margin-top: 10px;">
@@ -203,7 +218,7 @@ def generate_html_email(jobs: list) -> str:
                 <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">Vagas Junior, Trainee &amp; Internships</h1>
                 <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">IA/ML + Top-Tier Software Engineering (Ordenadas por Rating da Empresa)</p>
                 <div style="margin-top: 14px; display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 14px; border-radius: 20px; font-size: 13px;">
-                    <strong>{len(ordered_jobs)} vagas qualificadas</strong> ordenadas pelo maior score (Teamlyzer / Glassdoor)
+                    <strong>{len(ordered_jobs)} {safe_text(count_label)}</strong> ordenadas pelo maior score (Teamlyzer / Glassdoor)
                 </div>
             </div>
 
@@ -231,7 +246,9 @@ def generate_html_email(jobs: list) -> str:
 def send_daily_email(
     json_path: str = "vagas_estritamente_junior_trainee_internship.json",
     csv_path: str = "vagas_estritamente_junior_trainee_internship.csv",
-):
+    jobs: list | None = None,
+    new_only: bool = False,
+) -> bool:
     smtp_user = os.getenv("SMTP_USER")
     smtp_pass = os.getenv("SMTP_PASS")
     receiver = os.getenv("RECEIVER_EMAIL")
@@ -241,22 +258,28 @@ def send_daily_email(
     smtp_port = int(smtp_port_raw.strip()) if smtp_port_raw and smtp_port_raw.strip().isdigit() else 587
 
     if not (smtp_user and smtp_pass and receiver):
-        print("Aviso: SMTP_USER, SMTP_PASS e RECEIVER_EMAIL têm de estar configuradas. O envio foi ignorado.")
-        return
+        logger.error("SMTP_USER, SMTP_PASS e RECEIVER_EMAIL têm de estar configuradas.")
+        return False
 
-    if not os.path.exists(json_path):
-        print(f"Erro: Ficheiro {json_path} não encontrado.")
-        return
+    if jobs is None:
+        if not os.path.exists(json_path):
+            logger.error("Ficheiro %s não encontrado.", json_path)
+            return False
 
-    with open(json_path, "r", encoding="utf-8") as file:
-        jobs = json.load(file)
+        try:
+            with open(json_path, "r", encoding="utf-8") as file:
+                jobs = json.load(file)
+        except (OSError, json.JSONDecodeError) as error:
+            logger.error("Não foi possível carregar %s: %s", json_path, error)
+            return False
 
     if not jobs:
-        print("Aviso: Nenhuma vaga encontrada hoje para envio de email.")
-        return
+        logger.info("Nenhuma vaga qualificada; será enviado um digest vazio mas válido.")
 
-    subject = f"[Vagas Top Tech] {len(jobs)} Vagas Junior/Internship Ordenadas por Rating - {datetime.now().strftime('%d/%m/%Y')}"
-    html_content = generate_html_email(jobs)
+    scope_label = "Novas vagas" if new_only else "Vagas"
+    count_label = "novas vagas qualificadas" if new_only else "vagas qualificadas"
+    subject = f"[Vagas Top Tech] {len(jobs)} {scope_label} Junior/Internship - {datetime.now().strftime('%d/%m/%Y')}"
+    html_content = generate_html_email(jobs, count_label=count_label)
 
     message = MIMEMultipart("mixed")
     message["From"] = f"Top-Tech Job Finder <{smtp_user}>"
@@ -276,17 +299,19 @@ def send_daily_email(
             part.add_header("Content-Disposition", f"attachment; filename={os.path.basename(csv_path)}")
             message.attach(part)
         except OSError as error:
-            print(f"Aviso ao anexar CSV: {error}")
+            logger.warning("Falha ao anexar CSV: %s", error)
 
     try:
-        print(f"A ligar a {smtp_server}:{smtp_port} para envio de email a {receiver}...")
+        logger.info("A ligar a %s:%s para envio de email a %s...", smtp_server, smtp_port, receiver)
         with smtplib.SMTP(smtp_server, smtp_port, timeout=20) as server:
             server.starttls()
             server.login(smtp_user, smtp_pass)
             server.send_message(message)
-        print(f"SUCESSO: Email enviado para {receiver} com {len(jobs)} vagas ordenadas por rating!")
+        logger.info("Email enviado para %s com %s vagas.", receiver, len(jobs))
+        return True
     except Exception as error:
-        print(f"Erro ao enviar email via SMTP: {error}")
+        logger.error("Erro ao enviar email via SMTP: %s", error)
+        return False
 
 
 if __name__ == "__main__":
