@@ -1,10 +1,13 @@
 {
   "cloudflare": {
-    "score": "4.2/5",
-    "numeric": 4.2,
     "platform": "Teamlyzer",
-    "reviews": "16 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/cloudflare"
+    "score": "3.4/5",
+    "numeric": 3.4,
+    "reviews": "37 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/cloudflare",
+    "matched_name": "Cloudflare",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043679
   },
   "fujitsu": {
     "score": "3.1/5",
@@ -42,18 +45,24 @@
     "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions"
   },
   "volkswagengroup": {
-    "score": "3.5/5",
-    "numeric": 3.5,
     "platform": "Teamlyzer",
-    "reviews": "144 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/volkswagen-digital-solutions"
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "19 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/volkswagen-group-services",
+    "matched_name": "Volkswagen Group Services",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043672
   },
   "santander": {
-    "score": "3.2/5",
-    "numeric": 3.2,
     "platform": "Teamlyzer",
-    "reviews": "45 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/santander-totta"
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "22 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/banco-santander-totta",
+    "matched_name": "Banco Santander Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043680
   },
   "bancosantander": {
     "score": "3.2/5",
@@ -77,11 +86,14 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management"
   },
   "nordeaassetmanagementportugal": {
-    "score": "3.1/5",
-    "numeric": 3.1,
     "platform": "Teamlyzer",
-    "reviews": "1 Review",
-    "url": "https://pt.teamlyzer.com/companies/nordea-asset-management"
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "1 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
+    "matched_name": "Nordea Asset Management",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043681
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -133,11 +145,14 @@
     "url": "https://pt.teamlyzer.com/companies/critical-software"
   },
   "revolut": {
+    "platform": "Teamlyzer",
     "score": "3.1/5",
     "numeric": 3.1,
-    "platform": "Teamlyzer",
-    "reviews": "54 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/revolut"
+    "reviews": "55 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/revolut",
+    "matched_name": "Revolut",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043679
   },
   "ceiia": {
     "score": "3.8/5",
@@ -154,11 +169,14 @@
     "url": "https://pt.teamlyzer.com/companies/zendesk"
   },
   "euronext": {
-    "score": "3.9/5",
-    "numeric": 3.9,
     "platform": "Teamlyzer",
-    "reviews": "15 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/euronext"
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "52 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/euronext-s-technology-centre-portugal",
+    "matched_name": "Euronext's Technology Centre - Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043670
   },
   "philipmorris": {
     "score": "3.8/5",
@@ -168,11 +186,14 @@
     "url": "https://pt.teamlyzer.com/companies/tabaqueira"
   },
   "philipmorrisinternational": {
-    "score": "3.8/5",
-    "numeric": 3.8,
     "platform": "Teamlyzer",
-    "reviews": "15 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/tabaqueira"
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "16 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/philip-morris-international",
+    "matched_name": "Philip Morris International",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043679
   },
   "alten": {
     "score": "2.3/5",
@@ -307,7 +328,10 @@
     "score": "3.5/5",
     "numeric": 3.5,
     "reviews": "8 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/tensorops"
+    "url": "https://pt.teamlyzer.com/companies/tensorops",
+    "matched_name": "TensorOps",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043671
   },
   "policyme": {
     "score": "4.3/5",
@@ -595,7 +619,10 @@
     "score": "2.9/5",
     "numeric": 2.9,
     "reviews": "4 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub"
+    "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
+    "matched_name": "Innovation & Engineering HUB (VW)",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043670
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -761,7 +788,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Viatris",
-    "teamlyzer_checked_at": 1787949893
+    "teamlyzer_checked_at": 1788043681
   },
   "yellowipe": {
     "platform": "Teamlyzer",
@@ -782,7 +809,8 @@
     "score": "3.4/5",
     "numeric": 3.4,
     "reviews": "185 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/bosch"
+    "url": "https://pt.teamlyzer.com/companies/bosch",
+    "teamlyzer_checked_at": 1788043677
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -865,10 +893,11 @@
     "platform": "Teamlyzer",
     "score": "3.1/5",
     "numeric": 3.1,
-    "reviews": "209 Reviews",
+    "reviews": "213 Reviews",
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
-    "alias_match": false
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043670
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -919,7 +948,8 @@
     "reviews": "17 Reviews",
     "url": "https://pt.teamlyzer.com/companies/uniplaces",
     "matched_name": "Uniplaces",
-    "alias_match": false
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043681
   },
   "motorolasolutions": {
     "platform": "Teamlyzer",
@@ -945,7 +975,8 @@
     "reviews": "48 Reviews",
     "url": "https://pt.teamlyzer.com/companies/timwe",
     "matched_name": "TIMWETECH",
-    "alias_match": false
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043680
   },
   "volkswagengroupdigitalsolutionsportugal": {
     "platform": "Teamlyzer",
@@ -979,5 +1010,61 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Binance",
     "teamlyzer_checked_at": 1788012793
+  },
+  "mollie": {
+    "platform": "Teamlyzer",
+    "score": "3.5/5",
+    "numeric": 3.5,
+    "reviews": "13 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/mollie",
+    "matched_name": "Mollie",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043671
+  },
+  "maxacceleratetechnologygroup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Max%20Accelerate%20Technology%20Group",
+    "teamlyzer_checked_at": 1788043678
+  },
+  "conkord": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "136 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/conkord",
+    "matched_name": "CONKORD (ReadinessIT, Ritain.io, Latitudde e RedIT)",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043679
+  },
+  "bnpparibas": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "149 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/banco-bnp-paribas",
+    "matched_name": "Banco BNP Paribas",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043680
+  },
+  "knokcare": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/knokcare",
+    "matched_name": "knokcare",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788043682
+  },
+  "shee": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
+    "teamlyzer_checked_at": 1788043683
   }
 }
