@@ -404,7 +404,15 @@ class TestAllScenarios(unittest.TestCase):
             os.environ,
             {"MAX_HIRING_LOOKUPS": "3", "HIRING_INTELLIGENCE_ENABLED": "true"},
         ):
-            with patch.object(HiringIntelligence, "enrich_single_job", return_value={"target_found": False}):
+            with patch.object(
+                HiringIntelligence,
+                "load_candidate_profile",
+                return_value={"name": "Test Candidate", "projects": [], "skills": []},
+            ), patch.object(
+                HiringIntelligence,
+                "enrich_single_job",
+                return_value={"target_found": False},
+            ):
                 asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
 
         self.assertEqual([j.title for j in jobs], original_order, "A ordem das vagas NUNCA deve ser alterada!")
@@ -418,7 +426,15 @@ class TestAllScenarios(unittest.TestCase):
         """Testa se qualquer excecao de rede/parser e tratada silenciosamente sem abortar."""
         jobs = [make_job("Junior AI Engineer", "Acme")]
         with patch.dict(os.environ, {"HIRING_INTELLIGENCE_ENABLED": "true"}):
-            with patch.object(HiringIntelligence, "enrich_single_job", side_effect=RuntimeError("Network failure")):
+            with patch.object(
+                HiringIntelligence,
+                "load_candidate_profile",
+                return_value={"name": "Test Candidate", "projects": [], "skills": []},
+            ), patch.object(
+                HiringIntelligence,
+                "enrich_single_job",
+                side_effect=RuntimeError("Network failure"),
+            ):
                 asyncio.run(HiringIntelligence.enrich_jobs_async(jobs))
         self.assertIsNotNone(jobs[0].human_outreach)
         self.assertFalse(jobs[0].human_outreach["target_found"])
