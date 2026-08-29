@@ -1,7 +1,20 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List, Any
 from datetime import datetime, timezone
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
+
+TRACKING_QUERY_PARAMETERS = {
+    "campaign",
+    "eid",
+    "lipi",
+    "midtoken",
+    "ref",
+    "refid",
+    "source",
+    "trk",
+    "trackingid",
+}
 
 class JobPost(BaseModel):
     source: str
@@ -44,13 +57,25 @@ class JobPost(BaseModel):
         return str(v)
 
     def deduplication_key(self) -> str:
-        """Prefere a identidade da oferta e nao empresa+titulo apenas."""
+        """Prefer job identity while removing only known tracking parameters."""
         if self.job_url:
             try:
                 parsed = urlsplit(self.job_url.strip())
                 if parsed.netloc and parsed.path:
+                    meaningful_query = [
+                        (key, value)
+                        for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+                        if not key.casefold().startswith("utm_")
+                        and key.casefold() not in TRACKING_QUERY_PARAMETERS
+                    ]
                     canonical_url = urlunsplit(
-                        (parsed.scheme.lower(), parsed.netloc.lower(), parsed.path.rstrip("/"), "", "")
+                        (
+                            parsed.scheme.lower(),
+                            parsed.netloc.lower(),
+                            parsed.path.rstrip("/"),
+                            urlencode(sorted(meaningful_query)),
+                            parsed.fragment,
+                        )
                     )
                     return f"url:{canonical_url}"
             except ValueError:

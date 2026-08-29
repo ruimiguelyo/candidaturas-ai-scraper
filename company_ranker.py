@@ -39,6 +39,7 @@ class CompanyRanker:
     TEAMLYZER_AUTOCOMPLETE_URL = f"{TEAMLYZER_BASE_URL}/users/autocomplete_company/v2/"
     GLASSDOOR_SEARCH_URL = "https://www.glassdoor.com/Search/results.htm?keyword={}"
     TEAMLYZER_RECHECK_SECONDS = 24 * 60 * 60
+    TEAMLYZER_BREAKER_FAILURES = 4
 
     _cache: Dict[str, Optional[ScoreResult]] = {}
     _cache_loaded = False
@@ -569,7 +570,12 @@ class CompanyRanker:
 
     @classmethod
     async def get_score_async(
-        cls, company_name: str, client: httpx.AsyncClient
+        cls,
+        company_name: str,
+        client: httpx.AsyncClient,
+        *,
+        allow_network: bool = True,
+        raise_on_unavailable: bool = False,
     ) -> Optional[ScoreResult]:
         company_name = " ".join(str(company_name or "").split()).strip()
         if cls._normalize_name(company_name) in {cls._normalize_name(value) for value in cls.IGNORED_COMPANIES}:
@@ -591,17 +597,20 @@ class CompanyRanker:
                 if cls._legacy_teamlyzer_cache_is_plausible(company_name, cached):
                     legacy_teamlyzer_cache = cached
                 else:
+                    # Do not publish this unverified entry for the current job,
+                    # but preserve it until a healthy request can revalidate or
+                    # replace it. An outage must not destructively empty cache.
                     cached = None
-                    cls._cache.pop(cache_key, None)
             elif cls._trusted_teamlyzer_cache(company_name, cached):
                 legacy_teamlyzer_cache = cached
                 if cls._teamlyzer_was_checked_recently(cached):
                     return cached
             else:
-                cls._cache.pop(cache_key, None)
                 cached = None
         if isinstance(cached, dict) and cls._teamlyzer_was_checked_recently(cached):
             return cached
+        if not allow_network:
+            return cached if isinstance(cached, dict) else legacy_teamlyzer_cache
 
         try:
             teamlyzer_result = await cls.fetch_dynamic_teamlyzer(company_name, client)
@@ -609,7 +618,11 @@ class CompanyRanker:
             logger.warning("Teamlyzer indisponivel para %s: %s", company_name, error)
             if isinstance(cached, dict):
                 return cached
-            return legacy_teamlyzer_cache
+            if legacy_teamlyzer_cache is not None:
+                return legacy_teamlyzer_cache
+            if raise_on_unavailable:
+                raise
+            return None
 
         if teamlyzer_result:
             teamlyzer_result = dict(teamlyzer_result)
@@ -651,14 +664,41 @@ class CompanyRanker:
             company_names.setdefault(cls._cache_key(job.company), job.company)
 
         async with httpx.AsyncClient(headers=headers, follow_redirects=True) as client:
-            semaphore = asyncio.Semaphore(4)
+            names = list(company_names.values())
+            score_results: list[Optional[ScoreResult] | BaseException] = []
+            breaker_open = False
 
-            async def lookup(name: str) -> Optional[ScoreResult]:
-                async with semaphore:
-                    return await cls.get_score_async(name, client)
+            # Process in bounded batches. If one complete batch cannot reach
+            # Teamlyzer, stop repeating the same timeout for every company while
+            # still allowing recent/stale cached ratings to be reused.
+            for offset in range(0, len(names), cls.TEAMLYZER_BREAKER_FAILURES):
+                batch = names[offset : offset + cls.TEAMLYZER_BREAKER_FAILURES]
+                batch_results = await asyncio.gather(
+                    *(
+                        cls.get_score_async(
+                            name,
+                            client,
+                            allow_network=not breaker_open,
+                            raise_on_unavailable=not breaker_open,
+                        )
+                        for name in batch
+                    ),
+                    return_exceptions=True,
+                )
+                score_results.extend(batch_results)
 
-            tasks = [lookup(name) for name in company_names.values()]
-            score_results = await asyncio.gather(*tasks, return_exceptions=True)
+                if not breaker_open and len(batch) == cls.TEAMLYZER_BREAKER_FAILURES:
+                    unavailable_count = sum(
+                        isinstance(result, TeamlyzerUnavailable)
+                        for result in batch_results
+                    )
+                    if unavailable_count == cls.TEAMLYZER_BREAKER_FAILURES:
+                        breaker_open = True
+                        logger.warning(
+                            "Teamlyzer indisponível em %s consultas consecutivas; "
+                            "a execução continuará apenas com ratings em cache.",
+                            cls.TEAMLYZER_BREAKER_FAILURES,
+                        )
             scores_by_key = {
                 key: result
                 for key, result in zip(company_names.keys(), score_results)

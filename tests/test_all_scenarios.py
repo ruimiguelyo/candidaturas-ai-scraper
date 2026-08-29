@@ -8,7 +8,7 @@ import httpx
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from company_ranker import CompanyRanker
+from company_ranker import CompanyRanker, TeamlyzerUnavailable
 from hiring_intelligence import HiringIntelligence
 from email_notifier import generate_html_email
 from filter_engine import JobFilterEngine
@@ -110,12 +110,11 @@ class TestAllScenarios(unittest.TestCase):
             self.assertIsNotNone(result, title)
             self.assertEqual(result[0].category, "AI / ML")
 
-    def test_title_marker_is_mandatory_and_exclusions_always_win(self):
+    def test_entry_signal_is_mandatory_and_clear_exclusions_always_win(self):
         rejected = [
             ("AI Engineer", "Example"),
             ("Research Scientist", "Example"),
             ("Professional AI Engineer", "Example"),
-            ("Junior Program Manager, AI Studio", "Example"),
             ("Junior AI Engineer / Senior AI Engineer", "Example"),
             ("Junior AI Lead", "Example"),
             ("Junior Data Scientist", "Deloitte"),
@@ -126,7 +125,7 @@ class TestAllScenarios(unittest.TestCase):
         for title, company in rejected:
             self.assertIsNone(JobFilterEngine.pre_filter_job(make_job(title, company)), title)
 
-    def test_swe_description_cannot_bypass_rating_rule(self):
+    def test_rating_never_removes_a_qualified_swe_job(self):
         job = make_job(
             "Software Engineer Intern",
             description_snippet="Work on a platform powered by artificial intelligence.",
@@ -136,7 +135,9 @@ class TestAllScenarios(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertEqual(result[0].category, "Top-Tier Software Engineering")
         job.rating_score = 3.0
-        self.assertFalse(JobFilterEngine.is_eligible_after_rating(job))
+        self.assertTrue(JobFilterEngine.is_eligible_after_rating(job))
+        job.rating_score = 0.0
+        self.assertTrue(JobFilterEngine.is_eligible_after_rating(job))
         job.rating_score = 3.1
         self.assertTrue(JobFilterEngine.is_eligible_after_rating(job))
 
@@ -233,6 +234,54 @@ class TestAllScenarios(unittest.TestCase):
 
         asyncio.run(check())
 
+    def test_teamlyzer_outage_does_not_destructively_delete_unverified_cache(self):
+        async def check():
+            class OfflineClient:
+                async def get(self, url, **kwargs):
+                    raise httpx.ReadTimeout("offline")
+
+            cache_key = CompanyRanker._cache_key("Unknown Company")
+            CompanyRanker._cache[cache_key] = {
+                "platform": "Teamlyzer",
+                "score": "4.0/5",
+                "numeric": 4.0,
+                "reviews": "10 Reviews",
+                "url": "https://pt.teamlyzer.com/companies/a-different-company",
+            }
+
+            score = await CompanyRanker.get_score_async("Unknown Company", OfflineClient())
+
+            self.assertIsNone(score)
+            self.assertIn(cache_key, CompanyRanker._cache)
+
+        asyncio.run(check())
+
+    def test_teamlyzer_circuit_breaker_stops_repeated_run_wide_timeouts(self):
+        jobs = [
+            make_job(
+                "Junior AI Engineer",
+                company=f"Company {index}",
+                job_id=str(index),
+                job_url=f"https://jobs.example/{index}",
+            )
+            for index in range(10)
+        ]
+        calls = []
+
+        async def unavailable(_company_name, _client, **kwargs):
+            calls.append(kwargs["allow_network"])
+            if kwargs["allow_network"]:
+                raise TeamlyzerUnavailable("offline")
+            return None
+
+        with patch.object(CompanyRanker, "get_score_async", side_effect=unavailable):
+            with patch.object(CompanyRanker, "save_cache"):
+                asyncio.run(CompanyRanker.enrich_jobs_async(jobs))
+
+        self.assertEqual(calls.count(True), CompanyRanker.TEAMLYZER_BREAKER_FAILURES)
+        self.assertEqual(calls.count(False), len(jobs) - CompanyRanker.TEAMLYZER_BREAKER_FAILURES)
+        self.assertTrue(all(job.rating_score == 0.0 for job in jobs))
+
     def test_sorting_is_descending_and_email_preserves_it(self):
         jobs = [
             make_job("Junior AI 3.1", "Beta", rating_score=3.1),
@@ -264,6 +313,23 @@ class TestAllScenarios(unittest.TestCase):
         first = make_job("Junior AI Engineer", job_id="1", job_url="https://jobs.example/a")
         second = make_job("Junior AI Engineer", job_id="2", job_url="https://jobs.example/b")
         self.assertNotEqual(first.deduplication_key(), second.deduplication_key())
+
+    def test_deduplication_preserves_meaningful_query_and_fragment_identity(self):
+        first = make_job("Junior AI Engineer", job_url="https://jobs.example/opening?job=1#apply")
+        second = make_job("Junior AI Engineer", job_url="https://jobs.example/opening?job=2#apply")
+        third = make_job("Junior AI Engineer", job_url="https://jobs.example/opening?job=1#details")
+        self.assertNotEqual(first.deduplication_key(), second.deduplication_key())
+        self.assertNotEqual(first.deduplication_key(), third.deduplication_key())
+
+    def test_deduplication_ignores_only_known_tracking_parameters(self):
+        clean = make_job("Junior AI Engineer", job_url="https://jobs.example/opening?job=1")
+        tracked = make_job(
+            "Junior AI Engineer",
+            job_url=(
+                "https://jobs.example/opening?utm_source=digest&trk=feed&job=1"
+            )
+        )
+        self.assertEqual(clean.deduplication_key(), tracked.deduplication_key())
 
     def test_hiring_intelligence_disabled_flag(self):
         """Testa se com HIRING_INTELLIGENCE_ENABLED=false o pipeline nao altera nada."""

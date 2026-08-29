@@ -9,16 +9,20 @@ O projeto **não se candidata automaticamente**, não envia mensagens para recru
 
 ## O que melhorou na versão 2
 
-- Falhas de todas as fontes interrompem a execução e preservam o último dataset válido.
-- O terminal mostra saúde por fonte: pedidos bem-sucedidos, falhas e vagas brutas.
+- Recolhas vazias, demasiado pequenas ou sem diversidade de fontes interrompem a execução e preservam o último dataset válido.
+- O terminal mostra saúde por fonte: pedidos bem-sucedidos, parciais, falhas e vagas brutas.
 - Email e pesquisa de contactos são ações explícitas; uma execução local normal não envia nada.
 - O digest diário compara o snapshot anterior e envia apenas vagas novas; `--notify-all` continua disponível para uma revisão completa.
 - O dataset público já não contém perfis pessoais, mensagens, inferências de outreach ou corpos extensos de descrições.
 - Células CSV potencialmente interpretadas como fórmulas são neutralizadas.
 - Resultados de LinkedIn e Glassdoor só são associados a uma empresa quando o nome está realmente presente na evidência.
 - Rascunhos nunca afirmam que uma candidatura foi submetida sem esse estado existir.
-- Funções não técnicas de marketing, vendas e direito, bem como títulos mistos Júnior/Sénior, são excluídas.
-- Cada vaga explicita `location_compatibility` e notas; “remote” nunca é convertido silenciosamente em elegibilidade para Portugal. Resultados provavelmente restritos fora da Europa são excluídos, salvo `INCLUDE_UNLIKELY_LOCATIONS=true`.
+- Funções claramente não técnicas de marketing, vendas e direito, bem como títulos mistos Júnior/Sénior, são excluídas. Termos ambíguos como `operations`, `content` e `manager` deixaram de bloquear cargos técnicos por si só.
+- Cada vaga explicita `location_compatibility` e notas; “remote” nunca é convertido silenciosamente em elegibilidade para Portugal. A localização informa a decisão, mas já não elimina ofertas.
+- Senioridade entry-level pode ser demonstrada pelo título, metadata da fonte ou descrição, incluindo `Associate`, `New Grad`, `Apprentice`, `Academy`, `Level I` e experiência de 0–2 anos.
+- Frontend, mobile, cybersecurity, Python, platform, SRE, embedded, product, web, application e test/automation engineering fazem parte das áreas técnicas reconhecidas.
+- Ratings Teamlyzer/Glassdoor servem apenas para ordenar; uma vaga nunca é eliminada por falta de rating ou por uma nota baixa.
+- As rejeições do filtro central e a consolidação de duplicados ficam em `vagas_rejeitadas.csv`, com etapa e motivo auditáveis. A Deloitte continua explicitamente excluída.
 - Dependências diretas estão fixadas; CI corre offline em Windows e Linux, Python 3.10 e 3.12.
 - O workflow diário separa os segredos SMTP da única etapa com permissão de escrita no GitHub.
 
@@ -113,20 +117,21 @@ Se a versão antiga do repositório já publicou dados pessoais, removê-los do 
 |---|---|---|
 | `vagas_estritamente_junior_trainee_internship.json` | Registos normalizados e ordenados | Sim |
 | `vagas_estritamente_junior_trainee_internship.csv` | Vista compatível com folhas de cálculo | Sim |
+| `vagas_rejeitadas.csv` | Vagas únicas rejeitadas pelo filtro central e grupos de duplicados consolidados | Sim |
 | `company_scores_cache.json` | Cache de ratings e respetiva evidência | Sim |
 | Digest HTML enviado por SMTP | Vagas e, se ativados, contactos por verificar | Não é persistido |
 
-Os ratings ajudam a ordenar; não constituem recomendação definitiva. Uma vaga de IA/ML pode aparecer sem rating. Uma vaga geral de software só passa o filtro atual quando o rating verificável é pelo menos 3,1/5.
+Os ratings ajudam a ordenar e não constituem recomendação definitiva. Vagas de qualquer categoria permanecem visíveis mesmo quando a empresa não tem rating verificável.
 
 ## Pipeline
 
 ```text
 fontes públicas
-    ↓ recolha concorrente + saúde por fonte
-normalização e filtro estrito de título
-    ↓ deduplicação por identidade da oferta
+    ↓ pesquisas alargadas + paginação + saúde por fonte
+normalização e sinais entry-level no título, metadata ou descrição
+    ↓ classificação técnica + deduplicação + auditoria das rejeições
 rating Teamlyzer → fallback Glassdoor validado
-    ↓ regras de elegibilidade + ordenação
+    ↓ ordenação informativa, sem excluir por rating/localização
 outreach privado opcional e não confirmado
     ├─ digest SMTP explícito
     └─ export público sanitizado e atómico
@@ -142,7 +147,7 @@ python -m coverage run -m unittest discover -s tests -p "test_*.py"
 python -m coverage report
 ```
 
-A suite cobre regras de negócio, falhas totais e parciais, privacidade dos exports, injeção de fórmulas CSV, correspondência de empresas, ordenação e HTML do digest. Os testes normais não dependem da rede.
+A suite cobre regras de negócio, motivos de rejeição, paginação, falhas totais e parciais, privacidade dos exports, injeção de fórmulas CSV, correspondência de empresas, ordenação e HTML do digest. Os testes normais não dependem da rede.
 
 ## GitHub Actions
 
@@ -162,5 +167,7 @@ O job que acede aos secrets tem apenas `contents: read` e faz checkout sem crede
 - Datas ainda chegam em formatos diferentes conforme a fonte.
 - “Remote” pode estar limitado a um país; confirma sempre autorização de trabalho e localização.
 - A deduplicação entre plataformas ainda é conservadora e pode manter anúncios sindicados.
+- As pesquisas foram alargadas, mas nenhum conjunto de termos ou limite de um portal garante cobertura integral do mercado.
+- A auditoria começa quando uma fonte entrega um anúncio normalizado ao pipeline: não representa anúncios que o portal não devolveu, limites de pesquisa, falhas de rede ou itens que o parser não conseguiu normalizar.
 - Scraping HTML é inerentemente frágil; alterações nos portais devem resultar numa falha observável e num ajuste do respetivo adapter.
 - Não existe licença definida. Escolhe uma conscientemente antes de incentivar reutilização externa.

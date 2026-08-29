@@ -65,6 +65,7 @@ jobs:
             company_scores_cache.json
             vagas_estritamente_junior_trainee_internship.csv
             vagas_estritamente_junior_trainee_internship.json
+            vagas_rejeitadas.csv
 
   publish:
     name: Publish validated public data
@@ -88,7 +89,7 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add -- company_scores_cache.json vagas_estritamente_junior_trainee_internship.csv vagas_estritamente_junior_trainee_internship.json
+          git add -- company_scores_cache.json vagas_estritamente_junior_trainee_internship.csv vagas_estritamente_junior_trainee_internship.json vagas_rejeitadas.csv
           if git diff --cached --quiet; then
             echo "Sem alterações para publicar."
           else

@@ -4,6 +4,7 @@ from typing import List, Optional
 import bs4
 from curl_cffi.requests import AsyncSession
 from models import JobPost
+from scrapers.http_utils import ScrapeResults, get_with_retry
 
 logger = logging.getLogger("ITJobsScraper")
 
@@ -22,7 +23,7 @@ class ITJobsScraper:
         }
 
     async def fetch(self, search_term: str, location: Optional[str] = None, max_pages: int = 2) -> List[JobPost]:
-        results: List[JobPost] = []
+        results: ScrapeResults[JobPost] = ScrapeResults()
         seen_ids = set()
 
         async with AsyncSession(impersonate="chrome120") as session:
@@ -36,7 +37,12 @@ class ITJobsScraper:
                     params["page"] = str(page)
 
                 try:
-                    res = await session.get(self.SEARCH_URL, params=params, timeout=self.timeout)
+                    res = await get_with_retry(
+                        session.get,
+                        self.SEARCH_URL,
+                        params=params,
+                        timeout=self.timeout,
+                    )
                     if res.status_code == 404 and page > 1:
                         # ITJobs uses 404 to signal that pagination ended.
                         break
@@ -148,6 +154,14 @@ class ITJobsScraper:
 
                 except Exception as e:
                     logger.error(f"Erro ao raspar ITJobs.pt para '{search_term}': {e}")
+                    if page > 1:
+                        warning = (
+                            f"ITJobs.pt devolveu resultados parciais: a página {page} falhou "
+                            f"depois de {len(results)} vagas."
+                        )
+                        logger.warning(warning)
+                        results.mark_partial(warning)
+                        break
                     raise
 
         logger.info(f"ITJobs.pt: '{search_term}' retornou {len(results)} ofertas.")

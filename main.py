@@ -31,7 +31,7 @@ from filter_engine import JobFilterEngine
 from company_ranker import CompanyRanker
 from hiring_intelligence import HiringIntelligence
 from email_notifier import send_daily_email
-from exporter import export_public_jobs
+from exporter import export_public_artifacts
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("AIJobPipeline")
@@ -39,8 +39,85 @@ console = Console(force_terminal=True, legacy_windows=False)
 
 OUTPUT_CSV_NAME = "vagas_estritamente_junior_trainee_internship.csv"
 OUTPUT_JSON_NAME = "vagas_estritamente_junior_trainee_internship.json"
+OUTPUT_REJECTIONS_NAME = "vagas_rejeitadas.csv"
 MIN_SUCCESSFUL_REQUEST_RATIO = 0.25
 MIN_HEALTHY_SOURCES = 2
+MIN_UNIQUE_RAW_JOBS = 5
+
+LINKEDIN_SEARCHES = (
+    "Junior AI Engineer",
+    "AI Engineer Intern",
+    "Machine Learning Intern",
+    "Junior Machine Learning Engineer",
+    "NLP Intern",
+    "Computer Vision Intern",
+    "MLOps Intern",
+    "Junior Data Scientist",
+    "Data Science Intern",
+    "Junior Data Engineer",
+    "Data Analyst Intern",
+    "AI Research Intern",
+    "Prompt Engineering Intern",
+    "RAG Engineer Intern",
+    "Software Engineer Intern",
+    "Junior Software Engineer",
+    "Graduate Software Engineer",
+    "Entry Level Software Engineer",
+    "Associate Software Engineer",
+    "Frontend Developer Intern",
+    "Backend Developer Intern",
+    "Full Stack Developer Intern",
+    "Cloud Engineer Intern",
+    "DevOps Intern",
+    "QA Test Automation Intern",
+    "Cybersecurity Intern",
+    "Platform SRE Intern",
+    "Mobile Developer Intern",
+    "Python Developer Intern",
+    "Embedded Engineer Intern",
+    "Early Career Software Engineer",
+    "Software Engineering Apprentice",
+    "Software Engineering Academy",
+    "Level I Software Engineer",
+    "Junior Web Application Developer",
+)
+ITJOBS_SEARCHES = (
+    "junior",
+    "estagio",
+    "trainee",
+    "graduate",
+    "recem licenciado",
+)
+LANDING_JOBS_SEARCHES = (
+    "ai",
+    "machine learning",
+    "data",
+    "junior",
+    "graduate",
+    "intern",
+    "developer",
+    "cybersecurity",
+)
+HIMALAYAS_SEARCHES = (
+    "Junior AI",
+    "AI Intern",
+    "Machine Learning Intern",
+    "Junior Data",
+    "Data Intern",
+    "Software Engineer Intern",
+    "Junior Software Engineer",
+    "Graduate Software Engineer",
+    "Entry Level Software",
+    "Cybersecurity Intern",
+)
+JOBICY_SEARCHES = (
+    "artificial intelligence",
+    "machine learning",
+    "data science",
+    "software engineer",
+    "cybersecurity",
+    None,
+)
 
 
 def sort_jobs_by_rating(jobs: List[JobPost]) -> List[JobPost]:
@@ -84,96 +161,175 @@ class AIJobPipeline:
         self.itjobs = ITJobsScraper()
         self.jobicy = JobicyScraper()
         self.landing_jobs = LandingJobsScraper()
+        self.rejections: list[dict] = []
+
+    @staticmethod
+    def _rejection_record(job: JobPost, stage: str, reason_code: str, reason_detail: str) -> dict:
+        return {
+            "source": job.source,
+            "title": job.title,
+            "company": job.company,
+            "location": job.location,
+            "job_url": job.job_url,
+            "rejection_stage": stage,
+            "reason_code": reason_code,
+            "reason_detail": reason_detail,
+        }
+
+    @staticmethod
+    def _job_quality(job: JobPost) -> tuple[int, int, int, int]:
+        """Prefer the richest version when the same advert appears in several searches."""
+        meaningful_fields = (
+            job.company,
+            job.location,
+            job.seniority,
+            job.salary,
+            job.post_date,
+        )
+        metadata_score = sum(
+            bool(str(value or "").strip())
+            and str(value).strip().casefold() not in {"unknown", "n/a", "na"}
+            for value in meaningful_fields
+        )
+        return (
+            metadata_score,
+            len(job.tags or []),
+            len(str(job.description_snippet or "")),
+            len(str(job.job_url or "")),
+        )
+
+    def _filter_unique_jobs(self, all_jobs: List[JobPost]) -> List[JobPost]:
+        """Evaluate one vacancy identity once, using every collected variant as evidence."""
+        grouped: dict[str, list[JobPost]] = {}
+        for job in all_jobs:
+            grouped.setdefault(job.deduplication_key(), []).append(job)
+
+        candidates: List[JobPost] = []
+        rejection_priority = {
+            "excluded_company": 0,
+            "excluded_seniority": 1,
+            "excluded_non_technical": 2,
+            "unsupported_domain": 3,
+            "missing_entry_level_signal": 4,
+        }
+
+        for variants in grouped.values():
+            evaluated = [(job, JobFilterEngine.evaluate_job(job)) for job in variants]
+            source_names = sorted({job.source for job in variants})
+            duplicate_suffix = (
+                f" {len(variants)} ocorrências consolidadas de "
+                f"{len(source_names)} fonte(s): {', '.join(source_names)}."
+                if len(variants) > 1
+                else ""
+            )
+
+            # Deloitte is an absolute policy exclusion, even if another copy of
+            # the same URL has incomplete company metadata.
+            company_exclusions = [
+                pair for pair in evaluated if pair[1].reason_code == "excluded_company"
+            ]
+            if company_exclusions:
+                rejected_job, decision = company_exclusions[0]
+                self.rejections.append(
+                    self._rejection_record(
+                        rejected_job,
+                        "semantic_filter",
+                        decision.reason_code,
+                        decision.reason_detail + duplicate_suffix,
+                    )
+                )
+                continue
+
+            accepted = [pair for pair in evaluated if pair[1].accepted and pair[1].job is not None]
+            if accepted:
+                selected_job, _decision = max(
+                    accepted,
+                    key=lambda pair: self._job_quality(pair[0]),
+                )
+                candidates.append(selected_job)
+                if len(variants) > 1:
+                    self.rejections.append(
+                        self._rejection_record(
+                            selected_job,
+                            "deduplication",
+                            "duplicate",
+                            (
+                                f"{len(variants)} ocorrências do mesmo anúncio foram consolidadas; "
+                                f"foi mantida a versão de {selected_job.source}."
+                            ),
+                        )
+                    )
+                continue
+
+            rejected_job, decision = min(
+                evaluated,
+                key=lambda pair: rejection_priority.get(pair[1].reason_code, 99),
+            )
+            self.rejections.append(
+                self._rejection_record(
+                    rejected_job,
+                    "semantic_filter",
+                    decision.reason_code,
+                    decision.reason_detail + duplicate_suffix,
+                )
+            )
+
+        return candidates
 
     async def run(self) -> List[JobPost]:
         console.print("[bold cyan]>>> A recolher vagas Junior / Trainee / Internship (IA/ML + Top Tech SWE)...[/bold cyan]\n")
 
-        tasks = [
-            # 1. LinkedIn Portugal (IA/ML + Top Tech Internships)
-            self.linkedin.fetch("Junior AI Engineer", "Portugal", total_wanted=30),
-            self.linkedin.fetch("AI Engineer Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("AI Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Gen AI Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Artificial Intelligence Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Machine Learning Trainee", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Junior Machine Learning Engineer", "Portugal", total_wanted=30),
-            self.linkedin.fetch("AI Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("AI Internship", "Portugal", total_wanted=30),
-            self.linkedin.fetch("NLP Junior", "Portugal", total_wanted=30),
-            self.linkedin.fetch("NLP Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Junior Data Scientist", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Data Science Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Software Engineer Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Software Engineering Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Systems Engineer Intern", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Junior Software Engineer", "Portugal", total_wanted=30),
-            self.linkedin.fetch("Junior AI", "Lisbon, Portugal", total_wanted=30),
-            self.linkedin.fetch("Software Intern", "Lisbon, Portugal", total_wanted=30),
-
-            # 2. ITJobs Portugal (Mercado Português / Bolsas / IEFP)
-            self.itjobs.fetch("junior", max_pages=2),
-            self.itjobs.fetch("inteligencia artificial", max_pages=2),
-            self.itjobs.fetch("machine learning", max_pages=2),
-            self.itjobs.fetch("estagio", max_pages=2),
-            self.itjobs.fetch("ai engineer", max_pages=2),
-            self.itjobs.fetch("nlp", max_pages=2),
-
-            # 3. Landing.jobs (Portugal Tech Hub)
-            self.landing_jobs.fetch("ai", limit=30),
-            self.landing_jobs.fetch("machine learning", limit=30),
-            self.landing_jobs.fetch("junior software", limit=30),
-            self.landing_jobs.fetch("intern", limit=30),
-
-            # 4. Himalayas (Global Remote)
-            self.himalayas.fetch("Junior AI", limit=40),
-            self.himalayas.fetch("AI Intern", limit=40),
-            self.himalayas.fetch("Machine Learning Intern", limit=40),
-            self.himalayas.fetch("Software Engineer Intern", limit=40),
-            self.himalayas.fetch("Junior Software Engineer", limit=40),
-            self.himalayas.fetch("Junior Data", limit=40),
-
-            # 5. Jobicy (Remote)
-            self.jobicy.fetch("ai", count=30),
-            self.jobicy.fetch("software engineer", count=30),
-            self.jobicy.fetch(None, count=30),
-
-            # 6. Arbeitnow & RemoteOK
-            self.arbeitnow.fetch("junior machine learning", limit=40),
-            self.arbeitnow.fetch("software engineer intern", limit=40),
-            self.remoteok.fetch("intern", limit=40),
-            self.remoteok.fetch("junior", limit=40)
+        search_plan = [
+            *(
+                ("LinkedIn", self.linkedin.fetch(query, "Portugal", total_wanted=20))
+                for query in LINKEDIN_SEARCHES
+            ),
+            *(("ITJobs.pt", self.itjobs.fetch(query, max_pages=3)) for query in ITJOBS_SEARCHES),
+            *(
+                ("Landing.jobs", self.landing_jobs.fetch(query, limit=60, max_pages=3))
+                for query in LANDING_JOBS_SEARCHES
+            ),
+            *(("Himalayas", self.himalayas.fetch(query, limit=60)) for query in HIMALAYAS_SEARCHES),
+            *(("Jobicy", self.jobicy.fetch(query, count=50)) for query in JOBICY_SEARCHES),
+            ("Arbeitnow", self.arbeitnow.fetch(None, limit=250, max_pages=5)),
+            ("RemoteOK", self.remoteok.fetch(None, limit=250)),
         ]
-
-        task_sources = (
-            ["LinkedIn"] * 19
-            + ["ITJobs.pt"] * 6
-            + ["Landing.jobs"] * 4
-            + ["Himalayas"] * 6
-            + ["Jobicy"] * 3
-            + ["Arbeitnow"] * 2
-            + ["RemoteOK"] * 2
-        )
-        if len(task_sources) != len(tasks):
-            raise RuntimeError("O plano de pesquisas e os respetivos nomes de fonte ficaram dessincronizados.")
+        task_sources = [source for source, _task in search_plan]
+        tasks = [task for _source, task in search_plan]
+        self.rejections = []
 
         # Evita abrir dezenas de ligações simultaneas aos portais, sem perder a
         # recolha paralela entre fontes.
         semaphore = asyncio.Semaphore(8)
         source_semaphores = {
-            "LinkedIn": asyncio.Semaphore(3),
+            "LinkedIn": asyncio.Semaphore(1),
             "ITJobs.pt": asyncio.Semaphore(2),
         }
 
         async def run_limited(source, task):
-            async with semaphore:
-                source_semaphore = source_semaphores.get(source)
-                try:
-                    if source_semaphore is None:
-                        return source, await task, None
+            source_semaphore = source_semaphores.get(source)
+
+            async def execute():
+                async with semaphore:
+                    return await task
+
+            try:
+                if source_semaphore is None:
+                    jobs = await execute()
+                else:
+                    # Acquire the narrow source limit first so queued LinkedIn/ITJobs
+                    # work cannot occupy every global slot.
                     async with source_semaphore:
-                        return source, await task, None
-                except Exception as error:
-                    return source, [], error
+                        jobs = await execute()
+                return (
+                    source,
+                    jobs,
+                    None,
+                    bool(getattr(jobs, "partial", False)),
+                    getattr(jobs, "warning", None),
+                )
+            except Exception as error:
+                return source, [], error, False, None
 
         raw_responses = await asyncio.gather(
             *(run_limited(source, task) for source, task in zip(task_sources, tasks)),
@@ -181,20 +337,28 @@ class AIJobPipeline:
 
         all_jobs: List[JobPost] = []
         successful_requests: Counter[str] = Counter()
+        partial_requests: Counter[str] = Counter()
         failed_requests: Counter[str] = Counter()
         jobs_by_source: Counter[str] = Counter()
         last_errors: dict[str, str] = {}
 
-        for source, jobs, error in raw_responses:
+        partial_warnings: dict[str, str] = {}
+        for source, jobs, error, partial, warning in raw_responses:
             if error is not None:
                 failed_requests[source] += 1
                 last_errors[source] = str(error)
                 continue
-            successful_requests[source] += 1
+            if partial:
+                partial_requests[source] += 1
+                if warning:
+                    partial_warnings[source] = str(warning)
+            else:
+                successful_requests[source] += 1
             jobs_by_source[source] += len(jobs)
             all_jobs.extend(jobs)
 
-        if not successful_requests:
+        completed_requests = sum(successful_requests.values()) + sum(partial_requests.values())
+        if completed_requests == 0:
             raise RuntimeError(
                 "Todas as fontes falharam. Os últimos ficheiros válidos foram preservados e o email não foi enviado."
             )
@@ -202,12 +366,14 @@ class AIJobPipeline:
         health_table = Table(title="SAÚDE DAS FONTES", show_lines=False)
         health_table.add_column("Fonte")
         health_table.add_column("Pesquisas OK", justify="right")
+        health_table.add_column("Parciais", justify="right")
         health_table.add_column("Falhas", justify="right")
         health_table.add_column("Vagas brutas", justify="right")
         for source in dict.fromkeys(task_sources):
             health_table.add_row(
                 source,
                 str(successful_requests[source]),
+                str(partial_requests[source]),
                 str(failed_requests[source]),
                 str(jobs_by_source[source]),
             )
@@ -219,38 +385,38 @@ class AIJobPipeline:
                 failure_count,
                 last_errors[source],
             )
+        for source, warning in partial_warnings.items():
+            logger.warning("%s", warning)
 
         minimum_requests = max(1, math.ceil(len(tasks) * MIN_SUCCESSFUL_REQUEST_RATIO))
-        if len(successful_requests) < MIN_HEALTHY_SOURCES or sum(successful_requests.values()) < minimum_requests:
+        sources_with_jobs = {source for source, count in jobs_by_source.items() if count > 0}
+        unique_raw_jobs = len({job.deduplication_key() for job in all_jobs})
+        if (
+            len(sources_with_jobs) < MIN_HEALTHY_SOURCES
+            or completed_requests < minimum_requests
+            or unique_raw_jobs < MIN_UNIQUE_RAW_JOBS
+        ):
             raise RuntimeError(
                 "A recolha ficou abaixo do limiar de saúde "
-                f"({len(successful_requests)} fontes e {sum(successful_requests.values())}/{len(tasks)} pesquisas OK). "
+                f"({len(sources_with_jobs)} fontes com vagas, {unique_raw_jobs} vagas brutas únicas e "
+                f"{completed_requests}/{len(tasks)} pesquisas completas ou parciais). "
                 "Os últimos ficheiros válidos foram preservados e o email não foi enviado."
             )
 
-        # Pré-filtro: Deduplicação e separação
-        seen_keys = set()
-        candidates: List[JobPost] = []
-
-        for job in all_jobs:
-            filter_res = JobFilterEngine.pre_filter_job(job)
-            if not filter_res:
-                continue
-
-            valid_job, domain_type = filter_res
-            key = valid_job.deduplication_key()
-            if key not in seen_keys:
-                seen_keys.add(key)
-                candidates.append(valid_job)
+        candidates = self._filter_unique_jobs(all_jobs)
+        if not candidates:
+            raise RuntimeError(
+                "A recolha foi saudável, mas nenhuma vaga passou pelo filtro central. "
+                "Os últimos ficheiros válidos foram preservados e o email não foi enviado."
+            )
 
         # Cruzamento assíncrono com Teamlyzer e Glassdoor
         console.print("[yellow]A cruzar empresas em paralelo com scores do Teamlyzer e Glassdoor...[/yellow]")
         await CompanyRanker.enrich_jobs_async(candidates)
 
-        # Regra de Elegibilidade:
-        # - Vagas de IA/ML: Entram sempre (desde que Junior/Trainee/Intern)
-        # - Vagas de Software Engineering Geral: Entram APENAS se o rating da empresa for >= 3.1
-        final_jobs = [job for job in candidates if JobFilterEngine.is_eligible_after_rating(job)]
+        # O rating e a localização são informação para ordenar e decidir; nunca
+        # apagam uma vaga técnica entry-level já qualificada.
+        final_jobs = candidates
 
         # ORDENAÇÃO: Da empresa com MAIOR rating (ex: 4.4, 4.2, 3.7) até à menor / sem rating
         final_jobs = sort_jobs_by_rating(final_jobs)
@@ -260,6 +426,14 @@ class AIJobPipeline:
         await HiringIntelligence.enrich_jobs_async(final_jobs)
 
         console.print(f"[bold green]Total de vagas qualificadas (Ordenadas por Rating):[/bold green] {len(final_jobs)}\n")
+        rejection_counts = Counter(row["reason_code"] for row in self.rejections)
+        if rejection_counts:
+            rejection_table = Table(title="AUDITORIA DE REJEIÇÕES", show_lines=False)
+            rejection_table.add_column("Motivo")
+            rejection_table.add_column("Quantidade", justify="right")
+            for reason_code, count in sorted(rejection_counts.items()):
+                rejection_table.add_row(reason_code, str(count))
+            console.print(rejection_table)
         return final_jobs
 
     def export_and_display(
@@ -272,6 +446,7 @@ class AIJobPipeline:
         output_directory = Path(output_dir)
         csv_path = output_directory / OUTPUT_CSV_NAME
         json_path = output_directory / OUTPUT_JSON_NAME
+        rejections_path = output_directory / OUTPUT_REJECTIONS_NAME
         new_jobs = select_new_jobs(jobs, json_path)
 
         table = Table(title="VAGAS QUALIFICADAS (ORDENADAS POR RATING DE EMPRESA)", show_lines=True)
@@ -302,7 +477,13 @@ class AIJobPipeline:
         # Public exports exclude private outreach data and third-party description
         # bodies. The private in-memory rows are used only for an explicitly
         # requested notification and are never written to the repository.
-        export_public_jobs(jobs, csv_path, json_path)
+        export_public_artifacts(
+            jobs,
+            self.rejections,
+            csv_path,
+            json_path,
+            rejections_path,
+        )
 
         if not jobs:
             console.print("[yellow]Nenhuma vaga passou pelo filtro nesta execução.[/yellow]")
@@ -310,6 +491,7 @@ class AIJobPipeline:
             console.print(f"\n[bold green]Ficheiro público atualizado:[/bold green] {csv_path}")
             console.print(f"[bold green]Ficheiro público atualizado:[/bold green] {json_path}")
             console.print(f"[bold cyan]Vagas novas desde o snapshot anterior:[/bold cyan] {len(new_jobs)}")
+        console.print(f"[bold green]Auditoria de rejeições atualizada:[/bold green] {rejections_path}")
 
         if notify_mode:
             notification_jobs = jobs if notify_mode == "all" else new_jobs

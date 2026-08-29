@@ -4,6 +4,7 @@ from typing import List
 from bs4 import BeautifulSoup
 from curl_cffi.requests import AsyncSession
 from models import JobPost
+from scrapers.http_utils import ScrapeResults, get_with_retry
 
 logger = logging.getLogger("LinkedInScraper")
 
@@ -18,13 +19,20 @@ class LinkedInScraper:
         }
 
     async def fetch(self, search_term: str, location: str, total_wanted: int = 25) -> List[JobPost]:
-        results: List[JobPost] = []
+        if total_wanted <= 0:
+            return []
+
+        results: ScrapeResults[JobPost] = ScrapeResults()
+        seen_urls: set[str] = set()
         start = 0
-        PAGE_SIZE = 25  # LinkedIn Guest API paginates strictly in blocks of 25
+        PAGE_SIZE = 10  # The current public guest endpoint returns blocks of 10 cards.
+        # Bound requests even if LinkedIn keeps returning malformed or repeated cards.
+        max_pages = max(1, ((total_wanted + PAGE_SIZE - 1) // PAGE_SIZE) + 1)
+        pages_attempted = 0
 
         async with AsyncSession(impersonate="chrome120") as session:
             session.headers.update(self.headers)
-            while len(results) < total_wanted:
+            while len(results) < total_wanted and pages_attempted < max_pages:
                 params = {
                     "keywords": search_term,
                     "location": location,
@@ -32,7 +40,12 @@ class LinkedInScraper:
                 }
 
                 try:
-                    res = await session.get(self.BASE_URL, params=params, timeout=self.timeout)
+                    res = await get_with_retry(
+                        session.get,
+                        self.BASE_URL,
+                        params=params,
+                        timeout=self.timeout,
+                    )
 
                     if res.status_code == 429:
                         raise RuntimeError("LinkedIn respondeu HTTP 429 (limite de pedidos)")
@@ -68,6 +81,10 @@ class LinkedInScraper:
                             job_url = link_tag.get("href", "").split("?")[0]
                             post_date = date_tag.get_text(strip=True) if date_tag else None
 
+                            if job_url in seen_urls:
+                                continue
+                            seen_urls.add(job_url)
+
                             job_id = job_url.split("-")[-1] if "-" in job_url else job_url
 
                             is_remote = "remote" in raw_loc.lower() or "remoto" in raw_loc.lower() or "remote" in title.lower()
@@ -92,10 +109,23 @@ class LinkedInScraper:
                             continue
 
                     start += PAGE_SIZE
+                    pages_attempted += 1
                     await asyncio.sleep(0.5)
 
                 except Exception as req_err:
                     logger.error(f"LinkedIn request error at start={start}: {req_err}")
+                    if start > 0:
+                        warning = (
+                            f"LinkedIn devolveu resultados parciais: a página start={start} falhou "
+                            f"depois de {len(results)} vagas."
+                        )
+                        logger.warning(warning)
+                        results.mark_partial(warning)
+                        break
                     raise
 
-        return results
+        return ScrapeResults(
+            results[:total_wanted],
+            partial=results.partial,
+            warning=results.warning,
+        )
