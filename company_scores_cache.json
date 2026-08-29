@@ -366,7 +366,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti",
-    "teamlyzer_checked_at": 1787053728
+    "teamlyzer_checked_at": 1788012795
   },
   "csg": {
     "platform": "Glassdoor",
@@ -790,7 +790,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=MVST",
-    "teamlyzer_checked_at": 1787859593
+    "teamlyzer_checked_at": 1788012791
   },
   "infineontechnologies": {
     "platform": "Teamlyzer",
@@ -963,5 +963,21 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Alongside",
     "teamlyzer_checked_at": 1787859594
+  },
+  "aline": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Aline",
+    "teamlyzer_checked_at": 1788012792
+  },
+  "binance": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Binance",
+    "teamlyzer_checked_at": 1788012793
   }
 }
