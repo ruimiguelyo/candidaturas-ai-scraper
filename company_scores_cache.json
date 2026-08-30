@@ -1168,5 +1168,177 @@
     "matched_name": "IT People Innovation",
     "alias_match": false,
     "teamlyzer_checked_at": 1788052038
+  },
+  "affinity": {
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "107 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/affinity",
+    "matched_name": "Affinity",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052336
+  },
+  "hostelworldgroup": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "14 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/hostelworld-group",
+    "matched_name": "Hostelworld Group",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052336
+  },
+  "capgemini": {
+    "platform": "Teamlyzer",
+    "score": "2.1/5",
+    "numeric": 2.1,
+    "reviews": "138 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
+    "matched_name": "Capgemini Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052336
+  },
+  "hicalibre": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=hiCalibre",
+    "teamlyzer_checked_at": 1788052338
+  },
+  "robertwalters": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "1 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/robert-walters",
+    "matched_name": "Robert Walters",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052339
+  },
+  "indiciumai": {
+    "platform": "Teamlyzer",
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "reviews": "9 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/indicium-ai",
+    "matched_name": "Indicium AI",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052339
+  },
+  "amgen": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "12 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/amgen-portugal",
+    "matched_name": "Amgen Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052340
+  },
+  "bjak": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=BJAK",
+    "teamlyzer_checked_at": 1788052341
+  },
+  "komodoconsulting": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Komodo%20Consulting",
+    "teamlyzer_checked_at": 1788052344
+  },
+  "tmc": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "8 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/tmc",
+    "matched_name": "TMC",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052346
+  },
+  "fyld": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "96 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/fyld",
+    "matched_name": "Fyld",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052346
+  },
+  "inetum": {
+    "platform": "Teamlyzer",
+    "score": "2.1/5",
+    "numeric": 2.1,
+    "reviews": "118 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/inetum",
+    "matched_name": "Inetum",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052346
+  },
+  "frimarcindustriaecomerciosa": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=FRIMARC%20-%20Ind%C3%BAstria%20e%20Com%C3%A9rcio%2C%20S.A.",
+    "teamlyzer_checked_at": 1788052353
+  },
+  "accentureportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "383 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
+    "matched_name": "Accenture Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052354
+  },
+  "expleogroup": {
+    "platform": "Teamlyzer",
+    "score": "1.9/5",
+    "numeric": 1.9,
+    "reviews": "4 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/expleo",
+    "matched_name": "expleo",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052354
+  },
+  "siemensenergy": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/siemens-energy",
+    "matched_name": "Siemens Energy",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052355
+  },
+  "innotech": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "105 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/innotech",
+    "matched_name": "Innotech.pt",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052356
+  },
+  "kcsit": {
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "131 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/kcs-it",
+    "matched_name": "KCS IT",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052357
   }
 }
