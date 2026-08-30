@@ -17,7 +17,7 @@ logger = logging.getLogger("Exporter")
 # be committed to the public repository. Descriptions can also contain large
 # third-party HTML fragments, so the public dataset keeps only decision-ready
 # metadata.
-PRIVATE_FIELDS = {"description_snippet", "human_outreach"}
+PRIVATE_FIELDS = {"description_snippet", "discovery_query", "human_outreach"}
 PUBLIC_FIELDS = tuple(name for name in JobPost.model_fields if name not in PRIVATE_FIELDS)
 CSV_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r", "\n")
 REJECTION_AUDIT_FILENAME = "vagas_rejeitadas.csv"
@@ -69,7 +69,12 @@ def _unlink_if_present(path: Path) -> None:
 
 def _write_csv_file(path: Path, rows: list[dict], fieldnames: tuple[str, ...]) -> None:
     with path.open("w", encoding="utf-8", newline="") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames, quoting=csv.QUOTE_NONNUMERIC)
+        writer = csv.DictWriter(
+            csv_file,
+            fieldnames=fieldnames,
+            quoting=csv.QUOTE_NONNUMERIC,
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(
             {field: _csv_value(row.get(field)) for field in fieldnames}

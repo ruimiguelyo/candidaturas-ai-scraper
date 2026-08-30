@@ -2,6 +2,7 @@ import math
 import os
 import sys
 import unittest
+from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -17,6 +18,7 @@ def make_job(title="Junior AI Engineer", company="Example", **kwargs):
         company=company,
         location=kwargs.pop("location", "Portugal"),
         job_url=kwargs.pop("job_url", "https://jobs.example/1"),
+        post_date=kwargs.pop("post_date", datetime.now(timezone.utc).date().isoformat()),
         **kwargs,
     )
 
@@ -57,6 +59,25 @@ class TestFilterPolicyV2(unittest.TestCase):
         for job in jobs:
             with self.subTest(title=job.title, company=job.company):
                 self.assert_rejected(job, "excluded_company")
+
+    def test_recent_entry_level_search_can_supply_missing_title_signal(self):
+        decision = self.assert_accepted(
+            make_job(
+                "Software Engineer",
+                discovery_query="Entry Level Software Engineer",
+            ),
+            "SWE",
+        )
+        self.assertIn("discovery_query", decision.reason_detail)
+
+    def test_bare_mid_title_is_rejected_even_from_entry_level_search(self):
+        self.assert_rejected(
+            make_job(
+                "Mid Data Analytics Engineer",
+                discovery_query="Junior Data Engineer",
+            ),
+            "excluded_seniority",
+        )
 
     def test_clearly_senior_titles_are_rejected_before_entry_evidence(self):
         titles = [

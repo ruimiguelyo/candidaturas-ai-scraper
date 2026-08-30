@@ -1,7 +1,9 @@
 import re
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Optional, Tuple
 
+from date_utils import RECENCY_WINDOW_DAYS, recency_status
 from models import JobPost
 
 
@@ -161,6 +163,7 @@ class JobFilterEngine:
         r"\bestagi[aá]rio\b",
         r"\bgraduate\b",
         r"\bentry[- ]level\b",
+        r"\bentry[_ -]level\b",
         r"\bearly[- ]career\b",
         r"\bstudent\b",
         r"\bbolseir[oa]\b",
@@ -172,8 +175,14 @@ class JobFilterEngine:
         r"\blevel\s*(?:i|1)\b",
         r"\b(?:engineer|developer)\s+i\b",
         r"\b0\s*(?:-|–|—|to)\s*2\s+years?\b",
+        r"\b(?:0|1)\s*(?:-|–|—|to)\s*3\s+years?\b",
+        r"\b(?:0|1)\s*(?:-|–|—|to)\s*2\s+years?\b",
+        r"\bup\s+to\s+3\s+years?\b",
+        r"\b(?:0|1|2|3)\+?\s+years?\s+(?:of\s+)?experience\b",
         r"\bno\s+(?:prior\s+)?experience\b",
         r"\bsem\s+experi[eê]ncia\b",
+        r"\bprimeir[oa]\s+experi[eê]ncia\b",
+        r"\bfirst\s+(?:professional\s+)?experience\b",
         r"\brec[eé]m[- ]licenciad[oa]\b",
     ]
 
@@ -188,6 +197,7 @@ class JobFilterEngine:
         r"\bstaff\b",
         r"\bmid[- ]level\b",
         r"\bmidweight\b",
+        r"\bmid\b",
         r"\bpleno\b",
         r"\bjr\s*/\s*pl\b",
         r"\bjr\s*/\s*mid\b",
@@ -378,6 +388,7 @@ class JobFilterEngine:
             ("title", job.title),
             ("seniority", job.seniority),
             ("description_snippet", job.description_snippet),
+            ("discovery_query", job.discovery_query),
         )
         for field_name, value in fields:
             patterns = cls.STRICT_TITLE_KEYWORDS
@@ -391,7 +402,7 @@ class JobFilterEngine:
         return None
 
     @classmethod
-    def evaluate_job(cls, job: JobPost) -> FilterDecision:
+    def evaluate_job(cls, job: JobPost, now: datetime | None = None) -> FilterDecision:
         """Decide o pré-filtro e explica de forma estruturada qualquer rejeição."""
         title_text = str(job.title or "").strip()
         company_text = str(job.company or "").strip()
@@ -404,6 +415,25 @@ class JobFilterEngine:
                 reason_code="excluded_company",
                 reason_detail="Deloitte está explicitamente excluída desta pesquisa.",
             )
+
+        is_recent, published, recency_reason = recency_status(job.post_date, now=now)
+        if not is_recent:
+            if recency_reason == "outside_recency_window" and published is not None:
+                detail = (
+                    f"A vaga foi publicada em {published.date().isoformat()}, fora da janela "
+                    f"dos últimos {RECENCY_WINDOW_DAYS} dias."
+                )
+            elif recency_reason == "invalid_post_date":
+                detail = "A data de publicação está no futuro ou é inválida."
+            else:
+                detail = "A vaga não tem uma data de publicação verificável."
+            return FilterDecision(
+                accepted=False,
+                reason_code=recency_reason,
+                reason_detail=detail,
+            )
+
+        job.post_date = published.date().isoformat()
 
         title_exclusion = cls._matched_text(title_text, cls.EXCLUDE_KEYWORDS)
         if title_exclusion:

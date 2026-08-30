@@ -52,6 +52,7 @@ class JobicyScraper:
                                 tags=tags,
                                 description_snippet=item.get("jobDescription", "")
                                 or item.get("description", ""),
+                                discovery_query=tag,
                             )
                         )
                     except Exception as parse_error:

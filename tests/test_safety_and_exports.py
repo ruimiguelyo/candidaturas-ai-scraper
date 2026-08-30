@@ -5,6 +5,7 @@ import os
 import sys
 import tempfile
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
@@ -26,6 +27,7 @@ def make_job(title="Junior AI Engineer", company="Example", **kwargs):
         company=company,
         location=kwargs.pop("location", "Portugal"),
         job_url=kwargs.pop("job_url", "https://jobs.example/1"),
+        post_date=kwargs.pop("post_date", datetime.now(timezone.utc).date().isoformat()),
         **kwargs,
     )
 
@@ -139,6 +141,7 @@ class TestSafetyAndExports(unittest.TestCase):
             "itjobs",
             "jobicy",
             "landing_jobs",
+            "remotive",
         ):
             getattr(pipeline, scraper_name).fetch = AsyncMock(side_effect=RuntimeError("offline"))
 
@@ -173,6 +176,7 @@ class TestSafetyAndExports(unittest.TestCase):
             "itjobs",
             "jobicy",
             "landing_jobs",
+            "remotive",
         ):
             getattr(pipeline, scraper_name).fetch = AsyncMock(side_effect=RuntimeError("offline"))
 
@@ -192,6 +196,7 @@ class TestSafetyAndExports(unittest.TestCase):
             "itjobs",
             "jobicy",
             "landing_jobs",
+            "remotive",
         ):
             getattr(pipeline, scraper_name).fetch = AsyncMock(return_value=[])
 

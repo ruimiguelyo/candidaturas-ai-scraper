@@ -36,6 +36,7 @@ class LinkedInScraper:
                 params = {
                     "keywords": search_term,
                     "location": location,
+                    "f_TPR": "r604800",
                     "start": start
                 }
 
@@ -79,7 +80,11 @@ class LinkedInScraper:
                             company = company_tag.get_text(strip=True) if company_tag else "Confidencial"
                             raw_loc = loc_tag.get_text(strip=True) if loc_tag else location
                             job_url = link_tag.get("href", "").split("?")[0]
-                            post_date = date_tag.get_text(strip=True) if date_tag else None
+                            post_date = (
+                                date_tag.get("datetime") or date_tag.get_text(strip=True)
+                                if date_tag
+                                else None
+                            )
 
                             if job_url in seen_urls:
                                 continue
@@ -102,7 +107,8 @@ class LinkedInScraper:
                                 modality=modality,
                                 is_remote=is_remote,
                                 post_date=post_date,
-                                seniority=None
+                                seniority=None,
+                                discovery_query=search_term,
                             ))
                         except Exception as card_err:
                             logger.debug(f"LinkedIn item parse skipped: {card_err}")

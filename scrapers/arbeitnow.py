@@ -90,9 +90,9 @@ class ArbeitnowScraper:
                                 try:
                                     post_date = datetime.fromtimestamp(raw_date).strftime("%d/%m/%Y")
                                 except Exception:
-                                    post_date = "Recente"
+                                    post_date = None
                             else:
-                                post_date = str(raw_date) if raw_date else "Recente"
+                                post_date = str(raw_date) if raw_date else None
 
                             raw_tags = item.get("tags", []) or []
                             tags = raw_tags if isinstance(raw_tags, list) else [str(raw_tags)]
@@ -110,6 +110,7 @@ class ArbeitnowScraper:
                                 tags=tags,
                                 description_snippet=item.get("description", "")
                                 or item.get("job_description", ""),
+                                discovery_query=query,
                             )
                             seen_keys.add(identity)
                             results.append(job)

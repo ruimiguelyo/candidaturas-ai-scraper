@@ -1066,5 +1066,107 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
     "teamlyzer_checked_at": 1788043683
+  },
+  "airbus": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "2 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/airbus",
+    "matched_name": "Airbus",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052018
+  },
+  "volkswagenfinancialservicesportugal": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "37 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/volkswagen-financial-services",
+    "matched_name": "Volkswagen Financial Services",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052019
+  },
+  "bnpparibascib": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
+    "teamlyzer_checked_at": 1788052024
+  },
+  "celfocus": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "225 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/celfocus",
+    "matched_name": "Celfocus",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052026
+  },
+  "metyis": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "25 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/metyis",
+    "matched_name": "Metyis",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052026
+  },
+  "expressglassvidrosparaviaturas": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ExpressGlass%C2%AE%20-%20Vidros%20para%20Viaturas",
+    "teamlyzer_checked_at": 1788052032
+  },
+  "talenter": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "5 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/talenter",
+    "matched_name": "Talenter",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052033
+  },
+  "versigent": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
+    "teamlyzer_checked_at": 1788052034
+  },
+  "adentisportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "153 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/adentis-portugal",
+    "matched_name": "Adentis Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052034
+  },
+  "oliverwyman": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Oliver%20Wyman",
+    "teamlyzer_checked_at": 1788052037
+  },
+  "itpeopleinnovation": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "49 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/it-people-innovation",
+    "matched_name": "IT People Innovation",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788052038
   }
 }

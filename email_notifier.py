@@ -4,8 +4,6 @@ import math
 import os
 import smtplib
 from datetime import datetime
-from email import encoders
-from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from html import escape
@@ -234,7 +232,7 @@ def generate_html_email(jobs: list, count_label: str = "vagas qualificadas") -> 
             <div class="footer">
                 <p>Relatorio gerado em {safe_text(now_str)} pelo teu <strong>AI &amp; Top-Tech Job Aggregator</strong>.</p>
                 <p>Ordenacao decrescente: vagas de empresas com melhor rating aparecem sempre no topo.</p>
-                <p>Ficheiro CSV completo anexado a este email.</p>
+                <p>Este email é o relatório principal. Inclui apenas vagas com data verificável nos últimos 7 dias.</p>
             </div>
         </div>
     </body>
@@ -276,38 +274,41 @@ def send_daily_email(
     if not jobs:
         logger.info("Nenhuma vaga qualificada; será enviado um digest vazio mas válido.")
 
-    scope_label = "Novas vagas" if new_only else "Vagas"
+    scope_label = "Novas vagas" if new_only else "Vagas dos últimos 7 dias"
     count_label = "novas vagas qualificadas" if new_only else "vagas qualificadas"
-    subject = f"[Vagas Top Tech] {len(jobs)} {scope_label} Junior/Internship - {datetime.now().strftime('%d/%m/%Y')}"
-    html_content = generate_html_email(jobs, count_label=count_label)
-
-    message = MIMEMultipart("mixed")
-    message["From"] = f"Top-Tech Job Finder <{smtp_user}>"
-    message["To"] = receiver
-    message["Subject"] = subject
-
-    message_body = MIMEMultipart("alternative")
-    message_body.attach(MIMEText(html_content, "html", "utf-8"))
-    message.attach(message_body)
-
-    if os.path.exists(csv_path):
-        try:
-            with open(csv_path, "rb") as file:
-                part = MIMEBase("application", "octet-stream")
-                part.set_payload(file.read())
-            encoders.encode_base64(part)
-            part.add_header("Content-Disposition", f"attachment; filename={os.path.basename(csv_path)}")
-            message.attach(part)
-        except OSError as error:
-            logger.warning("Falha ao anexar CSV: %s", error)
+    # Gmail clips very large HTML messages. Split a large weekly digest into
+    # numbered messages so every vacancy remains visible in the inbox.
+    jobs_per_message = 35
+    chunks = [jobs[index : index + jobs_per_message] for index in range(0, len(jobs), jobs_per_message)]
+    if not chunks:
+        chunks = [[]]
 
     try:
         logger.info("A ligar a %s:%s para envio de email a %s...", smtp_server, smtp_port, receiver)
         with smtplib.SMTP(smtp_server, smtp_port, timeout=20) as server:
             server.starttls()
             server.login(smtp_user, smtp_pass)
-            server.send_message(message)
-        logger.info("Email enviado para %s com %s vagas.", receiver, len(jobs))
+            for part_number, chunk in enumerate(chunks, start=1):
+                part_label = (
+                    f" [{part_number}/{len(chunks)}]" if len(chunks) > 1 else ""
+                )
+                subject = (
+                    f"[Vagas Top Tech] {len(jobs)} {scope_label} Junior/Internship"
+                    f"{part_label} - {datetime.now().strftime('%d/%m/%Y')}"
+                )
+                html_content = generate_html_email(chunk, count_label=count_label)
+                message = MIMEMultipart("alternative")
+                message["From"] = f"Top-Tech Job Finder <{smtp_user}>"
+                message["To"] = receiver
+                message["Subject"] = subject
+                message.attach(MIMEText(html_content, "html", "utf-8"))
+                server.send_message(message)
+        logger.info(
+            "%s email(s) enviado(s) para %s com %s vagas no total.",
+            len(chunks),
+            receiver,
+            len(jobs),
+        )
         return True
     except Exception as error:
         logger.error("Erro ao enviar email via SMTP: %s", error)

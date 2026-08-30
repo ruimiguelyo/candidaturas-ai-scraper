@@ -77,7 +77,8 @@ class ITJobsScraper:
 
                         # Subir para o bloco pai do anúncio
                         parent = (
-                            link.find_parent("div", class_="details")
+                            link.find_parent("li")
+                            or link.find_parent("div", class_="details")
                             or link.find_parent("div", class_="content")
                             or link.find_parent("article")
                             or link.find_parent("li")
@@ -104,6 +105,17 @@ class ITJobsScraper:
 
                             # 2. Extração de Data, Localização e Salário no texto
                             parent_text = parent.get_text(" ", strip=True).replace("\xa0", " ")
+                            listing = parent.find_parent("ul", class_="listing")
+                            date_heading = (
+                                listing.find_previous_sibling("div", class_="heading")
+                                if listing
+                                else None
+                            )
+                            date_text = (
+                                date_heading.get_text(" ", strip=True)
+                                if date_heading
+                                else parent_text
+                            )
                             
                             if "remoto" in parent_text.lower() or "remote" in parent_text.lower():
                                 is_remote = True
@@ -127,7 +139,11 @@ class ITJobsScraper:
                                 loc_name = "Portugal (Remote)"
 
                             # Data (ex: "14 ago", "23 jul", "Hoje")
-                            date_match = re.search(r"(\d{1,2}\s+(?:jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez))", parent_text, re.IGNORECASE)
+                            date_match = re.search(
+                                r"\b(hoje|ontem|\d{1,2}\s+(?:jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez))\b",
+                                date_text,
+                                re.IGNORECASE,
+                            )
                             if date_match:
                                 date_str = date_match.group(1)
 
@@ -149,7 +165,8 @@ class ITJobsScraper:
                             is_remote=is_remote,
                             salary=salary,
                             post_date=date_str,
-                            description_snippet=None
+                            description_snippet=None,
+                            discovery_query=search_term,
                         ))
 
                 except Exception as e:

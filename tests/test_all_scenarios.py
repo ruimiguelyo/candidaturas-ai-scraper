@@ -2,6 +2,7 @@ import asyncio
 import os
 import sys
 import unittest
+from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import httpx
@@ -77,6 +78,7 @@ def make_job(title, company="Example", **kwargs):
         company=company,
         location=kwargs.pop("location", "Portugal"),
         job_url=kwargs.pop("job_url", f"https://jobs.example/{title.replace(' ', '-') }"),
+        post_date=kwargs.pop("post_date", datetime.now(timezone.utc).date().isoformat()),
         **kwargs,
     )
 

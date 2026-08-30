@@ -34,6 +34,7 @@ class JobPost(BaseModel):
     rating_score: float = 0.0                  # Nota numérica para ordenação (ex: 4.1, 3.7, 3.1)
     category: str = "AI / ML"                  # "AI / ML" ou "Top-Tier Software Engineering"
     tags: List[str] = Field(default_factory=list)
+    discovery_query: Optional[str] = None
     location_compatibility: str = "unknown"     # confirmed, conditional, unlikely, unknown
     location_notes: List[str] = Field(default_factory=list)
     description_snippet: Optional[str] = None

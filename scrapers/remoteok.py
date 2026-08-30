@@ -48,6 +48,7 @@ class RemoteOKScraper:
                                 tags=tags,
                                 post_date=item.get("date"),
                                 description_snippet=item.get("description", ""),
+                                discovery_query=query,
                             )
                         )
                     except Exception as parse_error:

@@ -17,7 +17,7 @@ class LandingJobsScraper:
     SEARCH_URL = "https://landing.jobs/jobs/search.json"
 
     @staticmethod
-    def _job_from_offer(item: dict) -> JobPost:
+    def _job_from_offer(item: dict, discovery_query: str | None = None) -> JobPost:
         title = str(item.get("title") or "").strip()
         job_url = str(item.get("url") or "").strip()
         if not title or not job_url:
@@ -47,6 +47,7 @@ class LandingJobsScraper:
             salary=item.get("salary"),
             post_date=item.get("published_at"),
             tags=tags,
+            discovery_query=discovery_query,
         )
 
     @staticmethod
@@ -161,7 +162,7 @@ class LandingJobsScraper:
                         if not isinstance(item, dict):
                             continue
                         try:
-                            job = self._job_from_offer(item)
+                            job = self._job_from_offer(item, query)
                         except (TypeError, ValueError) as parse_error:
                             logger.debug("Landing.jobs item skipped: %s", parse_error)
                             continue

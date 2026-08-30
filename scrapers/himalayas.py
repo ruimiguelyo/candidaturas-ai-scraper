@@ -1,6 +1,6 @@
 import logging
 from typing import List
-from datetime import datetime
+from datetime import datetime, timezone
 import httpx
 from models import JobPost
 from scrapers.http_utils import get_with_retry
@@ -68,11 +68,13 @@ class HimalayasScraper:
                         raw_pub = item.get("pubDate")
                         if isinstance(raw_pub, (int, float)):
                             try:
-                                post_date = datetime.fromtimestamp(raw_pub).strftime("%d/%m/%Y")
+                                post_date = datetime.fromtimestamp(
+                                    raw_pub, tz=timezone.utc
+                                ).isoformat()
                             except Exception:
-                                post_date = "Recente"
+                                post_date = None
                         else:
-                            post_date = str(raw_pub) if raw_pub else "Recente"
+                            post_date = str(raw_pub) if raw_pub else None
                         raw_categories = item.get("categories", []) or []
                         categories = (
                             raw_categories
@@ -95,6 +97,7 @@ class HimalayasScraper:
                                 seniority=item.get("experienceLevel") or item.get("seniority"),
                                 tags=categories,
                                 description_snippet=item.get("excerpt", ""),
+                                discovery_query=query,
                             )
                         )
                     except Exception as parse_error:

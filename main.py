@@ -27,6 +27,7 @@ from scrapers.remoteok import RemoteOKScraper
 from scrapers.itjobs import ITJobsScraper
 from scrapers.jobicy import JobicyScraper
 from scrapers.landing_jobs import LandingJobsScraper
+from scrapers.remotive import RemotiveScraper
 from filter_engine import JobFilterEngine
 from company_ranker import CompanyRanker
 from hiring_intelligence import HiringIntelligence
@@ -161,6 +162,7 @@ class AIJobPipeline:
         self.itjobs = ITJobsScraper()
         self.jobicy = JobicyScraper()
         self.landing_jobs = LandingJobsScraper()
+        self.remotive = RemotiveScraper()
         self.rejections: list[dict] = []
 
     @staticmethod
@@ -207,10 +209,13 @@ class AIJobPipeline:
         candidates: List[JobPost] = []
         rejection_priority = {
             "excluded_company": 0,
-            "excluded_seniority": 1,
-            "excluded_non_technical": 2,
-            "unsupported_domain": 3,
-            "missing_entry_level_signal": 4,
+            "outside_recency_window": 1,
+            "missing_post_date": 2,
+            "invalid_post_date": 3,
+            "excluded_seniority": 4,
+            "excluded_non_technical": 5,
+            "unsupported_domain": 6,
+            "missing_entry_level_signal": 7,
         }
 
         for variants in grouped.values():
@@ -293,6 +298,7 @@ class AIJobPipeline:
             *(("Jobicy", self.jobicy.fetch(query, count=50)) for query in JOBICY_SEARCHES),
             ("Arbeitnow", self.arbeitnow.fetch(None, limit=250, max_pages=5)),
             ("RemoteOK", self.remoteok.fetch(None, limit=250)),
+            ("Remotive", self.remotive.fetch(limit=200)),
         ]
         task_sources = [source for source, _task in search_plan]
         tasks = [task for _source, task in search_plan]
@@ -494,7 +500,9 @@ class AIJobPipeline:
         console.print(f"[bold green]Auditoria de rejeições atualizada:[/bold green] {rejections_path}")
 
         if notify_mode:
-            notification_jobs = jobs if notify_mode == "all" else new_jobs
+            # Email is the primary product: the normal digest contains the full
+            # verified seven-day window, not only rows absent from yesterday's snapshot.
+            notification_jobs = jobs if notify_mode in {"weekly", "all"} else new_jobs
             delivered = send_daily_email(
                 str(json_path),
                 str(csv_path),
@@ -518,7 +526,7 @@ def parse_args(argv=None):
     notification_group.add_argument(
         "--notify",
         action="store_true",
-        help="Envia por email apenas as vagas novas desde o último snapshot.",
+        help="Envia por email todas as vagas verificadas dos últimos 7 dias.",
     )
     notification_group.add_argument(
         "--notify-all",
@@ -546,7 +554,7 @@ def main(argv=None):
 
     pipeline = AIJobPipeline()
     jobs = asyncio.run(pipeline.run())
-    notify_mode = "all" if args.notify_all else ("new" if args.notify else None)
+    notify_mode = "all" if args.notify_all else ("weekly" if args.notify else None)
     pipeline.export_and_display(jobs, output_dir=args.output_dir, notify_mode=notify_mode)
 
 

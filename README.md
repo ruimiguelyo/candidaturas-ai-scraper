@@ -3,7 +3,7 @@
 [![CI](https://github.com/ruimiguelyo/candidaturas-ai-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/ruimiguelyo/candidaturas-ai-scraper/actions/workflows/ci.yml)
 [![Daily scraper](https://github.com/ruimiguelyo/candidaturas-ai-scraper/actions/workflows/daily_scraper.yml/badge.svg)](https://github.com/ruimiguelyo/candidaturas-ai-scraper/actions/workflows/daily_scraper.yml)
 
-Agregador pessoal de vagas técnicas **Junior, Trainee, Graduate e Internship**. Recolhe anúncios de várias fontes, aplica regras determinísticas de relevância, cruza ratings de empresas e produz um CSV/JSON público mais um digest privado opcional.
+Agregador pessoal de vagas técnicas **Junior, Trainee, Graduate e Internship**. O email é a saída principal: agrega todas as vagas qualificadas com data verificável nos últimos sete dias. CSV/JSON são artefactos públicos secundários para auditoria.
 
 O projeto **não se candidata automaticamente**, não envia mensagens para recrutadores e não usa um LLM para inventar adequação. Os contactos encontrados por pesquisa pública são sempre marcados como pendentes de verificação.
 
@@ -12,7 +12,8 @@ O projeto **não se candidata automaticamente**, não envia mensagens para recru
 - Recolhas vazias, demasiado pequenas ou sem diversidade de fontes interrompem a execução e preservam o último dataset válido.
 - O terminal mostra saúde por fonte: pedidos bem-sucedidos, parciais, falhas e vagas brutas.
 - Email e pesquisa de contactos são ações explícitas; uma execução local normal não envia nada.
-- O digest diário compara o snapshot anterior e envia apenas vagas novas; `--notify-all` continua disponível para uma revisão completa.
+- O digest diário envia o snapshot completo dos últimos sete dias. Relatórios grandes são divididos em emails numerados para evitar o corte de HTML do Gmail e não incluem anexos CSV.
+- Datas ausentes, inválidas ou anteriores à janela de sete dias são rejeitadas com motivo auditável; o LinkedIn também recebe o filtro temporal na própria pesquisa.
 - O dataset público já não contém perfis pessoais, mensagens, inferências de outreach ou corpos extensos de descrições.
 - Células CSV potencialmente interpretadas como fórmulas são neutralizadas.
 - Resultados de LinkedIn e Glassdoor só são associados a uma empresa quando o nome está realmente presente na evidência.
@@ -35,6 +36,7 @@ O projeto **não se candidata automaticamente**, não envia mensagens para recru
 - Jobicy
 - Arbeitnow
 - RemoteOK
+- Remotive (API pública; links atribuídos à Remotive)
 - Teamlyzer e Glassdoor para reputação da empresa
 - Pesquisa pública DuckDuckGo, opcional, para sugerir contactos a verificar
 
@@ -86,7 +88,7 @@ cp candidate_profile.example.json candidate_profile.local.json
 candidaturas --outreach
 ```
 
-Enviar apenas as vagas novas exige configuração SMTP e a flag explícita:
+Enviar por email todas as vagas qualificadas dos últimos sete dias exige configuração SMTP e a flag explícita:
 
 ```bash
 candidaturas --notify
@@ -119,7 +121,7 @@ Se a versão antiga do repositório já publicou dados pessoais, removê-los do 
 | `vagas_estritamente_junior_trainee_internship.csv` | Vista compatível com folhas de cálculo | Sim |
 | `vagas_rejeitadas.csv` | Vagas únicas rejeitadas pelo filtro central e grupos de duplicados consolidados | Sim |
 | `company_scores_cache.json` | Cache de ratings e respetiva evidência | Sim |
-| Digest HTML enviado por SMTP | Vagas e, se ativados, contactos por verificar | Não é persistido |
+| Digest HTML enviado por SMTP | Saída principal com todas as vagas dos últimos 7 dias; dividido em partes quando necessário | Não é persistido |
 
 Os ratings ajudam a ordenar e não constituem recomendação definitiva. Vagas de qualquer categoria permanecem visíveis mesmo quando a empresa não tem rating verificável.
 
@@ -128,8 +130,8 @@ Os ratings ajudam a ordenar e não constituem recomendação definitiva. Vagas d
 ```text
 fontes públicas
     ↓ pesquisas alargadas + paginação + saúde por fonte
-normalização e sinais entry-level no título, metadata ou descrição
-    ↓ classificação técnica + deduplicação + auditoria das rejeições
+normalização + confirmação da data nos últimos 7 dias
+    ↓ sinais entry-level no anúncio/query + classificação + deduplicação + auditoria
 rating Teamlyzer → fallback Glassdoor validado
     ↓ ordenação informativa, sem excluir por rating/localização
 outreach privado opcional e não confirmado
@@ -164,7 +166,7 @@ O job que acede aos secrets tem apenas `contents: read` e faz checkout sem crede
 
 ## Limitações atuais
 
-- Datas ainda chegam em formatos diferentes conforme a fonte.
+- Vagas sem data verificável são deliberadamente omitidas, mesmo quando parecem recentes.
 - “Remote” pode estar limitado a um país; confirma sempre autorização de trabalho e localização.
 - A deduplicação entre plataformas ainda é conservadora e pode manter anúncios sindicados.
 - As pesquisas foram alargadas, mas nenhum conjunto de termos ou limite de um portal garante cobertura integral do mercado.
