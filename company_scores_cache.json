@@ -280,11 +280,14 @@
     "url": "https://pt.teamlyzer.com/companies/cisco"
   },
   "nokia": {
-    "score": "3.8/5",
-    "numeric": 3.8,
     "platform": "Teamlyzer",
-    "reviews": "45 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/nokia"
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "101 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
+    "matched_name": "Nokia Networks Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099603
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -432,7 +435,10 @@
     "score": "4.1/5",
     "numeric": 4.1,
     "reviews": "58 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/keyrus"
+    "url": "https://pt.teamlyzer.com/companies/keyrus",
+    "matched_name": "Keyrus Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099622
   },
   "kgstechnologygroupinc": {
     "platform": "Glassdoor",
@@ -576,7 +582,10 @@
     "score": "2.2/5",
     "numeric": 2.2,
     "reviews": "62 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/dellent-consulting"
+    "url": "https://pt.teamlyzer.com/companies/dellent-consulting",
+    "matched_name": "Dellent Consulting",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099605
   },
   "softwaremind": {
     "platform": "Glassdoor",
@@ -795,7 +804,10 @@
     "score": "2.5/5",
     "numeric": 2.5,
     "reviews": "6 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/yellowipe"
+    "url": "https://pt.teamlyzer.com/companies/yellowipe",
+    "matched_name": "YellowIpe",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099611
   },
   "caixamagicasoftware": {
     "platform": "Teamlyzer",
@@ -869,7 +881,8 @@
     "reviews": "53 Reviews",
     "url": "https://pt.teamlyzer.com/companies/pwc",
     "matched_name": "PwC Portugal",
-    "alias_match": false
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099622
   },
   "emagine": {
     "platform": "Teamlyzer",
@@ -1410,5 +1423,67 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=IT%20International%20Mobility",
     "teamlyzer_checked_at": 1788053582
+  },
+  "concentrix": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "11 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/concentrix",
+    "matched_name": "Concentrix",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099604
+  },
+  "agap2industria": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=agap2%20Ind%C3%BAstria",
+    "teamlyzer_checked_at": 1788099609
+  },
+  "keenfinitygroup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Keenfinity%20Group",
+    "teamlyzer_checked_at": 1788099613
+  },
+  "fedex": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "4 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/fedex",
+    "matched_name": "FedEx",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099614
+  },
+  "integerconsulting": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "88 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/integer-consulting",
+    "matched_name": "Integer Consulting",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788099615
+  },
+  "agileengine": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=AgileEngine",
+    "teamlyzer_checked_at": 1788099616
+  },
+  "bnpparibaspersonalfinance": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20Personal%20Finance",
+    "teamlyzer_checked_at": 1788099621
   }
 }
