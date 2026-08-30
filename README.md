@@ -12,7 +12,7 @@ O projeto **não se candidata automaticamente**, não envia mensagens para recru
 - Recolhas vazias, demasiado pequenas ou sem diversidade de fontes interrompem a execução e preservam o último dataset válido.
 - O terminal mostra saúde por fonte: pedidos bem-sucedidos, parciais, falhas e vagas brutas.
 - Email e pesquisa de contactos são ações explícitas; uma execução local normal não envia nada.
-- O digest diário envia o snapshot completo dos últimos sete dias. Relatórios grandes são divididos em emails numerados para evitar o corte de HTML do Gmail e não incluem anexos CSV.
+- O digest diário envia o snapshot completo dos últimos sete dias num único email compacto, mantido abaixo do limite de corte do Gmail e sem anexos CSV.
 - Datas ausentes, inválidas ou anteriores à janela de sete dias são rejeitadas com motivo auditável; o LinkedIn também recebe o filtro temporal na própria pesquisa.
 - O dataset público já não contém perfis pessoais, mensagens, inferências de outreach ou corpos extensos de descrições.
 - Células CSV potencialmente interpretadas como fórmulas são neutralizadas.
@@ -121,7 +121,7 @@ Se a versão antiga do repositório já publicou dados pessoais, removê-los do 
 | `vagas_estritamente_junior_trainee_internship.csv` | Vista compatível com folhas de cálculo | Sim |
 | `vagas_rejeitadas.csv` | Vagas únicas rejeitadas pelo filtro central e grupos de duplicados consolidados | Sim |
 | `company_scores_cache.json` | Cache de ratings e respetiva evidência | Sim |
-| Digest HTML enviado por SMTP | Saída principal com todas as vagas dos últimos 7 dias; dividido em partes quando necessário | Não é persistido |
+| Digest HTML enviado por SMTP | Saída principal compacta, num único email, com todas as vagas dos últimos 7 dias | Não é persistido |
 
 Os ratings ajudam a ordenar e não constituem recomendação definitiva. Vagas de qualquer categoria permanecem visíveis mesmo quando a empresa não tem rating verificável.
 

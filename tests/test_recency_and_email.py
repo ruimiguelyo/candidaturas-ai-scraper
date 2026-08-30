@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from date_utils import parse_publication_date, recency_status
-from email_notifier import send_daily_email
+from email_notifier import generate_html_email, send_daily_email
 from filter_engine import JobFilterEngine
 from models import JobPost
 
@@ -55,8 +55,10 @@ class TestRecencyAndEmail(unittest.TestCase):
                 self.assertFalse(decision.accepted)
                 self.assertEqual(decision.reason_code, "missing_post_date")
 
-    def test_large_digest_is_split_into_visible_numbered_emails_without_csv(self):
-        jobs = [job("today").model_dump() for _ in range(71)]
+    def test_large_digest_is_one_compact_email_without_csv(self):
+        jobs = [job("today").model_dump() for _ in range(236)]
+        html = generate_html_email(jobs)
+        self.assertLess(len(html.encode("utf-8")), 95_000)
         smtp = MagicMock()
         smtp.__enter__.return_value = smtp
         with patch.dict(
@@ -71,10 +73,9 @@ class TestRecencyAndEmail(unittest.TestCase):
             delivered = send_daily_email(jobs=jobs)
 
         self.assertTrue(delivered)
-        self.assertEqual(smtp.send_message.call_count, 3)
-        subjects = [call.args[0]["Subject"] for call in smtp.send_message.call_args_list]
-        self.assertTrue(any("[1/3]" in subject for subject in subjects))
-        self.assertTrue(any("[3/3]" in subject for subject in subjects))
+        self.assertEqual(smtp.send_message.call_count, 1)
+        subject = smtp.send_message.call_args.args[0]["Subject"]
+        self.assertNotIn("[1/", subject)
         for call in smtp.send_message.call_args_list:
             message = call.args[0]
             self.assertFalse(any(part.get_filename() for part in message.walk()))

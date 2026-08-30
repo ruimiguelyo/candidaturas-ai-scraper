@@ -13,232 +13,113 @@ from urllib.parse import urlparse
 logger = logging.getLogger("EmailNotifier")
 
 
+def _rating(job: dict) -> float:
+    try:
+        value = float(job.get("rating_score", 0.0) or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+    return value if math.isfinite(value) else 0.0
+
+
+def _safe_text(value, fallback="") -> str:
+    return escape(str(value if value is not None else fallback))
+
+
+def _safe_url(value) -> str:
+    value = str(value or "")
+    try:
+        parsed = urlparse(value)
+    except ValueError:
+        return ""
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return ""
+    return escape(value, quote=True)
+
+
+def _location_section(job: dict) -> str:
+    location = str(job.get("location", "")).casefold()
+    modality = str(job.get("modality", "")).casefold()
+    if any(place in location for place in ("lisbon", "lisboa", "oeiras", "albarraque")):
+        return "lisbon"
+    if "remote" in modality or "remoto" in modality or "100% remote" in location:
+        return "remote"
+    return "other"
+
+
+def _render_outreach(job: dict) -> str:
+    outreach = job.get("human_outreach")
+    if not isinstance(outreach, dict) or not outreach.get("target_found"):
+        return ""
+    profile_url = _safe_url(outreach.get("profile_url"))
+    profile_link = f' <a href="{profile_url}">perfil</a>' if profile_url else ""
+    evidence = outreach.get("evidence") or []
+    evidence_text = evidence[0] if isinstance(evidence, list) and evidence else ""
+    return (
+        '<aside><b>UNVERIFIED CONTACT:</b> '
+        f'{_safe_text(outreach.get("name") or "Contacto")} — '
+        f'{_safe_text(outreach.get("current_title") or "função por confirmar")}{profile_link}<br>'
+        f'<b>Search confidence: {_safe_text(outreach.get("confidence") or "MEDIUM")}</b>. '
+        'Please verify the person and role before use. '
+        f'{_safe_text(evidence_text)}'
+        f'<br><i>{_safe_text(outreach.get("suggested_message") or "")}</i></aside>'
+    )
+
+
+def _render_jobs(jobs: list[dict]) -> str:
+    if not jobs:
+        return '<p class="empty">Nenhuma vaga nesta secção.</p>'
+    rows = []
+    for job in jobs:
+        url = _safe_url(job.get("job_url"))
+        title = _safe_text(job.get("title") or "Vaga sem título")
+        title_html = f'<a href="{url}"><b>{title}</b></a>' if url else f"<b>{title}</b>"
+        rating = _safe_text(job.get("company_score") or "sem rating")
+        compatibility = _safe_text(job.get("location_compatibility") or "unknown")
+        rows.append(
+            "<li>"
+            f"{title_html}"
+            "<small>"
+            f'{_safe_text(job.get("company") or "Empresa desconhecida")} · '
+            f'{_safe_text(job.get("location") or "Local desconhecido")} · '
+            f'{_safe_text(job.get("post_date") or "data desconhecida")} · '
+            f'{_safe_text(job.get("source") or "Web")} · {rating} · {compatibility}'
+            "</small>"
+            f"{_render_outreach(job)}"
+            "</li>"
+        )
+    return "<ol>" + "".join(rows) + "</ol>"
+
+
 def generate_html_email(jobs: list, count_label: str = "vagas qualificadas") -> str:
-    now_str = datetime.now().strftime("%d/%m/%Y às %H:%M")
-
-    def rating(job: dict) -> float:
-        try:
-            value = float(job.get("rating_score", 0.0) or 0.0)
-        except (TypeError, ValueError):
-            return 0.0
-        return value if math.isfinite(value) else 0.0
-
-    # A ordenacao por localizacao foi removida: quebrava a garantia global de
-    # maior rating para menor rating no email.
+    """Render one compact report that remains below Gmail's clipping threshold."""
     ordered_jobs = sorted(
         jobs,
         key=lambda job: (
-            -rating(job),
+            -_rating(job),
             str(job.get("company", "")).casefold(),
             str(job.get("title", "")).casefold(),
         ),
     )
-
-    # Keep the original report sections while preserving rating order inside
-    # each section. This is easier to scan on mobile and in long reports.
-    lisbon_jobs = []
-    remote_jobs = []
-    other_jobs = []
+    sections = {"lisbon": [], "remote": [], "other": []}
     for job in ordered_jobs:
-        location = str(job.get("location", "")).lower()
-        modality = str(job.get("modality", "")).lower()
-        if any(place in location for place in ("lisbon", "lisboa", "oeiras", "albarraque")):
-            lisbon_jobs.append(job)
-        elif "remote" in modality or "remoto" in modality or "100% remote" in location:
-            remote_jobs.append(job)
-        else:
-            other_jobs.append(job)
+        sections[_location_section(job)].append(job)
 
-    def safe_text(value, fallback="") -> str:
-        return escape(str(value if value is not None else fallback))
-
-    def safe_url(value) -> str:
-        value = str(value or "")
-        try:
-            parsed = urlparse(value)
-        except ValueError:
-            return ""
-        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
-            return ""
-        return escape(value, quote=True)
-
-    def render_cards(job_list: list) -> str:
-        if not job_list:
-            return "<p style='color: #64748b; font-style: italic;'>Nenhuma vaga qualificada hoje.</p>"
-
-        cards_html = ""
-        for job in job_list:
-            raw_source = str(job.get("source", "Web"))
-            source = safe_text(raw_source)
-            source_badge_color = {
-                "LinkedIn": "#0a66c2",
-                "Landing.jobs": "#00b289",
-                "Himalayas": "#2563eb",
-                "Jobicy": "#7c3aed",
-                "Arbeitnow": "#ea580c",
-                "ITJobs.pt": "#0f766e",
-            }.get(raw_source, "#475569")
-
-            category = safe_text(job.get("category", "AI / ML"))
-            if "ai" in category.lower():
-                category_badge = (
-                    '<span style="background-color: #ede9fe; color: #6d28d9; font-size: 11px; '
-                    'font-weight: 700; padding: 3px 8px; border-radius: 6px;">🤖 IA &amp; ML</span>'
-                )
-            else:
-                category_badge = (
-                    '<span style="background-color: #e0f2fe; color: #0369a1; font-size: 11px; '
-                    'font-weight: 700; padding: 3px 8px; border-radius: 6px;">⚡ TOP-TIER SWE</span>'
-                )
-
-            score = safe_text(job.get("company_score")) if job.get("company_score") else ""
-            reviews = safe_text(job.get("company_reviews")) if job.get("company_reviews") else ""
-            ranking_url = safe_url(job.get("teamlyzer_url"))
-            job_url = safe_url(job.get("job_url"))
-            location_compatibility = str(job.get("location_compatibility", "unknown")).lower()
-            location_label = {
-                "confirmed": "Localização compatível",
-                "conditional": "Localização a confirmar",
-                "unlikely": "Provavelmente incompatível",
-                "unknown": "Localização desconhecida",
-            }.get(location_compatibility, "Localização desconhecida")
-            location_color = {
-                "confirmed": "#15803d",
-                "conditional": "#b45309",
-                "unlikely": "#b91c1c",
-                "unknown": "#64748b",
-            }.get(location_compatibility, "#64748b")
-
-            if score and ranking_url:
-                if "teamlyzer" in ranking_url.lower():
-                    rating_badge = f"""
-                    <a href="{ranking_url}" target="_blank" rel="noopener" style="background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
-                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
-                    </a>
-                    """
-                else:
-                    rating_badge = f"""
-                    <a href="{ranking_url}" target="_blank" rel="noopener" style="background-color: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
-                        <span>{score}</span> <span style="font-weight: 500; opacity: 0.85;">({reviews})</span> ➔
-                    </a>
-                    """
-            elif score:
-                rating_badge = f"""
-                <span style="background-color: #f1f5f9; color: #334155; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px;">
-                    {score}
-                </span>
-                """
-            else:
-                rating_badge = """
-                <span style="color: #94a3b8; font-size: 11px; font-style: italic;">
-                    Sem rating
-                </span>
-                """
-
-            # Bloco opcional estático de Hiring Intelligence (apenas se target_found == True)
-            outreach = job.get("human_outreach")
-            outreach_html = ""
-            if outreach and isinstance(outreach, dict) and outreach.get("target_found"):
-                target_name = safe_text(outreach.get("name") or "Contact")
-                target_title = safe_text(outreach.get("current_title") or "Engineering Management")
-                target_confidence = safe_text(outreach.get("confidence", "MEDIUM"))
-                verification_status = safe_text(outreach.get("verification_status", "PENDING"))
-                profile_link = safe_url(outreach.get("profile_url"))
-                hook = safe_text(outreach.get("personalization_hook") or "")
-                evidence_list = outreach.get("evidence", [])
-                evidence_text = safe_text(evidence_list[0]) if (evidence_list and isinstance(evidence_list, list)) else "Lidera/recruta na área técnica correspondente."
-                suggested_msg = safe_text(outreach.get("suggested_message") or "")
-
-                conf_badge = "#16a34a" if target_confidence == "HIGH" else "#d97706"
-
-                profile_btn = f'<a href="{profile_link}" target="_blank" rel="noopener" style="color: #2563eb; font-weight: 600; text-decoration: underline; font-size: 12px; margin-left: 6px;">Ver Perfil LinkedIn ➔</a>' if profile_link else ""
-
-                msg_block = f"""
-                <div style="margin-top: 8px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-family: monospace; font-size: 12px; color: #1e293b; white-space: pre-wrap;">{suggested_msg}</div>
-                """ if suggested_msg else ""
-
-                outreach_html = f"""
-                <div style="margin: 12px 0; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid {conf_badge}; border-radius: 6px; padding: 12px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a;">👤 UNVERIFIED CONTACT: {target_name} <span style="font-weight: normal; color: #64748b;">({target_title})</span></span>
-                        <span style="font-size: 10px; font-weight: 800; color: {conf_badge}; text-transform: uppercase; background: #ffffff; border: 1px solid {conf_badge}; padding: 2px 6px; border-radius: 4px;">Search confidence: {target_confidence} · {verification_status}</span>
-                    </div>
-                    <div style="font-size: 12px; color: #475569; margin-bottom: 4px;"><strong>Why:</strong> {evidence_text} {profile_btn}</div>
-                    {f'<div style="font-size: 12px; color: #475569; margin-bottom: 4px;"><strong>Hook:</strong> {hook}</div>' if hook else ''}
-                    {'<div style="font-size: 11px; font-weight: 700; color: #334155; margin-top: 8px;">Draft — verify the person and role before use:</div>' if suggested_msg else ''}
-                    {msg_block}
-                </div>
-                """
-
-            cards_html += f"""
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                    <div>
-                        <span style="background-color: {source_badge_color}; color: white; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-transform: uppercase;">{source}</span>
-                        {category_badge}
-                        <span style="background-color: #f1f5f9; color: #334155; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; margin-left: 4px;">{safe_text(job.get('modality', 'Híbrido/Remoto'))}</span>
-                    </div>
-                    <span style="color: #94a3b8; font-size: 12px;">{safe_text(job.get('post_date') or 'Recente')}</span>
-                </div>
-                <h3 style="margin: 8px 0 6px 0; font-size: 17px; color: #0f172a; font-weight: 700;">{safe_text(job.get('title'))}</h3>
-                <div style="margin: 0 0 12px 0; color: #475569; font-size: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
-                    <span><strong>Empresa:</strong> <span style="color: #0f172a; font-weight: 700; font-size: 15px;">{safe_text(job.get('company'))}</span></span>
-                    <span>{rating_badge}</span>
-                    <span>• <strong>Local:</strong> {safe_text(job.get('location'))}</span>
-                    <span style="color: {location_color}; font-size: 11px; font-weight: 700;">{safe_text(location_label)}</span>
-                </div>
-                {outreach_html}
-                <div style="text-align: right; margin-top: 10px;">
-                    <a href="{job_url}" target="_blank" rel="noopener" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; display: inline-block;">
-                        Ver Vaga &amp; Candidatar ➔
-                    </a>
-                </div>
-            </div>
-            """
-        return cards_html
-
-    html = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8">
-        <style>
-            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; }}
-            .container {{ max-width: 680px; margin: 0 auto; background: #f8fafc; }}
-            .header {{ background: linear-gradient(135deg, #1e293b, #0f172a); color: white; padding: 26px 20px; border-radius: 12px; text-align: center; margin-bottom: 24px; }}
-            .section-title {{ font-size: 18px; color: #1e293b; font-weight: 800; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin: 24px 0 14px 0; }}
-            .footer {{ text-align: center; color: #94a3b8; font-size: 12px; margin-top: 30px; padding: 15px; }}
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">Vagas Junior, Trainee &amp; Internships</h1>
-                <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 14px;">IA/ML + Top-Tier Software Engineering (Ordenadas por Rating da Empresa)</p>
-                <div style="margin-top: 14px; display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 14px; border-radius: 20px; font-size: 13px;">
-                    <strong>{len(ordered_jobs)} {safe_text(count_label)}</strong> ordenadas pelo maior score (Teamlyzer / Glassdoor)
-                </div>
-            </div>
-
-            <div class="section-title">📍 Lisboa &amp; Região (Híbrido / Presencial)</div>
-            {render_cards(lisbon_jobs)}
-
-            <div class="section-title">🌐 100% Remoto (Nacional &amp; Internacional)</div>
-            {render_cards(remote_jobs)}
-
-            <div class="section-title">🇵🇹 Outras Localizações em Portugal &amp; Traineeships</div>
-            {render_cards(other_jobs)}
-
-            <div class="footer">
-                <p>Relatorio gerado em {safe_text(now_str)} pelo teu <strong>AI &amp; Top-Tech Job Aggregator</strong>.</p>
-                <p>Ordenacao decrescente: vagas de empresas com melhor rating aparecem sempre no topo.</p>
-                <p>Este email é o relatório principal. Inclui apenas vagas com data verificável nos últimos 7 dias.</p>
-            </div>
-        </div>
-    </body>
-    </html>
-    """
-    return html
+    now = _safe_text(datetime.now().strftime("%d/%m/%Y às %H:%M"))
+    return f"""<!doctype html><html><head><meta charset="utf-8"><style>
+body{{font:14px Arial,sans-serif;color:#172033;background:#f5f7fb;margin:0;padding:14px}}
+main{{max-width:760px;margin:auto;background:white;padding:18px;border-radius:10px}}
+h1{{font-size:22px;margin:0 0 5px}}h2{{font-size:17px;margin:22px 0 6px;border-bottom:2px solid #dbe4f0;padding-bottom:5px}}
+.summary{{background:#eaf2ff;padding:10px;border-radius:7px}}ol{{margin:0;padding-left:25px}}li{{padding:7px 3px;border-bottom:1px solid #edf0f5}}
+a{{color:#075fc9;text-decoration:none}}small{{display:block;color:#58657a;margin-top:2px}}aside{{font-size:12px;background:#f4f6f8;padding:6px;margin-top:5px}}
+.empty{{color:#748095}}footer{{font-size:11px;color:#748095;margin-top:20px}}
+</style></head><body><main>
+<h1>Vagas Junior, Trainee &amp; Internships</h1>
+<p class="summary"><b>{len(ordered_jobs)} {_safe_text(count_label)}</b> · apenas publicações verificadas dos últimos 7 dias · relatório completo num único email.</p>
+<h2>📍 Lisboa &amp; Região</h2>{_render_jobs(sections['lisbon'])}
+<h2>🌐 100% Remoto</h2>{_render_jobs(sections['remote'])}
+<h2>🇵🇹 Outras Localizações</h2>{_render_jobs(sections['other'])}
+<footer>Gerado em {now}. Ordenação por rating dentro de cada secção. Sem anexo CSV.</footer>
+</main></body></html>"""
 
 
 def send_daily_email(
@@ -251,19 +132,17 @@ def send_daily_email(
     smtp_pass = os.getenv("SMTP_PASS")
     receiver = os.getenv("RECEIVER_EMAIL")
     smtp_server = os.getenv("SMTP_SERVER") or "smtp.gmail.com"
-
     smtp_port_raw = os.getenv("SMTP_PORT")
     smtp_port = int(smtp_port_raw.strip()) if smtp_port_raw and smtp_port_raw.strip().isdigit() else 587
+    _ = csv_path  # Retained for backwards-compatible callers; CSV is intentionally not attached.
 
     if not (smtp_user and smtp_pass and receiver):
         logger.error("SMTP_USER, SMTP_PASS e RECEIVER_EMAIL têm de estar configuradas.")
         return False
-
     if jobs is None:
         if not os.path.exists(json_path):
             logger.error("Ficheiro %s não encontrado.", json_path)
             return False
-
         try:
             with open(json_path, "r", encoding="utf-8") as file:
                 jobs = json.load(file)
@@ -271,44 +150,24 @@ def send_daily_email(
             logger.error("Não foi possível carregar %s: %s", json_path, error)
             return False
 
-    if not jobs:
-        logger.info("Nenhuma vaga qualificada; será enviado um digest vazio mas válido.")
-
     scope_label = "Novas vagas" if new_only else "Vagas dos últimos 7 dias"
     count_label = "novas vagas qualificadas" if new_only else "vagas qualificadas"
-    # Gmail clips very large HTML messages. Split a large weekly digest into
-    # numbered messages so every vacancy remains visible in the inbox.
-    jobs_per_message = 35
-    chunks = [jobs[index : index + jobs_per_message] for index in range(0, len(jobs), jobs_per_message)]
-    if not chunks:
-        chunks = [[]]
+    subject = (
+        f"[Vagas Top Tech] {len(jobs)} {scope_label} Junior/Internship - "
+        f"{datetime.now().strftime('%d/%m/%Y')}"
+    )
+    message = MIMEMultipart("alternative")
+    message["From"] = f"Top-Tech Job Finder <{smtp_user}>"
+    message["To"] = receiver
+    message["Subject"] = subject
+    message.attach(MIMEText(generate_html_email(jobs, count_label=count_label), "html", "utf-8"))
 
     try:
-        logger.info("A ligar a %s:%s para envio de email a %s...", smtp_server, smtp_port, receiver)
         with smtplib.SMTP(smtp_server, smtp_port, timeout=20) as server:
             server.starttls()
             server.login(smtp_user, smtp_pass)
-            for part_number, chunk in enumerate(chunks, start=1):
-                part_label = (
-                    f" [{part_number}/{len(chunks)}]" if len(chunks) > 1 else ""
-                )
-                subject = (
-                    f"[Vagas Top Tech] {len(jobs)} {scope_label} Junior/Internship"
-                    f"{part_label} - {datetime.now().strftime('%d/%m/%Y')}"
-                )
-                html_content = generate_html_email(chunk, count_label=count_label)
-                message = MIMEMultipart("alternative")
-                message["From"] = f"Top-Tech Job Finder <{smtp_user}>"
-                message["To"] = receiver
-                message["Subject"] = subject
-                message.attach(MIMEText(html_content, "html", "utf-8"))
-                server.send_message(message)
-        logger.info(
-            "%s email(s) enviado(s) para %s com %s vagas no total.",
-            len(chunks),
-            receiver,
-            len(jobs),
-        )
+            server.send_message(message)
+        logger.info("Um email enviado para %s com %s vagas.", receiver, len(jobs))
         return True
     except Exception as error:
         logger.error("Erro ao enviar email via SMTP: %s", error)
