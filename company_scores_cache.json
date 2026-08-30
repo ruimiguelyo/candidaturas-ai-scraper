@@ -993,7 +993,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Alongside",
-    "teamlyzer_checked_at": 1787859594
+    "teamlyzer_checked_at": 1788053567
   },
   "aline": {
     "platform": "Glassdoor",
@@ -1340,5 +1340,75 @@
     "matched_name": "KCS IT",
     "alias_match": false,
     "teamlyzer_checked_at": 1788052357
+  },
+  "decskill": {
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "59 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/decskill",
+    "matched_name": "Decskill",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788053566
+  },
+  "iceye": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ICEYE",
+    "teamlyzer_checked_at": 1788053568
+  },
+  "stealthaistartup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Stealth%20AI%20Startup",
+    "teamlyzer_checked_at": 1788053573
+  },
+  "hexaconsulting": {
+    "platform": "Teamlyzer",
+    "score": "3.3/5",
+    "numeric": 3.3,
+    "reviews": "31 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/hexaconsulting",
+    "matched_name": "Hexa Consulting",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788053574
+  },
+  "riskified": {
+    "platform": "Teamlyzer",
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "reviews": "15 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/riskified",
+    "matched_name": "Riskified",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788053574
+  },
+  "neuronslab": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Neurons%20Lab",
+    "teamlyzer_checked_at": 1788053577
+  },
+  "openspring": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=OpenSpring",
+    "teamlyzer_checked_at": 1788053579
+  },
+  "itinternationalmobility": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=IT%20International%20Mobility",
+    "teamlyzer_checked_at": 1788053582
   }
 }
