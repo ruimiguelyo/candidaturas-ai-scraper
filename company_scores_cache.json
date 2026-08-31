@@ -217,11 +217,14 @@
     "url": "https://pt.teamlyzer.com/companies/talkdesk"
   },
   "primeit": {
+    "platform": "Teamlyzer",
     "score": "2.9/5",
     "numeric": 2.9,
-    "platform": "Teamlyzer",
-    "reviews": "568 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/prime-it"
+    "reviews": "569 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/prime-it",
+    "matched_name": "PrimeIT",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788194972
   },
   "siemens": {
     "score": "3.6/5",
@@ -1098,7 +1101,7 @@
     "url": "https://pt.teamlyzer.com/companies/volkswagen-financial-services",
     "matched_name": "Volkswagen Financial Services",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052019
+    "teamlyzer_checked_at": 1788194960
   },
   "bnpparibascib": {
     "platform": "Glassdoor",
@@ -1116,7 +1119,7 @@
     "url": "https://pt.teamlyzer.com/companies/celfocus",
     "matched_name": "Celfocus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052026
+    "teamlyzer_checked_at": 1788194958
   },
   "metyis": {
     "platform": "Teamlyzer",
@@ -1170,7 +1173,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Oliver%20Wyman",
-    "teamlyzer_checked_at": 1788052037
+    "teamlyzer_checked_at": 1788194963
   },
   "itpeopleinnovation": {
     "platform": "Teamlyzer",
@@ -1190,7 +1193,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052336
+    "teamlyzer_checked_at": 1788194959
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1200,7 +1203,7 @@
     "url": "https://pt.teamlyzer.com/companies/hostelworld-group",
     "matched_name": "Hostelworld Group",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052336
+    "teamlyzer_checked_at": 1788194958
   },
   "capgemini": {
     "platform": "Teamlyzer",
@@ -1210,7 +1213,7 @@
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052336
+    "teamlyzer_checked_at": 1788194959
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1228,7 +1231,7 @@
     "url": "https://pt.teamlyzer.com/companies/robert-walters",
     "matched_name": "Robert Walters",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052339
+    "teamlyzer_checked_at": 1788194960
   },
   "indiciumai": {
     "platform": "Teamlyzer",
@@ -1238,7 +1241,7 @@
     "url": "https://pt.teamlyzer.com/companies/indicium-ai",
     "matched_name": "Indicium AI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052339
+    "teamlyzer_checked_at": 1788194960
   },
   "amgen": {
     "platform": "Teamlyzer",
@@ -1248,7 +1251,7 @@
     "url": "https://pt.teamlyzer.com/companies/amgen-portugal",
     "matched_name": "Amgen Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052340
+    "teamlyzer_checked_at": 1788194965
   },
   "bjak": {
     "platform": "Glassdoor",
@@ -1274,7 +1277,7 @@
     "url": "https://pt.teamlyzer.com/companies/tmc",
     "matched_name": "TMC",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052346
+    "teamlyzer_checked_at": 1788194971
   },
   "fyld": {
     "platform": "Teamlyzer",
@@ -1284,7 +1287,7 @@
     "url": "https://pt.teamlyzer.com/companies/fyld",
     "matched_name": "Fyld",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052346
+    "teamlyzer_checked_at": 1788194964
   },
   "inetum": {
     "platform": "Teamlyzer",
@@ -1294,7 +1297,7 @@
     "url": "https://pt.teamlyzer.com/companies/inetum",
     "matched_name": "Inetum",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052346
+    "teamlyzer_checked_at": 1788194971
   },
   "frimarcindustriaecomerciosa": {
     "platform": "Glassdoor",
@@ -1302,7 +1305,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=FRIMARC%20-%20Ind%C3%BAstria%20e%20Com%C3%A9rcio%2C%20S.A.",
-    "teamlyzer_checked_at": 1788052353
+    "teamlyzer_checked_at": 1788194970
   },
   "accentureportugal": {
     "platform": "Teamlyzer",
@@ -1312,7 +1315,7 @@
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052354
+    "teamlyzer_checked_at": 1788194972
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1322,7 +1325,7 @@
     "url": "https://pt.teamlyzer.com/companies/expleo",
     "matched_name": "expleo",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052354
+    "teamlyzer_checked_at": 1788194971
   },
   "siemensenergy": {
     "platform": "Teamlyzer",
@@ -1370,7 +1373,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ICEYE",
-    "teamlyzer_checked_at": 1788053568
+    "teamlyzer_checked_at": 1788194971
   },
   "stealthaistartup": {
     "platform": "Glassdoor",
@@ -1485,5 +1488,25 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20Personal%20Finance",
     "teamlyzer_checked_at": 1788099621
+  },
+  "syone": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "53 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/syone",
+    "matched_name": "Syone",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788194965
+  },
+  "fidelidade": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "5 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/fidelidade-seguros",
+    "matched_name": "Fidelidade Seguros",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788194972
   }
 }
