@@ -24,11 +24,14 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu"
   },
   "innowave": {
+    "platform": "Teamlyzer",
     "score": "3.7/5",
     "numeric": 3.7,
-    "platform": "Teamlyzer",
-    "reviews": "147 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/innowave-technologies"
+    "reviews": "157 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/innowave-technologies",
+    "matched_name": "InnoWave",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788271225
   },
   "innowavetechnologies": {
     "score": "3.7/5",
@@ -337,7 +340,7 @@
     "url": "https://pt.teamlyzer.com/companies/tensorops",
     "matched_name": "TensorOps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043671
+    "teamlyzer_checked_at": 1788271218
   },
   "policyme": {
     "score": "4.3/5",
@@ -1109,7 +1112,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
-    "teamlyzer_checked_at": 1788052024
+    "teamlyzer_checked_at": 1788271215
   },
   "celfocus": {
     "platform": "Teamlyzer",
@@ -1137,7 +1140,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ExpressGlass%C2%AE%20-%20Vidros%20para%20Viaturas",
-    "teamlyzer_checked_at": 1788052032
+    "teamlyzer_checked_at": 1788271216
   },
   "talenter": {
     "platform": "Teamlyzer",
@@ -1147,7 +1150,7 @@
     "url": "https://pt.teamlyzer.com/companies/talenter",
     "matched_name": "Talenter",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052033
+    "teamlyzer_checked_at": 1788271225
   },
   "versigent": {
     "platform": "Glassdoor",
@@ -1155,7 +1158,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1788052034
+    "teamlyzer_checked_at": 1788271218
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1508,5 +1511,23 @@
     "matched_name": "Fidelidade Seguros",
     "alias_match": false,
     "teamlyzer_checked_at": 1788194972
+  },
+  "axiansportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "114 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/axians-portugal",
+    "matched_name": "Axians Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788271209
+  },
+  "bouyguestelecomservices": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bouygues%20Telecom%20Services",
+    "teamlyzer_checked_at": 1788271224
   }
 }
