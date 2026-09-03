@@ -7,7 +7,7 @@
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043679
+    "teamlyzer_checked_at": 1788441676
   },
   "fujitsu": {
     "score": "3.1/5",
@@ -31,7 +31,7 @@
     "url": "https://pt.teamlyzer.com/companies/innowave-technologies",
     "matched_name": "InnoWave",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788271225
+    "teamlyzer_checked_at": 1788441663
   },
   "innowavetechnologies": {
     "score": "3.7/5",
@@ -155,7 +155,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043679
+    "teamlyzer_checked_at": 1788441683
   },
   "ceiia": {
     "score": "3.8/5",
@@ -813,7 +813,7 @@
     "url": "https://pt.teamlyzer.com/companies/yellowipe",
     "matched_name": "YellowIpe",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788099611
+    "teamlyzer_checked_at": 1788441686
   },
   "caixamagicasoftware": {
     "platform": "Teamlyzer",
@@ -828,7 +828,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1788043677
+    "teamlyzer_checked_at": 1788441675
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -843,7 +843,10 @@
     "score": "2.9/5",
     "numeric": 2.9,
     "reviews": "11 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/infineon-technologies-portugal"
+    "url": "https://pt.teamlyzer.com/companies/infineon-technologies-portugal",
+    "matched_name": "Infineon Technologies Business Solutions",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788441682
   },
   "jofebar": {
     "platform": "Glassdoor",
@@ -1038,7 +1041,7 @@
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043671
+    "teamlyzer_checked_at": 1788441667
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1066,7 +1069,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-bnp-paribas",
     "matched_name": "Banco BNP Paribas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043680
+    "teamlyzer_checked_at": 1788441682
   },
   "knokcare": {
     "platform": "Teamlyzer",
@@ -1338,7 +1341,7 @@
     "url": "https://pt.teamlyzer.com/companies/siemens-energy",
     "matched_name": "Siemens Energy",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052355
+    "teamlyzer_checked_at": 1788441683
   },
   "innotech": {
     "platform": "Teamlyzer",
@@ -1348,7 +1351,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052356
+    "teamlyzer_checked_at": 1788441685
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1454,7 +1457,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Keenfinity%20Group",
-    "teamlyzer_checked_at": 1788099613
+    "teamlyzer_checked_at": 1788441688
   },
   "fedex": {
     "platform": "Teamlyzer",
@@ -1520,7 +1523,7 @@
     "url": "https://pt.teamlyzer.com/companies/axians-portugal",
     "matched_name": "Axians Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788271209
+    "teamlyzer_checked_at": 1788441665
   },
   "bouyguestelecomservices": {
     "platform": "Glassdoor",
@@ -1555,5 +1558,61 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JUST%20VARGAS",
     "teamlyzer_checked_at": 1788355368
+  },
+  "hays": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "18 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/hays",
+    "matched_name": "Hays Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788441665
+  },
+  "evotym": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Evotym",
+    "teamlyzer_checked_at": 1788441678
+  },
+  "netjetseurope": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=NetJets%20Europe",
+    "teamlyzer_checked_at": 1788441681
+  },
+  "prozis": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "39 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/prozis",
+    "matched_name": "Prozis",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788441684
+  },
+  "korber": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "27 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/korber-digital",
+    "matched_name": "Körber Campus Porto",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788441684
+  },
+  "catawiki": {
+    "platform": "Teamlyzer",
+    "score": "3.7/5",
+    "numeric": 3.7,
+    "reviews": "13 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/catawiki",
+    "matched_name": "Catawiki",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788441685
   }
 }
