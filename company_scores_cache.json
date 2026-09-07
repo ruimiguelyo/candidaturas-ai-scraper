@@ -7,7 +7,7 @@
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698533
+    "teamlyzer_checked_at": 1788792812
   },
   "fujitsu": {
     "score": "3.1/5",
@@ -31,7 +31,7 @@
     "url": "https://pt.teamlyzer.com/companies/innowave-technologies",
     "matched_name": "InnoWave",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698516
+    "teamlyzer_checked_at": 1788792810
   },
   "innowavetechnologies": {
     "score": "3.7/5",
@@ -65,7 +65,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-santander-totta",
     "matched_name": "Banco Santander Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698532
+    "teamlyzer_checked_at": 1788792803
   },
   "bancosantander": {
     "score": "3.2/5",
@@ -172,7 +172,7 @@
     "url": "https://pt.teamlyzer.com/companies/zendesk",
     "matched_name": "Zendesk",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698526
+    "teamlyzer_checked_at": 1788792816
   },
   "euronext": {
     "platform": "Teamlyzer",
@@ -182,7 +182,7 @@
     "url": "https://pt.teamlyzer.com/companies/euronext-s-technology-centre-portugal",
     "matched_name": "Euronext's Technology Centre - Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698533
+    "teamlyzer_checked_at": 1788792812
   },
   "philipmorris": {
     "score": "3.8/5",
@@ -199,7 +199,7 @@
     "url": "https://pt.teamlyzer.com/companies/philip-morris-international",
     "matched_name": "Philip Morris International",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698525
+    "teamlyzer_checked_at": 1788792801
   },
   "alten": {
     "score": "2.3/5",
@@ -296,7 +296,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698533
+    "teamlyzer_checked_at": 1788792813
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -849,7 +849,7 @@
     "url": "https://pt.teamlyzer.com/companies/infineon-technologies-portugal",
     "matched_name": "Infineon Technologies Business Solutions",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788441682
+    "teamlyzer_checked_at": 1788792812
   },
   "jofebar": {
     "platform": "Glassdoor",
@@ -875,7 +875,8 @@
     "reviews": "12 Reviews",
     "url": "https://pt.teamlyzer.com/companies/salsify",
     "matched_name": "Salsify",
-    "alias_match": false
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788792810
   },
   "miniclip": {
     "platform": "Teamlyzer",
@@ -1038,13 +1039,13 @@
   },
   "mollie": {
     "platform": "Teamlyzer",
-    "score": "3.4/5",
-    "numeric": 3.4,
+    "score": "3.3/5",
+    "numeric": 3.3,
     "reviews": "13 Reviews",
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698520
+    "teamlyzer_checked_at": 1788792801
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1138,7 +1139,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698518
+    "teamlyzer_checked_at": 1788792802
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1146,7 +1147,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ExpressGlass%C2%AE%20-%20Vidros%20para%20Viaturas",
-    "teamlyzer_checked_at": 1788527712
+    "teamlyzer_checked_at": 1788792808
   },
   "talenter": {
     "platform": "Teamlyzer",
@@ -1222,7 +1223,7 @@
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698519
+    "teamlyzer_checked_at": 1788792814
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1260,7 +1261,7 @@
     "url": "https://pt.teamlyzer.com/companies/amgen-portugal",
     "matched_name": "Amgen Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788527718
+    "teamlyzer_checked_at": 1788792811
   },
   "bjak": {
     "platform": "Glassdoor",
@@ -1286,7 +1287,7 @@
     "url": "https://pt.teamlyzer.com/companies/tmc",
     "matched_name": "TMC",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698521
+    "teamlyzer_checked_at": 1788792816
   },
   "fyld": {
     "platform": "Teamlyzer",
@@ -1354,7 +1355,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698524
+    "teamlyzer_checked_at": 1788792816
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1374,7 +1375,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788053566
+    "teamlyzer_checked_at": 1788792812
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1526,7 +1527,7 @@
     "url": "https://pt.teamlyzer.com/companies/axians-portugal",
     "matched_name": "Axians Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698518
+    "teamlyzer_checked_at": 1788792799
   },
   "bouyguestelecomservices": {
     "platform": "Glassdoor",
@@ -1542,7 +1543,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ActAI",
-    "teamlyzer_checked_at": 1788698517
+    "teamlyzer_checked_at": 1788792814
   },
   "boschportugal": {
     "platform": "Teamlyzer",
@@ -1552,7 +1553,7 @@
     "url": "https://pt.teamlyzer.com/companies/bosch",
     "matched_name": "Bosch",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698520
+    "teamlyzer_checked_at": 1788792803
   },
   "justvargas": {
     "platform": "Glassdoor",
@@ -1570,7 +1571,7 @@
     "url": "https://pt.teamlyzer.com/companies/hays",
     "matched_name": "Hays Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698516
+    "teamlyzer_checked_at": 1788792800
   },
   "evotym": {
     "platform": "Glassdoor",
@@ -1578,7 +1579,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Evotym",
-    "teamlyzer_checked_at": 1788441678
+    "teamlyzer_checked_at": 1788792800
   },
   "netjetseurope": {
     "platform": "Glassdoor",
@@ -1596,7 +1597,7 @@
     "url": "https://pt.teamlyzer.com/companies/prozis",
     "matched_name": "Prozis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698526
+    "teamlyzer_checked_at": 1788792811
   },
   "korber": {
     "platform": "Teamlyzer",
@@ -1610,13 +1611,13 @@
   },
   "catawiki": {
     "platform": "Teamlyzer",
-    "score": "3.7/5",
-    "numeric": 3.7,
-    "reviews": "13 Reviews",
+    "score": "3.8/5",
+    "numeric": 3.8,
+    "reviews": "14 Reviews",
     "url": "https://pt.teamlyzer.com/companies/catawiki",
     "matched_name": "Catawiki",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698525
+    "teamlyzer_checked_at": 1788792814
   },
   "codewin": {
     "platform": "Teamlyzer",
@@ -1626,7 +1627,7 @@
     "url": "https://pt.teamlyzer.com/companies/codewin",
     "matched_name": "CodeWin",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698518
+    "teamlyzer_checked_at": 1788792799
   },
   "vtxrmsoftwarefactory": {
     "platform": "Teamlyzer",
@@ -1646,7 +1647,7 @@
     "url": "https://pt.teamlyzer.com/companies/epam-systems",
     "matched_name": "EPAM Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698522
+    "teamlyzer_checked_at": 1788792810
   },
   "euphoric": {
     "platform": "Glassdoor",
@@ -1664,7 +1665,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698517
+    "teamlyzer_checked_at": 1788792814
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1674,7 +1675,7 @@
     "url": "https://pt.teamlyzer.com/companies/itds-portugal",
     "matched_name": "ITDS Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698520
+    "teamlyzer_checked_at": 1788792810
   },
   "devoteam": {
     "platform": "Teamlyzer",
@@ -1684,7 +1685,7 @@
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698522
+    "teamlyzer_checked_at": 1788792803
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1692,7 +1693,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobgether",
-    "teamlyzer_checked_at": 1788698527
+    "teamlyzer_checked_at": 1788792816
   },
   "beeengineeringict": {
     "platform": "Glassdoor",
@@ -1711,5 +1712,35 @@
     "matched_name": "INOV-INESC",
     "alias_match": false,
     "teamlyzer_checked_at": 1788611371
+  },
+  "prninformatica": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/prn-informatica",
+    "matched_name": "PRN Informática",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788792802
+  },
+  "airapps": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "2 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/air-apps",
+    "matched_name": "Air Apps",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788792811
+  },
+  "gritsolutions": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "37 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/grit-solutions",
+    "matched_name": "GRiT Solutions",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1788792817
   }
 }
