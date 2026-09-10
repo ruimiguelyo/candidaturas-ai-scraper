@@ -825,11 +825,11 @@
     "platform": "Teamlyzer",
     "score": "4.1/5",
     "numeric": 4.1,
-    "reviews": "27 Reviews",
+    "reviews": "28 Reviews",
     "url": "https://pt.teamlyzer.com/companies/caixa-magica",
     "matched_name": "Caixa Mágica Software",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788873841
+    "teamlyzer_checked_at": 1789046600
   },
   "boschhomecomfortportugal": {
     "platform": "Teamlyzer",
@@ -837,7 +837,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1788441675
+    "teamlyzer_checked_at": 1789046620
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1145,7 +1145,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792802
+    "teamlyzer_checked_at": 1789046602
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1209,7 +1209,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788873840
+    "teamlyzer_checked_at": 1789046599
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1299,21 +1299,21 @@
     "platform": "Teamlyzer",
     "score": "3.0/5",
     "numeric": 3.0,
-    "reviews": "96 Reviews",
+    "reviews": "97 Reviews",
     "url": "https://pt.teamlyzer.com/companies/fyld",
     "matched_name": "Fyld",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788194964
+    "teamlyzer_checked_at": 1789046621
   },
   "inetum": {
     "platform": "Teamlyzer",
     "score": "2.1/5",
     "numeric": 2.1,
-    "reviews": "118 Reviews",
+    "reviews": "119 Reviews",
     "url": "https://pt.teamlyzer.com/companies/inetum",
     "matched_name": "Inetum",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698523
+    "teamlyzer_checked_at": 1789046604
   },
   "frimarcindustriaecomerciosa": {
     "platform": "Glassdoor",
@@ -1351,7 +1351,7 @@
     "url": "https://pt.teamlyzer.com/companies/siemens-energy",
     "matched_name": "Siemens Energy",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788873843
+    "teamlyzer_checked_at": 1789046622
   },
   "innotech": {
     "platform": "Teamlyzer",
@@ -1361,7 +1361,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792816
+    "teamlyzer_checked_at": 1789046623
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1371,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698523
+    "teamlyzer_checked_at": 1789046602
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1381,7 +1381,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792812
+    "teamlyzer_checked_at": 1789046601
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1533,7 +1533,7 @@
     "url": "https://pt.teamlyzer.com/companies/axians-portugal",
     "matched_name": "Axians Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792799
+    "teamlyzer_checked_at": 1789046603
   },
   "bouyguestelecomservices": {
     "platform": "Glassdoor",
@@ -1671,7 +1671,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792814
+    "teamlyzer_checked_at": 1789046601
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1767,7 +1767,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788873828
+    "teamlyzer_checked_at": 1789046623
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -1842,5 +1842,31 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
     "teamlyzer_checked_at": 1788960734
+  },
+  "pagerduty": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "9 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/pagerduty",
+    "matched_name": "PagerDuty",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789046598
+  },
+  "azakaw": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=azakaw",
+    "teamlyzer_checked_at": 1789046605
+  },
+  "quanteamportugalrainbowpartnersgroup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=QUANTEAM%20-%20Portugal%20%28RAINBOW%20PARTNERS%20Group%29",
+    "teamlyzer_checked_at": 1789046613
   }
 }
