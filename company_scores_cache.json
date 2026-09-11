@@ -199,7 +199,7 @@
     "url": "https://pt.teamlyzer.com/companies/philip-morris-international",
     "matched_name": "Philip Morris International",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788960725
+    "teamlyzer_checked_at": 1789132932
   },
   "alten": {
     "score": "2.3/5",
@@ -289,7 +289,7 @@
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788960725
+    "teamlyzer_checked_at": 1789132933
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -1727,7 +1727,7 @@
     "url": "https://pt.teamlyzer.com/companies/prn-informatica",
     "matched_name": "PRN Informática",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788960725
+    "teamlyzer_checked_at": 1789132938
   },
   "airapps": {
     "platform": "Teamlyzer",
@@ -1817,7 +1817,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Braining",
-    "teamlyzer_checked_at": 1788960724
+    "teamlyzer_checked_at": 1789132927
   },
   "alan": {
     "platform": "Glassdoor",
@@ -1825,7 +1825,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Alan",
-    "teamlyzer_checked_at": 1788960726
+    "teamlyzer_checked_at": 1789132933
   },
   "mundiconsulting": {
     "platform": "Glassdoor",
@@ -1833,7 +1833,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mundi%20Consulting",
-    "teamlyzer_checked_at": 1788960731
+    "teamlyzer_checked_at": 1789132941
   },
   "samlinogroup": {
     "platform": "Glassdoor",
@@ -1868,5 +1868,31 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=QUANTEAM%20-%20Portugal%20%28RAINBOW%20PARTNERS%20Group%29",
     "teamlyzer_checked_at": 1789046613
+  },
+  "jobcloudhrtechportugal": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=JobCloud%20HR%20Tech%20Portugal",
+    "teamlyzer_checked_at": 1789132931
+  },
+  "elevaengsolutionslda": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ElevaEng%20Solutions%2C%20Lda.",
+    "teamlyzer_checked_at": 1789132937
+  },
+  "aceve": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "10 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/aceve",
+    "matched_name": "Aceve",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789132939
   }
 }
