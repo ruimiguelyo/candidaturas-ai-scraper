@@ -96,7 +96,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043681
+    "teamlyzer_checked_at": 1789400734
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -199,7 +199,7 @@
     "url": "https://pt.teamlyzer.com/companies/philip-morris-international",
     "matched_name": "Philip Morris International",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789306998
+    "teamlyzer_checked_at": 1789400727
   },
   "alten": {
     "score": "2.3/5",
@@ -289,7 +289,7 @@
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789306999
+    "teamlyzer_checked_at": 1789400727
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -837,7 +837,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1789307004
+    "teamlyzer_checked_at": 1789400732
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1145,7 +1145,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789306992
+    "teamlyzer_checked_at": 1789400722
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1643,7 +1643,7 @@
     "url": "https://pt.teamlyzer.com/companies/vtxrm",
     "matched_name": "VTXRM - Software Factory",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788527706
+    "teamlyzer_checked_at": 1789400734
   },
   "epamsystems": {
     "platform": "Teamlyzer",
@@ -1737,7 +1737,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789307005
+    "teamlyzer_checked_at": 1789400737
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1825,7 +1825,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Alan",
-    "teamlyzer_checked_at": 1789306993
+    "teamlyzer_checked_at": 1789400722
   },
   "mundiconsulting": {
     "platform": "Glassdoor",
@@ -1833,7 +1833,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mundi%20Consulting",
-    "teamlyzer_checked_at": 1789132941
+    "teamlyzer_checked_at": 1789400736
   },
   "samlinogroup": {
     "platform": "Glassdoor",
@@ -1851,7 +1851,7 @@
     "url": "https://pt.teamlyzer.com/companies/pagerduty",
     "matched_name": "PagerDuty",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789306992
+    "teamlyzer_checked_at": 1789400722
   },
   "azakaw": {
     "platform": "Glassdoor",
@@ -1859,7 +1859,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=azakaw",
-    "teamlyzer_checked_at": 1789307009
+    "teamlyzer_checked_at": 1789400738
   },
   "quanteamportugalrainbowpartnersgroup": {
     "platform": "Glassdoor",
@@ -1875,7 +1875,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JobCloud%20HR%20Tech%20Portugal",
-    "teamlyzer_checked_at": 1789306997
+    "teamlyzer_checked_at": 1789400726
   },
   "elevaengsolutionslda": {
     "platform": "Glassdoor",
@@ -1893,7 +1893,7 @@
     "url": "https://pt.teamlyzer.com/companies/aceve",
     "matched_name": "Aceve",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789306998
+    "teamlyzer_checked_at": 1789400734
   },
   "imaginarycloud": {
     "platform": "Teamlyzer",
@@ -1914,5 +1914,15 @@
     "matched_name": "Banco BPI",
     "alias_match": false,
     "teamlyzer_checked_at": 1789217003
+  },
+  "luzsaude": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/luz-saude",
+    "matched_name": "Luz Saúde",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789400727
   }
 }
