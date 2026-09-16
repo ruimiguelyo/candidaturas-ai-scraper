@@ -96,7 +96,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400734
+    "teamlyzer_checked_at": 1789567558
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -199,7 +199,7 @@
     "url": "https://pt.teamlyzer.com/companies/philip-morris-international",
     "matched_name": "Philip Morris International",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400727
+    "teamlyzer_checked_at": 1789567555
   },
   "alten": {
     "score": "2.3/5",
@@ -837,7 +837,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1789400732
+    "teamlyzer_checked_at": 1789567564
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1108,7 +1108,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052018
+    "teamlyzer_checked_at": 1789567558
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1146,7 +1146,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400722
+    "teamlyzer_checked_at": 1789567555
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1738,7 +1738,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400737
+    "teamlyzer_checked_at": 1789567567
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1852,7 +1852,7 @@
     "url": "https://pt.teamlyzer.com/companies/pagerduty",
     "matched_name": "PagerDuty",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400722
+    "teamlyzer_checked_at": 1789567555
   },
   "azakaw": {
     "platform": "Glassdoor",
@@ -1860,7 +1860,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=azakaw",
-    "teamlyzer_checked_at": 1789400738
+    "teamlyzer_checked_at": 1789567565
   },
   "quanteamportugalrainbowpartnersgroup": {
     "platform": "Glassdoor",
@@ -1894,17 +1894,17 @@
     "url": "https://pt.teamlyzer.com/companies/aceve",
     "matched_name": "Aceve",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400734
+    "teamlyzer_checked_at": 1789567557
   },
   "imaginarycloud": {
     "platform": "Teamlyzer",
     "score": "4.3/5",
     "numeric": 4.3,
-    "reviews": "137 Reviews",
+    "reviews": "138 Reviews",
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789307009
+    "teamlyzer_checked_at": 1789567567
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1941,5 +1941,47 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JTA%3A%20The%20Data%20Scientists",
     "teamlyzer_checked_at": 1789481656
+  },
+  "wilco": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Wilco",
+    "teamlyzer_checked_at": 1789567556
+  },
+  "axeleraai": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Axelera%20AI",
+    "teamlyzer_checked_at": 1789567570
+  },
+  "mapfre": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mapfre",
+    "teamlyzer_checked_at": 1789567572
+  },
+  "untile": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "1 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/untile",
+    "matched_name": "Untile",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789567573
+  },
+  "umo": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=UMO",
+    "teamlyzer_checked_at": 1789567574
   }
 }
