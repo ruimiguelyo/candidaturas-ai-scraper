@@ -96,7 +96,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789567558
+    "teamlyzer_checked_at": 1789654250
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -643,7 +643,7 @@
     "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
     "matched_name": "Innovation & Engineering HUB (VW)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043670
+    "teamlyzer_checked_at": 1789654241
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -837,7 +837,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1789567564
+    "teamlyzer_checked_at": 1789654256
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1108,7 +1108,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789567558
+    "teamlyzer_checked_at": 1789654249
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1276,7 +1276,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BJAK",
-    "teamlyzer_checked_at": 1789307009
+    "teamlyzer_checked_at": 1789654259
   },
   "komodoconsulting": {
     "platform": "Glassdoor",
@@ -1304,7 +1304,7 @@
     "url": "https://pt.teamlyzer.com/companies/fyld",
     "matched_name": "Fyld",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789046621
+    "teamlyzer_checked_at": 1789654250
   },
   "inetum": {
     "platform": "Teamlyzer",
@@ -1668,11 +1668,11 @@
     "platform": "Teamlyzer",
     "score": "2.2/5",
     "numeric": 2.2,
-    "reviews": "145 Reviews",
+    "reviews": "146 Reviews",
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789481657
+    "teamlyzer_checked_at": 1789654258
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1852,7 +1852,7 @@
     "url": "https://pt.teamlyzer.com/companies/pagerduty",
     "matched_name": "PagerDuty",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789567555
+    "teamlyzer_checked_at": 1789654241
   },
   "azakaw": {
     "platform": "Glassdoor",
@@ -1948,7 +1948,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Wilco",
-    "teamlyzer_checked_at": 1789567556
+    "teamlyzer_checked_at": 1789654242
   },
   "axeleraai": {
     "platform": "Glassdoor",
@@ -1983,5 +1983,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=UMO",
     "teamlyzer_checked_at": 1789567574
+  },
+  "soundsatbridgingseaspace": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Soundsat%20-%20Bridging%20Sea%20%26%20Space",
+    "teamlyzer_checked_at": 1789654248
   }
 }
