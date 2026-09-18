@@ -1326,13 +1326,13 @@
   },
   "accentureportugal": {
     "platform": "Teamlyzer",
-    "score": "2.5/5",
-    "numeric": 2.5,
-    "reviews": "385 Reviews",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "386 Reviews",
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789481658
+    "teamlyzer_checked_at": 1789738169
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1542,7 +1542,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bouygues%20Telecom%20Services",
-    "teamlyzer_checked_at": 1789481655
+    "teamlyzer_checked_at": 1789738181
   },
   "actai": {
     "platform": "Glassdoor",
@@ -1904,7 +1904,7 @@
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789567567
+    "teamlyzer_checked_at": 1789738182
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1940,7 +1940,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JTA%3A%20The%20Data%20Scientists",
-    "teamlyzer_checked_at": 1789481656
+    "teamlyzer_checked_at": 1789738181
   },
   "wilco": {
     "platform": "Glassdoor",
@@ -1991,5 +1991,21 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Soundsat%20-%20Bridging%20Sea%20%26%20Space",
     "teamlyzer_checked_at": 1789654248
+  },
+  "pibraindustrialsolutions": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=PIBRA%20-%20Industrial%20Solutions",
+    "teamlyzer_checked_at": 1789738174
+  },
+  "zome": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zome",
+    "teamlyzer_checked_at": 1789738184
   }
 }
