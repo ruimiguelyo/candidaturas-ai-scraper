@@ -96,7 +96,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789654250
+    "teamlyzer_checked_at": 1789822688
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -155,7 +155,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789481658
+    "teamlyzer_checked_at": 1789822693
   },
   "ceiia": {
     "score": "3.8/5",
@@ -643,7 +643,7 @@
     "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
     "matched_name": "Innovation & Engineering HUB (VW)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789654241
+    "teamlyzer_checked_at": 1789822686
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -837,7 +837,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1789654256
+    "teamlyzer_checked_at": 1789822700
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1108,7 +1108,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789654249
+    "teamlyzer_checked_at": 1789822686
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1172,7 +1172,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1788271218
+    "teamlyzer_checked_at": 1789822689
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1276,7 +1276,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BJAK",
-    "teamlyzer_checked_at": 1789654259
+    "teamlyzer_checked_at": 1789822689
   },
   "komodoconsulting": {
     "platform": "Glassdoor",
@@ -1304,7 +1304,7 @@
     "url": "https://pt.teamlyzer.com/companies/fyld",
     "matched_name": "Fyld",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789654250
+    "teamlyzer_checked_at": 1789822686
   },
   "inetum": {
     "platform": "Teamlyzer",
@@ -1372,7 +1372,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789046602
+    "teamlyzer_checked_at": 1789822689
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1390,7 +1390,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ICEYE",
-    "teamlyzer_checked_at": 1788527718
+    "teamlyzer_checked_at": 1789822694
   },
   "stealthaistartup": {
     "platform": "Glassdoor",
@@ -1948,7 +1948,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Wilco",
-    "teamlyzer_checked_at": 1789654242
+    "teamlyzer_checked_at": 1789822687
   },
   "axeleraai": {
     "platform": "Glassdoor",
@@ -1956,7 +1956,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Axelera%20AI",
-    "teamlyzer_checked_at": 1789567570
+    "teamlyzer_checked_at": 1789822692
   },
   "mapfre": {
     "platform": "Glassdoor",
@@ -1964,7 +1964,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mapfre",
-    "teamlyzer_checked_at": 1789567572
+    "teamlyzer_checked_at": 1789822696
   },
   "untile": {
     "platform": "Teamlyzer",
@@ -2007,5 +2007,53 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zome",
     "teamlyzer_checked_at": 1789738184
+  },
+  "newnote": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=NewNote",
+    "teamlyzer_checked_at": 1789822691
+  },
+  "ascendi": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "7 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/aenor-ascendi",
+    "matched_name": "Ascendi",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789822693
+  },
+  "inoweiser": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "21 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/inoweiser",
+    "matched_name": "Inoweiser",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789822693
+  },
+  "gmv": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "15 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/gmv",
+    "matched_name": "GMV",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789822695
+  },
+  "luzagroup": {
+    "platform": "Teamlyzer",
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "reviews": "40 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/luza-group",
+    "matched_name": "LUZA Group",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1789822695
   }
 }
