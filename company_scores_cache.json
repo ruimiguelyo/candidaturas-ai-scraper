@@ -96,7 +96,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822688
+    "teamlyzer_checked_at": 1789911044
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -643,7 +643,7 @@
     "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
     "matched_name": "Innovation & Engineering HUB (VW)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822686
+    "teamlyzer_checked_at": 1789911039
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -1104,11 +1104,11 @@
     "platform": "Teamlyzer",
     "score": "2.5/5",
     "numeric": 2.5,
-    "reviews": "2 Reviews",
+    "reviews": "3 Reviews",
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822686
+    "teamlyzer_checked_at": 1789911038
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1172,7 +1172,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1789822689
+    "teamlyzer_checked_at": 1789911045
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1276,7 +1276,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BJAK",
-    "teamlyzer_checked_at": 1789822689
+    "teamlyzer_checked_at": 1789911053
   },
   "komodoconsulting": {
     "platform": "Glassdoor",
@@ -1332,7 +1332,7 @@
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789738169
+    "teamlyzer_checked_at": 1789911044
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1372,7 +1372,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822689
+    "teamlyzer_checked_at": 1789911051
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1904,7 +1904,7 @@
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789738182
+    "teamlyzer_checked_at": 1789911052
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1940,7 +1940,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JTA%3A%20The%20Data%20Scientists",
-    "teamlyzer_checked_at": 1789738181
+    "teamlyzer_checked_at": 1789911050
   },
   "wilco": {
     "platform": "Glassdoor",
@@ -1948,7 +1948,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Wilco",
-    "teamlyzer_checked_at": 1789822687
+    "teamlyzer_checked_at": 1789911039
   },
   "axeleraai": {
     "platform": "Glassdoor",
@@ -1998,7 +1998,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=PIBRA%20-%20Industrial%20Solutions",
-    "teamlyzer_checked_at": 1789738174
+    "teamlyzer_checked_at": 1789911043
   },
   "zome": {
     "platform": "Glassdoor",
