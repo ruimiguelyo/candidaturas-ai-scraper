@@ -643,7 +643,7 @@
     "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
     "matched_name": "Innovation & Engineering HUB (VW)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789911039
+    "teamlyzer_checked_at": 1790005463
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -1108,7 +1108,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789911038
+    "teamlyzer_checked_at": 1790005462
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1172,7 +1172,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1789911045
+    "teamlyzer_checked_at": 1790005469
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1276,7 +1276,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BJAK",
-    "teamlyzer_checked_at": 1789911053
+    "teamlyzer_checked_at": 1790005475
   },
   "komodoconsulting": {
     "platform": "Glassdoor",
@@ -1332,7 +1332,7 @@
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789911044
+    "teamlyzer_checked_at": 1790005468
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1372,7 +1372,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789911051
+    "teamlyzer_checked_at": 1790005474
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1842,7 +1842,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1789481653
+    "teamlyzer_checked_at": 1790005470
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -1904,7 +1904,7 @@
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789911052
+    "teamlyzer_checked_at": 1790005475
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1940,7 +1940,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JTA%3A%20The%20Data%20Scientists",
-    "teamlyzer_checked_at": 1789911050
+    "teamlyzer_checked_at": 1790005473
   },
   "wilco": {
     "platform": "Glassdoor",
@@ -1998,7 +1998,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=PIBRA%20-%20Industrial%20Solutions",
-    "teamlyzer_checked_at": 1789911043
+    "teamlyzer_checked_at": 1790005466
   },
   "zome": {
     "platform": "Glassdoor",
@@ -2055,5 +2055,23 @@
     "matched_name": "LUZA Group",
     "alias_match": false,
     "teamlyzer_checked_at": 1789822695
+  },
+  "claranetportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "55 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
+    "matched_name": "Claranet Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790005463
+  },
+  "techsulitsolutions": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Techsul%20IT%20Solutions",
+    "teamlyzer_checked_at": 1790005478
   }
 }

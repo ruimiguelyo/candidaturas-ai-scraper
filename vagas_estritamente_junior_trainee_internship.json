@@ -21,31 +21,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761577+00:00"
-  },
-  {
-    "source": "Jobicy",
-    "job_id": "153164",
-    "title": "Junior Software Engineer",
-    "company": "PolicyMe",
-    "location": "Canada",
-    "job_url": "https://jobicy.com/jobs/153164-junior-software-engineer-2",
-    "modality": "100% Remote",
-    "seniority": "Entry-Level, Junior",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 4.3/5 (Glassdoor)",
-    "company_reviews": "39 Reviews",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=PolicyMe",
-    "rating_score": 4.3,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:37.719670+00:00"
+    "fetched_at": "2026-09-21T15:43:21.754348+00:00"
   },
   {
     "source": "Jobicy",
@@ -69,31 +45,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:37.165511+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4465781597",
-    "title": "Junior DevOps / ELK Engineer",
-    "company": "LUZA Group",
-    "location": "Lisbon, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-devops-elk-engineer-at-luza-group-4465781597",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 4.1/5 (Teamlyzer)",
-    "company_reviews": "40 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/luza-group",
-    "rating_score": 4.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:15.472938+00:00"
+    "fetched_at": "2026-09-21T15:43:23.162861+00:00"
   },
   {
     "source": "LinkedIn",
@@ -117,7 +69,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:41.263134+00:00"
+    "fetched_at": "2026-09-21T15:43:28.107576+00:00"
   },
   {
     "source": "LinkedIn",
@@ -141,7 +93,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:47.844580+00:00"
+    "fetched_at": "2026-09-21T15:43:34.049474+00:00"
   },
   {
     "source": "LinkedIn",
@@ -165,31 +117,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:13.657227+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418825690",
-    "title": "Junior Software Engineer",
-    "company": "Crossjoin Solutions",
-    "location": "Almada, Setúbal, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-software-engineer-at-crossjoin-solutions-4418825690",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 3.5/5 (Teamlyzer)",
-    "company_reviews": "90 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/crossjoin",
-    "rating_score": 3.5,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:58.725312+00:00"
+    "fetched_at": "2026-09-21T15:43:59.359559+00:00"
   },
   {
     "source": "LinkedIn",
@@ -213,7 +141,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:58.725938+00:00"
+    "fetched_at": "2026-09-21T15:43:45.492293+00:00"
   },
   {
     "source": "LinkedIn",
@@ -237,79 +165,79 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:44.982975+00:00"
+    "fetched_at": "2026-09-21T15:43:24.235880+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4389814214",
-    "title": "Distributed Cloud | Machine Learning Engineer",
-    "company": "Devoteam",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/distributed-cloud-machine-learning-engineer-at-devoteam-4389814214",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 3.4/5 (Teamlyzer)",
-    "company_reviews": "323 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
-    "rating_score": 3.4,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:41.263335+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4372584866",
-    "title": "Data Scientist (NLP Deep Learning Engineer)",
+    "job_id": "4433225703",
+    "title": "Graduate Programme 2027: Information Security Engineer (Appsec)",
     "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/data-scientist-nlp-deep-learning-engineer-at-revolut-4372584866",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-19",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:41.263770+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418834449",
-    "title": "Graduate Programme 2027: Data Scientist and Analyst",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-data-scientist-and-analyst-at-revolut-4418834449",
+    "location": "Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-information-security-engineer-appsec-at-revolut-4433225703",
     "modality": "On-site / Hybrid",
     "seniority": "Graduate",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-21",
     "company_score": "★ 3.1/5 (Teamlyzer)",
     "company_reviews": "56 Reviews",
     "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
     "rating_score": 3.1,
-    "category": "AI / ML",
+    "category": "Top-Tier Software Engineering",
     "tags": [],
     "location_compatibility": "confirmed",
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:40.440638+00:00"
+    "fetched_at": "2026-09-21T15:44:04.222789+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4433231287",
+    "title": "Graduate Programme 2027: Information Security Engineer (Appsec)",
+    "company": "Revolut",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-information-security-engineer-appsec-at-revolut-4433231287",
+    "modality": "On-site / Hybrid",
+    "seniority": "Graduate",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 3.1/5 (Teamlyzer)",
+    "company_reviews": "56 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
+    "rating_score": 3.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:44:04.222661+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4433212965",
+    "title": "Graduate Programme 2027: Information Security Engineer (Operations)",
+    "company": "Revolut",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-information-security-engineer-operations-at-revolut-4433212965",
+    "modality": "On-site / Hybrid",
+    "seniority": "Graduate",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 3.1/5 (Teamlyzer)",
+    "company_reviews": "56 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
+    "rating_score": 3.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:44:04.222398+00:00"
   },
   {
     "source": "LinkedIn",
@@ -333,127 +261,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:18.144227+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418832556",
-    "title": "Graduate Programme 2027: Software Engineer (Android)",
-    "company": "Revolut",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-software-engineer-android-at-revolut-4418832556",
-    "modality": "On-site / Hybrid",
-    "seniority": "Graduate",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:02.219965+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418830565",
-    "title": "Graduate Programme 2027: Software Engineer (Frontend)",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-software-engineer-frontend-at-revolut-4418830565",
-    "modality": "On-site / Hybrid",
-    "seniority": "Graduate",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:02.220046+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418831594",
-    "title": "Graduate Programme 2027: Software Engineer (Frontend)",
-    "company": "Revolut",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-programme-2027-software-engineer-frontend-at-revolut-4418831594",
-    "modality": "On-site / Hybrid",
-    "seniority": "Graduate",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:06.719492+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4419049784",
-    "title": "Internship Programme 2027: Data Scientist and Analyst",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-data-scientist-and-analyst-at-revolut-4419049784",
-    "modality": "On-site / Hybrid",
-    "seniority": "Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:37.012392+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4419066093",
-    "title": "Internship Programme 2027: Data Scientist and Analyst",
-    "company": "Revolut",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-data-scientist-and-analyst-at-revolut-4419066093",
-    "modality": "On-site / Hybrid",
-    "seniority": "Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:37.012300+00:00"
+    "fetched_at": "2026-09-21T15:44:04.222530+00:00"
   },
   {
     "source": "LinkedIn",
@@ -477,20 +285,20 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:13.657527+00:00"
+    "fetched_at": "2026-09-21T15:43:59.359953+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4418831649",
-    "title": "Internship Programme 2027: Software Engineer (Android)",
+    "job_id": "4433220744",
+    "title": "Internship Programme 2027: Information Security Engineer (Appsec)",
     "company": "Revolut",
     "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-android-at-revolut-4418831649",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-information-security-engineer-appsec-at-revolut-4433220744",
     "modality": "On-site / Hybrid",
     "seniority": "Internship",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-13",
+    "post_date": "2026-09-21",
     "company_score": "★ 3.1/5 (Teamlyzer)",
     "company_reviews": "56 Reviews",
     "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
@@ -501,20 +309,44 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:12.067280+00:00"
+    "fetched_at": "2026-09-21T15:43:59.360114+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4418822811",
-    "title": "Internship Programme 2027: Software Engineer (Frontend)",
+    "job_id": "4433229421",
+    "title": "Internship Programme 2027: Information Security Engineer (Operations)",
+    "company": "Revolut",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-information-security-engineer-operations-at-revolut-4433229421",
+    "modality": "On-site / Hybrid",
+    "seniority": "Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 3.1/5 (Teamlyzer)",
+    "company_reviews": "56 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
+    "rating_score": 3.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:35.874757+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4433234118",
+    "title": "Internship Programme 2027: Information Security Engineer (Operations)",
     "company": "Revolut",
     "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-frontend-at-revolut-4418822811",
+    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-information-security-engineer-operations-at-revolut-4433234118",
     "modality": "On-site / Hybrid",
     "seniority": "Internship",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-21",
     "company_score": "★ 3.1/5 (Teamlyzer)",
     "company_reviews": "56 Reviews",
     "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
@@ -525,79 +357,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:06.719002+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418834444",
-    "title": "Internship Programme 2027: Software Engineer (Frontend)",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-frontend-at-revolut-4418834444",
-    "modality": "On-site / Hybrid",
-    "seniority": "Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:06.719114+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418827668",
-    "title": "Internship Programme 2027: Software Engineer (iOS)",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-ios-at-revolut-4418827668",
-    "modality": "On-site / Hybrid",
-    "seniority": "Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:57.939667+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418831599",
-    "title": "Internship Programme 2027: Software Engineer (iOS)",
-    "company": "Revolut",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-ios-at-revolut-4418831599",
-    "modality": "On-site / Hybrid",
-    "seniority": "Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:57.939580+00:00"
+    "fetched_at": "2026-09-21T15:43:44.659371+00:00"
   },
   {
     "source": "LinkedIn",
@@ -621,31 +381,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:45.731406+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4418843133",
-    "title": "Internship Programme 2027: Software Engineer (Python)",
-    "company": "Revolut",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/internship-programme-2027-software-engineer-python-at-revolut-4418843133",
-    "modality": "On-site / Hybrid",
-    "seniority": "Internship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "56 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/revolut",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:45.731318+00:00"
+    "fetched_at": "2026-09-21T15:43:23.450778+00:00"
   },
   {
     "source": "LinkedIn",
@@ -669,64 +405,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:51.267677+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4466253413",
-    "title": "Junior DevOps Engineer (Java & Automation)",
-    "company": "Smart Consulting",
-    "location": "Lisbon Metropolitan Area",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-devops-engineer-java-automation-at-smart-consulting-4466253413",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-17",
-    "company_score": "★ 3.1/5 (Teamlyzer)",
-    "company_reviews": "213 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/smart-consulting",
-    "rating_score": 3.1,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:14.719209+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "grad-intern-data-engineer-amgen-s-technology-medical-organizations-summer",
-    "title": "Grad Intern – Data Engineer – Amgen’s Technology & Medical Organizations (Summer",
-    "company": "Amgen",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/amgen/jobs/grad-intern-data-engineer-amgen-s-technology-medical-organizations-summer",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 3.0/5 (Teamlyzer)",
-    "company_reviews": "12 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/amgen-portugal",
-    "rating_score": 3.0,
-    "category": "AI / ML",
-    "tags": [
-      "Data-Engineering",
-      "Data-Engineer-Intern",
-      "Data-Science",
-      "Database-Engineering",
-      "ETL-Engineering",
-      "Data-Engineering-Intern",
-      "Internship-Data-Engineering",
-      "Internship-Data-Engineer"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.539003+00:00"
+    "fetched_at": "2026-09-21T15:43:37.810043+00:00"
   },
   {
     "source": "Himalayas",
@@ -765,7 +444,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521740+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211195+00:00"
   },
   {
     "source": "Himalayas",
@@ -801,7 +480,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.538957+00:00"
+    "fetched_at": "2026-09-21T15:43:21.278094+00:00"
   },
   {
     "source": "Himalayas",
@@ -840,7 +519,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521729+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211181+00:00"
   },
   {
     "source": "Himalayas",
@@ -878,7 +557,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.588962+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328369+00:00"
   },
   {
     "source": "Himalayas",
@@ -914,31 +593,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.362512+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4466670799",
-    "title": "AI Engineer",
-    "company": "PrimeIT",
-    "location": "Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ai-engineer-at-primeit-4466670799",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-18",
-    "company_score": "★ 3.0/5 (Teamlyzer)",
-    "company_reviews": "570 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/prime-it",
-    "rating_score": 3.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:41.263854+00:00"
+    "fetched_at": "2026-09-21T15:43:22.512400+00:00"
   },
   {
     "source": "LinkedIn",
@@ -962,7 +617,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:14.719292+00:00"
+    "fetched_at": "2026-09-21T15:44:00.410370+00:00"
   },
   {
     "source": "LinkedIn",
@@ -986,7 +641,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:59.695566+00:00"
+    "fetched_at": "2026-09-21T15:43:46.561560+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1010,7 +665,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:03.210679+00:00"
+    "fetched_at": "2026-09-21T15:43:50.219126+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1034,7 +689,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:59.695472+00:00"
+    "fetched_at": "2026-09-21T15:43:46.561428+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1058,7 +713,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:51.267770+00:00"
+    "fetched_at": "2026-09-21T15:43:37.810183+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1082,7 +737,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:51.267564+00:00"
+    "fetched_at": "2026-09-21T15:43:37.809882+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1106,7 +761,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.953795+00:00"
+    "fetched_at": "2026-09-21T15:43:20.892965+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1130,7 +785,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.012925+00:00"
+    "fetched_at": "2026-09-21T15:43:23.450912+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1154,7 +809,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:45.731491+00:00"
+    "fetched_at": "2026-09-21T15:43:31.905921+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1178,7 +833,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:44.983395+00:00"
+    "fetched_at": "2026-09-21T15:43:26.070161+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4437086081",
+    "title": "Technology Graduate Programme - French Speaker",
+    "company": "Accenture Portugal",
+    "location": "Lisbon, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/technology-graduate-programme-french-speaker-at-accenture-portugal-4437086081",
+    "modality": "On-site / Hybrid",
+    "seniority": "Graduate",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-18",
+    "company_score": "★ 2.9/5 (Teamlyzer)",
+    "company_reviews": "386 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/accenture-portugal",
+    "rating_score": 2.9,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:57.461693+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1202,7 +881,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.012841+00:00"
+    "fetched_at": "2026-09-21T15:43:23.450649+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1226,7 +905,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:47.844308+00:00"
+    "fetched_at": "2026-09-21T15:43:34.049059+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1250,7 +929,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.953530+00:00"
+    "fetched_at": "2026-09-21T15:43:20.892401+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4452471337",
+    "title": "Full-Stack Developer",
+    "company": "Miniclip",
+    "location": "Lisbon, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/full-stack-developer-at-miniclip-4452471337",
+    "modality": "On-site / Hybrid",
+    "seniority": "Academy",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-17",
+    "company_score": "★ 2.9/5 (Teamlyzer)",
+    "company_reviews": "27 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/miniclip-games",
+    "rating_score": 2.9,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:44:16.499733+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1274,7 +977,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.012099+00:00"
+    "fetched_at": "2026-09-21T15:43:23.449862+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1298,14 +1001,14 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.789095+00:00"
+    "fetched_at": "2026-09-21T15:43:24.235491+00:00"
   },
   {
     "source": "LinkedIn",
     "job_id": "4447992296",
     "title": "Data Engineering Associate",
     "company": "Metyis",
-    "location": "Porto, Porto, Portugal",
+    "location": "Porto, Portugal",
     "job_url": "https://pt.linkedin.com/jobs/view/data-engineering-associate-at-metyis-4447992296",
     "modality": "On-site / Hybrid",
     "seniority": "Associate",
@@ -1322,7 +1025,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:50.500397+00:00"
+    "fetched_at": "2026-09-21T15:43:36.986588+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1346,7 +1049,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:31.420338+00:00"
+    "fetched_at": "2026-09-21T15:44:15.708485+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1370,31 +1073,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:59.695218+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4455425634",
-    "title": "Data Engineer",
-    "company": "GRiT Solutions",
-    "location": "Lisbon Metropolitan Area",
-    "job_url": "https://pt.linkedin.com/jobs/view/data-engineer-at-grit-solutions-4455425634",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 2.6/5 (Teamlyzer)",
-    "company_reviews": "37 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/grit-solutions",
-    "rating_score": 2.6,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:51.267854+00:00"
+    "fetched_at": "2026-09-21T15:43:46.561030+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1418,7 +1097,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488698+00:00"
+    "fetched_at": "2026-09-21T15:43:47.341371+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1442,31 +1121,55 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:16.376683+00:00"
+    "fetched_at": "2026-09-21T15:44:02.285397+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4430948490",
-    "title": "AI & Data Engineer Trainee (NAM Portugal)",
-    "company": "Nordea Asset Management Portugal",
-    "location": "Oeiras, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/ai-data-engineer-trainee-nam-portugal-at-nordea-asset-management-portugal-4430948490",
+    "job_id": "4467361876",
+    "title": "Software Engineer Trainee",
+    "company": "Nokia",
+    "location": "Amadora, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/software-engineer-trainee-at-nokia-4467361876",
     "modality": "On-site / Hybrid",
     "seniority": "Trainee",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-21",
     "company_score": "★ 2.6/5 (Teamlyzer)",
-    "company_reviews": "1 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
+    "company_reviews": "101 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "rating_score": 2.6,
-    "category": "AI / ML",
+    "category": "Top-Tier Software Engineering",
     "tags": [],
     "location_compatibility": "confirmed",
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.953876+00:00"
+    "fetched_at": "2026-09-21T15:43:21.754745+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4467375537",
+    "title": "Software Engineer Trainee",
+    "company": "Nokia",
+    "location": "Aveiro, Aveiro, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/software-engineer-trainee-at-nokia-4467375537",
+    "modality": "On-site / Hybrid",
+    "seniority": "Trainee",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 2.6/5 (Teamlyzer)",
+    "company_reviews": "101 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
+    "rating_score": 2.6,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:21.754485+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1490,7 +1193,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:50.499969+00:00"
+    "fetched_at": "2026-09-21T15:43:36.986063+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1514,7 +1217,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.953618+00:00"
+    "fetched_at": "2026-09-21T15:43:20.892552+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1538,7 +1241,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.762211+00:00"
+    "fetched_at": "2026-09-21T15:43:27.147936+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1562,7 +1265,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488214+00:00"
+    "fetched_at": "2026-09-21T15:43:47.340811+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1586,7 +1289,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:15.473268+00:00"
+    "fetched_at": "2026-09-21T15:44:01.166056+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4469862939",
+    "title": "AI/ML Engineer",
+    "company": "Affinity",
+    "location": "Lisbon Metropolitan Area",
+    "job_url": "https://pt.linkedin.com/jobs/view/ai-ml-engineer-at-affinity-4469862939",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 2.2/5 (Teamlyzer)",
+    "company_reviews": "107 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/affinity",
+    "rating_score": 2.2,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:21.754618+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1610,7 +1337,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:15.472651+00:00"
+    "fetched_at": "2026-09-21T15:44:00.410503+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4468722153",
+    "title": "AI Engineer",
+    "company": "Claranet Portugal",
+    "location": "Lisbon Metropolitan Area",
+    "job_url": "https://pt.linkedin.com/jobs/view/ai-engineer-at-claranet-portugal-4468722153",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 2.2/5 (Teamlyzer)",
+    "company_reviews": "55 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/claranet-portugal",
+    "rating_score": 2.2,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:20.892687+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1634,20 +1385,44 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:50.500655+00:00"
+    "fetched_at": "2026-09-21T15:43:36.986860+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4465217540",
-    "title": "Junior Network Security Engineer | Porto",
+    "job_id": "4467368590",
+    "title": "Data Engineer ETL/ELT (French Speaker)",
     "company": "Decskill",
-    "location": "Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-network-security-engineer-porto-at-decskill-4465217540",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/data-engineer-etl-elt-french-speaker-at-decskill-4467368590",
     "modality": "On-site / Hybrid",
     "seniority": "Junior",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-21",
+    "company_score": "★ 2.2/5 (Teamlyzer)",
+    "company_reviews": "59 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/decskill",
+    "rating_score": 2.2,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:37.809723+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4467372601",
+    "title": "Junior Network Security Engineer | Porto",
+    "company": "Decskill",
+    "location": "Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/junior-network-security-engineer-porto-at-decskill-4467372601",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
     "company_score": "★ 2.2/5 (Teamlyzer)",
     "company_reviews": "59 Reviews",
     "teamlyzer_url": "https://pt.teamlyzer.com/companies/decskill",
@@ -1658,7 +1433,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:18.144757+00:00"
+    "fetched_at": "2026-09-21T15:44:04.221941+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1682,7 +1457,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:59.695386+00:00"
+    "fetched_at": "2026-09-21T15:43:46.561297+00:00"
   },
   {
     "source": "ITJobs.pt",
@@ -1706,7 +1481,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.049649+00:00"
+    "fetched_at": "2026-09-21T15:43:21.001352+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1730,31 +1505,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488348+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4469172108",
-    "title": "Junior Java/Angular Fullstack Developer",
-    "company": "Dellent",
-    "location": "Lisbon, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-java-angular-fullstack-developer-at-dellent-4469172108",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-18",
-    "company_score": "★ 2.2/5 (Teamlyzer)",
-    "company_reviews": "62 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/dellent-consulting",
-    "rating_score": 2.2,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:30:35.048190+00:00"
+    "fetched_at": "2026-09-21T15:43:47.340950+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1778,31 +1529,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761350+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4454239417",
-    "title": "Data Engineer",
-    "company": "KCS iT",
-    "location": "Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/data-engineer-at-kcs-it-4454239417",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "★ 2.2/5 (Teamlyzer)",
-    "company_reviews": "131 Reviews",
-    "teamlyzer_url": "https://pt.teamlyzer.com/companies/kcs-it",
-    "rating_score": 2.2,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:50.500055+00:00"
+    "fetched_at": "2026-09-21T15:43:20.893685+00:00"
   },
   {
     "source": "LinkedIn",
@@ -1826,7 +1553,79 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488126+00:00"
+    "fetched_at": "2026-09-21T15:43:47.340650+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4342923941",
+    "title": "Kickstart Your Career in Salesforce (French Speakers)",
+    "company": "Inetum",
+    "location": "Lisboa, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/kickstart-your-career-in-salesforce-french-speakers-at-inetum-4342923941",
+    "modality": "On-site / Hybrid",
+    "seniority": "Graduate",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 2.1/5 (Teamlyzer)",
+    "company_reviews": "119 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/inetum",
+    "rating_score": 2.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:49.217361+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4345717711",
+    "title": "Trainee Developer – (French Speaker)",
+    "company": "Inetum",
+    "location": "Lisboa, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/trainee-developer-%E2%80%93-french-speaker-at-inetum-4345717711",
+    "modality": "On-site / Hybrid",
+    "seniority": "Trainee",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-20",
+    "company_score": "★ 2.1/5 (Teamlyzer)",
+    "company_reviews": "119 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/inetum",
+    "rating_score": 2.1,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:49.217106+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4469867275",
+    "title": "Junior Data Engineer (Microsoft Azure – Databricks)",
+    "company": "Expleo Group",
+    "location": "Lisboa, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/junior-data-engineer-microsoft-azure-%E2%80%93-databricks-at-expleo-group-4469867275",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "★ 1.9/5 (Teamlyzer)",
+    "company_reviews": "4 Reviews",
+    "teamlyzer_url": "https://pt.teamlyzer.com/companies/expleo",
+    "rating_score": 1.9,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:36.985619+00:00"
   },
   {
     "source": "Himalayas",
@@ -1859,7 +1658,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.588920+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328302+00:00"
   },
   {
     "source": "Himalayas",
@@ -1898,20 +1697,20 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.589020+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328454+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4466179829",
+    "job_id": "4468708750",
     "title": "Machine Learning Platform Engineer",
     "company": "ActAI",
     "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/machine-learning-platform-engineer-at-actai-4466179829",
+    "job_url": "https://pt.linkedin.com/jobs/view/machine-learning-platform-engineer-at-actai-4468708750",
     "modality": "On-site / Hybrid",
     "seniority": "Academy",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-15",
+    "post_date": "2026-09-21",
     "company_score": "🔍 Glassdoor",
     "company_reviews": "Pesquisa Global",
     "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=ActAI",
@@ -1922,7 +1721,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:32.255935+00:00"
+    "fetched_at": "2026-09-21T15:44:16.499345+00:00"
   },
   {
     "source": "Himalayas",
@@ -1961,85 +1760,31 @@
     "location_notes": [
       "Remoto global; confirmar contrato, fuso horário e autorização de trabalho."
     ],
-    "fetched_at": "2026-09-20T13:29:35.590209+00:00"
+    "fetched_at": "2026-09-21T15:43:21.255703+00:00"
   },
   {
-    "source": "Arbeitnow",
-    "job_id": "intern-vision-software-development-munich-bavaria-461280",
-    "title": "Intern (m/f/d) Vision Software Development",
-    "company": "Agilerobotsse",
-    "location": "Munich, Bavaria",
-    "job_url": "https://www.arbeitnow.com/jobs/companies/agilerobotsse/intern-vision-software-development-munich-bavaria-461280",
-    "modality": "Hybrid / On-site",
-    "seniority": "Intern",
+    "source": "LinkedIn",
+    "job_id": "4469899221",
+    "title": ".NET & Machine Learning Engineer",
+    "company": "AdvanceWorks",
+    "location": "Lisbon Metropolitan Area",
+    "job_url": "https://pt.linkedin.com/jobs/view/net-machine-learning-engineer-at-advanceworks-4469899221",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-20",
+    "post_date": "2026-09-21",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "Industrial Automation & Robotic Applications"
-    ],
-    "location_compatibility": "unlikely",
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
     "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+      "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:36.523223+00:00"
-  },
-  {
-    "source": "Arbeitnow",
-    "job_id": "sap-s-4hana-data-controller-munich-bavaria-38439",
-    "title": "SAP S/4HANA Data Controller (m/f/d)",
-    "company": "Agilerobotsse",
-    "location": "Munich, Bavaria",
-    "job_url": "https://www.arbeitnow.com/jobs/companies/agilerobotsse/sap-s-4hana-data-controller-munich-bavaria-38439",
-    "modality": "Hybrid / On-site",
-    "seniority": "Apprenticeship",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-20",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "Supply Chain & Procurement"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:36.521222+00:00"
-  },
-  {
-    "source": "Arbeitnow",
-    "job_id": "working-student-robotics-software-testing-munich-bavaria-135421",
-    "title": "Working Student - Robotics Software Testing (m/f/d)",
-    "company": "Agilerobotsse",
-    "location": "Munich, Bavaria",
-    "job_url": "https://www.arbeitnow.com/jobs/companies/agilerobotsse/working-student-robotics-software-testing-munich-bavaria-135421",
-    "modality": "Hybrid / On-site",
-    "seniority": "Student",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-20",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "Intelligent Solutions Applications"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:36.516667+00:00"
+    "fetched_at": "2026-09-21T15:43:28.108122+00:00"
   },
   {
     "source": "Arbeitnow",
@@ -2065,7 +1810,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.533162+00:00"
+    "fetched_at": "2026-09-21T15:43:22.719291+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2089,7 +1834,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.012586+00:00"
+    "fetched_at": "2026-09-21T15:43:23.450364+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2113,7 +1858,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:50.500141+00:00"
+    "fetched_at": "2026-09-21T15:43:36.986197+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4469900887",
+    "title": "Estágio Profissional - Data & AI",
+    "company": "ANA - Aeroportos de Portugal, SA",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/est%C3%A1gio-profissional-data-ai-at-ana-aeroportos-de-portugal-sa-4469900887",
+    "modality": "On-site / Hybrid",
+    "seniority": "Estágio",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:23.450082+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2137,7 +1906,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:30.430360+00:00"
+    "fetched_at": "2026-09-21T15:44:14.687606+00:00"
   },
   {
     "source": "Himalayas",
@@ -2173,7 +1942,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.590244+00:00"
+    "fetched_at": "2026-09-21T15:43:21.255742+00:00"
   },
   {
     "source": "Jobicy",
@@ -2197,31 +1966,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:37.165392+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4467277080",
-    "title": "Data Engineer",
-    "company": "AUMOVIO",
-    "location": "Vila Real, Vila Real, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/data-engineer-at-aumovio-4467277080",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:51.268275+00:00"
+    "fetched_at": "2026-09-21T15:43:22.446633+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2245,7 +1990,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:58.725856+00:00"
+    "fetched_at": "2026-09-21T15:43:45.492166+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2269,7 +2014,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761704+00:00"
+    "fetched_at": "2026-09-21T15:43:21.754875+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2293,7 +2038,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761791+00:00"
+    "fetched_at": "2026-09-21T15:43:21.754996+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2317,31 +2062,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761467+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4467070813",
-    "title": "Développeur / Créateur d’Agents IA Voix et Chat – Relation Client (F/H)",
-    "company": "Bouygues Telecom Services",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/d%C3%A9veloppeur-cr%C3%A9ateur-d%E2%80%99agents-ia-voix-et-chat-%E2%80%93-relation-client-f-h-at-bouygues-telecom-services-4467070813",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Bouygues%20Telecom%20Services",
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:34.954127+00:00"
+    "fetched_at": "2026-09-21T15:43:21.754030+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2365,7 +2086,33 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:41.263600+00:00"
+    "fetched_at": "2026-09-21T15:43:28.108253+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "operations-specialist-ai-enablement-london-76363",
+    "title": "Operations Specialist, AI Enablement",
+    "company": "Bumble Inc.",
+    "location": "UK London",
+    "job_url": "https://www.arbeitnow.co.uk/jobs/companies/bumble-inc/operations-specialist-ai-enablement-london-76363",
+    "modality": "Hybrid / On-site",
+    "seniority": "1+ years of experience",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [
+      "Customer Experience & Trust"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.713126+00:00"
   },
   {
     "source": "Himalayas",
@@ -2400,7 +2147,80 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.017964+00:00"
+    "fetched_at": "2026-09-21T15:43:22.564576+00:00"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "cybersecurity-summer-2027-intern-undergraduate",
+    "title": "Cybersecurity Summer 2027 Intern (Undergraduate)",
+    "company": "Centene Corporation",
+    "location": "Macao",
+    "job_url": "https://himalayas.app/companies/centene-corporation/jobs/cybersecurity-summer-2027-intern-undergraduate",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": "USD 21 - 26",
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [
+      "Cybersecurity-Internship",
+      "Information-Security-Internship",
+      "Security-Operations",
+      "Risk-Management",
+      "Governance-Risk-And-Compliance",
+      "Cybersecurity-Intern",
+      "Cybersecurity-Analyst-Intern",
+      "Internship-Cybersecurity",
+      "Information-Security-Analyst-Intern",
+      "Information-Security-Intern",
+      "Network-Security-Intern",
+      "IT-Security-Intern",
+      "Security-Engineer-Intern"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:21.601394+00:00"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "data-and-analytics-summer-2027-intern-undergraduate",
+    "title": "Data and Analytics Summer 2027 Intern (Undergraduate)",
+    "company": "Centene Corporation",
+    "location": "Macao",
+    "job_url": "https://himalayas.app/companies/centene-corporation/jobs/data-and-analytics-summer-2027-intern-undergraduate",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": "USD 21 - 26",
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [
+      "Data-Analytics-Internship",
+      "Business-Intelligence-Intern",
+      "Data-Science-Intern",
+      "Machine-Learning-Intern",
+      "Undergraduate-Internship",
+      "Data-Analytics-Intern",
+      "Data-Analyst-Intern",
+      "Data-Analysis-Intern",
+      "Analytics-Intern",
+      "Business-Analytics-Intern"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:21.211349+00:00"
   },
   {
     "source": "Himalayas",
@@ -2435,40 +2255,71 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521819+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211283+00:00"
   },
   {
     "source": "Himalayas",
-    "job_id": "virginia-tech-compliance-advisory-2027-summer-internship",
-    "title": "Virginia Tech | Compliance Advisory - 2027 Summer Internship",
-    "company": "Coalfire",
+    "job_id": "intern-gen-ai-research-engineer-hiring-now",
+    "title": "Intern - Gen AI Research Engineer (Hiring Now!)",
+    "company": "Cotiviti",
     "location": "United States",
-    "job_url": "https://himalayas.app/companies/coalfire/jobs/virginia-tech-compliance-advisory-2027-summer-internship",
+    "job_url": "https://himalayas.app/companies/cotiviti/jobs/intern-gen-ai-research-engineer-hiring-now",
     "modality": "100% Remote",
     "seniority": "Entry-level",
     "is_remote": true,
+    "salary": "USD 32 - 40",
+    "post_date": "2026-09-21",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Cotiviti",
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [
+      "AI-Research-Engineer",
+      "AI-ML-Research",
+      "Healthcare-AI",
+      "Machine-Learning-Engineering",
+      "AI-Research-Intern",
+      "Generative-AI-Intern",
+      "AI-Engineering-Intern",
+      "Entry-Level-AI-Research-Engineer",
+      "AI-Development-Intern",
+      "AI-Research-Internships",
+      "AI-Engineering-Internship",
+      "Research-Engineer"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:20.723633+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "junior-software-engineer-ki-gestutzte-entwicklung-hamburg-316522",
+    "title": "Junior Software Engineer (m/w/d) — KI-gestützte Entwicklung",
+    "company": "data nation GmbH",
+    "location": "Hamburg",
+    "job_url": "https://www.arbeitnow.com/jobs/companies/data-nation-gmbh/junior-software-engineer-ki-gestutzte-entwicklung-hamburg-316522",
+    "modality": "Hybrid / On-site",
+    "seniority": "Junior",
+    "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-13",
+    "post_date": "2026-09-21",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
     "category": "Top-Tier Software Engineering",
     "tags": [
-      "Compliance-Advisory",
-      "Cybersecurity",
-      "GRC",
-      "Security-Compliance",
-      "FedRAMP-Compliance",
-      "IT-Compliance-Intern",
-      "Compliance-Intern",
-      "Technology-Consulting-Intern"
+      "Internet and software",
+      "high school coursework"
     ],
     "location_compatibility": "unlikely",
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.000914+00:00"
+    "fetched_at": "2026-09-21T15:43:22.686575+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2492,7 +2343,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:32.255302+00:00"
+    "fetched_at": "2026-09-21T15:44:16.498490+00:00"
   },
   {
     "source": "Himalayas",
@@ -2533,33 +2384,46 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.017851+00:00"
+    "fetched_at": "2026-09-21T15:43:22.564445+00:00"
   },
   {
-    "source": "Arbeitnow",
-    "job_id": "machine-learning-engineer-growth-personalisation-london-282918",
-    "title": "Machine Learning Engineer - Growth & Personalisation",
-    "company": "Deliveroo",
-    "location": "London",
-    "job_url": "https://www.arbeitnow.co.uk/jobs/companies/deliveroo/machine-learning-engineer-growth-personalisation-london-282918",
-    "modality": "Hybrid / On-site",
-    "seniority": "3+ years of experience",
-    "is_remote": false,
+    "source": "Himalayas",
+    "job_id": "software-engineering-intern",
+    "title": "Software Engineering Intern",
+    "company": "DecisionPoint Corporation",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/decisionpoint-corporation/jobs/software-engineering-intern",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
     "salary": null,
     "post_date": "2026-09-20",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
-    "category": "AI / ML",
+    "category": "Top-Tier Software Engineering",
     "tags": [
-      "Machine Learning (Ads)"
+      "Software-Engineering-Intern",
+      "Mobile-Application-Developer",
+      "React-Native-Development",
+      "Java-Development",
+      "Software-Development",
+      "Software-Engineer-Intern",
+      "Software-Engineering-Internship",
+      "Software-Intern",
+      "Software-Development-Intern",
+      "Software-Developer-Intern",
+      "Software-Development-Internship",
+      "Software-Developer-Internship",
+      "Software-Internship",
+      "Engineering-Intern"
     ],
     "location_compatibility": "unlikely",
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.556963+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328317+00:00"
   },
   {
     "source": "Arbeitnow",
@@ -2585,7 +2449,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.544101+00:00"
+    "fetched_at": "2026-09-21T15:43:22.733586+00:00"
   },
   {
     "source": "Himalayas",
@@ -2620,7 +2484,7 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:35.590270+00:00"
+    "fetched_at": "2026-09-21T15:43:21.255763+00:00"
   },
   {
     "source": "Himalayas",
@@ -2659,7 +2523,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.504965+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723577+00:00"
   },
   {
     "source": "Himalayas",
@@ -2698,7 +2562,34 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.504975+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723590+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "junior-google-performance-analytics-manager-stuttgart-394573",
+    "title": "Junior Google Performance & Analytics Manager (m/w/d)",
+    "company": "eFLY Marketplace Services GmbH",
+    "location": "Stuttgart",
+    "job_url": "https://www.arbeitnow.com/jobs/companies/efly-marketplace-services-gmbh/junior-google-performance-analytics-manager-stuttgart-394573",
+    "modality": "Hybrid / On-site",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [
+      "Management",
+      "Team Leader"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.691065+00:00"
   },
   {
     "source": "Jobicy",
@@ -2722,7 +2613,7 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:37.719360+00:00"
+    "fetched_at": "2026-09-21T15:43:23.695351+00:00"
   },
   {
     "source": "Himalayas",
@@ -2757,7 +2648,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.538893+00:00"
+    "fetched_at": "2026-09-21T15:43:21.277995+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2781,7 +2672,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:05.027952+00:00"
+    "fetched_at": "2026-09-21T15:43:47.341885+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2805,7 +2696,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:05.831285+00:00"
+    "fetched_at": "2026-09-21T15:43:52.127458+00:00"
   },
   {
     "source": "Himalayas",
@@ -2843,7 +2734,7 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:36.000943+00:00"
+    "fetched_at": "2026-09-21T15:43:21.601585+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2867,7 +2758,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:51.268024+00:00"
+    "fetched_at": "2026-09-21T15:43:37.810830+00:00"
   },
   {
     "source": "Himalayas",
@@ -2906,7 +2797,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521829+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211297+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2930,7 +2821,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:58.725522+00:00"
+    "fetched_at": "2026-09-21T15:43:45.491621+00:00"
   },
   {
     "source": "LinkedIn",
@@ -2954,7 +2845,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:58.725423+00:00"
+    "fetched_at": "2026-09-21T15:43:45.491487+00:00"
   },
   {
     "source": "ITJobs.pt",
@@ -2978,7 +2869,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.582877+00:00"
+    "fetched_at": "2026-09-21T15:43:21.497932+00:00"
   },
   {
     "source": "Himalayas",
@@ -3017,7 +2908,7 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:35.427836+00:00"
+    "fetched_at": "2026-09-21T15:43:21.172806+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3041,7 +2932,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488863+00:00"
+    "fetched_at": "2026-09-21T15:43:47.341757+00:00"
   },
   {
     "source": "Himalayas",
@@ -3077,31 +2968,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521857+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4432971674",
-    "title": "Forward Deployed AI Engineer, Portugal",
-    "company": "ICEYE",
-    "location": "Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/forward-deployed-ai-engineer-portugal-at-iceye-4432971674",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-19",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=ICEYE",
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.762127+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211334+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3125,7 +2992,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761959+00:00"
+    "fetched_at": "2026-09-21T15:43:21.755319+00:00"
   },
   {
     "source": "Himalayas",
@@ -3161,7 +3028,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.017862+00:00"
+    "fetched_at": "2026-09-21T15:43:22.564460+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3185,7 +3052,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:02.220381+00:00"
+    "fetched_at": "2026-09-21T15:43:49.217233+00:00"
   },
   {
     "source": "ITJobs.pt",
@@ -3209,38 +3076,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.583268+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "ai-and-compiler-engineering-graduate-intern",
-    "title": "AI and Compiler Engineering Graduate Intern",
-    "company": "Intel Corporation",
-    "location": "Canada",
-    "job_url": "https://himalayas.app/companies/intel-corporation/jobs/ai-and-compiler-engineering-graduate-intern",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [
-      "Compiler-Engineering",
-      "AI-ML-Engineer",
-      "R&D",
-      "Software-Engineer",
-      "Graduate-Intern",
-      "Deep-Learning-Compiler-Engineer"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:36.362580+00:00"
+    "fetched_at": "2026-09-21T15:43:21.498477+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3264,31 +3100,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:58.726105+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4468074769",
-    "title": "Data & AI Solutions Consultant",
-    "company": "IQVIA",
-    "location": "Oeiras, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/data-ai-solutions-consultant-at-iqvia-4468074769",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-19",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:41.263936+00:00"
+    "fetched_at": "2026-09-21T15:43:46.560584+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3312,7 +3124,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488615+00:00"
+    "fetched_at": "2026-09-21T15:43:47.341240+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3336,7 +3148,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:15.473104+00:00"
+    "fetched_at": "2026-09-21T15:44:01.165775+00:00"
   },
   {
     "source": "ITJobs.pt",
@@ -3360,7 +3172,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.583543+00:00"
+    "fetched_at": "2026-09-21T15:43:21.499090+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3384,7 +3196,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:59.695738+00:00"
+    "fetched_at": "2026-09-21T15:43:46.561687+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3408,31 +3220,45 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.953957+00:00"
+    "fetched_at": "2026-09-21T15:43:20.893255+00:00"
   },
   {
-    "source": "LinkedIn",
-    "job_id": "4467044973",
-    "title": "Quality Engineer - Trainee",
-    "company": "KEMET Electronics Corporation",
-    "location": "Évora, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/quality-engineer-trainee-at-kemet-electronics-corporation-4467044973",
-    "modality": "On-site / Hybrid",
-    "seniority": "Trainee",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-14",
+    "source": "Himalayas",
+    "job_id": "engineering-data-analyst-energy-industry-intern",
+    "title": "Engineering Data Analyst-Energy Industry (Intern)",
+    "company": "Kanadevia Inova North America",
+    "location": "Slovakia",
+    "job_url": "https://himalayas.app/companies/kanadevia-inova-north-america/jobs/engineering-data-analyst-energy-industry-intern",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": "EUR 9 - 9",
+    "post_date": "2026-09-20",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
+    "category": "AI / ML",
+    "tags": [
+      "Engineering-Data-Analyst",
+      "Platform-Analytics",
+      "Energy-Analyst",
+      "Data-Engineering",
+      "Energy-Data-Analyst",
+      "Data-Engineer-Intern",
+      "Data-Engineering-Intern",
+      "Internship-Data-Engineer",
+      "Data-Analyst-Intern",
+      "Internship-Data-Engineering",
+      "Energy-Sector-Internship",
+      "Data-Analytics-Intern",
+      "Data-Analyst"
     ],
-    "fetched_at": "2026-09-20T13:30:16.377199+00:00"
+    "location_compatibility": "conditional",
+    "location_notes": [
+      "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
+    ],
+    "fetched_at": "2026-09-21T15:43:21.277965+00:00"
   },
   {
     "source": "RemoteOK",
@@ -3476,20 +3302,44 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.944868+00:00"
+    "fetched_at": "2026-09-21T15:43:22.949218+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4464792010",
-    "title": "Graduate Test Automation",
-    "company": "Leonteq",
-    "location": "Lisbon Metropolitan Area",
-    "job_url": "https://pt.linkedin.com/jobs/view/graduate-test-automation-at-leonteq-4464792010",
+    "job_id": "4467605608",
+    "title": "Data Engineer",
+    "company": "KWAN",
+    "location": "Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/data-engineer-at-kwan-4467605608",
     "modality": "On-site / Hybrid",
-    "seniority": "Graduate",
+    "seniority": "Junior",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:37.810704+00:00"
+  },
+  {
+    "source": "ITJobs.pt",
+    "job_id": "517144",
+    "title": "Frontend Developer (React.js)",
+    "company": "KWAN",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://www.itjobs.pt/oferta/517144/frontend-developer-react-js",
+    "modality": "On-site / Hybrid",
+    "seniority": "junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-20",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
@@ -3500,7 +3350,45 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:16.376570+00:00"
+    "fetched_at": "2026-09-21T15:43:21.919272+00:00"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "technical-intern",
+    "title": "Technical Intern",
+    "company": "Leidos",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/leidos/jobs/technical-intern",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": "USD 57,850 - 104,575",
+    "post_date": "2026-09-20",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [
+      "Technical-Intern",
+      "Software-Engineering-Intern",
+      "AI-ML-Intern",
+      "Systems-Engineering-Intern",
+      "Cybersecurity-Intern",
+      "Technical-Internship",
+      "Technical-Programming-Intern",
+      "Technical-Development-Internship",
+      "Technology-Intern",
+      "Tech-Internship",
+      "Technology-Internship",
+      "Engineering-Intern",
+      "Technical-Trainee"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:21.601525+00:00"
   },
   {
     "source": "Himalayas",
@@ -3537,66 +3425,103 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.538858+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "junior-ai-engineer-program-dla-absolwentow",
-    "title": "Junior AI Engineer | Program dla Absolwentów",
-    "company": "Look4IT",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/look4it/jobs/junior-ai-engineer-program-dla-absolwentow",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Look4IT",
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [
-      "AI-Engineering",
-      "Machine-Learning-Engineering",
-      "Junior-AI-Engineer",
-      "AI-Development",
-      "Prompt-Engineering",
-      "Junior-AI-ML-Engineer",
-      "Remote-Junior-AI-Engineer",
-      "Junior-AI-Developer",
-      "Junior-ML-Engineer",
-      "Junior-AI-Programming-Associate"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.427938+00:00"
+    "fetched_at": "2026-09-21T15:43:21.277928+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4467725388",
-    "title": "AWS Cloud Engineer",
-    "company": "MagicBeans",
-    "location": "Lisbon Metropolitan Area",
-    "job_url": "https://pt.linkedin.com/jobs/view/aws-cloud-engineer-at-magicbeans-4467725388",
+    "job_id": "4469895329",
+    "title": "Machine Learning Engineer",
+    "company": "Loop Future",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/machine-learning-engineer-at-loop-future-4469895329",
     "modality": "On-site / Hybrid",
-    "seniority": "Intern",
+    "seniority": "Junior",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-15",
+    "post_date": "2026-09-21",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
+    "category": "AI / ML",
     "tags": [],
     "location_compatibility": "confirmed",
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:13.657430+00:00"
+    "fetched_at": "2026-09-21T15:43:28.107274+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "ai-education-expert-for-the-european-ai-factory-hammerhai-garching-bei-munchen-345091",
+    "title": "AI Education Expert (m/f/d) for the European AI Factory HammerHAI",
+    "company": "Lrz",
+    "location": "Garching bei München",
+    "job_url": "https://www.arbeitnow.com/jobs/companies/lrz/ai-education-expert-for-the-european-ai-factory-hammerhai-garching-bei-munchen-345091",
+    "modality": "Hybrid / On-site",
+    "seniority": "Academy",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.681091+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "customer-success-expert-for-the-european-ai-factory-hammerhai-garching-bei-munchen-281490",
+    "title": "Customer Success Expert (m/f/d) for the European AI Factory HammerHAI",
+    "company": "Lrz",
+    "location": "Garching bei München",
+    "job_url": "https://www.arbeitnow.com/jobs/companies/lrz/customer-success-expert-for-the-european-ai-factory-hammerhai-garching-bei-munchen-281490",
+    "modality": "Hybrid / On-site",
+    "seniority": "Academy",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.680655+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "data-platform-engineer-for-the-european-ai-factory-hammerhai-garching-bei-munchen-349180",
+    "title": "Data Platform Engineer (f/m/d)  for the European AI Factory HammerHAI",
+    "company": "Lrz",
+    "location": "Garching bei München",
+    "job_url": "https://www.arbeitnow.com/jobs/companies/lrz/data-platform-engineer-for-the-european-ai-factory-hammerhai-garching-bei-munchen-349180",
+    "modality": "Hybrid / On-site",
+    "seniority": "Academy",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.680170+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3620,31 +3545,42 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.012675+00:00"
+    "fetched_at": "2026-09-21T15:43:23.450515+00:00"
   },
   {
-    "source": "LinkedIn",
-    "job_id": "4467057885",
-    "title": "Junior Data Analyst",
-    "company": "Match Profiler",
-    "location": "Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-data-analyst-at-match-profiler-4467057885",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
+    "source": "Himalayas",
+    "job_id": "software-engineer-new-grads-welcome-6029302177",
+    "title": "Software Engineer [New Grads Welcome]",
+    "company": "Mechanical Orchard",
+    "location": "Canada",
+    "job_url": "https://himalayas.app/companies/mechanical-orchard/jobs/software-engineer-new-grads-welcome-6029302177",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-18",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
+    "category": "Top-Tier Software Engineering",
+    "tags": [
+      "Software-Engineer",
+      "AI-Engineering",
+      "Machine-Learning",
+      "Data-Engineering",
+      "Fullstack-Development",
+      "Entry-Level-Software-Engineer",
+      "Software-Engineer-I",
+      "Junior-Software-Engineer",
+      "Software-Engineer-Jobs",
+      "Software-Engineer-Trainee"
     ],
-    "fetched_at": "2026-09-20T13:29:47.844748+00:00"
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.564598+00:00"
   },
   {
     "source": "Himalayas",
@@ -3682,7 +3618,55 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521901+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211409+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4467369998",
+    "title": "Junior SQL Developer (French Speaker) | BPCE-SI",
+    "company": "Natixis in Portugal",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/junior-sql-developer-french-speaker-bpce-si-at-natixis-in-portugal-4467369998",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:37.810445+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4467372960",
+    "title": "Junior SQL Developer (French Speaker) | BPCE-SI",
+    "company": "Natixis in Portugal",
+    "location": "Lisboa, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/junior-sql-developer-french-speaker-bpce-si-at-natixis-in-portugal-4467372960",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:37.810315+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3706,7 +3690,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.761878+00:00"
+    "fetched_at": "2026-09-21T15:43:21.755184+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4468786148",
+    "title": "NIQ Early Career Program: Internship - Customer Success Analytics FMCG (12 months, Pre-hire internship)",
+    "company": "NielsenIQ",
+    "location": "Lisbon Metropolitan Area",
+    "job_url": "https://pt.linkedin.com/jobs/view/niq-early-career-program-internship-customer-success-analytics-fmcg-12-months-pre-hire-internship-at-nielseniq-4468786148",
+    "modality": "On-site / Hybrid",
+    "seniority": "Internship",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:35.085358+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3730,55 +3738,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:35.048109+00:00"
+    "fetched_at": "2026-09-21T15:44:19.328950+00:00"
   },
   {
     "source": "LinkedIn",
-    "job_id": "4465763761",
-    "title": "Junior Backend Engineer C++",
-    "company": "Nimber",
-    "location": "Lisbon, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-backend-engineer-c%2B%2B-at-nimber-4465763761",
+    "job_id": "4469868215",
+    "title": "Machine Learning Engineer",
+    "company": "Nmbrs",
+    "location": "Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/machine-learning-engineer-at-nmbrs-4469868215",
     "modality": "On-site / Hybrid",
     "seniority": "Junior",
     "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-14",
+    "post_date": "2026-09-21",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
+    "category": "AI / ML",
     "tags": [],
     "location_compatibility": "confirmed",
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488781+00:00"
-  },
-  {
-    "source": "ITJobs.pt",
-    "job_id": "516858",
-    "title": "Network Engineer",
-    "company": "Nonius",
-    "location": "Porto, Portugal",
-    "job_url": "https://www.itjobs.pt/oferta/516858/network-engineer",
-    "modality": "On-site / Hybrid",
-    "seniority": "junior",
-    "is_remote": false,
-    "salary": "€20 000 - €25 000",
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.583338+00:00"
+    "fetched_at": "2026-09-21T15:43:27.148091+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3802,7 +3786,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:51.267942+00:00"
+    "fetched_at": "2026-09-21T15:43:37.810573+00:00"
   },
   {
     "source": "Himalayas",
@@ -3836,7 +3820,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521874+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211360+00:00"
   },
   {
     "source": "Himalayas",
@@ -3875,44 +3859,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.000895+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "entry-level-technical-support-specialist",
-    "title": "Entry Level Technical Support Specialist",
-    "company": "Partner One Capital",
-    "location": "Mexico",
-    "job_url": "https://himalayas.app/companies/partner-one-capital/jobs/entry-level-technical-support-specialist",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "Technical-Support-Specialist",
-      "Help-Desk-Support",
-      "Customer-Support",
-      "IT-Support",
-      "Entry-Level-Technical-Support",
-      "Entry-Level-Technical-Support-Specialist",
-      "Entry-Level-Technical-Support-Analyst",
-      "Entry-Level-Tech-Support",
-      "Entry-Level-Support-Specialist",
-      "Entry-Level-IT-Support-Technician",
-      "Entry-Level-Technology-Support",
-      "Entry-Level-Remote-Support-Specialist"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:36.017887+00:00"
+    "fetched_at": "2026-09-21T15:43:21.601513+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3936,7 +3883,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.953707+00:00"
+    "fetched_at": "2026-09-21T15:43:20.892827+00:00"
   },
   {
     "source": "LinkedIn",
@@ -3960,53 +3907,41 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:35.833366+00:00"
+    "fetched_at": "2026-09-21T15:44:20.119259+00:00"
   },
   {
-    "source": "Himalayas",
-    "job_id": "junior-ai-ml-engineer-genai-aws",
-    "title": "Junior AI/ML Engineer (GenAI, AWS)",
-    "company": "Provectus",
-    "location": "Armenia, Poland, Serbia, Ukraine",
-    "job_url": "https://himalayas.app/companies/provectus/jobs/junior-ai-ml-engineer-genai-aws",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
+    "source": "LinkedIn",
+    "job_id": "4468729247",
+    "title": "Associate Data Engineer",
+    "company": "Planet",
+    "location": "Porto, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/associate-data-engineer-at-planet-4468729247",
+    "modality": "On-site / Hybrid",
+    "seniority": "Associate",
+    "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-13",
+    "post_date": "2026-09-21",
     "company_score": null,
     "company_reviews": null,
     "teamlyzer_url": null,
     "rating_score": 0.0,
     "category": "AI / ML",
-    "tags": [
-      "Junior-AI-ML-Engineer",
-      "Generative-AI-Engineering",
-      "Software-Engineer",
-      "AI-Development",
-      "Machine-Learning-Engineering",
-      "Junior-AI-Engineer",
-      "Junior-ML-Engineer",
-      "Junior-AI-ML-Engineer-Jobs",
-      "Junior-Machine-Learning-Engineer",
-      "Remote-Junior-AI-Engineer",
-      "Junior-AI-Developer"
-    ],
-    "location_compatibility": "conditional",
+    "tags": [],
+    "location_compatibility": "confirmed",
     "location_notes": [
-      "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
+      "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.427867+00:00"
+    "fetched_at": "2026-09-21T15:43:36.985778+00:00"
   },
   {
     "source": "Arbeitnow",
-    "job_id": "remote-junior-data-scientist-305623",
-    "title": "(Junior) Data Scientist",
-    "company": "Quantilope Gmbh",
-    "location": "Hybrid (Hamburg) or Remote (Germany)",
-    "job_url": "https://www.arbeitnow.com/jobs/companies/quantilope-gmbh/remote-junior-data-scientist-305623",
+    "job_id": "ai-scientist-for-quantum-computing-massy-101398",
+    "title": "AI scientist for Quantum Computing (Massy)",
+    "company": "Quandela",
+    "location": "Massy, France",
+    "job_url": "https://www.arbeitnow.fr/jobs/companies/quandela/ai-scientist-for-quantum-computing-massy-101398",
     "modality": "Hybrid / On-site",
-    "seniority": "Junior",
+    "seniority": "junior",
     "is_remote": false,
     "salary": null,
     "post_date": "2026-09-20",
@@ -4016,16 +3951,38 @@
     "rating_score": 0.0,
     "category": "AI / ML",
     "tags": [
-      "data science",
-      "agentic ai",
-      "python",
-      "ai engineer"
+      "Research",
+      "Computer Hardware"
     ],
     "location_compatibility": "conditional",
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:36.527176+00:00"
+    "fetched_at": "2026-09-21T15:43:22.744263+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4469907814",
+    "title": "Data Scientist",
+    "company": "Retail Consult",
+    "location": "Maia, Porto, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/data-scientist-at-retail-consult-4469907814",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:28.108383+00:00"
   },
   {
     "source": "Himalayas",
@@ -4063,7 +4020,7 @@
     "location_notes": [
       "Remoto global; confirmar contrato, fuso horário e autorização de trabalho."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521892+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211384+00:00"
   },
   {
     "source": "Himalayas",
@@ -4102,7 +4059,7 @@
     "location_notes": [
       "Remoto global; confirmar contrato, fuso horário e autorização de trabalho."
     ],
-    "fetched_at": "2026-09-20T13:29:35.588954+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328356+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4126,7 +4083,31 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:00.488437+00:00"
+    "fetched_at": "2026-09-21T15:43:47.341109+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4467603807",
+    "title": "AI Implementation Specialist - Samlino Group",
+    "company": "Samlino Group",
+    "location": "Lisboa, Lisbon, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/ai-implementation-specialist-samlino-group-at-samlino-group-4467603807",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
+    "rating_score": 0.0,
+    "category": "AI / ML",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:43:20.893550+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4150,7 +4131,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:51.268189+00:00"
+    "fetched_at": "2026-09-21T15:43:37.810957+00:00"
   },
   {
     "source": "Himalayas",
@@ -4186,7 +4167,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.588979+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328394+00:00"
   },
   {
     "source": "Himalayas",
@@ -4227,7 +4208,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.427946+00:00"
+    "fetched_at": "2026-09-21T15:43:21.172952+00:00"
   },
   {
     "source": "Himalayas",
@@ -4266,7 +4247,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.948982+00:00"
+    "fetched_at": "2026-09-21T15:43:22.489316+00:00"
   },
   {
     "source": "Himalayas",
@@ -4304,7 +4285,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.948960+00:00"
+    "fetched_at": "2026-09-21T15:43:22.489293+00:00"
   },
   {
     "source": "Himalayas",
@@ -4343,7 +4324,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.948942+00:00"
+    "fetched_at": "2026-09-21T15:43:22.489280+00:00"
   },
   {
     "source": "Himalayas",
@@ -4379,7 +4360,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.948969+00:00"
+    "fetched_at": "2026-09-21T15:43:22.489304+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4403,31 +4384,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:37.789009+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4468810901",
-    "title": "GCP Data Engineer (Porto,Hibrido)",
-    "company": "Shore",
-    "location": "Porto, Porto, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/gcp-data-engineer-porto-hibrido-at-shore-4468810901",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-17",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:51.268358+00:00"
+    "fetched_at": "2026-09-21T15:43:24.235364+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4451,7 +4408,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:46.960134+00:00"
+    "fetched_at": "2026-09-21T15:43:33.187038+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4475,7 +4432,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:05.832013+00:00"
+    "fetched_at": "2026-09-21T15:43:52.954207+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4499,7 +4456,33 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:35.833196+00:00"
+    "fetched_at": "2026-09-21T15:43:52.954476+00:00"
+  },
+  {
+    "source": "Arbeitnow",
+    "job_id": "automatisierungsingenieurin-villingen-schwenningen-47358",
+    "title": "Automatisierungsingenieur:in",
+    "company": "Skillect",
+    "location": "Villingen-Schwenningen",
+    "job_url": "https://www.arbeitnow.com/jobs/companies/skillect/automatisierungsingenieurin-villingen-schwenningen-47358",
+    "modality": "Hybrid / On-site",
+    "seniority": "intern",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [
+      "Automation Engineering"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.700876+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4523,7 +4506,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:32.255605+00:00"
+    "fetched_at": "2026-09-21T15:44:16.498788+00:00"
   },
   {
     "source": "Himalayas",
@@ -4563,7 +4546,7 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:35.427856+00:00"
+    "fetched_at": "2026-09-21T15:43:21.172832+00:00"
   },
   {
     "source": "Himalayas",
@@ -4599,7 +4582,31 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:35.427912+00:00"
+    "fetched_at": "2026-09-21T15:43:21.172908+00:00"
+  },
+  {
+    "source": "LinkedIn",
+    "job_id": "4469893629",
+    "title": "Information Security Specialist",
+    "company": "Start Campus",
+    "location": "Lisbon Metropolitan Area",
+    "job_url": "https://pt.linkedin.com/jobs/view/information-security-specialist-at-start-campus-4469893629",
+    "modality": "On-site / Hybrid",
+    "seniority": "Intern",
+    "is_remote": false,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
+    "location_notes": [
+      "A localização anunciada inclui Portugal."
+    ],
+    "fetched_at": "2026-09-21T15:44:03.442228+00:00"
   },
   {
     "source": "Himalayas",
@@ -4636,7 +4643,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.590130+00:00"
+    "fetched_at": "2026-09-21T15:43:21.255602+00:00"
   },
   {
     "source": "LinkedIn",
@@ -4660,7 +4667,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:23.984331+00:00"
+    "fetched_at": "2026-09-21T15:44:10.595695+00:00"
   },
   {
     "source": "Himalayas",
@@ -4700,7 +4707,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.505038+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723691+00:00"
   },
   {
     "source": "Himalayas",
@@ -4733,7 +4740,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.427892+00:00"
+    "fetched_at": "2026-09-21T15:43:21.172881+00:00"
   },
   {
     "source": "Himalayas",
@@ -4765,46 +4772,31 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.362710+00:00"
+    "fetched_at": "2026-09-21T15:43:22.512616+00:00"
   },
   {
-    "source": "Himalayas",
-    "job_id": "data-visualization-analyst-summer-intern",
-    "title": "Data Visualization Analyst Summer Intern",
-    "company": "The Chemours Company",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/the-chemours-company/jobs/data-visualization-analyst-summer-intern",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
+    "source": "LinkedIn",
+    "job_id": "4469816089",
+    "title": "Engenheiro de software",
+    "company": "Techsul IT Solutions",
+    "location": "Albufeira, Faro, Portugal",
+    "job_url": "https://pt.linkedin.com/jobs/view/engenheiro-de-software-at-techsul-it-solutions-4469816089",
+    "modality": "On-site / Hybrid",
+    "seniority": "Junior",
+    "is_remote": false,
     "salary": null,
-    "post_date": "2026-09-19",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
+    "post_date": "2026-09-20",
+    "company_score": "🔍 Glassdoor",
+    "company_reviews": "Pesquisa Global",
+    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Techsul%20IT%20Solutions",
     "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [
-      "Data-Visualization",
-      "Data-Analytics-Intern",
-      "Business-Intelligence",
-      "Summer-Intern",
-      "Digital-Analytics",
-      "Data-Visualization-Intern",
-      "Data-Analyst-Intern",
-      "Data-Analysis-Intern",
-      "Data-Visualization-Analyst",
-      "Analytics-Intern",
-      "Data-Analysis-Internship",
-      "Data-Analytics-Internship",
-      "Data-Analysis-Research-Intern",
-      "Analytics-Internship"
-    ],
-    "location_compatibility": "unlikely",
+    "category": "Top-Tier Software Engineering",
+    "tags": [],
+    "location_compatibility": "confirmed",
     "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+      "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:35.538915+00:00"
+    "fetched_at": "2026-09-21T15:43:21.754204+00:00"
   },
   {
     "source": "Himalayas",
@@ -4838,7 +4830,80 @@
     "location_notes": [
       "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
     ],
-    "fetched_at": "2026-09-20T13:29:35.590296+00:00"
+    "fetched_at": "2026-09-21T15:43:21.255793+00:00"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "associate-software-engineer-junior-intern-summer-2027",
+    "title": "Associate Software Engineer - Junior Intern Summer 2027",
+    "company": "Thrivent Financial for Lutherans",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/thrivent-financial-for-lutherans/jobs/associate-software-engineer-junior-intern-summer-2027",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": "USD 25 - 28",
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [
+      "Software-Engineering-Intern",
+      "Application-Development",
+      "Software-Developer-Intern",
+      "Computer-Science-Internship",
+      "Tech-Internship",
+      "Software-Engineer-Intern",
+      "Associate-Software-Engineer",
+      "Software-Development-Intern",
+      "Software-Engineering-Internship",
+      "Software-Engineering-Associate",
+      "Software-Intern"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.328417+00:00"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "associate-software-engineer-sophomore-intern-summer-2027",
+    "title": "Associate Software Engineer - Sophomore Intern Summer 2027",
+    "company": "Thrivent Financial for Lutherans",
+    "location": "United States",
+    "job_url": "https://himalayas.app/companies/thrivent-financial-for-lutherans/jobs/associate-software-engineer-sophomore-intern-summer-2027",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": "USD 25 - 28",
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [
+      "Software-Engineering-Intern",
+      "Software-Development-Intern",
+      "Technology-Internship",
+      "Programming-Intern",
+      "Software-Engineer-Intern",
+      "Associate-Software-Engineer",
+      "Software-Developer-Intern",
+      "Software-Engineering-Internship",
+      "Software-Intern",
+      "Software-Engineering-Associate",
+      "Software-Engineer",
+      "Developer"
+    ],
+    "location_compatibility": "unlikely",
+    "location_notes": [
+      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.328282+00:00"
   },
   {
     "source": "Himalayas",
@@ -4876,7 +4941,44 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.590172+00:00"
+    "fetched_at": "2026-09-21T15:43:21.255667+00:00"
+  },
+  {
+    "source": "Himalayas",
+    "job_id": "entry-level-browser-tester-917583261",
+    "title": "Entry-Level Browser Tester",
+    "company": "TSMG",
+    "location": "Poland",
+    "job_url": "https://himalayas.app/companies/tsmg/jobs/entry-level-browser-tester-917583261",
+    "modality": "100% Remote",
+    "seniority": "Entry-level",
+    "is_remote": true,
+    "salary": null,
+    "post_date": "2026-09-21",
+    "company_score": null,
+    "company_reviews": null,
+    "teamlyzer_url": null,
+    "rating_score": 0.0,
+    "category": "Top-Tier Software Engineering",
+    "tags": [
+      "Software-Testing",
+      "QA-Testing",
+      "Quality-Assurance",
+      "Web-Testing",
+      "Browser-Testing",
+      "Entry-Level-Tester",
+      "Entry-Level-Quality-Assurance-Tester",
+      "Entry-Level-Testing-Role",
+      "Entry-Level-Software-Testing",
+      "Entry-Level-Product-Tester",
+      "Junior-Tester",
+      "Entry-Level-QA"
+    ],
+    "location_compatibility": "conditional",
+    "location_notes": [
+      "A região anunciada inclui potencialmente Portugal; confirmar países aceites."
+    ],
+    "fetched_at": "2026-09-21T15:43:22.564506+00:00"
   },
   {
     "source": "Himalayas",
@@ -4913,150 +5015,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.589045+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "junior-cloud-security-validation-engineer-9572448187",
-    "title": "Junior Cloud Security Validation Engineer",
-    "company": "Upwind Security",
-    "location": "Ukraine",
-    "job_url": "https://himalayas.app/companies/upwind-security/jobs/junior-cloud-security-validation-engineer-9572448187",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "QA-Engineering",
-      "Automation-Testing",
-      "Cloud-Security",
-      "Software-Testing",
-      "Quality-Assurance",
-      "Cloud-Security-Intern",
-      "Junior-DevSecOps-Engineer",
-      "Junior-Cybersecurity-Engineer"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:36.000968+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "ai-automation-engineering-intern-summer-2027",
-    "title": "AI & Automation Engineering Intern - Summer 2027",
-    "company": "Veeam Software",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/veeam-software/jobs/ai-automation-engineering-intern-summer-2027",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [
-      "AI-And-Automation-Engineering",
-      "AI-Engineering-Intern",
-      "Automation-Engineering",
-      "Summer-Internship",
-      "Software-Engineer",
-      "AI-Automation-Intern",
-      "AI-Engineering-Internship",
-      "AI-and-Prompt-Engineering-Intern",
-      "Automation-Intern",
-      "AI-Software-Developer-Intern",
-      "Automation-Internship",
-      "AI-Development-Intern",
-      "AI-Data-Science-Intern"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.505025+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "data-analytics-programs-intern-summer-2027",
-    "title": "Data Analytics & Programs Intern - Summer 2027",
-    "company": "Veeam Software",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/veeam-software/jobs/data-analytics-programs-intern-summer-2027",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [
-      "Business-Analytics",
-      "Intern-Program",
-      "Internship",
-      "Data-Analyst-Intern",
-      "Data-Analysis-Intern",
-      "Data-Analytics-Intern",
-      "Data-and-Research-Intern",
-      "Data-Analysis-Research-Intern",
-      "Data-Analysis-Internship",
-      "Data-Operations-Intern",
-      "Data-Analytics-Internship",
-      "Analytics-Intern",
-      "Data-Intern"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.538885+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "people-culture-ai-transformation-intern-summer-2027",
-    "title": "People & Culture AI Transformation Intern- Summer 2027",
-    "company": "Veeam Software",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/veeam-software/jobs/people-culture-ai-transformation-intern-summer-2027",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-13",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [
-      "People-And-Culture",
-      "AI-Enabled-HR-Transformation",
-      "HR-Innovation",
-      "Human-Resources",
-      "People-Operations-Intern",
-      "People-Operations-Internship",
-      "AI-Strategy-Intern",
-      "AI-Internship",
-      "Operations"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.505057+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328476+00:00"
   },
   {
     "source": "LinkedIn",
@@ -5080,7 +5039,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:16.376859+00:00"
+    "fetched_at": "2026-09-21T15:44:02.285691+00:00"
   },
   {
     "source": "LinkedIn",
@@ -5104,44 +5063,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:29:34.954039+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "junior-software-engineer",
-    "title": "Junior Software Engineer",
-    "company": "Waymark",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/waymark/jobs/junior-software-engineer",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": "USD 82,000 - 137,000",
-    "post_date": "2026-09-13",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Waymark",
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "Junior-Software-Engineer",
-      "Backend-Development",
-      "Frontend-Development",
-      "Fullstack-Development",
-      "Junior-Software-Engineer-Jobs",
-      "Junior-Software-Engineering",
-      "Junior-Software-Developer",
-      "Junior-Backend-Software-Engineer",
-      "Junior-Full-Stack-Software-Engineer",
-      "Junior-Software-Engineer-TypeScript",
-      "Junior-Software-Development",
-      "Software-Engineer"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.948991+00:00"
+    "fetched_at": "2026-09-21T15:43:20.893406+00:00"
   },
   {
     "source": "LinkedIn",
@@ -5165,7 +5087,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:31.420708+00:00"
+    "fetched_at": "2026-09-21T15:44:15.709031+00:00"
   },
   {
     "source": "LinkedIn",
@@ -5189,7 +5111,7 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:32.255854+00:00"
+    "fetched_at": "2026-09-21T15:44:16.499212+00:00"
   },
   {
     "source": "Jobicy",
@@ -5213,7 +5135,7 @@
     "location_notes": [
       "Remoto global; confirmar contrato, fuso horário e autorização de trabalho."
     ],
-    "fetched_at": "2026-09-20T13:29:36.842963+00:00"
+    "fetched_at": "2026-09-21T15:43:22.586990+00:00"
   },
   {
     "source": "Jobicy",
@@ -5237,7 +5159,7 @@
     "location_notes": [
       "Remoto global; confirmar contrato, fuso horário e autorização de trabalho."
     ],
-    "fetched_at": "2026-09-20T13:29:36.842857+00:00"
+    "fetched_at": "2026-09-21T15:43:22.586866+00:00"
   },
   {
     "source": "Himalayas",
@@ -5279,7 +5201,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.588990+00:00"
+    "fetched_at": "2026-09-21T15:43:22.328405+00:00"
   },
   {
     "source": "Himalayas",
@@ -5317,7 +5239,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.505017+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723667+00:00"
   },
   {
     "source": "Himalayas",
@@ -5355,45 +5277,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.504983+00:00"
-  },
-  {
-    "source": "Himalayas",
-    "job_id": "fullstack-software-engineer-intern-undergraduate",
-    "title": "Fullstack Software Engineer Intern (Undergraduate)",
-    "company": "wex",
-    "location": "United States",
-    "job_url": "https://himalayas.app/companies/wex/jobs/fullstack-software-engineer-intern-undergraduate",
-    "modality": "100% Remote",
-    "seniority": "Entry-level",
-    "is_remote": true,
-    "salary": null,
-    "post_date": "2026-09-16",
-    "company_score": null,
-    "company_reviews": null,
-    "teamlyzer_url": null,
-    "rating_score": 0.0,
-    "category": "Top-Tier Software Engineering",
-    "tags": [
-      "Software-Engineering-Internship",
-      "Fullstack-Development",
-      "Software-Engineering-Intern",
-      "Engineering-Intern",
-      "Internship",
-      "Full-Stack-Software-Development-Engineer-Intern",
-      "Full-Stack-Engineering-Intern",
-      "Fullstack-Developer-Intern",
-      "Full-Stack-Development-Intern",
-      "Full-Stack-Development-Internship",
-      "Software-Engineer-Intern",
-      "Junior-Full-Stack-Engineer-(React-Node.Js)",
-      "Software-Developer-Intern"
-    ],
-    "location_compatibility": "unlikely",
-    "location_notes": [
-      "A localização parece restrita fora da Europa; verificar antes de investir tempo."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.589074+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723602+00:00"
   },
   {
     "source": "Himalayas",
@@ -5431,7 +5315,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.505000+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723645+00:00"
   },
   {
     "source": "Himalayas",
@@ -5463,7 +5347,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:36.362687+00:00"
+    "fetched_at": "2026-09-21T15:43:22.512594+00:00"
   },
   {
     "source": "Himalayas",
@@ -5500,31 +5384,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.521791+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4465986290",
-    "title": "Junior AI Engineer",
-    "company": "Wilco",
-    "location": "Lisbon, Lisbon, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/junior-ai-engineer-at-wilco-4465986290",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-16",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Wilco",
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:34.953315+00:00"
+    "fetched_at": "2026-09-21T15:43:21.211245+00:00"
   },
   {
     "source": "Himalayas",
@@ -5561,7 +5421,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.505047+00:00"
+    "fetched_at": "2026-09-21T15:43:20.723701+00:00"
   },
   {
     "source": "Himalayas",
@@ -5598,7 +5458,7 @@
     "location_notes": [
       "A localização parece restrita fora da Europa; verificar antes de investir tempo."
     ],
-    "fetched_at": "2026-09-20T13:29:35.538807+00:00"
+    "fetched_at": "2026-09-21T15:43:21.277870+00:00"
   },
   {
     "source": "LinkedIn",
@@ -5622,30 +5482,6 @@
     "location_notes": [
       "A localização anunciada inclui Portugal."
     ],
-    "fetched_at": "2026-09-20T13:30:02.220298+00:00"
-  },
-  {
-    "source": "LinkedIn",
-    "job_id": "4469122939",
-    "title": "Developer \"Explorador\" – IA & New Tech (Full-time | Braga)",
-    "company": "Zome",
-    "location": "Braga, Portugal",
-    "job_url": "https://pt.linkedin.com/jobs/view/developer-explorador-%E2%80%93-ia-new-tech-full-time-braga-at-zome-4469122939",
-    "modality": "On-site / Hybrid",
-    "seniority": "Junior",
-    "is_remote": false,
-    "salary": null,
-    "post_date": "2026-09-18",
-    "company_score": "🔍 Glassdoor",
-    "company_reviews": "Pesquisa Global",
-    "teamlyzer_url": "https://www.glassdoor.com/Search/results.htm?keyword=Zome",
-    "rating_score": 0.0,
-    "category": "AI / ML",
-    "tags": [],
-    "location_compatibility": "confirmed",
-    "location_notes": [
-      "A localização anunciada inclui Portugal."
-    ],
-    "fetched_at": "2026-09-20T13:29:35.762045+00:00"
+    "fetched_at": "2026-09-21T15:43:49.216948+00:00"
   }
 ]
