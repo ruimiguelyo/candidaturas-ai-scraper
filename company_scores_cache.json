@@ -10,11 +10,14 @@
     "teamlyzer_checked_at": 1788792812
   },
   "fujitsu": {
-    "score": "3.1/5",
-    "numeric": 3.1,
     "platform": "Teamlyzer",
-    "reviews": "110 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/fujitsu"
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "23 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/fujitsu",
+    "matched_name": "Fujitsu Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790085435
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -299,7 +302,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789217000
+    "teamlyzer_checked_at": 1790085427
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -1098,7 +1101,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1788043683
+    "teamlyzer_checked_at": 1790085440
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1190,7 +1193,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Oliver%20Wyman",
-    "teamlyzer_checked_at": 1788527717
+    "teamlyzer_checked_at": 1790085426
   },
   "itpeopleinnovation": {
     "platform": "Teamlyzer",
@@ -1210,7 +1213,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789046599
+    "teamlyzer_checked_at": 1790085428
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1594,7 +1597,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=NetJets%20Europe",
-    "teamlyzer_checked_at": 1788441681
+    "teamlyzer_checked_at": 1790085438
   },
   "prozis": {
     "platform": "Teamlyzer",
@@ -1662,7 +1665,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1788527720
+    "teamlyzer_checked_at": 1790085431
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -1964,7 +1967,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mapfre",
-    "teamlyzer_checked_at": 1789822696
+    "teamlyzer_checked_at": 1790085436
   },
   "untile": {
     "platform": "Teamlyzer",
@@ -2006,7 +2009,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zome",
-    "teamlyzer_checked_at": 1789738184
+    "teamlyzer_checked_at": 1790085429
   },
   "newnote": {
     "platform": "Glassdoor",
@@ -2014,7 +2017,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=NewNote",
-    "teamlyzer_checked_at": 1789822691
+    "teamlyzer_checked_at": 1790085429
   },
   "ascendi": {
     "platform": "Teamlyzer",
@@ -2024,7 +2027,7 @@
     "url": "https://pt.teamlyzer.com/companies/aenor-ascendi",
     "matched_name": "Ascendi",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822693
+    "teamlyzer_checked_at": 1790085431
   },
   "inoweiser": {
     "platform": "Teamlyzer",
@@ -2044,7 +2047,7 @@
     "url": "https://pt.teamlyzer.com/companies/gmv",
     "matched_name": "GMV",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822695
+    "teamlyzer_checked_at": 1790085439
   },
   "luzagroup": {
     "platform": "Teamlyzer",
@@ -2073,5 +2076,53 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Techsul%20IT%20Solutions",
     "teamlyzer_checked_at": 1790005478
+  },
+  "rumos": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "11 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/grupo-rumos",
+    "matched_name": "Grupo Rumos",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790085429
+  },
+  "anaaeroportosdeportugalsa": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/ana-aeroportos-de-portugal",
+    "matched_name": "ANA Aeroportos de Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790085431
+  },
+  "amendoeiraproducoes": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Amendoeira%20Produ%C3%A7%C3%B5es",
+    "teamlyzer_checked_at": 1790085434
+  },
+  "nmbrs": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "12 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/nmbrs-bv",
+    "matched_name": "Nmbrs BV",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790085439
+  },
+  "loopfuture": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "20 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/the-loop-co",
+    "matched_name": "The Loop co. / Loop Future",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790085440
   }
 }
