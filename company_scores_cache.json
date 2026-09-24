@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790085435
+    "teamlyzer_checked_at": 1790258781
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -227,13 +227,13 @@
   },
   "primeit": {
     "platform": "Teamlyzer",
-    "score": "3.0/5",
-    "numeric": 3.0,
-    "reviews": "570 Reviews",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "571 Reviews",
     "url": "https://pt.teamlyzer.com/companies/prime-it",
     "matched_name": "PrimeIT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788698523
+    "teamlyzer_checked_at": 1790258780
   },
   "siemens": {
     "score": "3.6/5",
@@ -1077,13 +1077,13 @@
   },
   "bnpparibas": {
     "platform": "Teamlyzer",
-    "score": "3.1/5",
-    "numeric": 3.1,
+    "score": "3.0/5",
+    "numeric": 3.0,
     "reviews": "150 Reviews",
     "url": "https://pt.teamlyzer.com/companies/banco-bnp-paribas",
     "matched_name": "Banco BNP Paribas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789481659
+    "teamlyzer_checked_at": 1790258781
   },
   "knokcare": {
     "platform": "Teamlyzer",
@@ -1185,7 +1185,7 @@
     "url": "https://pt.teamlyzer.com/companies/adentis-portugal",
     "matched_name": "Adentis Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788052034
+    "teamlyzer_checked_at": 1790258773
   },
   "oliverwyman": {
     "platform": "Glassdoor",
@@ -1213,7 +1213,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790085428
+    "teamlyzer_checked_at": 1790258772
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1329,13 +1329,13 @@
   },
   "accentureportugal": {
     "platform": "Teamlyzer",
-    "score": "2.9/5",
-    "numeric": 2.9,
+    "score": "2.7/5",
+    "numeric": 2.7,
     "reviews": "386 Reviews",
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790005468
+    "teamlyzer_checked_at": 1790258780
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1665,7 +1665,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1790085431
+    "teamlyzer_checked_at": 1790258780
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -1741,7 +1741,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789567567
+    "teamlyzer_checked_at": 1790258774
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1771,7 +1771,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789217002
+    "teamlyzer_checked_at": 1790258774
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -2027,7 +2027,7 @@
     "url": "https://pt.teamlyzer.com/companies/aenor-ascendi",
     "matched_name": "Ascendi",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790085431
+    "teamlyzer_checked_at": 1790258780
   },
   "inoweiser": {
     "platform": "Teamlyzer",
@@ -2124,5 +2124,21 @@
     "matched_name": "The Loop co. / Loop Future",
     "alias_match": false,
     "teamlyzer_checked_at": 1790085440
+  },
+  "honorgrowthunipessoallda": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=HONOR%20GROWTH%20Uni%20Pessoal%20Lda.",
+    "teamlyzer_checked_at": 1790258771
+  },
+  "infinitefoundry": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Infinite%20Foundry",
+    "teamlyzer_checked_at": 1790258778
   }
 }
