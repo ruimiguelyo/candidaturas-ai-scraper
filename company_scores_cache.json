@@ -116,11 +116,14 @@
     "url": "https://pt.teamlyzer.com/companies/mckinsey-company"
   },
   "havi": {
-    "score": "3.6/5",
-    "numeric": 3.6,
     "platform": "Teamlyzer",
-    "reviews": "8 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/havi-portugal"
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "2 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/havi",
+    "matched_name": "HAVI",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790346580
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -646,7 +649,7 @@
     "url": "https://pt.teamlyzer.com/companies/innovation-engineering-hub",
     "matched_name": "Innovation & Engineering HUB (VW)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790172502
+    "teamlyzer_checked_at": 1790346581
   },
   "smuleinc": {
     "platform": "Glassdoor",
@@ -927,13 +930,13 @@
   },
   "smartconsulting": {
     "platform": "Teamlyzer",
-    "score": "3.1/5",
-    "numeric": 3.1,
-    "reviews": "213 Reviews",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "216 Reviews",
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788043670
+    "teamlyzer_checked_at": 1790346586
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -1051,11 +1054,11 @@
     "platform": "Teamlyzer",
     "score": "3.4/5",
     "numeric": 3.4,
-    "reviews": "13 Reviews",
+    "reviews": "14 Reviews",
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788960723
+    "teamlyzer_checked_at": 1790346580
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1121,7 +1124,7 @@
     "url": "https://pt.teamlyzer.com/companies/volkswagen-financial-services",
     "matched_name": "Volkswagen Financial Services",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790172502
+    "teamlyzer_checked_at": 1790346586
   },
   "bnpparibascib": {
     "platform": "Glassdoor",
@@ -1175,7 +1178,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1790172509
+    "teamlyzer_checked_at": 1790346587
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1185,7 +1188,7 @@
     "url": "https://pt.teamlyzer.com/companies/adentis-portugal",
     "matched_name": "Adentis Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258773
+    "teamlyzer_checked_at": 1790346592
   },
   "oliverwyman": {
     "platform": "Glassdoor",
@@ -1213,7 +1216,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258772
+    "teamlyzer_checked_at": 1790346592
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1375,7 +1378,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790172508
+    "teamlyzer_checked_at": 1790346588
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1845,7 +1848,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1790172510
+    "teamlyzer_checked_at": 1790346590
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -1907,7 +1910,7 @@
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790172514
+    "teamlyzer_checked_at": 1790346588
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -2067,7 +2070,7 @@
     "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
     "matched_name": "Claranet Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790172502
+    "teamlyzer_checked_at": 1790346586
   },
   "techsulitsolutions": {
     "platform": "Glassdoor",
@@ -2075,7 +2078,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Techsul%20IT%20Solutions",
-    "teamlyzer_checked_at": 1790172517
+    "teamlyzer_checked_at": 1790346591
   },
   "rumos": {
     "platform": "Teamlyzer",
@@ -2140,5 +2143,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Infinite%20Foundry",
     "teamlyzer_checked_at": 1790258778
+  },
+  "havibelgium": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=HAVI%20Belgium",
+    "teamlyzer_checked_at": 1790346584
   }
 }
