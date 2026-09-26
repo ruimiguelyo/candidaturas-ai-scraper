@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258781
+    "teamlyzer_checked_at": 1790430001
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -305,7 +305,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790172514
+    "teamlyzer_checked_at": 1790430001
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -843,7 +843,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1789822700
+    "teamlyzer_checked_at": 1790430007
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -884,11 +884,11 @@
     "platform": "Teamlyzer",
     "score": "2.7/5",
     "numeric": 2.7,
-    "reviews": "12 Reviews",
+    "reviews": "13 Reviews",
     "url": "https://pt.teamlyzer.com/companies/salsify",
     "matched_name": "Salsify",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788960734
+    "teamlyzer_checked_at": 1790429998
   },
   "miniclip": {
     "platform": "Teamlyzer",
@@ -1104,7 +1104,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1790085440
+    "teamlyzer_checked_at": 1790430010
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1668,7 +1668,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1790258780
+    "teamlyzer_checked_at": 1790430000
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -1774,7 +1774,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258774
+    "teamlyzer_checked_at": 1790429999
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -2151,5 +2151,31 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=HAVI%20Belgium",
     "teamlyzer_checked_at": 1790346584
+  },
+  "sixt": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "7 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/sixt",
+    "matched_name": "SIXT",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790429999
+  },
+  "boiboardofinnovation": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=BOI%20%28Board%20of%20Innovation%29",
+    "teamlyzer_checked_at": 1790430006
+  },
+  "wisout": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=WISOUT",
+    "teamlyzer_checked_at": 1790430010
   }
 }
