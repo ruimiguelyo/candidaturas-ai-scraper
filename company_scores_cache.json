@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519804
+    "teamlyzer_checked_at": 1790616459
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -68,7 +68,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-santander-totta",
     "matched_name": "Banco Santander Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519797
+    "teamlyzer_checked_at": 1790616450
   },
   "bancosantander": {
     "score": "3.2/5",
@@ -123,7 +123,7 @@
     "url": "https://pt.teamlyzer.com/companies/havi",
     "matched_name": "HAVI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519792
+    "teamlyzer_checked_at": 1790616448
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -888,7 +888,7 @@
     "url": "https://pt.teamlyzer.com/companies/salsify",
     "matched_name": "Salsify",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519802
+    "teamlyzer_checked_at": 1790616451
   },
   "miniclip": {
     "platform": "Teamlyzer",
@@ -936,7 +936,7 @@
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519797
+    "teamlyzer_checked_at": 1790616449
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -1058,7 +1058,7 @@
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519792
+    "teamlyzer_checked_at": 1790616448
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1124,7 +1124,7 @@
     "url": "https://pt.teamlyzer.com/companies/volkswagen-financial-services",
     "matched_name": "Volkswagen Financial Services",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519797
+    "teamlyzer_checked_at": 1790616448
   },
   "bnpparibascib": {
     "platform": "Glassdoor",
@@ -1170,7 +1170,7 @@
     "url": "https://pt.teamlyzer.com/companies/talenter",
     "matched_name": "Talenter",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788271225
+    "teamlyzer_checked_at": 1790616450
   },
   "versigent": {
     "platform": "Glassdoor",
@@ -1188,7 +1188,7 @@
     "url": "https://pt.teamlyzer.com/companies/adentis-portugal",
     "matched_name": "Adentis Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519802
+    "teamlyzer_checked_at": 1790616451
   },
   "oliverwyman": {
     "platform": "Glassdoor",
@@ -1668,7 +1668,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1790519804
+    "teamlyzer_checked_at": 1790616454
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -1698,7 +1698,7 @@
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519798
+    "teamlyzer_checked_at": 1790616450
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1744,7 +1744,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258774
+    "teamlyzer_checked_at": 1790616453
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1774,7 +1774,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519802
+    "teamlyzer_checked_at": 1790616452
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -1906,11 +1906,11 @@
     "platform": "Teamlyzer",
     "score": "4.3/5",
     "numeric": 4.3,
-    "reviews": "138 Reviews",
+    "reviews": "139 Reviews",
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519798
+    "teamlyzer_checked_at": 1790616452
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -2160,7 +2160,7 @@
     "url": "https://pt.teamlyzer.com/companies/sixt",
     "matched_name": "SIXT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790429999
+    "teamlyzer_checked_at": 1790616453
   },
   "boiboardofinnovation": {
     "platform": "Glassdoor",
@@ -2177,5 +2177,31 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=WISOUT",
     "teamlyzer_checked_at": 1790430010
+  },
+  "iqvia": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "5 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/iqvia",
+    "matched_name": "IQVIA",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790616450
+  },
+  "quantumblackaibymckinsey": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=QuantumBlack%2C%20AI%20by%20McKinsey",
+    "teamlyzer_checked_at": 1790616458
+  },
+  "surelio": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Surelio",
+    "teamlyzer_checked_at": 1790616460
   }
 }
