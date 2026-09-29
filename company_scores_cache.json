@@ -1548,7 +1548,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bouygues%20Telecom%20Services",
-    "teamlyzer_checked_at": 1789738181
+    "teamlyzer_checked_at": 1790695655
   },
   "actai": {
     "platform": "Glassdoor",
@@ -2168,7 +2168,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BOI%20%28Board%20of%20Innovation%29",
-    "teamlyzer_checked_at": 1790430006
+    "teamlyzer_checked_at": 1790695661
   },
   "wisout": {
     "platform": "Glassdoor",
@@ -2203,5 +2203,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Surelio",
     "teamlyzer_checked_at": 1790616460
+  },
+  "builtcolab": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=BUILT%20CoLAB",
+    "teamlyzer_checked_at": 1790695654
   }
 }
