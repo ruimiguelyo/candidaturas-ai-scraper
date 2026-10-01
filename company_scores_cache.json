@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783048
+    "teamlyzer_checked_at": 1790870793
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -68,7 +68,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-santander-totta",
     "matched_name": "Banco Santander Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783040
+    "teamlyzer_checked_at": 1790870784
   },
   "bancosantander": {
     "score": "3.2/5",
@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783039
+    "teamlyzer_checked_at": 1790870784
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -123,7 +123,7 @@
     "url": "https://pt.teamlyzer.com/companies/havi",
     "matched_name": "HAVI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783037
+    "teamlyzer_checked_at": 1790870783
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -305,7 +305,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783053
+    "teamlyzer_checked_at": 1790870798
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -799,8 +799,11 @@
     "platform": "Teamlyzer",
     "score": "2.5/5",
     "numeric": 2.5,
-    "reviews": "22 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/neotalent"
+    "reviews": "24 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/neotalent",
+    "matched_name": "Neotalent Conclusion",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790870783
   },
   "ceiiacentreofengineeringandproductdevelopment": {
     "platform": "Glassdoor",
@@ -888,7 +891,7 @@
     "url": "https://pt.teamlyzer.com/companies/salsify",
     "matched_name": "Salsify",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783046
+    "teamlyzer_checked_at": 1790870785
   },
   "miniclip": {
     "platform": "Teamlyzer",
@@ -1058,7 +1061,7 @@
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783037
+    "teamlyzer_checked_at": 1790870784
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1170,7 +1173,7 @@
     "url": "https://pt.teamlyzer.com/companies/talenter",
     "matched_name": "Talenter",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783040
+    "teamlyzer_checked_at": 1790870786
   },
   "versigent": {
     "platform": "Glassdoor",
@@ -1216,7 +1219,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783038
+    "teamlyzer_checked_at": 1790870784
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1368,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789046623
+    "teamlyzer_checked_at": 1790870791
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1548,7 +1551,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bouygues%20Telecom%20Services",
-    "teamlyzer_checked_at": 1790783045
+    "teamlyzer_checked_at": 1790870790
   },
   "actai": {
     "platform": "Glassdoor",
@@ -1584,7 +1587,7 @@
     "url": "https://pt.teamlyzer.com/companies/hays",
     "matched_name": "Hays Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783047
+    "teamlyzer_checked_at": 1790870783
   },
   "evotym": {
     "platform": "Glassdoor",
@@ -1668,7 +1671,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1790783048
+    "teamlyzer_checked_at": 1790870792
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -1698,7 +1701,7 @@
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783040
+    "teamlyzer_checked_at": 1790870786
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1774,7 +1777,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783048
+    "teamlyzer_checked_at": 1790870792
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -2194,7 +2197,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=QuantumBlack%2C%20AI%20by%20McKinsey",
-    "teamlyzer_checked_at": 1790783051
+    "teamlyzer_checked_at": 1790870796
   },
   "surelio": {
     "platform": "Glassdoor",
@@ -2220,6 +2223,34 @@
     "url": "https://pt.teamlyzer.com/companies/bi4all",
     "matched_name": "BI4ALL",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783046
+    "teamlyzer_checked_at": 1790870792
+  },
+  "nutrium": {
+    "platform": "Teamlyzer",
+    "score": "3.4/5",
+    "numeric": 3.4,
+    "reviews": "18 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/nutrium",
+    "matched_name": "Nutrium",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790870783
+  },
+  "closerconsulting": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "50 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/closer-consulting",
+    "matched_name": "Closer Consulting",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790870793
+  },
+  "augmtd": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=AUGMTD",
+    "teamlyzer_checked_at": 1790870794
   }
 }
