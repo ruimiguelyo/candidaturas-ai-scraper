@@ -1155,7 +1155,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789567555
+    "teamlyzer_checked_at": 1790954997
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1435,7 +1435,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Neurons%20Lab",
-    "teamlyzer_checked_at": 1788053577
+    "teamlyzer_checked_at": 1790955010
   },
   "openspring": {
     "platform": "Glassdoor",
@@ -1603,7 +1603,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=NetJets%20Europe",
-    "teamlyzer_checked_at": 1790085438
+    "teamlyzer_checked_at": 1790955011
   },
   "prozis": {
     "platform": "Teamlyzer",
@@ -2091,7 +2091,7 @@
     "url": "https://pt.teamlyzer.com/companies/grupo-rumos",
     "matched_name": "Grupo Rumos",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790085429
+    "teamlyzer_checked_at": 1790955002
   },
   "anaaeroportosdeportugalsa": {
     "platform": "Teamlyzer",
@@ -2252,5 +2252,41 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=AUGMTD",
     "teamlyzer_checked_at": 1790870794
+  },
+  "lcg": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "16 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/lcg",
+    "matched_name": "LCG+",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790954999
+  },
+  "inovadigital": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=InovaDigital",
+    "teamlyzer_checked_at": 1790955000
+  },
+  "aubayportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "367 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/aubay",
+    "matched_name": "Aubay",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1790955002
+  },
+  "rederua": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Rede%20Rua",
+    "teamlyzer_checked_at": 1790955007
   }
 }
