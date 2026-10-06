@@ -7,7 +7,7 @@
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792812
+    "teamlyzer_checked_at": 1791301538
   },
   "fujitsu": {
     "platform": "Teamlyzer",
@@ -157,11 +157,11 @@
     "platform": "Teamlyzer",
     "score": "3.1/5",
     "numeric": 3.1,
-    "reviews": "56 Reviews",
+    "reviews": "57 Reviews",
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789822693
+    "teamlyzer_checked_at": 1791301536
   },
   "ceiia": {
     "score": "3.8/5",
@@ -178,7 +178,7 @@
     "url": "https://pt.teamlyzer.com/companies/zendesk",
     "matched_name": "Zendesk",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791036692
+    "teamlyzer_checked_at": 1791301543
   },
   "euronext": {
     "platform": "Teamlyzer",
@@ -305,7 +305,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791124905
+    "teamlyzer_checked_at": 1791301538
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -1107,7 +1107,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1790430010
+    "teamlyzer_checked_at": 1791301539
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1247,7 +1247,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=hiCalibre",
-    "teamlyzer_checked_at": 1788052338
+    "teamlyzer_checked_at": 1791301544
   },
   "robertwalters": {
     "platform": "Teamlyzer",
@@ -1391,7 +1391,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791036692
+    "teamlyzer_checked_at": 1791301543
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1671,7 +1671,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1790870792
+    "teamlyzer_checked_at": 1791301532
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -2325,7 +2325,7 @@
     "url": "https://pt.teamlyzer.com/companies/sumol-compal",
     "matched_name": "Sumol+Compal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791036693
+    "teamlyzer_checked_at": 1791301544
   },
   "neuraloc": {
     "platform": "Glassdoor",
@@ -2334,5 +2334,49 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=NeuraLoc",
     "teamlyzer_checked_at": 1791124894
+  },
+  "blocklabs": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Block%20Labs",
+    "teamlyzer_checked_at": 1791301535
+  },
+  "grupointerpass": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Interpass",
+    "teamlyzer_checked_at": 1791301542
+  },
+  "mc": {
+    "platform": "Teamlyzer",
+    "score": "2.2/5",
+    "numeric": 2.2,
+    "reviews": "41 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/mc-digital",
+    "matched_name": "MC Digital (antiga BIT)",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791301546
+  },
+  "prosegur": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "2 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/prosegur",
+    "matched_name": "Prosegur",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791301546
+  },
+  "bravoportugal": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bravo%20Portugal",
+    "teamlyzer_checked_at": 1791301548
   }
 }
