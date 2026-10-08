@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389439
+    "teamlyzer_checked_at": 1791475913
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -161,7 +161,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389449
+    "teamlyzer_checked_at": 1791475931
   },
   "ceiia": {
     "score": "3.8/5",
@@ -803,7 +803,7 @@
     "url": "https://pt.teamlyzer.com/companies/neotalent",
     "matched_name": "Neotalent Conclusion",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389436
+    "teamlyzer_checked_at": 1791475912
   },
   "ceiiacentreofengineeringandproductdevelopment": {
     "platform": "Glassdoor",
@@ -834,11 +834,11 @@
     "platform": "Teamlyzer",
     "score": "4.1/5",
     "numeric": 4.1,
-    "reviews": "28 Reviews",
+    "reviews": "29 Reviews",
     "url": "https://pt.teamlyzer.com/companies/caixa-magica",
     "matched_name": "Caixa Mágica Software",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789046600
+    "teamlyzer_checked_at": 1791475923
   },
   "boschhomecomfortportugal": {
     "platform": "Teamlyzer",
@@ -1117,7 +1117,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389439
+    "teamlyzer_checked_at": 1791475914
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1219,7 +1219,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389438
+    "teamlyzer_checked_at": 1791475914
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1323,7 +1323,7 @@
     "url": "https://pt.teamlyzer.com/companies/inetum",
     "matched_name": "Inetum",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389441
+    "teamlyzer_checked_at": 1791475916
   },
   "frimarcindustriaecomerciosa": {
     "platform": "Glassdoor",
@@ -1371,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389438
+    "teamlyzer_checked_at": 1791475922
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1681,7 +1681,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389436
+    "teamlyzer_checked_at": 1791475912
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1913,7 +1913,7 @@
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783047
+    "teamlyzer_checked_at": 1791475916
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1999,7 +1999,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Soundsat%20-%20Bridging%20Sea%20%26%20Space",
-    "teamlyzer_checked_at": 1789654248
+    "teamlyzer_checked_at": 1791475930
   },
   "pibraindustrialsolutions": {
     "platform": "Glassdoor",
@@ -2269,7 +2269,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=InovaDigital",
-    "teamlyzer_checked_at": 1791389440
+    "teamlyzer_checked_at": 1791475915
   },
   "aubayportugal": {
     "platform": "Teamlyzer",
@@ -2279,7 +2279,7 @@
     "url": "https://pt.teamlyzer.com/companies/aubay",
     "matched_name": "Aubay",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389439
+    "teamlyzer_checked_at": 1791475917
   },
   "rederua": {
     "platform": "Glassdoor",
@@ -2297,7 +2297,7 @@
     "url": "https://pt.teamlyzer.com/companies/xpand-it",
     "matched_name": "Xpand IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389436
+    "teamlyzer_checked_at": 1791475912
   },
   "bosecorporation": {
     "platform": "Teamlyzer",
@@ -2307,7 +2307,7 @@
     "url": "https://pt.teamlyzer.com/companies/bose",
     "matched_name": "Bose",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389448
+    "teamlyzer_checked_at": 1791475932
   },
   "stellantisyouportugal": {
     "platform": "Glassdoor",
@@ -2387,6 +2387,24 @@
     "url": "https://pt.teamlyzer.com/companies/elastic",
     "matched_name": "Elastic",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389437
+    "teamlyzer_checked_at": 1791475912
+  },
+  "remotecrew": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Remote%20Crew",
+    "teamlyzer_checked_at": 1791475921
+  },
+  "iriumportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/irium-portugal",
+    "matched_name": "Irium Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791475922
   }
 }
