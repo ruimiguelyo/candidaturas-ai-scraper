@@ -7,7 +7,7 @@
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791301538
+    "teamlyzer_checked_at": 1791561271
   },
   "fujitsu": {
     "platform": "Teamlyzer",
@@ -188,7 +188,7 @@
     "url": "https://pt.teamlyzer.com/companies/euronext-s-technology-centre-portugal",
     "matched_name": "Euronext's Technology Centre - Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789481659
+    "teamlyzer_checked_at": 1791561262
   },
   "philipmorris": {
     "score": "3.8/5",
@@ -230,13 +230,13 @@
   },
   "primeit": {
     "platform": "Teamlyzer",
-    "score": "3.1/5",
-    "numeric": 3.1,
-    "reviews": "571 Reviews",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "575 Reviews",
     "url": "https://pt.teamlyzer.com/companies/prime-it",
     "matched_name": "PrimeIT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258780
+    "teamlyzer_checked_at": 1791561261
   },
   "siemens": {
     "score": "3.6/5",
@@ -846,7 +846,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1791389447
+    "teamlyzer_checked_at": 1791561269
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1107,7 +1107,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1791301539
+    "teamlyzer_checked_at": 1791561272
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1235,11 +1235,11 @@
     "platform": "Teamlyzer",
     "score": "2.1/5",
     "numeric": 2.1,
-    "reviews": "138 Reviews",
+    "reviews": "140 Reviews",
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792814
+    "teamlyzer_checked_at": 1791561257
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1619,11 +1619,11 @@
     "platform": "Teamlyzer",
     "score": "2.7/5",
     "numeric": 2.7,
-    "reviews": "27 Reviews",
+    "reviews": "28 Reviews",
     "url": "https://pt.teamlyzer.com/companies/korber-digital",
     "matched_name": "Körber Campus Porto",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788611371
+    "teamlyzer_checked_at": 1791561270
   },
   "catawiki": {
     "platform": "Teamlyzer",
@@ -1643,7 +1643,7 @@
     "url": "https://pt.teamlyzer.com/companies/codewin",
     "matched_name": "CodeWin",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788960723
+    "teamlyzer_checked_at": 1791561253
   },
   "vtxrmsoftwarefactory": {
     "platform": "Teamlyzer",
@@ -1851,7 +1851,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1790519800
+    "teamlyzer_checked_at": 1791561261
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -2406,5 +2406,51 @@
     "matched_name": "Irium Portugal",
     "alias_match": false,
     "teamlyzer_checked_at": 1791475922
+  },
+  "omilia": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Omilia",
+    "teamlyzer_checked_at": 1791561255
+  },
+  "matchprofiler": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "26 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/match-profiler",
+    "matched_name": "Match Profiler",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791561256
+  },
+  "continental": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "21 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/continental",
+    "matched_name": "Continental",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791561257
+  },
+  "korbercampusporto": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "28 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/korber-digital",
+    "matched_name": "Körber Campus Porto",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791561273
+  },
+  "branddelta": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=BrandDelta",
+    "teamlyzer_checked_at": 1791561275
   }
 }
