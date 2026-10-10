@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475913
+    "teamlyzer_checked_at": 1791644820
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -161,7 +161,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475931
+    "teamlyzer_checked_at": 1791644825
   },
   "ceiia": {
     "score": "3.8/5",
@@ -1219,7 +1219,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475914
+    "teamlyzer_checked_at": 1791644818
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1371,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475922
+    "teamlyzer_checked_at": 1791644823
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1391,7 +1391,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389441
+    "teamlyzer_checked_at": 1791644822
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1671,7 +1671,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Euphoric",
-    "teamlyzer_checked_at": 1791301532
+    "teamlyzer_checked_at": 1791644824
   },
   "actdigital": {
     "platform": "Teamlyzer",
@@ -1681,7 +1681,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475912
+    "teamlyzer_checked_at": 1791644819
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1701,7 +1701,7 @@
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791389441
+    "teamlyzer_checked_at": 1791644824
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1909,11 +1909,11 @@
     "platform": "Teamlyzer",
     "score": "4.3/5",
     "numeric": 4.3,
-    "reviews": "139 Reviews",
+    "reviews": "140 Reviews",
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475916
+    "teamlyzer_checked_at": 1791644821
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1923,7 +1923,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-bpi",
     "matched_name": "Banco BPI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789481659
+    "teamlyzer_checked_at": 1791644831
   },
   "luzsaude": {
     "platform": "Teamlyzer",
@@ -1999,7 +1999,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Soundsat%20-%20Bridging%20Sea%20%26%20Space",
-    "teamlyzer_checked_at": 1791475930
+    "teamlyzer_checked_at": 1791644817
   },
   "pibraindustrialsolutions": {
     "platform": "Glassdoor",
@@ -2279,7 +2279,7 @@
     "url": "https://pt.teamlyzer.com/companies/aubay",
     "matched_name": "Aubay",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475917
+    "teamlyzer_checked_at": 1791644823
   },
   "rederua": {
     "platform": "Glassdoor",
@@ -2349,7 +2349,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Interpass",
-    "teamlyzer_checked_at": 1791301542
+    "teamlyzer_checked_at": 1791644829
   },
   "mc": {
     "platform": "Teamlyzer",
@@ -2387,7 +2387,7 @@
     "url": "https://pt.teamlyzer.com/companies/elastic",
     "matched_name": "Elastic",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475912
+    "teamlyzer_checked_at": 1791644809
   },
   "remotecrew": {
     "platform": "Glassdoor",
@@ -2452,5 +2452,15 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BrandDelta",
     "teamlyzer_checked_at": 1791561275
+  },
+  "vestas": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "40 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/vestas",
+    "matched_name": "Vestas",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1791644820
   }
 }
