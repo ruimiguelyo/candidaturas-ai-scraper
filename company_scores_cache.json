@@ -236,7 +236,7 @@
     "url": "https://pt.teamlyzer.com/companies/prime-it",
     "matched_name": "PrimeIT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732287
+    "teamlyzer_checked_at": 1791830619
   },
   "siemens": {
     "score": "3.6/5",
@@ -1181,7 +1181,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1791732283
+    "teamlyzer_checked_at": 1791830614
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1219,7 +1219,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732280
+    "teamlyzer_checked_at": 1791830612
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1239,7 +1239,7 @@
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732281
+    "teamlyzer_checked_at": 1791830612
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1371,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732286
+    "teamlyzer_checked_at": 1791830619
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1643,7 +1643,7 @@
     "url": "https://pt.teamlyzer.com/companies/codewin",
     "matched_name": "CodeWin",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732272
+    "teamlyzer_checked_at": 1791830605
   },
   "vtxrmsoftwarefactory": {
     "platform": "Teamlyzer",
@@ -1681,7 +1681,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732281
+    "teamlyzer_checked_at": 1791830612
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1717,7 +1717,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bee%20Engineering%20ICT",
-    "teamlyzer_checked_at": 1788698530
+    "teamlyzer_checked_at": 1791830618
   },
   "inov": {
     "platform": "Teamlyzer",
@@ -1851,7 +1851,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1791732285
+    "teamlyzer_checked_at": 1791830615
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -1909,11 +1909,11 @@
     "platform": "Teamlyzer",
     "score": "4.3/5",
     "numeric": 4.3,
-    "reviews": "140 Reviews",
+    "reviews": "141 Reviews",
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732286
+    "teamlyzer_checked_at": 1791830619
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -1999,7 +1999,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Soundsat%20-%20Bridging%20Sea%20%26%20Space",
-    "teamlyzer_checked_at": 1791732279
+    "teamlyzer_checked_at": 1791830611
   },
   "pibraindustrialsolutions": {
     "platform": "Glassdoor",
@@ -2279,7 +2279,7 @@
     "url": "https://pt.teamlyzer.com/companies/aubay",
     "matched_name": "Aubay",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732286
+    "teamlyzer_checked_at": 1791830619
   },
   "rederua": {
     "platform": "Glassdoor",
@@ -2387,7 +2387,7 @@
     "url": "https://pt.teamlyzer.com/companies/elastic",
     "matched_name": "Elastic",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732272
+    "teamlyzer_checked_at": 1791830605
   },
   "remotecrew": {
     "platform": "Glassdoor",
@@ -2423,7 +2423,7 @@
     "url": "https://pt.teamlyzer.com/companies/match-profiler",
     "matched_name": "Match Profiler",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732272
+    "teamlyzer_checked_at": 1791830605
   },
   "continental": {
     "platform": "Teamlyzer",
@@ -2433,7 +2433,7 @@
     "url": "https://pt.teamlyzer.com/companies/continental",
     "matched_name": "Continental",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732281
+    "teamlyzer_checked_at": 1791830612
   },
   "korbercampusporto": {
     "platform": "Teamlyzer",
@@ -2461,6 +2461,6 @@
     "url": "https://pt.teamlyzer.com/companies/vestas",
     "matched_name": "Vestas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732282
+    "teamlyzer_checked_at": 1791830613
   }
 }
