@@ -1181,7 +1181,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1791830614
+    "teamlyzer_checked_at": 1791987882
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1191,7 +1191,7 @@
     "url": "https://pt.teamlyzer.com/companies/adentis-portugal",
     "matched_name": "Adentis Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790616451
+    "teamlyzer_checked_at": 1791987892
   },
   "oliverwyman": {
     "platform": "Glassdoor",
@@ -1215,11 +1215,11 @@
     "platform": "Teamlyzer",
     "score": "2.2/5",
     "numeric": 2.2,
-    "reviews": "107 Reviews",
+    "reviews": "108 Reviews",
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830612
+    "teamlyzer_checked_at": 1791987888
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1239,7 +1239,7 @@
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830612
+    "teamlyzer_checked_at": 1791987881
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1371,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830619
+    "teamlyzer_checked_at": 1791987889
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1643,7 +1643,7 @@
     "url": "https://pt.teamlyzer.com/companies/codewin",
     "matched_name": "CodeWin",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830605
+    "teamlyzer_checked_at": 1791987878
   },
   "vtxrmsoftwarefactory": {
     "platform": "Teamlyzer",
@@ -1681,7 +1681,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830612
+    "teamlyzer_checked_at": 1791987889
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1851,7 +1851,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1791830615
+    "teamlyzer_checked_at": 1791987891
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -1999,7 +1999,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Soundsat%20-%20Bridging%20Sea%20%26%20Space",
-    "teamlyzer_checked_at": 1791830611
+    "teamlyzer_checked_at": 1791987887
   },
   "pibraindustrialsolutions": {
     "platform": "Glassdoor",
@@ -2423,7 +2423,7 @@
     "url": "https://pt.teamlyzer.com/companies/match-profiler",
     "matched_name": "Match Profiler",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830605
+    "teamlyzer_checked_at": 1791987879
   },
   "continental": {
     "platform": "Teamlyzer",
@@ -2461,7 +2461,7 @@
     "url": "https://pt.teamlyzer.com/companies/vestas",
     "matched_name": "Vestas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830613
+    "teamlyzer_checked_at": 1791987892
   },
   "guepardo": {
     "platform": "Glassdoor",
@@ -2508,5 +2508,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=VIRTHIO",
     "teamlyzer_checked_at": 1791910068
+  },
+  "edynamicstechnologies": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=eDynamics%20Technologies",
+    "teamlyzer_checked_at": 1791987884
   }
 }
