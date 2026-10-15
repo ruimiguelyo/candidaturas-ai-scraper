@@ -161,7 +161,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910067
+    "teamlyzer_checked_at": 1792072905
   },
   "ceiia": {
     "score": "3.8/5",
@@ -188,7 +188,7 @@
     "url": "https://pt.teamlyzer.com/companies/euronext-s-technology-centre-portugal",
     "matched_name": "Euronext's Technology Centre - Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910056
+    "teamlyzer_checked_at": 1792072915
   },
   "philipmorris": {
     "score": "3.8/5",
@@ -236,7 +236,7 @@
     "url": "https://pt.teamlyzer.com/companies/prime-it",
     "matched_name": "PrimeIT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830619
+    "teamlyzer_checked_at": 1792072915
   },
   "siemens": {
     "score": "3.6/5",
@@ -305,7 +305,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910056
+    "teamlyzer_checked_at": 1792072919
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -864,7 +864,7 @@
     "url": "https://pt.teamlyzer.com/companies/infineon-technologies-portugal",
     "matched_name": "Infineon Technologies Business Solutions",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792812
+    "teamlyzer_checked_at": 1792072919
   },
   "jofebar": {
     "platform": "Glassdoor",
@@ -1083,13 +1083,13 @@
   },
   "bnpparibas": {
     "platform": "Teamlyzer",
-    "score": "3.0/5",
-    "numeric": 3.0,
+    "score": "3.1/5",
+    "numeric": 3.1,
     "reviews": "150 Reviews",
     "url": "https://pt.teamlyzer.com/companies/banco-bnp-paribas",
     "matched_name": "Banco BNP Paribas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790258781
+    "teamlyzer_checked_at": 1792072919
   },
   "knokcare": {
     "platform": "Teamlyzer",
@@ -1341,7 +1341,7 @@
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910063
+    "teamlyzer_checked_at": 1792072906
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1381,7 +1381,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910051
+    "teamlyzer_checked_at": 1792072905
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1695,13 +1695,13 @@
   },
   "devoteam": {
     "platform": "Teamlyzer",
-    "score": "3.0/5",
-    "numeric": 3.0,
+    "score": "3.4/5",
+    "numeric": 3.4,
     "reviews": "325 Reviews",
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910065
+    "teamlyzer_checked_at": 1792072926
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1709,7 +1709,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobgether",
-    "teamlyzer_checked_at": 1791910064
+    "teamlyzer_checked_at": 1792072926
   },
   "beeengineeringict": {
     "platform": "Glassdoor",
@@ -1717,7 +1717,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bee%20Engineering%20ICT",
-    "teamlyzer_checked_at": 1791830618
+    "teamlyzer_checked_at": 1792072912
   },
   "inov": {
     "platform": "Teamlyzer",
@@ -1907,13 +1907,13 @@
   },
   "imaginarycloud": {
     "platform": "Teamlyzer",
-    "score": "4.3/5",
-    "numeric": 4.3,
+    "score": "4.2/5",
+    "numeric": 4.2,
     "reviews": "141 Reviews",
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830619
+    "teamlyzer_checked_at": 1792072913
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -2279,7 +2279,7 @@
     "url": "https://pt.teamlyzer.com/companies/aubay",
     "matched_name": "Aubay",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791830619
+    "teamlyzer_checked_at": 1792072914
   },
   "rederua": {
     "platform": "Glassdoor",
@@ -2479,7 +2479,7 @@
     "url": "https://pt.teamlyzer.com/companies/ytech",
     "matched_name": "Ytech",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910065
+    "teamlyzer_checked_at": 1792072914
   },
   "capgeminiengineering": {
     "platform": "Teamlyzer",
@@ -2489,7 +2489,7 @@
     "url": "https://pt.teamlyzer.com/companies/capgemini-engineering",
     "matched_name": "Capgemini Engineering",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791910066
+    "teamlyzer_checked_at": 1792072926
   },
   "planet": {
     "platform": "Teamlyzer",
@@ -2516,5 +2516,59 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=eDynamics%20Technologies",
     "teamlyzer_checked_at": 1791987884
+  },
+  "ey": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "40 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/ey",
+    "matched_name": "Ernst & Young (EY)",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1792072916
+  },
+  "universiaportugal": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Universia%20Portugal",
+    "teamlyzer_checked_at": 1792072918
+  },
+  "theheinekencompany": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=The%20HEINEKEN%20Company",
+    "teamlyzer_checked_at": 1792072924
+  },
+  "wireit": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "14 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/wire-it",
+    "matched_name": "Wire IT",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1792072925
+  },
+  "hiscox": {
+    "platform": "Teamlyzer",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "10 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/hiscox",
+    "matched_name": "Hiscox",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1792072927
+  },
+  "testo": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Testo",
+    "teamlyzer_checked_at": 1792072928
   }
 }
