@@ -123,7 +123,7 @@
     "url": "https://pt.teamlyzer.com/companies/havi",
     "matched_name": "HAVI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790870783
+    "teamlyzer_checked_at": 1792158516
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -1061,7 +1061,7 @@
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790870784
+    "teamlyzer_checked_at": 1792158516
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1181,7 +1181,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1791987882
+    "teamlyzer_checked_at": 1792158517
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1191,7 +1191,7 @@
     "url": "https://pt.teamlyzer.com/companies/adentis-portugal",
     "matched_name": "Adentis Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987892
+    "teamlyzer_checked_at": 1792158521
   },
   "oliverwyman": {
     "platform": "Glassdoor",
@@ -1219,7 +1219,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987888
+    "teamlyzer_checked_at": 1792158518
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1239,7 +1239,7 @@
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987881
+    "teamlyzer_checked_at": 1792158517
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1371,7 +1371,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987889
+    "teamlyzer_checked_at": 1792158518
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1391,7 +1391,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791732288
+    "teamlyzer_checked_at": 1792158515
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1411,13 +1411,13 @@
   },
   "hexaconsulting": {
     "platform": "Teamlyzer",
-    "score": "3.3/5",
-    "numeric": 3.3,
-    "reviews": "31 Reviews",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "34 Reviews",
     "url": "https://pt.teamlyzer.com/companies/hexaconsulting",
     "matched_name": "Hexa Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788053574
+    "teamlyzer_checked_at": 1792158532
   },
   "riskified": {
     "platform": "Teamlyzer",
@@ -1643,7 +1643,7 @@
     "url": "https://pt.teamlyzer.com/companies/codewin",
     "matched_name": "CodeWin",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987878
+    "teamlyzer_checked_at": 1792158515
   },
   "vtxrmsoftwarefactory": {
     "platform": "Teamlyzer",
@@ -1681,7 +1681,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987889
+    "teamlyzer_checked_at": 1792158531
   },
   "itds": {
     "platform": "Teamlyzer",
@@ -1851,7 +1851,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1791987891
+    "teamlyzer_checked_at": 1792158520
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -2461,7 +2461,7 @@
     "url": "https://pt.teamlyzer.com/companies/vestas",
     "matched_name": "Vestas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987892
+    "teamlyzer_checked_at": 1792158518
   },
   "guepardo": {
     "platform": "Glassdoor",
@@ -2570,5 +2570,39 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Testo",
     "teamlyzer_checked_at": 1792072928
+  },
+  "inegidrivingscienceinnovation": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=INEGI%20driving%20science%20%26%20innovation",
+    "teamlyzer_checked_at": 1792158528
+  },
+  "velaia": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Velaia",
+    "teamlyzer_checked_at": 1792158530
+  },
+  "mastercard": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "19 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/mastercard",
+    "matched_name": "Mastercard",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1792158532
+  },
+  "gocardless": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=GoCardless",
+    "teamlyzer_checked_at": 1792158534
   }
 }
