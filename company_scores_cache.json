@@ -936,13 +936,13 @@
   },
   "smartconsulting": {
     "platform": "Teamlyzer",
-    "score": "3.1/5",
-    "numeric": 3.1,
+    "score": "3.0/5",
+    "numeric": 3.0,
     "reviews": "217 Reviews",
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790783040
+    "teamlyzer_checked_at": 1792505444
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -2615,5 +2615,29 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Border%20Innovation",
     "teamlyzer_checked_at": 1792426674
+  },
+  "multivisionconsulting": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Multivision%20Consulting",
+    "teamlyzer_checked_at": 1792505448
+  },
+  "fraunhoferportugalaicos": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Fraunhofer%20Portugal%20AICOS",
+    "teamlyzer_checked_at": 1792505454
+  },
+  "autoeuropecarrental": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Auto%20Europe%20Car%20Rental",
+    "teamlyzer_checked_at": 1792505455
   }
 }
