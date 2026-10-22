@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592629
+    "teamlyzer_checked_at": 1792679106
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -116,7 +116,7 @@
     "url": "https://pt.teamlyzer.com/companies/mckinsey-company",
     "matched_name": "McKinsey Portugal",
     "alias_match": true,
-    "teamlyzer_checked_at": 1792592647
+    "teamlyzer_checked_at": 1792679118
   },
   "havi": {
     "platform": "Teamlyzer",
@@ -126,7 +126,7 @@
     "url": "https://pt.teamlyzer.com/companies/havi",
     "matched_name": "HAVI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592628
+    "teamlyzer_checked_at": 1792679105
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -942,7 +942,7 @@
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592630
+    "teamlyzer_checked_at": 1792679106
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -1064,7 +1064,7 @@
     "url": "https://pt.teamlyzer.com/companies/mollie",
     "matched_name": "Mollie",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592627
+    "teamlyzer_checked_at": 1792679105
   },
   "maxacceleratetechnologygroup": {
     "platform": "Glassdoor",
@@ -1340,11 +1340,11 @@
     "platform": "Teamlyzer",
     "score": "2.7/5",
     "numeric": 2.7,
-    "reviews": "388 Reviews",
+    "reviews": "389 Reviews",
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592628
+    "teamlyzer_checked_at": 1792679105
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1374,7 +1374,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592637
+    "teamlyzer_checked_at": 1792679108
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1384,7 +1384,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592629
+    "teamlyzer_checked_at": 1792679107
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1394,7 +1394,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592628
+    "teamlyzer_checked_at": 1792679105
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1700,11 +1700,11 @@
     "platform": "Teamlyzer",
     "score": "3.4/5",
     "numeric": 3.4,
-    "reviews": "326 Reviews",
+    "reviews": "327 Reviews",
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592638
+    "teamlyzer_checked_at": 1792679108
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1740,7 +1740,7 @@
     "url": "https://pt.teamlyzer.com/companies/prn-informatica",
     "matched_name": "PRN Informática",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789132938
+    "teamlyzer_checked_at": 1792679106
   },
   "airapps": {
     "platform": "Teamlyzer",
@@ -1750,7 +1750,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592637
+    "teamlyzer_checked_at": 1792679117
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1872,7 +1872,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=azakaw",
-    "teamlyzer_checked_at": 1792592647
+    "teamlyzer_checked_at": 1792679118
   },
   "quanteamportugalrainbowpartnersgroup": {
     "platform": "Glassdoor",
@@ -2072,11 +2072,11 @@
     "platform": "Teamlyzer",
     "score": "2.2/5",
     "numeric": 2.2,
-    "reviews": "55 Reviews",
+    "reviews": "57 Reviews",
     "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
     "matched_name": "Claranet Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790519797
+    "teamlyzer_checked_at": 1792679108
   },
   "techsulitsolutions": {
     "platform": "Glassdoor",
@@ -2580,7 +2580,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=INEGI%20driving%20science%20%26%20innovation",
-    "teamlyzer_checked_at": 1792592645
+    "teamlyzer_checked_at": 1792679124
   },
   "velaia": {
     "platform": "Glassdoor",
@@ -2638,7 +2638,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Auto%20Europe%20Car%20Rental",
-    "teamlyzer_checked_at": 1792592636
+    "teamlyzer_checked_at": 1792679115
   },
   "mobizy": {
     "platform": "Glassdoor",
@@ -2646,6 +2646,6 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mobizy",
-    "teamlyzer_checked_at": 1792592648
+    "teamlyzer_checked_at": 1792679126
   }
 }
