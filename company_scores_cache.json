@@ -294,11 +294,11 @@
     "platform": "Teamlyzer",
     "score": "3.3/5",
     "numeric": 3.3,
-    "reviews": "24 Reviews",
+    "reviews": "25 Reviews",
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1789400727
+    "teamlyzer_checked_at": 1792764466
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -1088,11 +1088,11 @@
     "platform": "Teamlyzer",
     "score": "3.1/5",
     "numeric": 3.1,
-    "reviews": "150 Reviews",
+    "reviews": "151 Reviews",
     "url": "https://pt.teamlyzer.com/companies/banco-bnp-paribas",
     "matched_name": "Banco BNP Paribas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792072919
+    "teamlyzer_checked_at": 1792764460
   },
   "knokcare": {
     "platform": "Teamlyzer",
@@ -1110,7 +1110,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1791561272
+    "teamlyzer_checked_at": 1792764470
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1138,7 +1138,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
-    "teamlyzer_checked_at": 1788611370
+    "teamlyzer_checked_at": 1792764465
   },
   "celfocus": {
     "platform": "Teamlyzer",
@@ -2647,5 +2647,31 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Mobizy",
     "teamlyzer_checked_at": 1792679126
+  },
+  "wtw": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/wtw",
+    "matched_name": "wtw",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1792764467
+  },
+  "nitrosoftware": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Nitro%20Software",
+    "teamlyzer_checked_at": 1792764473
+  },
+  "proctergamble": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Procter%20%26%20Gamble",
+    "teamlyzer_checked_at": 1792764473
   }
 }
