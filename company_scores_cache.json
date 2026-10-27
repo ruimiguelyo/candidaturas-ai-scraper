@@ -164,7 +164,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792426668
+    "teamlyzer_checked_at": 1793113944
   },
   "ceiia": {
     "score": "3.8/5",
@@ -1750,7 +1750,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792935457
+    "teamlyzer_checked_at": 1793113950
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -2518,7 +2518,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=eDynamics%20Technologies",
-    "teamlyzer_checked_at": 1791987884
+    "teamlyzer_checked_at": 1793113936
   },
   "ey": {
     "platform": "Teamlyzer",
@@ -2544,7 +2544,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=The%20HEINEKEN%20Company",
-    "teamlyzer_checked_at": 1792241162
+    "teamlyzer_checked_at": 1793113949
   },
   "wireit": {
     "platform": "Teamlyzer",
@@ -2614,7 +2614,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Border%20Innovation",
-    "teamlyzer_checked_at": 1792426674
+    "teamlyzer_checked_at": 1793113941
   },
   "multivisionconsulting": {
     "platform": "Glassdoor",
@@ -2656,7 +2656,7 @@
     "url": "https://pt.teamlyzer.com/companies/wtw",
     "matched_name": "wtw",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792764467
+    "teamlyzer_checked_at": 1793113942
   },
   "nitrosoftware": {
     "platform": "Glassdoor",
@@ -2664,7 +2664,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Nitro%20Software",
-    "teamlyzer_checked_at": 1792764473
+    "teamlyzer_checked_at": 1793113948
   },
   "proctergamble": {
     "platform": "Glassdoor",
@@ -2682,7 +2682,7 @@
     "url": "https://pt.teamlyzer.com/companies/h-b-fuller",
     "matched_name": "H.B. Fuller",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792847454
+    "teamlyzer_checked_at": 1793113950
   },
   "tekever": {
     "platform": "Teamlyzer",
@@ -2719,5 +2719,15 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Reninstal",
     "teamlyzer_checked_at": 1793030211
+  },
+  "lbc": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "4 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/lbc",
+    "matched_name": "LBC",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793113932
   }
 }
