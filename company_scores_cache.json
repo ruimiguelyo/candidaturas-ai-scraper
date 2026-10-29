@@ -1,13 +1,13 @@
 {
   "cloudflare": {
     "platform": "Teamlyzer",
-    "score": "3.4/5",
-    "numeric": 3.4,
+    "score": "3.5/5",
+    "numeric": 3.5,
     "reviews": "38 Reviews",
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202488
+    "teamlyzer_checked_at": 1793289370
   },
   "fujitsu": {
     "platform": "Teamlyzer",
@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202479
+    "teamlyzer_checked_at": 1793289359
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -164,7 +164,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793113944
+    "teamlyzer_checked_at": 1793289370
   },
   "ceiia": {
     "score": "3.8/5",
@@ -298,7 +298,7 @@
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202479
+    "teamlyzer_checked_at": 1793289359
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -1092,7 +1092,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-bnp-paribas",
     "matched_name": "Banco BNP Paribas",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202478
+    "teamlyzer_checked_at": 1793289358
   },
   "knokcare": {
     "platform": "Teamlyzer",
@@ -1120,7 +1120,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202479
+    "teamlyzer_checked_at": 1793289360
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1138,7 +1138,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
-    "teamlyzer_checked_at": 1793202477
+    "teamlyzer_checked_at": 1793289358
   },
   "celfocus": {
     "platform": "Teamlyzer",
@@ -1158,7 +1158,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202472
+    "teamlyzer_checked_at": 1793289352
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1238,11 +1238,11 @@
     "platform": "Teamlyzer",
     "score": "2.1/5",
     "numeric": 2.1,
-    "reviews": "140 Reviews",
+    "reviews": "141 Reviews",
     "url": "https://pt.teamlyzer.com/companies/capgemini-portugal",
     "matched_name": "Capgemini Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792426670
+    "teamlyzer_checked_at": 1793289361
   },
   "hicalibre": {
     "platform": "Glassdoor",
@@ -1374,7 +1374,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202480
+    "teamlyzer_checked_at": 1793289361
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1384,7 +1384,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202472
+    "teamlyzer_checked_at": 1793289352
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1750,7 +1750,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793113950
+    "teamlyzer_checked_at": 1793289363
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -2482,7 +2482,7 @@
     "url": "https://pt.teamlyzer.com/companies/ytech",
     "matched_name": "Ytech",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202486
+    "teamlyzer_checked_at": 1793289364
   },
   "capgeminiengineering": {
     "platform": "Teamlyzer",
@@ -2656,7 +2656,7 @@
     "url": "https://pt.teamlyzer.com/companies/wtw",
     "matched_name": "wtw",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202486
+    "teamlyzer_checked_at": 1793289361
   },
   "nitrosoftware": {
     "platform": "Glassdoor",
@@ -2718,7 +2718,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Reninstal",
-    "teamlyzer_checked_at": 1793202488
+    "teamlyzer_checked_at": 1793289364
   },
   "lbc": {
     "platform": "Teamlyzer",
@@ -2728,7 +2728,7 @@
     "url": "https://pt.teamlyzer.com/companies/lbc",
     "matched_name": "LBC",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202472
+    "teamlyzer_checked_at": 1793289352
   },
   "maisa": {
     "platform": "Glassdoor",
@@ -2736,7 +2736,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Maisa",
-    "teamlyzer_checked_at": 1793202482
+    "teamlyzer_checked_at": 1793289362
   },
   "moviik": {
     "platform": "Teamlyzer",
@@ -2756,6 +2756,14 @@
     "url": "https://pt.teamlyzer.com/companies/solvay",
     "matched_name": "HyChen (antiga Solvay)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202488
+    "teamlyzer_checked_at": 1793289370
+  },
+  "eloalabs": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Eloa%20Labs",
+    "teamlyzer_checked_at": 1793289369
   }
 }
