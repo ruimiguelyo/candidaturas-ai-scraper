@@ -308,7 +308,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792426686
+    "teamlyzer_checked_at": 1793374834
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -875,7 +875,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JOFEBAR",
-    "teamlyzer_checked_at": 1792328641
+    "teamlyzer_checked_at": 1793374832
   },
   "orbcom": {
     "platform": "Teamlyzer",
@@ -1280,7 +1280,7 @@
     "url": "https://pt.teamlyzer.com/companies/amgen-portugal",
     "matched_name": "Amgen Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792592647
+    "teamlyzer_checked_at": 1793374832
   },
   "bjak": {
     "platform": "Glassdoor",
@@ -1700,11 +1700,11 @@
     "platform": "Teamlyzer",
     "score": "3.4/5",
     "numeric": 3.4,
-    "reviews": "327 Reviews",
+    "reviews": "328 Reviews",
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792847444
+    "teamlyzer_checked_at": 1793374843
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1912,11 +1912,11 @@
     "platform": "Teamlyzer",
     "score": "4.3/5",
     "numeric": 4.3,
-    "reviews": "141 Reviews",
+    "reviews": "142 Reviews",
     "url": "https://pt.teamlyzer.com/companies/imaginary-cloud",
     "matched_name": "Imaginary Cloud",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792328641
+    "teamlyzer_checked_at": 1793374831
   },
   "bancobpi": {
     "platform": "Teamlyzer",
@@ -2094,7 +2094,7 @@
     "url": "https://pt.teamlyzer.com/companies/grupo-rumos",
     "matched_name": "Grupo Rumos",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791223446
+    "teamlyzer_checked_at": 1793374830
   },
   "anaaeroportosdeportugalsa": {
     "platform": "Teamlyzer",
@@ -2208,7 +2208,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Surelio",
-    "teamlyzer_checked_at": 1790616460
+    "teamlyzer_checked_at": 1793374834
   },
   "builtcolab": {
     "platform": "Glassdoor",
@@ -2278,11 +2278,11 @@
     "platform": "Teamlyzer",
     "score": "2.6/5",
     "numeric": 2.6,
-    "reviews": "368 Reviews",
+    "reviews": "371 Reviews",
     "url": "https://pt.teamlyzer.com/companies/aubay",
     "matched_name": "Aubay",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792241152
+    "teamlyzer_checked_at": 1793374830
   },
   "rederua": {
     "platform": "Glassdoor",
@@ -2682,7 +2682,7 @@
     "url": "https://pt.teamlyzer.com/companies/h-b-fuller",
     "matched_name": "H.B. Fuller",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793113950
+    "teamlyzer_checked_at": 1793374835
   },
   "tekever": {
     "platform": "Teamlyzer",
@@ -2765,5 +2765,41 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Eloa%20Labs",
     "teamlyzer_checked_at": 1793289369
+  },
+  "darkcloudgames": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dark%20Cloud%20Games",
+    "teamlyzer_checked_at": 1793374828
+  },
+  "sensortower": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/sensor-tower",
+    "matched_name": "Sensor Tower",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793374829
+  },
+  "nttdataeuropelatam": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=NTT%20DATA%20Europe%20%26%20Latam",
+    "teamlyzer_checked_at": 1793374842
+  },
+  "advanceworks": {
+    "platform": "Teamlyzer",
+    "score": "3.3/5",
+    "numeric": 3.3,
+    "reviews": "9 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/advance-works",
+    "matched_name": "AdvanceWorks",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793374843
   }
 }
