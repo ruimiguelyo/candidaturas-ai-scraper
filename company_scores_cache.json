@@ -7,7 +7,7 @@
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793459428
+    "teamlyzer_checked_at": 1793724824
   },
   "fujitsu": {
     "platform": "Teamlyzer",
@@ -308,7 +308,7 @@
     "url": "https://pt.teamlyzer.com/companies/nokia-networks-portugal",
     "matched_name": "Nokia Networks Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793374834
+    "teamlyzer_checked_at": 1793724817
   },
   "sevensenders": {
     "score": "3.8/5",
@@ -849,7 +849,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1793459426
+    "teamlyzer_checked_at": 1793724822
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -875,7 +875,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JOFEBAR",
-    "teamlyzer_checked_at": 1793374832
+    "teamlyzer_checked_at": 1793724816
   },
   "orbcom": {
     "platform": "Teamlyzer",
@@ -2482,7 +2482,7 @@
     "url": "https://pt.teamlyzer.com/companies/ytech",
     "matched_name": "Ytech",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793289364
+    "teamlyzer_checked_at": 1793724815
   },
   "capgeminiengineering": {
     "platform": "Teamlyzer",
@@ -2756,7 +2756,7 @@
     "url": "https://pt.teamlyzer.com/companies/solvay",
     "matched_name": "HyChen (antiga Solvay)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793459428
+    "teamlyzer_checked_at": 1793724823
   },
   "eloalabs": {
     "platform": "Glassdoor",
@@ -2819,5 +2819,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Zero%20to%20100",
     "teamlyzer_checked_at": 1793647013
+  },
+  "drivetelservicoseprojetosdetelecomunicacoessa": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=DRIVETEL%20%7C%20Servi%C3%A7os%20e%20Projetos%20de%20Telecomunica%C3%A7%C3%B5es%2C%20S.A.",
+    "teamlyzer_checked_at": 1793724814
   }
 }
