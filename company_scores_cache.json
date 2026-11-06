@@ -126,7 +126,7 @@
     "url": "https://pt.teamlyzer.com/companies/havi",
     "matched_name": "HAVI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792679105
+    "teamlyzer_checked_at": 1793983144
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -191,7 +191,7 @@
     "url": "https://pt.teamlyzer.com/companies/euronext-s-technology-centre-portugal",
     "matched_name": "Euronext's Technology Centre - Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793647010
+    "teamlyzer_checked_at": 1793983164
   },
   "philipmorris": {
     "score": "3.8/5",
@@ -242,11 +242,14 @@
     "teamlyzer_checked_at": 1792072915
   },
   "siemens": {
-    "score": "3.6/5",
-    "numeric": 3.6,
     "platform": "Teamlyzer",
-    "reviews": "65 Reviews",
-    "url": "https://pt.teamlyzer.com/companies/siemens-sa"
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "142 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/siemens-portugal",
+    "matched_name": "Siemens Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793983160
   },
   "bosch": {
     "score": "3.8/5",
@@ -849,7 +852,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1793724822
+    "teamlyzer_checked_at": 1793983158
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1110,7 +1113,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1793030211
+    "teamlyzer_checked_at": 1793983152
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1222,7 +1225,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792426670
+    "teamlyzer_checked_at": 1793983166
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1426,11 +1429,11 @@
     "platform": "Teamlyzer",
     "score": "4.1/5",
     "numeric": 4.1,
-    "reviews": "16 Reviews",
+    "reviews": "18 Reviews",
     "url": "https://pt.teamlyzer.com/companies/riskified",
     "matched_name": "Riskified",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788873851
+    "teamlyzer_checked_at": 1793983164
   },
   "neuronslab": {
     "platform": "Glassdoor",
@@ -1750,7 +1753,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793289363
+    "teamlyzer_checked_at": 1793983152
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1760,7 +1763,7 @@
     "url": "https://pt.teamlyzer.com/companies/grit-solutions",
     "matched_name": "GRiT Solutions",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792817
+    "teamlyzer_checked_at": 1793983159
   },
   "noesis": {
     "platform": "Teamlyzer",
@@ -2246,7 +2249,7 @@
     "url": "https://pt.teamlyzer.com/companies/closer-consulting",
     "matched_name": "Closer Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791036691
+    "teamlyzer_checked_at": 1793983150
   },
   "augmtd": {
     "platform": "Glassdoor",
@@ -2310,7 +2313,7 @@
     "url": "https://pt.teamlyzer.com/companies/bose",
     "matched_name": "Bose",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475932
+    "teamlyzer_checked_at": 1793983160
   },
   "stellantisyouportugal": {
     "platform": "Glassdoor",
@@ -2564,7 +2567,7 @@
     "url": "https://pt.teamlyzer.com/companies/hiscox",
     "matched_name": "Hiscox",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792847461
+    "teamlyzer_checked_at": 1793983166
   },
   "testo": {
     "platform": "Glassdoor",
@@ -2594,11 +2597,11 @@
     "platform": "Teamlyzer",
     "score": "2.9/5",
     "numeric": 2.9,
-    "reviews": "19 Reviews",
+    "reviews": "20 Reviews",
     "url": "https://pt.teamlyzer.com/companies/mastercard",
     "matched_name": "Mastercard",
     "alias_match": false,
-    "teamlyzer_checked_at": 1792158532
+    "teamlyzer_checked_at": 1793983164
   },
   "gocardless": {
     "platform": "Glassdoor",
@@ -2606,7 +2609,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=GoCardless",
-    "teamlyzer_checked_at": 1792158534
+    "teamlyzer_checked_at": 1793983167
   },
   "borderinnovation": {
     "platform": "Glassdoor",
@@ -2756,7 +2759,7 @@
     "url": "https://pt.teamlyzer.com/companies/solvay",
     "matched_name": "HyChen (antiga Solvay)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793724823
+    "teamlyzer_checked_at": 1793983164
   },
   "eloalabs": {
     "platform": "Glassdoor",
@@ -2845,5 +2848,51 @@
     "matched_name": "Iterable",
     "alias_match": false,
     "teamlyzer_checked_at": 1793898696
+  },
+  "managementsolutions": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "13 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/management-solutions-portugal",
+    "matched_name": "Management Solutions Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793983146
+  },
+  "quidgest": {
+    "platform": "Teamlyzer",
+    "score": "1.9/5",
+    "numeric": 1.9,
+    "reviews": "48 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/quidgest",
+    "matched_name": "Quidgest",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793983147
+  },
+  "raisebox": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=RAISEBOX",
+    "teamlyzer_checked_at": 1793983149
+  },
+  "kuehnenagel": {
+    "platform": "Teamlyzer",
+    "score": "4.1/5",
+    "numeric": 4.1,
+    "reviews": "185 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/kuehne-nagel",
+    "matched_name": "Kuehne+Nagel",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1793983151
+  },
+  "acclaimai": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Acclaim%20AI",
+    "teamlyzer_checked_at": 1793983163
   }
 }
