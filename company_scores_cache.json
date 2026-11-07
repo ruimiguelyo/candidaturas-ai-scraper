@@ -164,7 +164,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898689
+    "teamlyzer_checked_at": 1794065487
   },
   "ceiia": {
     "score": "3.8/5",
@@ -1179,7 +1179,7 @@
     "url": "https://pt.teamlyzer.com/companies/talenter",
     "matched_name": "Talenter",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898698
+    "teamlyzer_checked_at": 1794065492
   },
   "versigent": {
     "platform": "Glassdoor",
@@ -1187,7 +1187,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Versigent",
-    "teamlyzer_checked_at": 1793898691
+    "teamlyzer_checked_at": 1794065490
   },
   "adentisportugal": {
     "platform": "Teamlyzer",
@@ -1283,7 +1283,7 @@
     "url": "https://pt.teamlyzer.com/companies/amgen-portugal",
     "matched_name": "Amgen Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898697
+    "teamlyzer_checked_at": 1794065492
   },
   "bjak": {
     "platform": "Glassdoor",
@@ -1315,11 +1315,11 @@
     "platform": "Teamlyzer",
     "score": "3.0/5",
     "numeric": 3.0,
-    "reviews": "101 Reviews",
+    "reviews": "102 Reviews",
     "url": "https://pt.teamlyzer.com/companies/fyld",
     "matched_name": "Fyld",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898690
+    "teamlyzer_checked_at": 1794065491
   },
   "inetum": {
     "platform": "Teamlyzer",
@@ -1329,7 +1329,7 @@
     "url": "https://pt.teamlyzer.com/companies/inetum",
     "matched_name": "Inetum",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475916
+    "teamlyzer_checked_at": 1794065502
   },
   "frimarcindustriaecomerciosa": {
     "platform": "Glassdoor",
@@ -1377,7 +1377,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898698
+    "teamlyzer_checked_at": 1794065503
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1387,7 +1387,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898689
+    "teamlyzer_checked_at": 1794065489
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1397,7 +1397,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202486
+    "teamlyzer_checked_at": 1794065487
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1478,12 +1478,14 @@
     "teamlyzer_checked_at": 1788099609
   },
   "keenfinitygroup": {
-    "platform": "Glassdoor",
-    "score": "Ver Reviews",
-    "numeric": 0.0,
-    "reviews": "Pesquisa Global",
-    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Keenfinity%20Group",
-    "teamlyzer_checked_at": 1788441688
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/keenfinity",
+    "matched_name": "KEENFINITY",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794065493
   },
   "fedex": {
     "platform": "Teamlyzer",
@@ -1723,7 +1725,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Bee%20Engineering%20ICT",
-    "teamlyzer_checked_at": 1792328639
+    "teamlyzer_checked_at": 1794065500
   },
   "inov": {
     "platform": "Teamlyzer",
@@ -1743,7 +1745,7 @@
     "url": "https://pt.teamlyzer.com/companies/prn-informatica",
     "matched_name": "PRN Informática",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793030201
+    "teamlyzer_checked_at": 1794065489
   },
   "airapps": {
     "platform": "Teamlyzer",
@@ -2059,7 +2061,7 @@
     "url": "https://pt.teamlyzer.com/companies/gmv",
     "matched_name": "GMV",
     "alias_match": false,
-    "teamlyzer_checked_at": 1790085439
+    "teamlyzer_checked_at": 1794065501
   },
   "luzagroup": {
     "platform": "Teamlyzer",
@@ -2813,7 +2815,7 @@
     "url": "https://pt.teamlyzer.com/companies/amadeus",
     "matched_name": "Amadeus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898697
+    "teamlyzer_checked_at": 1794065491
   },
   "zeroto100": {
     "platform": "Glassdoor",
@@ -2837,7 +2839,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=QualityAI",
-    "teamlyzer_checked_at": 1793898689
+    "teamlyzer_checked_at": 1794065488
   },
   "iterable": {
     "platform": "Teamlyzer",
@@ -2847,7 +2849,7 @@
     "url": "https://pt.teamlyzer.com/companies/iterable",
     "matched_name": "Iterable",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898696
+    "teamlyzer_checked_at": 1794065491
   },
   "managementsolutions": {
     "platform": "Teamlyzer",
@@ -2894,5 +2896,59 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Acclaim%20AI",
     "teamlyzer_checked_at": 1793983163
+  },
+  "mozaydo": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=MOZAYDO",
+    "teamlyzer_checked_at": 1794065496
+  },
+  "natixisinportugal": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Natixis%20in%20Portugal",
+    "teamlyzer_checked_at": 1794065499
+  },
+  "shore": {
+    "platform": "Teamlyzer",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "11 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/shore",
+    "matched_name": "Shore",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794065502
+  },
+  "hnservicesportugal": {
+    "platform": "Teamlyzer",
+    "score": "3.1/5",
+    "numeric": 3.1,
+    "reviews": "61 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/ghh-services-portugal",
+    "matched_name": "HN Services Portugal",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794065502
+  },
+  "go4mobility": {
+    "platform": "Teamlyzer",
+    "score": "2.5/5",
+    "numeric": 2.5,
+    "reviews": "1 Review",
+    "url": "https://pt.teamlyzer.com/companies/go4mobility",
+    "matched_name": "Go4mobility",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794065503
+  },
+  "condoroo": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Condoroo",
+    "teamlyzer_checked_at": 1794065504
   }
 }
