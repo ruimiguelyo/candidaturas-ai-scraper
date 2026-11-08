@@ -116,7 +116,7 @@
     "url": "https://pt.teamlyzer.com/companies/mckinsey-company",
     "matched_name": "McKinsey Portugal",
     "alias_match": true,
-    "teamlyzer_checked_at": 1792679118
+    "teamlyzer_checked_at": 1794153104
   },
   "havi": {
     "platform": "Teamlyzer",
@@ -126,7 +126,7 @@
     "url": "https://pt.teamlyzer.com/companies/havi",
     "matched_name": "HAVI",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983144
+    "teamlyzer_checked_at": 1794153093
   },
   "havitechhub": {
     "score": "3.6/5",
@@ -164,7 +164,7 @@
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065487
+    "teamlyzer_checked_at": 1794153093
   },
   "ceiia": {
     "score": "3.8/5",
@@ -852,7 +852,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1793983158
+    "teamlyzer_checked_at": 1794153101
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1113,7 +1113,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1793983152
+    "teamlyzer_checked_at": 1794153106
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1283,7 +1283,7 @@
     "url": "https://pt.teamlyzer.com/companies/amgen-portugal",
     "matched_name": "Amgen Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065492
+    "teamlyzer_checked_at": 1794153103
   },
   "bjak": {
     "platform": "Glassdoor",
@@ -1319,7 +1319,7 @@
     "url": "https://pt.teamlyzer.com/companies/fyld",
     "matched_name": "Fyld",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065491
+    "teamlyzer_checked_at": 1794153101
   },
   "inetum": {
     "platform": "Teamlyzer",
@@ -1387,7 +1387,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065489
+    "teamlyzer_checked_at": 1794153095
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1397,7 +1397,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065487
+    "teamlyzer_checked_at": 1794153093
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1485,7 +1485,7 @@
     "url": "https://pt.teamlyzer.com/companies/keenfinity",
     "matched_name": "KEENFINITY",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065493
+    "teamlyzer_checked_at": 1794153105
   },
   "fedex": {
     "platform": "Teamlyzer",
@@ -1705,11 +1705,11 @@
     "platform": "Teamlyzer",
     "score": "3.4/5",
     "numeric": 3.4,
-    "reviews": "328 Reviews",
+    "reviews": "329 Reviews",
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793374843
+    "teamlyzer_checked_at": 1794153102
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1745,7 +1745,7 @@
     "url": "https://pt.teamlyzer.com/companies/prn-informatica",
     "matched_name": "PRN Informática",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065489
+    "teamlyzer_checked_at": 1794153095
   },
   "airapps": {
     "platform": "Teamlyzer",
@@ -1755,7 +1755,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983152
+    "teamlyzer_checked_at": 1794153109
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1765,7 +1765,7 @@
     "url": "https://pt.teamlyzer.com/companies/grit-solutions",
     "matched_name": "GRiT Solutions",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983159
+    "teamlyzer_checked_at": 1794153109
   },
   "noesis": {
     "platform": "Teamlyzer",
@@ -2251,7 +2251,7 @@
     "url": "https://pt.teamlyzer.com/companies/closer-consulting",
     "matched_name": "Closer Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983150
+    "teamlyzer_checked_at": 1794153103
   },
   "augmtd": {
     "platform": "Glassdoor",
@@ -2677,7 +2677,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Procter%20%26%20Gamble",
-    "teamlyzer_checked_at": 1792764473
+    "teamlyzer_checked_at": 1794153108
   },
   "hbfuller": {
     "platform": "Teamlyzer",
@@ -2761,7 +2761,7 @@
     "url": "https://pt.teamlyzer.com/companies/solvay",
     "matched_name": "HyChen (antiga Solvay)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983164
+    "teamlyzer_checked_at": 1794153109
   },
   "eloalabs": {
     "platform": "Glassdoor",
@@ -2815,7 +2815,7 @@
     "url": "https://pt.teamlyzer.com/companies/amadeus",
     "matched_name": "Amadeus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065491
+    "teamlyzer_checked_at": 1794153102
   },
   "zeroto100": {
     "platform": "Glassdoor",
@@ -2839,7 +2839,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=QualityAI",
-    "teamlyzer_checked_at": 1794065488
+    "teamlyzer_checked_at": 1794153094
   },
   "iterable": {
     "platform": "Teamlyzer",
@@ -2849,7 +2849,7 @@
     "url": "https://pt.teamlyzer.com/companies/iterable",
     "matched_name": "Iterable",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065491
+    "teamlyzer_checked_at": 1794153102
   },
   "managementsolutions": {
     "platform": "Teamlyzer",
@@ -2859,7 +2859,7 @@
     "url": "https://pt.teamlyzer.com/companies/management-solutions-portugal",
     "matched_name": "Management Solutions Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983146
+    "teamlyzer_checked_at": 1794153095
   },
   "quidgest": {
     "platform": "Teamlyzer",
@@ -2877,7 +2877,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=RAISEBOX",
-    "teamlyzer_checked_at": 1793983149
+    "teamlyzer_checked_at": 1794153104
   },
   "kuehnenagel": {
     "platform": "Teamlyzer",
@@ -2887,7 +2887,7 @@
     "url": "https://pt.teamlyzer.com/companies/kuehne-nagel",
     "matched_name": "Kuehne+Nagel",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983151
+    "teamlyzer_checked_at": 1794153105
   },
   "acclaimai": {
     "platform": "Glassdoor",
