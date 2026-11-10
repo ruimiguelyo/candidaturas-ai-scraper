@@ -191,7 +191,7 @@
     "url": "https://pt.teamlyzer.com/companies/euronext-s-technology-centre-portugal",
     "matched_name": "Euronext's Technology Centre - Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983164
+    "teamlyzer_checked_at": 1794329518
   },
   "philipmorris": {
     "score": "3.8/5",
@@ -805,11 +805,11 @@
     "platform": "Teamlyzer",
     "score": "2.5/5",
     "numeric": 2.5,
-    "reviews": "24 Reviews",
+    "reviews": "25 Reviews",
     "url": "https://pt.teamlyzer.com/companies/neotalent",
     "matched_name": "Neotalent Conclusion",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791475912
+    "teamlyzer_checked_at": 1794329509
   },
   "ceiiacentreofengineeringandproductdevelopment": {
     "platform": "Glassdoor",
@@ -939,13 +939,13 @@
   },
   "smartconsulting": {
     "platform": "Teamlyzer",
-    "score": "3.3/5",
-    "numeric": 3.3,
-    "reviews": "219 Reviews",
+    "score": "3.0/5",
+    "numeric": 3.0,
+    "reviews": "220 Reviews",
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793811418
+    "teamlyzer_checked_at": 1794329510
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -1225,7 +1225,7 @@
     "url": "https://pt.teamlyzer.com/companies/affinity",
     "matched_name": "Affinity",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983166
+    "teamlyzer_checked_at": 1794329525
   },
   "hostelworldgroup": {
     "platform": "Teamlyzer",
@@ -1433,7 +1433,7 @@
     "url": "https://pt.teamlyzer.com/companies/riskified",
     "matched_name": "Riskified",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983164
+    "teamlyzer_checked_at": 1794329519
   },
   "neuronslab": {
     "platform": "Glassdoor",
@@ -1781,11 +1781,11 @@
     "platform": "Teamlyzer",
     "score": "2.7/5",
     "numeric": 2.7,
-    "reviews": "27 Reviews",
+    "reviews": "28 Reviews",
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791036692
+    "teamlyzer_checked_at": 1794329525
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -1957,7 +1957,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=JTA%3A%20The%20Data%20Scientists",
-    "teamlyzer_checked_at": 1790005473
+    "teamlyzer_checked_at": 1794329524
   },
   "wilco": {
     "platform": "Glassdoor",
@@ -2081,7 +2081,7 @@
     "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
     "matched_name": "Claranet Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793202481
+    "teamlyzer_checked_at": 1794329511
   },
   "techsulitsolutions": {
     "platform": "Glassdoor",
@@ -2357,7 +2357,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Interpass",
-    "teamlyzer_checked_at": 1791644829
+    "teamlyzer_checked_at": 1794329515
   },
   "mc": {
     "platform": "Teamlyzer",
@@ -2569,7 +2569,7 @@
     "url": "https://pt.teamlyzer.com/companies/hiscox",
     "matched_name": "Hiscox",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983166
+    "teamlyzer_checked_at": 1794329519
   },
   "testo": {
     "platform": "Glassdoor",
@@ -2603,7 +2603,7 @@
     "url": "https://pt.teamlyzer.com/companies/mastercard",
     "matched_name": "Mastercard",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793983164
+    "teamlyzer_checked_at": 1794329519
   },
   "gocardless": {
     "platform": "Glassdoor",
@@ -2611,7 +2611,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=GoCardless",
-    "teamlyzer_checked_at": 1793983167
+    "teamlyzer_checked_at": 1794329527
   },
   "borderinnovation": {
     "platform": "Glassdoor",
@@ -2960,5 +2960,43 @@
     "matched_name": "Banco Millennium BCP",
     "alias_match": false,
     "teamlyzer_checked_at": 1794252986
+  },
+  "cs4consultingservices": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=CS4%20Consulting%20Services",
+    "teamlyzer_checked_at": 1794329516
+  },
+  "sixtportugal": {
+    "platform": "Teamlyzer",
+    "score": "2.9/5",
+    "numeric": 2.9,
+    "reviews": "7 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/sixt",
+    "matched_name": "SIXT",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794329517
+  },
+  "bizay": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "37 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/360-imprimir-bizay",
+    "matched_name": "360 Imprimir / Bizay",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794329517
+  },
+  "oney": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/oney",
+    "matched_name": "Oney",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794329518
   }
 }
