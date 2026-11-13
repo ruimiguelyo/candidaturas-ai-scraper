@@ -13,11 +13,11 @@
     "platform": "Teamlyzer",
     "score": "2.3/5",
     "numeric": 2.3,
-    "reviews": "23 Reviews",
+    "reviews": "24 Reviews",
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791223455
+    "teamlyzer_checked_at": 1794589228
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -301,7 +301,7 @@
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793289359
+    "teamlyzer_checked_at": 1794589229
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -1347,7 +1347,7 @@
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794416281
+    "teamlyzer_checked_at": 1794589236
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1709,7 +1709,7 @@
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794416282
+    "teamlyzer_checked_at": 1794589236
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1785,7 +1785,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794416281
+    "teamlyzer_checked_at": 1794589239
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -1859,7 +1859,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1794416280
+    "teamlyzer_checked_at": 1794589238
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -2619,7 +2619,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Border%20Innovation",
-    "teamlyzer_checked_at": 1793898695
+    "teamlyzer_checked_at": 1794589235
   },
   "multivisionconsulting": {
     "platform": "Glassdoor",
@@ -2677,7 +2677,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Procter%20%26%20Gamble",
-    "teamlyzer_checked_at": 1794252994
+    "teamlyzer_checked_at": 1794589243
   },
   "hbfuller": {
     "platform": "Teamlyzer",
@@ -2967,7 +2967,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=CS4%20Consulting%20Services",
-    "teamlyzer_checked_at": 1794329516
+    "teamlyzer_checked_at": 1794589244
   },
   "sixtportugal": {
     "platform": "Teamlyzer",
@@ -3006,5 +3006,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobbex%20IT",
     "teamlyzer_checked_at": 1794504366
+  },
+  "matchtech": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Matchtech",
+    "teamlyzer_checked_at": 1794589237
   }
 }
