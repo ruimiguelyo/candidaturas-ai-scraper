@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504374
+    "teamlyzer_checked_at": 1794670750
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -809,7 +809,7 @@
     "url": "https://pt.teamlyzer.com/companies/neotalent",
     "matched_name": "Neotalent Conclusion",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504362
+    "teamlyzer_checked_at": 1794670741
   },
   "ceiiacentreofengineeringandproductdevelopment": {
     "platform": "Glassdoor",
@@ -852,7 +852,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1794504372
+    "teamlyzer_checked_at": 1794670759
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -939,13 +939,13 @@
   },
   "smartconsulting": {
     "platform": "Teamlyzer",
-    "score": "3.0/5",
-    "numeric": 3.0,
+    "score": "3.3/5",
+    "numeric": 3.3,
     "reviews": "221 Reviews",
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504364
+    "teamlyzer_checked_at": 1794670744
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -1141,7 +1141,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
-    "teamlyzer_checked_at": 1794504380
+    "teamlyzer_checked_at": 1794670749
   },
   "celfocus": {
     "platform": "Teamlyzer",
@@ -1305,11 +1305,11 @@
     "platform": "Teamlyzer",
     "score": "2.9/5",
     "numeric": 2.9,
-    "reviews": "8 Reviews",
+    "reviews": "9 Reviews",
     "url": "https://pt.teamlyzer.com/companies/tmc",
     "matched_name": "TMC",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788792816
+    "teamlyzer_checked_at": 1794670752
   },
   "fyld": {
     "platform": "Teamlyzer",
@@ -1387,7 +1387,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504362
+    "teamlyzer_checked_at": 1794670741
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -2071,7 +2071,7 @@
     "url": "https://pt.teamlyzer.com/companies/luza-group",
     "matched_name": "LUZA Group",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504373
+    "teamlyzer_checked_at": 1794670744
   },
   "claranetportugal": {
     "platform": "Teamlyzer",
@@ -2081,7 +2081,7 @@
     "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
     "matched_name": "Claranet Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504374
+    "teamlyzer_checked_at": 1794670751
   },
   "techsulitsolutions": {
     "platform": "Glassdoor",
@@ -2959,7 +2959,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-millennium-bcp",
     "matched_name": "Banco Millennium BCP",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504381
+    "teamlyzer_checked_at": 1794670751
   },
   "cs4consultingservices": {
     "platform": "Glassdoor",
@@ -3005,7 +3005,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobbex%20IT",
-    "teamlyzer_checked_at": 1794504366
+    "teamlyzer_checked_at": 1794670743
   },
   "matchtech": {
     "platform": "Glassdoor",
@@ -3014,5 +3014,23 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Matchtech",
     "teamlyzer_checked_at": 1794589237
+  },
+  "seekers": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Seekers",
+    "teamlyzer_checked_at": 1794670753
+  },
+  "leroymerlin": {
+    "platform": "Teamlyzer",
+    "score": "2.7/5",
+    "numeric": 2.7,
+    "reviews": "3 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/leroy-merlin",
+    "matched_name": "Leroy Merlin",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1794670760
   }
 }
