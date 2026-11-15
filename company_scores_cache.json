@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794589228
+    "teamlyzer_checked_at": 1794758911
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670750
+    "teamlyzer_checked_at": 1794758919
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -301,7 +301,7 @@
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794589229
+    "teamlyzer_checked_at": 1794758914
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -809,7 +809,7 @@
     "url": "https://pt.teamlyzer.com/companies/neotalent",
     "matched_name": "Neotalent Conclusion",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670741
+    "teamlyzer_checked_at": 1794758912
   },
   "ceiiacentreofengineeringandproductdevelopment": {
     "platform": "Glassdoor",
@@ -945,7 +945,7 @@
     "url": "https://pt.teamlyzer.com/companies/smart-consulting",
     "matched_name": "Smart Consulting",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670744
+    "teamlyzer_checked_at": 1794758914
   },
   "farfetch": {
     "platform": "Teamlyzer",
@@ -1119,11 +1119,11 @@
     "platform": "Teamlyzer",
     "score": "2.5/5",
     "numeric": 2.5,
-    "reviews": "3 Reviews",
+    "reviews": "5 Reviews",
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793459413
+    "teamlyzer_checked_at": 1794758919
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1141,7 +1141,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
-    "teamlyzer_checked_at": 1794670749
+    "teamlyzer_checked_at": 1794758918
   },
   "celfocus": {
     "platform": "Teamlyzer",
@@ -1341,13 +1341,13 @@
   },
   "accentureportugal": {
     "platform": "Teamlyzer",
-    "score": "2.9/5",
-    "numeric": 2.9,
+    "score": "2.7/5",
+    "numeric": 2.7,
     "reviews": "391 Reviews",
     "url": "https://pt.teamlyzer.com/companies/accenture-portugal",
     "matched_name": "Accenture Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794589236
+    "teamlyzer_checked_at": 1794758924
   },
   "expleogroup": {
     "platform": "Teamlyzer",
@@ -1387,7 +1387,7 @@
     "url": "https://pt.teamlyzer.com/companies/kcs-it",
     "matched_name": "KCS IT",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670741
+    "teamlyzer_checked_at": 1794758912
   },
   "decskill": {
     "platform": "Teamlyzer",
@@ -1785,7 +1785,7 @@
     "url": "https://pt.teamlyzer.com/companies/team-it",
     "matched_name": "team.it",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794589239
+    "teamlyzer_checked_at": 1794758925
   },
   "grupobrisa": {
     "platform": "Glassdoor",
@@ -1859,7 +1859,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Samlino%20Group",
-    "teamlyzer_checked_at": 1794589238
+    "teamlyzer_checked_at": 1794758925
   },
   "pagerduty": {
     "platform": "Teamlyzer",
@@ -2071,7 +2071,7 @@
     "url": "https://pt.teamlyzer.com/companies/luza-group",
     "matched_name": "LUZA Group",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670744
+    "teamlyzer_checked_at": 1794758914
   },
   "claranetportugal": {
     "platform": "Teamlyzer",
@@ -2081,7 +2081,7 @@
     "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
     "matched_name": "Claranet Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670751
+    "teamlyzer_checked_at": 1794758919
   },
   "techsulitsolutions": {
     "platform": "Glassdoor",
@@ -2777,7 +2777,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dark%20Cloud%20Games",
-    "teamlyzer_checked_at": 1793898696
+    "teamlyzer_checked_at": 1794758923
   },
   "sensortower": {
     "platform": "Teamlyzer",
@@ -2959,7 +2959,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-millennium-bcp",
     "matched_name": "Banco Millennium BCP",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670751
+    "teamlyzer_checked_at": 1794758923
   },
   "cs4consultingservices": {
     "platform": "Glassdoor",
@@ -3005,7 +3005,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobbex%20IT",
-    "teamlyzer_checked_at": 1794670743
+    "teamlyzer_checked_at": 1794758913
   },
   "matchtech": {
     "platform": "Glassdoor",
@@ -3013,7 +3013,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Matchtech",
-    "teamlyzer_checked_at": 1794589237
+    "teamlyzer_checked_at": 1794758924
   },
   "seekers": {
     "platform": "Glassdoor",
