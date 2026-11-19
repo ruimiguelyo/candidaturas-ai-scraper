@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024354
+    "teamlyzer_checked_at": 1795111302
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794939386
+    "teamlyzer_checked_at": 1795111309
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -301,7 +301,7 @@
     "url": "https://pt.teamlyzer.com/companies/cisco-systems",
     "matched_name": "Cisco Systems",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024355
+    "teamlyzer_checked_at": 1795111304
   },
   "nokia": {
     "platform": "Teamlyzer",
@@ -1117,13 +1117,13 @@
   },
   "airbus": {
     "platform": "Teamlyzer",
-    "score": "2.5/5",
-    "numeric": 2.5,
-    "reviews": "5 Reviews",
+    "score": "2.3/5",
+    "numeric": 2.3,
+    "reviews": "6 Reviews",
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794939386
+    "teamlyzer_checked_at": 1795111304
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1141,7 +1141,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=BNP%20Paribas%20CIB",
-    "teamlyzer_checked_at": 1794939385
+    "teamlyzer_checked_at": 1795111308
   },
   "celfocus": {
     "platform": "Teamlyzer",
@@ -1161,7 +1161,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024354
+    "teamlyzer_checked_at": 1795111302
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1309,7 +1309,7 @@
     "url": "https://pt.teamlyzer.com/companies/tmc",
     "matched_name": "TMC",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794670752
+    "teamlyzer_checked_at": 1795111314
   },
   "fyld": {
     "platform": "Teamlyzer",
@@ -1377,7 +1377,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794939392
+    "teamlyzer_checked_at": 1795111314
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1397,7 +1397,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794504362
+    "teamlyzer_checked_at": 1795111314
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1717,7 +1717,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobgether",
-    "teamlyzer_checked_at": 1794939378
+    "teamlyzer_checked_at": 1795111303
   },
   "beeengineeringict": {
     "platform": "Glassdoor",
@@ -2081,7 +2081,7 @@
     "url": "https://pt.teamlyzer.com/companies/claranet-portugal",
     "matched_name": "Claranet Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794939392
+    "teamlyzer_checked_at": 1795111308
   },
   "techsulitsolutions": {
     "platform": "Glassdoor",
@@ -2777,7 +2777,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dark%20Cloud%20Games",
-    "teamlyzer_checked_at": 1794939391
+    "teamlyzer_checked_at": 1795111313
   },
   "sensortower": {
     "platform": "Teamlyzer",
@@ -2839,7 +2839,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=QualityAI",
-    "teamlyzer_checked_at": 1794939380
+    "teamlyzer_checked_at": 1795111304
   },
   "iterable": {
     "platform": "Teamlyzer",
@@ -3039,7 +3039,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Recipharm",
-    "teamlyzer_checked_at": 1795024356
+    "teamlyzer_checked_at": 1795111309
   },
   "aurora": {
     "platform": "Glassdoor",
@@ -3068,5 +3068,13 @@
     "matched_name": "The Navigator Company",
     "alias_match": false,
     "teamlyzer_checked_at": 1795024370
+  },
+  "thinkermesh": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=ThinkerMesh",
+    "teamlyzer_checked_at": 1795111303
   }
 }
