@@ -7,7 +7,7 @@
     "url": "https://pt.teamlyzer.com/companies/cloudflare",
     "matched_name": "Cloudflare",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024364
+    "teamlyzer_checked_at": 1795196326
   },
   "fujitsu": {
     "platform": "Teamlyzer",
@@ -160,11 +160,11 @@
     "platform": "Teamlyzer",
     "score": "3.1/5",
     "numeric": 3.1,
-    "reviews": "57 Reviews",
+    "reviews": "58 Reviews",
     "url": "https://pt.teamlyzer.com/companies/revolut",
     "matched_name": "Revolut",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024366
+    "teamlyzer_checked_at": 1795196327
   },
   "ceiia": {
     "score": "3.8/5",
@@ -852,7 +852,7 @@
     "numeric": 3.4,
     "reviews": "185 Reviews",
     "url": "https://pt.teamlyzer.com/companies/bosch",
-    "teamlyzer_checked_at": 1795024363
+    "teamlyzer_checked_at": 1795196324
   },
   "mvst": {
     "platform": "Glassdoor",
@@ -1113,7 +1113,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=SHEE",
-    "teamlyzer_checked_at": 1795024366
+    "teamlyzer_checked_at": 1795196328
   },
   "airbus": {
     "platform": "Teamlyzer",
@@ -1329,7 +1329,7 @@
     "url": "https://pt.teamlyzer.com/companies/inetum",
     "matched_name": "Inetum",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794065502
+    "teamlyzer_checked_at": 1795196330
   },
   "frimarcindustriaecomerciosa": {
     "platform": "Glassdoor",
@@ -1427,13 +1427,13 @@
   },
   "riskified": {
     "platform": "Teamlyzer",
-    "score": "4.1/5",
-    "numeric": 4.1,
-    "reviews": "18 Reviews",
+    "score": "4.2/5",
+    "numeric": 4.2,
+    "reviews": "19 Reviews",
     "url": "https://pt.teamlyzer.com/companies/riskified",
     "matched_name": "Riskified",
     "alias_match": false,
-    "teamlyzer_checked_at": 1794329519
+    "teamlyzer_checked_at": 1795196331
   },
   "neuronslab": {
     "platform": "Glassdoor",
@@ -1709,7 +1709,7 @@
     "url": "https://pt.teamlyzer.com/companies/devoteam-portugal",
     "matched_name": "Devoteam Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024370
+    "teamlyzer_checked_at": 1795196330
   },
   "jobgether": {
     "platform": "Glassdoor",
@@ -1755,7 +1755,7 @@
     "url": "https://pt.teamlyzer.com/companies/air-apps",
     "matched_name": "Air Apps",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024370
+    "teamlyzer_checked_at": 1795196329
   },
   "gritsolutions": {
     "platform": "Teamlyzer",
@@ -1819,7 +1819,7 @@
     "url": "https://pt.teamlyzer.com/companies/banco-credibom",
     "matched_name": "Banco Credibom",
     "alias_match": false,
-    "teamlyzer_checked_at": 1788873852
+    "teamlyzer_checked_at": 1795196329
   },
   "tp": {
     "platform": "Glassdoor",
@@ -2315,7 +2315,7 @@
     "url": "https://pt.teamlyzer.com/companies/bose",
     "matched_name": "Bose",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024365
+    "teamlyzer_checked_at": 1795196326
   },
   "stellantisyouportugal": {
     "platform": "Glassdoor",
@@ -2427,11 +2427,11 @@
     "platform": "Teamlyzer",
     "score": "2.5/5",
     "numeric": 2.5,
-    "reviews": "26 Reviews",
+    "reviews": "27 Reviews",
     "url": "https://pt.teamlyzer.com/companies/match-profiler",
     "matched_name": "Match Profiler",
     "alias_match": false,
-    "teamlyzer_checked_at": 1791987879
+    "teamlyzer_checked_at": 1795196319
   },
   "continental": {
     "platform": "Teamlyzer",
@@ -2761,7 +2761,7 @@
     "url": "https://pt.teamlyzer.com/companies/solvay",
     "matched_name": "HyChen (antiga Solvay)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024365
+    "teamlyzer_checked_at": 1795196326
   },
   "eloalabs": {
     "platform": "Glassdoor",
@@ -3031,7 +3031,7 @@
     "url": "https://pt.teamlyzer.com/companies/leroy-merlin",
     "matched_name": "Leroy Merlin",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024366
+    "teamlyzer_checked_at": 1795196327
   },
   "recipharm": {
     "platform": "Glassdoor",
@@ -3067,7 +3067,7 @@
     "url": "https://pt.teamlyzer.com/companies/the-navigator-company",
     "matched_name": "The Navigator Company",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024370
+    "teamlyzer_checked_at": 1795196329
   },
   "thinkermesh": {
     "platform": "Glassdoor",
@@ -3076,5 +3076,47 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ThinkerMesh",
     "teamlyzer_checked_at": 1795111303
+  },
+  "analytichemgroup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=AnalytiChem%20Group",
+    "teamlyzer_checked_at": 1795196317
+  },
+  "slicedgroup": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Slice%20D%20Group",
+    "teamlyzer_checked_at": 1795196318
+  },
+  "bancoctt": {
+    "platform": "Teamlyzer",
+    "score": "2.6/5",
+    "numeric": 2.6,
+    "reviews": "7 Reviews",
+    "url": "https://pt.teamlyzer.com/companies/banco-ctt",
+    "matched_name": "Banco CTT",
+    "alias_match": false,
+    "teamlyzer_checked_at": 1795196326
+  },
+  "visa": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Visa",
+    "teamlyzer_checked_at": 1795196328
+  },
+  "slalom": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Slalom",
+    "teamlyzer_checked_at": 1795196331
   }
 }
