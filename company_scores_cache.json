@@ -17,7 +17,7 @@
     "url": "https://pt.teamlyzer.com/companies/fujitsu",
     "matched_name": "Fujitsu Portugal",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795111302
+    "teamlyzer_checked_at": 1795279202
   },
   "fujitsuportugal": {
     "score": "3.1/5",
@@ -99,7 +99,7 @@
     "url": "https://pt.teamlyzer.com/companies/nordea-asset-management",
     "matched_name": "Nordea Asset Management",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795111309
+    "teamlyzer_checked_at": 1795279204
   },
   "mckinsey": {
     "score": "3.3/5",
@@ -1123,7 +1123,7 @@
     "url": "https://pt.teamlyzer.com/companies/airbus",
     "matched_name": "Airbus",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795111304
+    "teamlyzer_checked_at": 1795279204
   },
   "volkswagenfinancialservicesportugal": {
     "platform": "Teamlyzer",
@@ -1161,7 +1161,7 @@
     "url": "https://pt.teamlyzer.com/companies/metyis",
     "matched_name": "Metyis",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795111302
+    "teamlyzer_checked_at": 1795279202
   },
   "expressglassvidrosparaviaturas": {
     "platform": "Glassdoor",
@@ -1377,7 +1377,7 @@
     "url": "https://pt.teamlyzer.com/companies/innotech",
     "matched_name": "Innotech.pt",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795111314
+    "teamlyzer_checked_at": 1795279210
   },
   "kcsit": {
     "platform": "Teamlyzer",
@@ -1397,7 +1397,7 @@
     "url": "https://pt.teamlyzer.com/companies/decskill",
     "matched_name": "Decskill",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795111314
+    "teamlyzer_checked_at": 1795279210
   },
   "iceye": {
     "platform": "Glassdoor",
@@ -1717,7 +1717,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Jobgether",
-    "teamlyzer_checked_at": 1795111303
+    "teamlyzer_checked_at": 1795279201
   },
   "beeengineeringict": {
     "platform": "Glassdoor",
@@ -2357,7 +2357,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Grupo%20Interpass",
-    "teamlyzer_checked_at": 1794329515
+    "teamlyzer_checked_at": 1795279214
   },
   "mc": {
     "platform": "Teamlyzer",
@@ -2661,7 +2661,7 @@
     "url": "https://pt.teamlyzer.com/companies/wtw",
     "matched_name": "wtw",
     "alias_match": false,
-    "teamlyzer_checked_at": 1793898688
+    "teamlyzer_checked_at": 1795279200
   },
   "nitrosoftware": {
     "platform": "Glassdoor",
@@ -2777,7 +2777,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Dark%20Cloud%20Games",
-    "teamlyzer_checked_at": 1795111313
+    "teamlyzer_checked_at": 1795279209
   },
   "sensortower": {
     "platform": "Teamlyzer",
@@ -2839,7 +2839,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=QualityAI",
-    "teamlyzer_checked_at": 1795111304
+    "teamlyzer_checked_at": 1795279203
   },
   "iterable": {
     "platform": "Teamlyzer",
@@ -3039,7 +3039,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Recipharm",
-    "teamlyzer_checked_at": 1795111309
+    "teamlyzer_checked_at": 1795279210
   },
   "aurora": {
     "platform": "Glassdoor",
@@ -3057,7 +3057,7 @@
     "url": "https://pt.teamlyzer.com/companies/act-digital-em-portugal",
     "matched_name": "act digital (antiga Alter Solutions)",
     "alias_match": false,
-    "teamlyzer_checked_at": 1795024370
+    "teamlyzer_checked_at": 1795279215
   },
   "thenavigatorcompany": {
     "platform": "Teamlyzer",
@@ -3075,7 +3075,7 @@
     "numeric": 0.0,
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=ThinkerMesh",
-    "teamlyzer_checked_at": 1795111303
+    "teamlyzer_checked_at": 1795279201
   },
   "analytichemgroup": {
     "platform": "Glassdoor",
@@ -3118,5 +3118,13 @@
     "reviews": "Pesquisa Global",
     "url": "https://www.glassdoor.com/Search/results.htm?keyword=Slalom",
     "teamlyzer_checked_at": 1795196331
+  },
+  "sybilion": {
+    "platform": "Glassdoor",
+    "score": "Ver Reviews",
+    "numeric": 0.0,
+    "reviews": "Pesquisa Global",
+    "url": "https://www.glassdoor.com/Search/results.htm?keyword=Sybilion",
+    "teamlyzer_checked_at": 1795279201
   }
 }
