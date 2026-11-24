@@ -1,0 +1,178 @@
+# Configuração de fontes verificadas para o Estágio Radar PT v4.0
+# Modo Sniper (ao minuto) + Modo Deep (cobertura total Portugal/Europa)
+
+recency:
+  ats_days: 60
+  board_days: 14
+  linkedin_days: 7
+
+greenhouse:
+  - { slug: "cloudflare", company: "Cloudflare" }
+  - { slug: "riskified", company: "Riskified" }
+  - { slug: "datadog", company: "Datadog" }
+  - { slug: "feedzai", company: "Feedzai" }
+  - { slug: "talkdesk2", company: "Talkdesk" }
+  - { slug: "swordhealth", company: "Sword Health" }
+  - { slug: "blip", company: "Blip" }
+  - { slug: "wise", company: "Wise" }
+  - { slug: "pagerduty", company: "PagerDuty" }
+  - { slug: "elastic", company: "Elastic" }
+  - { slug: "canonical", company: "Canonical" }
+  - { slug: "mozilla", company: "Mozilla" }
+  - { slug: "gitlab", company: "GitLab" }
+  - { slug: "stripe", company: "Stripe" }
+  - { slug: "databricks", company: "Databricks" }
+  - { slug: "adyen", company: "Adyen" }
+  - { slug: "sumup", company: "SumUp" }
+  - { slug: "monzo", company: "Monzo" }
+  - { slug: "wolt", company: "Wolt" }
+  - { slug: "deliveroo", company: "Deliveroo" }
+  - { slug: "algolia", company: "Algolia" }
+  - { slug: "cockroachlabs", company: "Cockroach Labs" }
+  - { slug: "lokalise", company: "Lokalise" }
+  - { slug: "typeform", company: "Typeform" }
+  - { slug: "gympass", company: "Wellhub (Gympass)" }
+  - { slug: "mongodb", company: "MongoDB" }
+  - { slug: "vercel", company: "Vercel" }
+  - { slug: "anthropic", company: "Anthropic" }
+  - { slug: "scaleai", company: "Scale AI" }
+  - { slug: "airbnb", company: "Airbnb" }
+  - { slug: "dropbox", company: "Dropbox" }
+  - { slug: "mirakl", company: "Mirakl" }
+  - { slug: "freenow", company: "FREE NOW" }
+  - { slug: "jumia", company: "Jumia" }
+  - { slug: "epicgames", company: "Epic Games" }
+  - { slug: "discord", company: "Discord" }
+  - { slug: "airtable", company: "Airtable" }
+
+ashby:
+  - { slug: "paddle", company: "Paddle" }
+  - { slug: "supabase", company: "Supabase" }
+  - { slug: "posthog", company: "PostHog" }
+  - { slug: "linear", company: "Linear" }
+  - { slug: "openai", company: "OpenAI" }
+  - { slug: "elevenlabs", company: "ElevenLabs" }
+  - { slug: "cursor", company: "Cursor" }
+  - { slug: "langchain", company: "LangChain" }
+  - { slug: "cohere", company: "Cohere" }
+  - { slug: "perplexity", company: "Perplexity" }
+  - { slug: "anyscale", company: "Anyscale" }
+  - { slug: "pinecone", company: "Pinecone" }
+  - { slug: "clickhouse", company: "ClickHouse" }
+  - { slug: "pleo", company: "Pleo" }
+  - { slug: "qonto", company: "Qonto" }
+  - { slug: "oyster", company: "Oyster" }
+  - { slug: "mollie", company: "Mollie" }
+  - { slug: "resend", company: "Resend" }
+  - { slug: "render", company: "Render" }
+  - { slug: "clerk", company: "Clerk" }
+  - { slug: "notion", company: "Notion" }
+  - { slug: "railway", company: "Railway" }
+  - { slug: "ramp", company: "Ramp" }
+
+lever:
+  - { slug: "farfetch", company: "Farfetch" }
+  - { slug: "spotify", company: "Spotify" }
+
+smartrecruiters:
+  - { slug: "BoschGroup", company: "Bosch" }
+  - { slug: "Continental", company: "Continental" }
+  - { slug: "Devoteam", company: "Devoteam" }
+
+recruitee:
+  - { slug: "mbio", company: "Mercedes-Benz.io" }
+
+teamtailor:
+  - { domain: "careers.tekever.com", company: "TEKEVER" }
+  - { domain: "careers.coverflex.com", company: "Coverflex" }
+  - { domain: "careers.infraspeak.com", company: "Infraspeak" }
+  - { domain: "careers.stratioautomotive.com", company: "Stratio" }
+
+workday:
+  - { tenant: "visa", wd: "wd5", site: "Visa", company: "Visa" }
+  - { tenant: "cisco", wd: "wd5", site: "Cisco_Careers", company: "Cisco" }
+  - { tenant: "iqvia", wd: "wd1", site: "IQVIA", company: "IQVIA" }
+  - { tenant: "salesforce", wd: "wd12", site: "External_Career_Site", company: "Salesforce" }
+  - { tenant: "philips", wd: "wd3", site: "jobs-and-careers", company: "Philips" }
+  - { tenant: "abb", wd: "wd3", site: "External_Career_Page", company: "ABB" }
+  - { tenant: "novartis", wd: "wd3", site: "Novartis_Careers", company: "Novartis" }
+  - { tenant: "roche", wd: "wd3", site: "roche-ext", company: "Roche" }
+
+siemens_avature:
+  base_url: "https://jobs.siemens.com/en_US/externaljobs/SearchJobs"
+  queries:
+    - "Portugal intern"
+    - "Portugal estagio"
+    - "Portugal trainee"
+    - "Lisbon intern"
+
+successfactors:
+  - { base_url: "https://jobs.edp.com/search/", queries: ["estagio", "intern"], company: "EDP" }
+  - { base_url: "https://careers.miniclip.com/search/", queries: ["", "intern"], company: "Miniclip" }
+  - { base_url: "https://jobs.galp.com/search/", queries: ["estagio", "intern"], company: "Galp" }
+
+oracle_hcm:
+  - name: "Nokia"
+    endpoint: "https://fa-evmr-saasfaprod1.fa.ocs.oraclecloud.com/hcmRestApi/resources/latest/recruitingCEJobRequisitions"
+    site_number: "CX_1"
+    job_base_url: "https://fa-evmr-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job"
+    limit: 200
+
+github_trackers:
+  - { repo: "cavlero/Tech-Internships-Europe", format: "cavlero" }
+  - { repo: "Emjumaev/FAANG-2027-Internships-Tracker-Europe", format: "emjumaev" }
+
+euraxess_pt:
+  - { url: "https://euraxess.ec.europa.eu/jobs/search?f%5B0%5D=job_country%3A784&sort%5Bname%5D=created&sort%5Bdirection%5D=DESC", label: "newest_p0" }
+  - { url: "https://euraxess.ec.europa.eu/jobs/search?f%5B0%5D=job_country%3A784&sort%5Bname%5D=created&sort%5Bdirection%5D=DESC&page=1", label: "newest_p1" }
+  - { url: "https://euraxess.ec.europa.eu/jobs/search?keywords=artificial+intelligence+OR+machine+learning+OR+software+OR+data+OR+informatica&f%5B0%5D=job_country%3A784", label: "tech_ai" }
+
+teamlyzer_jobs:
+  - { url: "https://pt.teamlyzer.com/companies/jobs?tags=internship&order=most_recent", label: "internship" }
+  - { url: "https://pt.teamlyzer.com/companies/jobs?order=most_recent&address=setubal", label: "setubal" }
+  - { url: "https://pt.teamlyzer.com/companies/jobs?order=most_recent&address=lisboa", label: "lisboa" }
+  - { url: "https://pt.teamlyzer.com/companies/jobs?order=most_recent", label: "recent_p1" }
+  - { url: "https://pt.teamlyzer.com/companies/jobs?order=most_recent&page=2", label: "recent_p2" }
+  - { url: "https://pt.teamlyzer.com/companies/jobs?order=most_recent&page=3", label: "recent_p3" }
+
+linkedin:
+  sniper_queries:
+    - { keywords: "estagio OR intern OR trainee OR graduate", location: "Lisbon, Portugal", f_E: "", total: 10 }
+    - { keywords: "estagio OR intern OR trainee", location: "Setúbal, Portugal", f_E: "", total: 10 }
+  fast_queries:
+    - { keywords: "estagio", location: "Setúbal, Portugal", f_E: "", total: 10 }
+    - { keywords: "Software Engineer Intern", location: "Lisbon, Portugal", f_E: "", total: 10 }
+    - { keywords: "estagio informatica", location: "Lisbon, Portugal", f_E: "", total: 10 }
+    - { keywords: "Data Science Intern OR AI Intern", location: "Lisbon, Portugal", f_E: "", total: 10 }
+    - { keywords: "Trainee OR Graduate Software", location: "Lisbon, Portugal", f_E: "", total: 10 }
+  full_extra_queries:
+    - { keywords: "Machine Learning Intern OR NLP", location: "Portugal", f_E: "", total: 10 }
+    - { keywords: "Junior AI OR Junior Data", location: "Lisbon, Portugal", f_E: "", total: 10 }
+    - { keywords: "Junior Software Engineer OR Python", location: "Lisbon, Portugal", f_E: "", total: 10 }
+
+itjobs:
+  queries:
+    - "estagio"
+    - "intern"
+    - "trainee"
+    - "graduate"
+    - "junior"
+  max_pages: 2
+
+net_empregos:
+  searches:
+    - { keywords: "estagio informatica", zona: 15, zone_name: "Setúbal" }
+    - { keywords: "estagio", zona: 15, zone_name: "Setúbal" }
+    - { keywords: "estagio informatica", zona: 1, zone_name: "Lisboa" }
+    - { keywords: "estagio programacao", zona: 1, zone_name: "Lisboa" }
+    - { keywords: "estagio dados ia", zona: 1, zone_name: "Lisboa" }
+    - { keywords: "trainee informatica", zona: 1, zone_name: "Lisboa" }
+
+remote_eu:
+  himalayas_queries:
+    - "AI Intern"
+    - "Machine Learning Intern"
+    - "Data Science Intern"
+    - "Software Engineer Intern"
+    - "Graduate Software Engineer"
+    - "Junior AI"
