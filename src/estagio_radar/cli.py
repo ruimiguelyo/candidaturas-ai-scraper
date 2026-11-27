@@ -7,6 +7,7 @@ import asyncio
 import logging
 import os
 import socket
+import subprocess
 import sys
 import threading
 import time
@@ -245,6 +246,13 @@ def build_parser() -> argparse.ArgumentParser:
     # browser-login
     sub.add_parser("browser-login", help="Abre o perfil Chrome persistente para iniciar sessão no LinkedIn/portais.")
 
+    # app
+    p_app = sub.add_parser("app", help="Garante o daemon ativo e abre o Dashboard no Chrome dedicado (sem seletor de perfis).")
+    p_app.add_argument("--ui-port", type=int, default=8765)
+    p_app.add_argument("--db", default=os.getenv("RADAR_DB_PATH", "data/radar.db"))
+    p_app.add_argument("--cache", default=os.getenv("COMPANY_CACHE_PATH", "data/company_cache.json"))
+    p_app.add_argument("--output-dir", default=os.getenv("RADAR_OUTPUT_DIR", "output"))
+
     return parser
 
 
@@ -445,6 +453,74 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "browser-login":
         open_login_browser()
+        return 0
+
+    if args.command == "app":
+        from estagio_radar.autofill_worker import open_radar_app
+
+        if not _is_port_listening("127.0.0.1", args.ui_port):
+            if sys.platform == "win32":
+                try:
+                    subprocess.run(
+                        ["schtasks", "/run", "/tn", "EstagioRadarPT_Daemon"],
+                        capture_output=True,
+                        timeout=5,
+                    )
+                except Exception:
+                    pass
+                deadline = time.monotonic() + 4.0
+                while time.monotonic() < deadline and not _is_port_listening("127.0.0.1", args.ui_port):
+                    time.sleep(0.25)
+
+            if not _is_port_listening("127.0.0.1", args.ui_port):
+                py_exe = Path(sys.executable)
+                if sys.platform == "win32" and py_exe.name.lower() == "python.exe":
+                    pyw = py_exe.with_name("pythonw.exe")
+                    if pyw.exists():
+                        py_exe = pyw
+                cmd = [
+                    str(py_exe),
+                    "-m",
+                    "estagio_radar",
+                    "watch",
+                    "--sniper-interval",
+                    "5",
+                    "--deep-interval",
+                    "60",
+                    "--notify",
+                    "--with-ui",
+                    "--ui-port",
+                    str(args.ui_port),
+                    "--db",
+                    args.db,
+                    "--cache",
+                    args.cache,
+                    "--output-dir",
+                    args.output_dir,
+                    "--log-file",
+                    "data/radar.log",
+                ]
+                creationflags = 0
+                if sys.platform == "win32":
+                    creationflags = (
+                        getattr(subprocess, "CREATE_NO_WINDOW", 0)
+                        | getattr(subprocess, "DETACHED_PROCESS", 0)
+                        | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+                    )
+                subprocess.Popen(
+                    cmd,
+                    cwd=str(Path.cwd()),
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    creationflags=creationflags,
+                    close_fds=(os.name != "nt"),
+                )
+                deadline = time.monotonic() + 6.0
+                while time.monotonic() < deadline and not _is_port_listening("127.0.0.1", args.ui_port):
+                    time.sleep(0.25)
+
+        open_radar_app(f"http://127.0.0.1:{args.ui_port}")
         return 0
 
     if args.command == "status":

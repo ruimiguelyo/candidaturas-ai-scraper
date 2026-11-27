@@ -102,7 +102,12 @@ def _cdp_endpoint_ready(port: int = CDP_PORT) -> bool:
         return False
 
 
-def _ensure_cdp_chrome(profile_dir: Path, port: int = CDP_PORT) -> str | None:
+def _ensure_cdp_chrome(
+    profile_dir: Path,
+    port: int = CDP_PORT,
+    *,
+    initial_url: str = "about:blank",
+) -> str | None:
     """Reutiliza ou arranca o Chrome dedicado com porta CDP fixa para nunca colidir perfis."""
     endpoint = f"http://127.0.0.1:{port}"
     if _cdp_endpoint_ready(port):
@@ -122,7 +127,7 @@ def _ensure_cdp_chrome(profile_dir: Path, port: int = CDP_PORT) -> str | None:
         "--no-default-browser-check",
         "--disable-blink-features=AutomationControlled",
         "--start-maximized",
-        "about:blank",
+        initial_url or "about:blank",
     ]
     creationflags = 0
     if os.name == "nt":
@@ -848,6 +853,53 @@ def _launch_persistent(p: Any, profile_dir: Path, *, headless: bool) -> Any:
         except Exception as err:
             last_err = err
     raise RuntimeError(f"Não foi possível iniciar o browser persistente Chrome/Edge: {last_err}")
+
+
+def open_radar_app(
+    dashboard_url: str = "http://127.0.0.1:8765",
+    *,
+    user_data_dir: Path | None = None,
+    port: int = CDP_PORT,
+) -> dict[str, Any]:
+    """Abre ou foca o Dashboard no Chrome dedicado isolado (sem menu de perfis)."""
+    prof_dir = user_data_dir or CHROME_PROFILE_DIR
+    clean_base = dashboard_url.rstrip("/")
+
+    if not _cdp_endpoint_ready(port):
+        endpoint = _ensure_cdp_chrome(prof_dir, port, initial_url=dashboard_url)
+        if endpoint:
+            return {"ok": True, "mode": "launched_cdp", "url": dashboard_url}
+        import webbrowser
+
+        webbrowser.open(dashboard_url)
+        return {"ok": True, "mode": "fallback_webbrowser", "url": dashboard_url}
+
+    try:
+        from playwright.sync_api import sync_playwright
+
+        with sync_playwright() as p:
+            browser = p.chromium.connect_over_cdp(f"http://127.0.0.1:{port}")
+            context = browser.contexts[0] if browser.contexts else browser.new_context()
+            for existing in context.pages:
+                if (existing.url or "").rstrip("/").startswith(clean_base):
+                    try:
+                        existing.bring_to_front()
+                    except Exception:
+                        pass
+                    return {"ok": True, "mode": "focused_existing", "url": existing.url}
+            page = context.new_page()
+            page.goto(dashboard_url, wait_until="domcontentloaded", timeout=15000)
+            try:
+                page.bring_to_front()
+            except Exception:
+                pass
+            return {"ok": True, "mode": "opened_tab", "url": dashboard_url}
+    except Exception as err:
+        logger.warning("Fallback webbrowser ao abrir Dashboard: %s", err)
+        import webbrowser
+
+        webbrowser.open(dashboard_url)
+        return {"ok": True, "mode": "fallback_webbrowser", "url": dashboard_url}
 
 
 def open_login_browser(urls: list[str] | None = None, *, user_data_dir: Path | None = None) -> None:

@@ -23,6 +23,7 @@ from estagio_radar.apply_copilot import generate_application_kit
 from estagio_radar.autofill_worker import (
     _launch_persistent,
     _run_linkedin_easy_apply_assistant,
+    open_radar_app,
     read_autofill_status,
     run_autofill_browser,
     write_autofill_status,
@@ -532,3 +533,26 @@ def test_playwright_v3_combobox_radios_easy_apply_stops_before_submit(tmp_path):
             assert pg.locator("#final-submit").is_visible() is True
         finally:
             ctx.close()
+
+
+def test_app_cli_parser_and_open_radar_app_initial_url(tmp_path, monkeypatch):
+    from estagio_radar.cli import build_parser
+
+    parsed = build_parser().parse_args(["app"])
+    assert parsed.command == "app"
+    assert parsed.ui_port == 8765
+
+    calls = {}
+    monkeypatch.setattr("estagio_radar.autofill_worker._cdp_endpoint_ready", lambda port=9229: False)
+
+    def _fake_ensure(prof, port=9229, *, initial_url="about:blank"):
+        calls["prof"] = prof
+        calls["port"] = port
+        calls["initial_url"] = initial_url
+        return f"http://127.0.0.1:{port}"
+
+    monkeypatch.setattr("estagio_radar.autofill_worker._ensure_cdp_chrome", _fake_ensure)
+    res = open_radar_app("http://127.0.0.1:8765", user_data_dir=tmp_path / "cdp_prof")
+    assert res["ok"] is True
+    assert res["mode"] == "launched_cdp"
+    assert calls["initial_url"] == "http://127.0.0.1:8765"
