@@ -403,6 +403,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if args.command == "autofill":
+        from estagio_radar.autofill_worker import AUTOFILL_STATUS_PATH, write_autofill_status
+
         storage = RadarStorage(args.db)
         job = storage.get_job(args.fingerprint)
         if job is None:
@@ -417,15 +419,29 @@ def main(argv: list[str] | None = None) -> int:
             storage=storage,
             tone=args.tone,
         )
-        res = run_autofill_browser(
-            job,
-            kit,
-            profile,
-            headless=False,
-            keep_open=not args.no_keep_open,
-        )
-        console.print(f"[green]Autofill concluído:[/green] {res}")
-        return 0
+        try:
+            res = run_autofill_browser(
+                job,
+                kit,
+                profile,
+                headless=False,
+                keep_open=not args.no_keep_open,
+            )
+            console.print(f"[green]Autofill concluído:[/green] {res}")
+            return 0
+        except Exception as err:
+            write_autofill_status(
+                {
+                    "status": "error",
+                    "company": job.company,
+                    "title": job.title,
+                    "message": f"Erro ao abrir Chrome dedicado: {err}",
+                    "error": str(err),
+                },
+                AUTOFILL_STATUS_PATH,
+            )
+            console.print(f"[bold red]Erro autofill:[/bold red] {err}")
+            return 1
 
     if args.command == "browser-login":
         open_login_browser()

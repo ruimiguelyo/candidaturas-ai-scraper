@@ -207,8 +207,8 @@ def detect_apply_strategy(job: EnrichedJob, external_apply_url: str | None = Non
     if "linkedin.com" in effective_url:
         return {
             "type": "linkedin_portal",
-            "label": "LinkedIn — Candidatar + Abordar Recrutador",
-            "hint": "Usa a Extensão no teu Chrome já logado ou faz 'Login Chrome' 1x no perfil persistente.",
+            "label": "LinkedIn — Chrome Dedicado + Abordar Recrutador",
+            "hint": "Abre no Chrome dedicado do Radar (sessão isolada dos teus outros perfis), preenche Easy Apply/ATS e anexa o CV automaticamente.",
         }
 
     return {

@@ -17,7 +17,11 @@ from pathlib import Path
 from typing import Any, Callable
 from urllib.parse import parse_qs, urlparse
 
-from estagio_radar.ai_writer import answer_form_questions_with_gemini, load_cv_markdown
+from estagio_radar.ai_writer import (
+    answer_form_questions_with_gemini,
+    load_cv_markdown,
+    verify_gemini_api_key,
+)
 from estagio_radar.apply_copilot import (
     DEFAULT_PROFILE_PATH,
     generate_application_kit,
@@ -25,6 +29,7 @@ from estagio_radar.apply_copilot import (
     load_candidate_profile,
     send_application_email,
 )
+from estagio_radar.autofill_worker import read_autofill_status, write_autofill_status
 from estagio_radar.exporters import render_dashboard_html
 from estagio_radar.models import CompanyProfile, DomainCategory, EnrichedJob, GeoZone, RoleTier, ScoreBreakdown
 from estagio_radar.storage import RadarStorage
@@ -219,6 +224,9 @@ def make_handler(
                 )
                 self._send_json(HTTPStatus.OK, kit)
                 return
+            if path == "/api/autofill-status":
+                self._send_json(HTTPStatus.OK, read_autofill_status(repo_root / "data/last_autofill.json"))
+                return
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "Endpoint não encontrado"})
 
         def do_POST(self) -> None:  # noqa: N802
@@ -308,32 +316,47 @@ def make_handler(
                 py_exe = _resolve_python_exe()
                 cmd = [str(py_exe), "-m", "estagio_radar", "browser-login"]
                 creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0) if sys.platform == "win32" else 0
+                log_path = repo_root / "data/autofill.log"
+                log_path.parent.mkdir(parents=True, exist_ok=True)
                 try:
-                    subprocess.Popen(
-                        cmd,
-                        cwd=str(repo_root),
-                        stdin=subprocess.DEVNULL,
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        creationflags=creationflags,
-                    )
+                    with open(log_path, "a", encoding="utf-8") as log_fh:
+                        subprocess.Popen(
+                            cmd,
+                            cwd=str(repo_root),
+                            stdin=subprocess.DEVNULL,
+                            stdout=log_fh,
+                            stderr=log_fh,
+                            creationflags=creationflags,
+                        )
                     self._send_json(
                         HTTPStatus.OK,
-                        {"ok": True, "message": "Chrome persistente aberto — faz login no LinkedIn/portais e fecha quando acabares."},
+                        {
+                            "ok": True,
+                            "message": "Chrome dedicado aberto — inicia sessão 1x no LinkedIn (nunca toca nos teus outros perfis!).",
+                        },
                     )
                 except Exception as err:
-                    self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"Falha ao abrir login Chrome: {err}"})
+                    self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"Falha ao abrir Chrome dedicado: {err}"})
                 return
 
             if path == "/api/settings/gemini-key":
                 api_key = str(data.get("api_key") or "").strip()
                 if not api_key:
-                    self._send_json(HTTPStatus.BAD_REQUEST, {"error": "API Key vazia."})
+                    self._send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": "API Key vazia."})
+                    return
+                ok, model_used, msg = verify_gemini_api_key(api_key)
+                if not ok:
+                    self._send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "gemini_configured": False, "error": msg})
                     return
                 _write_env_setting(repo_root, "GEMINI_API_KEY", api_key)
                 self._send_json(
                     HTTPStatus.OK,
-                    {"ok": True, "gemini_configured": True, "message": "GEMINI_API_KEY guardada no .env e ativa já!"},
+                    {
+                        "ok": True,
+                        "gemini_configured": True,
+                        "model": model_used,
+                        "message": msg,
+                    },
                 )
                 return
 
@@ -355,6 +378,18 @@ def make_handler(
                     tone=tone,
                 )
 
+                status_file = repo_root / "data/last_autofill.json"
+                write_autofill_status(
+                    {
+                        "status": "starting",
+                        "company": job.company,
+                        "title": job.title,
+                        "cv_filename": kit["cv"]["filename"],
+                        "message": f"A abrir Chrome dedicado para {job.company} ({kit['cv']['filename']})...",
+                    },
+                    status_file,
+                )
+
                 py_exe = _resolve_python_exe()
                 cmd = [
                     str(py_exe),
@@ -374,20 +409,23 @@ def make_handler(
                     cmd.extend(["--cv-track", cv_track])
 
                 creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0) if sys.platform == "win32" else 0
+                log_path = repo_root / "data/autofill.log"
+                log_path.parent.mkdir(parents=True, exist_ok=True)
                 try:
-                    subprocess.Popen(
-                        cmd,
-                        cwd=str(repo_root),
-                        stdin=subprocess.DEVNULL,
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        creationflags=creationflags,
-                    )
+                    with open(log_path, "a", encoding="utf-8") as log_fh:
+                        subprocess.Popen(
+                            cmd,
+                            cwd=str(repo_root),
+                            stdin=subprocess.DEVNULL,
+                            stdout=log_fh,
+                            stderr=log_fh,
+                            creationflags=creationflags,
+                        )
                     self._send_json(
                         HTTPStatus.OK,
                         {
                             "ok": True,
-                            "message": f"Chrome persistente a abrir com auto-preenchimento e CV {kit['cv']['filename']}...",
+                            "message": f"Chrome dedicado a abrir com auto-preenchimento e CV {kit['cv']['filename']}...",
                             "cv": kit["cv"],
                         },
                     )

@@ -13,9 +13,20 @@ from types import SimpleNamespace
 import pytest
 import yaml
 
-from estagio_radar.ai_writer import generate_copy_with_gemini, parse_natural_role_phrase
+from estagio_radar.ai_writer import (
+    answer_form_questions_with_gemini,
+    generate_copy_with_gemini,
+    parse_natural_role_phrase,
+    verify_gemini_api_key,
+)
 from estagio_radar.apply_copilot import generate_application_kit
-from estagio_radar.autofill_worker import run_autofill_browser
+from estagio_radar.autofill_worker import (
+    _launch_persistent,
+    _run_linkedin_easy_apply_assistant,
+    read_autofill_status,
+    run_autofill_browser,
+    write_autofill_status,
+)
 from estagio_radar.dashboard import make_handler
 from estagio_radar.job_details import (
     parse_greenhouse_detail_json,
@@ -326,3 +337,198 @@ def test_playwright_v2_cookies_selects_hidden_file_and_open_question(tmp_path):
     assert res["ok"] is True
     assert res["cv_attached"] is True
     assert {"full_name", "email", "country", "sponsorship", "cv_pdf"}.issubset(set(res["filled_fields"]))
+
+
+def test_form_answers_list_schema_and_gemini_key_verification(tmp_path, monkeypatch):
+    profile = _sample_profile(tmp_path)
+
+    class OkClient:
+        class interactions:
+            @staticmethod
+            def create(**kwargs):
+                if "schema" in (kwargs.get("response_format") or {}):
+                    return SimpleNamespace(
+                        output_text=json.dumps({
+                            "answers": [
+                                {"question": "Why Cloudflare?", "answer": "I build fast distributed TypeScript and Python systems."},
+                            ]
+                        })
+                    )
+                return SimpleNamespace(output_text="OK")
+
+    ok, used_model, msg = verify_gemini_api_key("AQ.FakeTestKey123", client=OkClient())
+    assert ok is True
+    assert used_model == "gemini-4-hydrogen"
+    assert "validado" in msg
+
+    ans = answer_form_questions_with_gemini(
+        questions=["Why Cloudflare?"],
+        company="Cloudflare",
+        title="SWE Intern",
+        page_text="Lisbon",
+        cv_markdown="Python, TypeScript",
+        profile=profile,
+        client=OkClient(),
+    )
+    assert ans["Why Cloudflare?"] == "I build fast distributed TypeScript and Python systems."
+
+    class BadClient:
+        class interactions:
+            @staticmethod
+            def create(**kwargs):
+                raise RuntimeError("API_KEY_INVALID")
+
+    ok_bad, _m, bad_msg = verify_gemini_api_key("AQ.Invalid", client=BadClient())
+    assert ok_bad is False
+    assert "API_KEY_INVALID" in bad_msg
+
+    # Testar /api/settings/gemini-key (200 valido / 400 invalido) + /api/autofill-status sem sujar .env real
+    env_calls = []
+    monkeypatch.setattr("estagio_radar.dashboard._write_env_setting", lambda root, k, v: env_calls.append((k, v)))
+    monkeypatch.setattr(
+        "estagio_radar.dashboard.verify_gemini_api_key",
+        lambda key: (True, "gemini-4-hydrogen", "OK!") if key.startswith("AQ.Valid") else (False, "gemini-4-hydrogen", "Bad key"),
+    )
+
+    prof_path = tmp_path / "candidate_profile.yaml"
+    prof_path.write_text(yaml.safe_dump(profile, allow_unicode=True), encoding="utf-8")
+    db = RadarStorage(tmp_path / "radar.db")
+    server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(db, profile_path=prof_path))
+    port = server.server_address[1]
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    try:
+        base = f"http://127.0.0.1:{port}"
+        bad_req = urllib.request.Request(
+            f"{base}/api/settings/gemini-key",
+            data=json.dumps({"api_key": "bad-key"}).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with pytest.raises(urllib.error.HTTPError) as exc_info:
+            urllib.request.urlopen(bad_req, timeout=5)
+        assert exc_info.value.code == 400
+        assert env_calls == []
+
+        ok_req = urllib.request.Request(
+            f"{base}/api/settings/gemini-key",
+            data=json.dumps({"api_key": "AQ.ValidKey123"}).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        ok_resp = json.loads(urllib.request.urlopen(ok_req, timeout=5).read().decode("utf-8"))
+        assert ok_resp["ok"] is True
+        assert env_calls == [("GEMINI_API_KEY", "AQ.ValidKey123")]
+
+        st = json.loads(urllib.request.urlopen(f"{base}/api/autofill-status", timeout=5).read().decode("utf-8"))
+        assert "status" in st
+    finally:
+        server.shutdown()
+        server.server_close()
+
+    status_file = tmp_path / "last_autofill.json"
+    write_autofill_status({"status": "done", "message": "Teste OK"}, status_file)
+    assert read_autofill_status(status_file)["status"] == "done"
+
+
+def test_playwright_v3_combobox_radios_easy_apply_stops_before_submit(tmp_path):
+    pytest.importorskip("playwright")
+    from playwright.sync_api import sync_playwright
+
+    profile = _sample_profile(tmp_path)
+    job = _navigator_job()
+    kit = generate_application_kit(job, profile, fetch_email=False)
+
+    mock_easy = tmp_path / "mock_easy_apply.html"
+    mock_easy.write_text(
+        """<!doctype html>
+        <html><body>
+          <script>window.__SUBMIT_CLICKED = false;</script>
+          <button class="jobs-apply-button" onclick="document.getElementById('modal').style.display='block'">Easy Apply</button>
+          <div id="modal" role="dialog" style="display:none">
+            <div id="step-1">
+              <label for="phone_inp">Phone</label>
+              <input id="phone_inp" name="phone" type="tel">
+              <label for="country_cb">Country</label>
+              <input id="country_cb" role="combobox" type="text">
+              <div role="listbox">
+                <div role="option" onclick="document.getElementById('country_cb').value='Portugal'">Portugal</div>
+                <div role="option">Spain</div>
+              </div>
+              <fieldset>
+                <legend>Are you legally authorized to work in the EU / Portugal?</legend>
+                <label><input type="radio" name="work_auth" value="yes"> Yes</label>
+                <label><input type="radio" name="work_auth" value="no"> No</label>
+              </fieldset>
+              <button type="button" onclick="document.getElementById('step-1').style.display='none';document.getElementById('step-2').style.display='block'">Next</button>
+            </div>
+            <div id="step-2" style="display:none">
+              <label for="cv_up">Upload Resume</label>
+              <input id="cv_up" name="resume" type="file" style="display:none">
+              <button type="button" onclick="document.getElementById('step-2').style.display='none';document.getElementById('step-3').style.display='block'">Review</button>
+            </div>
+            <div id="step-3" style="display:none">
+              <button type="submit" id="final-submit" onclick="window.__SUBMIT_CLICKED = true">Submit application</button>
+            </div>
+          </div>
+        </body></html>""",
+        encoding="utf-8",
+    )
+
+    res = run_autofill_browser(
+        job,
+        kit,
+        profile,
+        headless=True,
+        keep_open=False,
+        target_url=mock_easy.as_uri(),
+        user_data_dir=tmp_path / "chrome_easy",
+    )
+    assert res["ok"] is True
+    assert res["stopped_before_submit"] is True
+    assert res["cv_attached"] is True
+    assert res["steps_completed"] == 3
+    assert {"phone", "country", "work_auth", "cv_pdf"}.issubset(set(res["filled_fields"]))
+
+    # Confirmar separadamente numa pagina CAPTCHA que a automacao para sem tocar em nada
+    mock_captcha = tmp_path / "mock_captcha.html"
+    mock_captcha.write_text(
+        """<!doctype html>
+        <html><body>
+          <div class="cf-turnstile">Verify you are human</div>
+          <iframe src="https://challenges.cloudflare.com/turnstile/v0/widget" width="300" height="65"></iframe>
+          <form><input name="email" type="email"></form>
+        </body></html>""",
+        encoding="utf-8",
+    )
+    res_cap = run_autofill_browser(
+        job,
+        kit,
+        profile,
+        headless=True,
+        keep_open=False,
+        target_url=mock_captcha.as_uri(),
+        user_data_dir=tmp_path / "chrome_cap",
+    )
+    assert res_cap["captcha_detected"] is True
+    assert res_cap["status"] == "captcha_blocked"
+    assert res_cap["filled_fields"] == []
+
+    # Garantir diretamente no browser real que o assistente preenche os passos e NUNCA clica Submit
+    with sync_playwright() as p:
+        ctx = _launch_persistent(p, tmp_path / "chrome_direct", headless=True)
+        try:
+            pg = ctx.pages[0] if ctx.pages else ctx.new_page()
+            pg.goto(mock_easy.as_uri(), wait_until="domcontentloaded")
+            _run_linkedin_easy_apply_assistant(
+                pg,
+                job=job,
+                kit=kit,
+                profile=profile,
+                values={"phone": profile["phone"]},
+                cv_path=Path(kit["cv"]["path"]),
+            )
+            assert pg.evaluate("window.__SUBMIT_CLICKED") is False
+            assert pg.locator("#final-submit").is_visible() is True
+        finally:
+            ctx.close()

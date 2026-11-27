@@ -363,7 +363,7 @@ def render_dashboard_html(
     </div>
 
     <div class="cop-actions">
-      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill()">🚀 Abrir &amp; Auto-Preencher no Chrome</button>
+      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill()">🚀 Auto-Preencher no Chrome Dedicado</button>
       <button class="btn btn-ghost" onclick="copyDmAndOpenRecruiters()">💬 Copiar DM + Recrutadores LinkedIn</button>
       <button class="btn btn-ghost" onclick="toggleEmailBox()">✉️ Candidatar por Email</button>
       <button class="btn btn-ghost" onclick="markAppliedFromCopilot()">✅ Marcar Candidatado</button>
@@ -397,12 +397,12 @@ def render_dashboard_html(
     </div>
     <div class="cop-box">
       <div style="font-size:12.5px;color:#cbd5e1;line-height:1.5;margin-bottom:10px">
-        1. Cria ou copia uma API key grátis no <a class="tl-link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>.<br>
-        2. Cola abaixo e clica em Guardar — fica só no teu <code>.env</code> local (nunca vai para o Git).
+        1. Clica em <strong>Copy key</strong> no <a class="tl-link" href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener">Google AI Studio</a>.<br>
+        2. Cola abaixo e guarda — testamos a ligação em direto e fica só no teu <code>.env</code> local.
       </div>
-      <input id="gem-key-input" type="password" class="cop-inp" placeholder="Cola aqui a tua GEMINI_API_KEY (AIza...)">
+      <input id="gem-key-input" type="password" class="cop-inp" placeholder="Cola aqui a tua GEMINI_API_KEY (AQ... ou AIza...)">
       <div class="cop-actions">
-        <button class="btn btn-primary btn-sm" onclick="saveGeminiKey()">💾 Guardar &amp; Ativar Gemini</button>
+        <button class="btn btn-primary btn-sm" id="btn-save-gemini" onclick="saveGeminiKey()">💾 Testar &amp; Ativar Gemini</button>
       </div>
       <div class="cop-status" id="gem-feedback"></div>
     </div>
@@ -431,7 +431,7 @@ async function setupInteractiveHeader() {{
   const wrap = document.getElementById("header-actions");
   wrap.innerHTML =
     '<button class="btn btn-ghost" id="btn-gemini">🔑 Gemini AI</button>' +
-    '<button class="btn btn-ghost" id="btn-browser-login" title="Fazer login 1 vez no LinkedIn e portais no perfil persistente">🔐 Login Chrome</button>' +
+    '<button class="btn btn-ghost" id="btn-browser-login" title="Abre o Chrome dedicado do Radar (isolado dos teus 20+ perfis) para entrares 1 vez no LinkedIn e portais">🔐 Login LinkedIn (1x)</button>' +
     '<button class="btn btn-primary" id="btn-scan">⚡ Atualizar Radar Agora</button>';
 
   try {{
@@ -491,24 +491,35 @@ function closeGeminiModal() {{
 async function saveGeminiKey() {{
   const key = document.getElementById("gem-key-input").value.trim();
   const fb = document.getElementById("gem-feedback");
+  const btn = document.getElementById("btn-save-gemini");
   if (!key) {{
     fb.textContent = "Cola uma API Key válida.";
     fb.className = "cop-status err";
     return;
   }}
-  const res = await fetch("/api/settings/gemini-key", {{
-    method: "POST",
-    headers: {{ "Content-Type": "application/json" }},
-    body: JSON.stringify({{ api_key: key }})
-  }});
-  const data = await res.json();
-  if (res.ok && data.ok) {{
-    fb.textContent = data.message || "Chave guardada!";
-    fb.className = "cop-status ok";
-    document.getElementById("btn-gemini").textContent = "✨ Gemini AI Ativo";
-  }} else {{
-    fb.textContent = data.error || "Erro ao guardar chave.";
+  btn.disabled = true;
+  fb.textContent = "⏳ A testar ligação ao Gemini...";
+  fb.className = "cop-status ok";
+  try {{
+    const res = await fetch("/api/settings/gemini-key", {{
+      method: "POST",
+      headers: {{ "Content-Type": "application/json" }},
+      body: JSON.stringify({{ api_key: key }})
+    }});
+    const data = await res.json();
+    if (res.ok && data.ok) {{
+      fb.textContent = data.message || "Chave validada e guardada!";
+      fb.className = "cop-status ok";
+      document.getElementById("btn-gemini").textContent = "✨ Gemini AI Ativo";
+    }} else {{
+      fb.textContent = data.error || "Erro ao validar chave.";
+      fb.className = "cop-status err";
+    }}
+  }} catch (e) {{
+    fb.textContent = "Erro de ligação ao servidor local: " + e;
     fb.className = "cop-status err";
+  }} finally {{
+    btn.disabled = false;
   }}
 }}
 
@@ -756,8 +767,39 @@ async function copyTextField(id, okMsg) {{
   }}
 }}
 
+let AUTOFILL_POLL_TIMER = null;
+
+async function pollAutofillStatus(attemptsLeft) {{
+  if (attemptsLeft <= 0) return;
+  try {{
+    const res = await fetch("/api/autofill-status");
+    const st = await res.json();
+    const s = st.status || "idle";
+    if (s === "done") {{
+      showCopilotFeedback(st.message || "✅ Auto-preenchido! Revê e submete no Chrome dedicado.", false);
+      return;
+    }}
+    if (s === "needs_login" || s === "captcha_blocked") {{
+      showCopilotFeedback(st.message || "⚠️ Ação necessária na janela do Chrome dedicado.", false);
+      return;
+    }}
+    if (s === "error") {{
+      showCopilotFeedback(st.message || st.error || "Erro no Chrome dedicado.", true);
+      return;
+    }}
+    if (st.message) {{
+      showCopilotFeedback("⏳ " + st.message, false);
+    }}
+  }} catch (_e) {{}}
+  AUTOFILL_POLL_TIMER = setTimeout(() => pollAutofillStatus(attemptsLeft - 1), 1000);
+}}
+
 async function launchAutofill() {{
   if (!CURRENT_KIT) return;
+  if (AUTOFILL_POLL_TIMER) {{
+    clearTimeout(AUTOFILL_POLL_TIMER);
+    AUTOFILL_POLL_TIMER = null;
+  }}
   const btn = document.getElementById("cop-btn-autofill");
   btn.disabled = true;
   try {{
@@ -772,9 +814,10 @@ async function launchAutofill() {{
     }});
     const data = await res.json();
     if (res.ok && data.ok) {{
-      showCopilotFeedback(data.message || "Chrome aberto! Revê e submete quando estiver pronto.", false);
+      showCopilotFeedback(data.message || "Chrome dedicado a abrir! A acompanhar preenchimento...", false);
+      AUTOFILL_POLL_TIMER = setTimeout(() => pollAutofillStatus(35), 900);
     }} else {{
-      showCopilotFeedback(data.error || "Erro ao lançar Chrome.", true);
+      showCopilotFeedback(data.error || "Erro ao lançar Chrome dedicado.", true);
     }}
   }} catch (e) {{
     showCopilotFeedback("Erro ao contactar servidor: " + e, true);

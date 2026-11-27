@@ -35,10 +35,20 @@ class GeneratedApplicationCopy(BaseModel):
     highlight_bullets: list[str] = Field(description="3 destaques reais do CV alinhados aos requisitos da vaga.")
 
 
+class FormAnswerItem(BaseModel):
+    """Par pergunta-resposta estruturado para formulários ATS."""
+
+    question: str = Field(description="Texto exato da pergunta do formulário.")
+    answer: str = Field(description="Resposta concisa, natural e verdadeira (2-4 frases).")
+
+
 class FormAnswersPayload(BaseModel):
     """Respostas estruturadas às perguntas abertas de um formulário ATS."""
 
-    answers: dict[str, str] = Field(default_factory=dict, description="Mapa exato pergunta -> resposta concisa.")
+    answers: list[FormAnswerItem] = Field(
+        default_factory=list,
+        description="Lista de respostas às perguntas do formulário.",
+    )
 
 
 def parse_natural_role_phrase(raw_title: str, company: str, *, pt: bool) -> dict[str, str]:
@@ -215,6 +225,41 @@ def _build_gemini_prompt(
     return sys_inst, user_input
 
 
+def verify_gemini_api_key(
+    api_key: str,
+    *,
+    model: str | None = None,
+    client: Any = None,
+) -> tuple[bool, str, str]:
+    """Valida em direto uma GEMINI_API_KEY (AQ.* ou AIza*) contra a Interactions API."""
+    clean_key = (api_key or "").strip()
+    if not clean_key and client is None:
+        return False, DEFAULT_GEMINI_MODEL, "API Key vazia."
+
+    resolved_model = (model or os.getenv("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
+    if resolved_model.startswith(("gemini-2.5", "gemini-2.0", "gemini-1.5")):
+        resolved_model = DEFAULT_GEMINI_MODEL
+
+    try:
+        if client is None:
+            from google import genai
+
+            client = genai.Client(api_key=clean_key)
+
+        interaction = client.interactions.create(
+            model=resolved_model,
+            input="Responde apenas OK.",
+            store=False,
+        )
+        out_txt = (getattr(interaction, "output_text", None) or "").strip()
+        if not out_txt:
+            return False, resolved_model, "Resposta vazia da API Gemini ao validar a chave."
+        return True, resolved_model, f"Gemini ({resolved_model}) ligado e validado com sucesso!"
+    except Exception as err:
+        logger.warning("Falha na validação live da Gemini API key: %s", err)
+        return False, resolved_model, f"Chave rejeitada pela API Gemini: {err}"
+
+
 def generate_copy_with_gemini(
     *,
     job: EnrichedJob,
@@ -295,7 +340,7 @@ def answer_form_questions_with_gemini(
             sys_inst = (
                 "You fill open-ended internship/junior job application questions truthfully and concisely (2-4 sentences per answer). "
                 "Use European Portuguese (PT-PT) if the question is in Portuguese, otherwise crisp English. "
-                "Never invent skills not in the CV. Return a JSON object mapping each exact question string to its concise answer."
+                "Never invent skills not in the CV. Return JSON matching the schema with one {question, answer} item per question."
             )
             q_list = "\n".join(f"- {q}" for q in clean_qs)
             prompt = (
@@ -320,7 +365,22 @@ def answer_form_questions_with_gemini(
             )
             parsed = FormAnswersPayload.model_validate_json(getattr(interaction, "output_text", "") or "{}")
             if parsed.answers:
-                return parsed.answers
+                norm_map = {re.sub(r"\s+", " ", q).strip().casefold(): q for q in clean_qs}
+                mapped: dict[str, str] = {}
+                for item in parsed.answers:
+                    q_raw = (item.question or "").strip()
+                    a_raw = (item.answer or "").strip()
+                    if not q_raw or not a_raw:
+                        continue
+                    if q_raw in clean_qs:
+                        mapped[q_raw] = a_raw
+                    else:
+                        q_norm = re.sub(r"\s+", " ", q_raw).strip().casefold()
+                        matched_q = norm_map.get(q_norm)
+                        if matched_q:
+                            mapped[matched_q] = a_raw
+                if mapped:
+                    return mapped
         except Exception as err:
             logger.warning("Fallback respostas offline (erro Gemini): %s", err)
 
