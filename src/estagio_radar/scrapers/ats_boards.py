@@ -626,73 +626,85 @@ async def scrape_teamtailor(
 
 
 async def scrape_workday(boards: list[dict[str, str]], client: httpx.AsyncClient) -> ScraperBatchResult:
-    """Consulta endpoints Workday CXS JSON filtrando por Portugal com pacing contra WAF 429."""
+    """Consulta endpoints Workday CXS JSON filtrando por Portugal com curl_cffi (anti-WAF 429)."""
     t0 = time.monotonic()
     jobs: list[RawJob] = []
     seen_urls: set[str] = set()
     ok = failed = 0
     warnings: list[str] = []
 
-    for idx, board in enumerate(boards):
-        tenant = board["tenant"]
-        wd = board["wd"]
-        site = board["site"]
-        company = board.get("company") or tenant
-        api_url = f"https://{tenant}.{wd}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs"
-        search_text = board.get("search") or "Portugal"
-        payload = {"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": search_text}
-        if idx > 0:
-            await asyncio.sleep(0.9)
-        try:
-            res = await retry_async(
-                client.post,
-                api_url,
-                json=payload,
-                headers={"Accept": "application/json", "Content-Type": "application/json"},
-                timeout=10.0,
-            )
-            if res.status_code == 429:
-                failed += 1
-                warnings.append(f"Workday {company}: HTTP 429 (rate-limit WAF, paragem graciosa)")
-                break
-            if res.status_code != 200:
-                failed += 1
-                warnings.append(f"Workday {company}: HTTP {res.status_code}")
-                continue
-            data = res.json()
-            ok += 1
-        except Exception as err:
-            failed += 1
-            warnings.append(f"Workday {company}: {err}")
-            continue
+    try:
+        from curl_cffi.requests import AsyncSession as CurlAsyncSession
+    except ImportError:
+        CurlAsyncSession = None
 
-        for post in data.get("jobPostings") or []:
-            title = str(post.get("title") or "").strip()
-            ext_path = str(post.get("externalPath") or "").strip()
-            if not title or not ext_path:
-                continue
-            job_url = f"https://{tenant}.{wd}.myworkdayjobs.com/en-US/{site}{ext_path}"
-            if job_url in seen_urls:
-                continue
-            seen_urls.add(job_url)
-            loc = str(post.get("locationsText") or "Portugal").strip()
-            pub_raw = str(post.get("postedOn") or "").replace("Posted ", "").strip()
-            jobs.append(
-                RawJob(
-                    source=f"Workday ({company})",
-                    source_type="ats",
-                    job_id=ext_path.rstrip("/").split("/")[-1],
-                    title=title,
-                    company=company,
-                    location=loc,
-                    all_locations=[loc],
-                    job_url=job_url,
-                    modality=_infer_modality(loc),
-                    is_remote="remote" in loc.casefold(),
-                    published_at=parse_publication_datetime(pub_raw),
-                    published_raw=pub_raw,
+    async def _run_queries(session: Any) -> None:
+        nonlocal ok, failed
+        for idx, board in enumerate(boards):
+            tenant = board["tenant"]
+            wd = board["wd"]
+            site = board["site"]
+            company = board.get("company") or tenant
+            api_url = f"https://{tenant}.{wd}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs"
+            search_text = board.get("search") or "Portugal"
+            payload = {"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": search_text}
+            if idx > 0:
+                await asyncio.sleep(1.2)
+            try:
+                res = await session.post(
+                    api_url,
+                    json=payload,
+                    headers={"Accept": "application/json", "Content-Type": "application/json"},
+                    timeout=12,
                 )
-            )
+                if res.status_code == 429:
+                    failed += 1
+                    warnings.append(f"Workday {company}: HTTP 429 (rate-limit WAF, paragem graciosa)")
+                    break
+                if res.status_code != 200:
+                    failed += 1
+                    warnings.append(f"Workday {company}: HTTP {res.status_code}")
+                    continue
+                data = res.json()
+                ok += 1
+            except Exception as err:
+                failed += 1
+                warnings.append(f"Workday {company}: {err}")
+                continue
+
+            for post in data.get("jobPostings") or []:
+                title = str(post.get("title") or "").strip()
+                ext_path = str(post.get("externalPath") or "").strip()
+                if not title or not ext_path:
+                    continue
+                job_url = f"https://{tenant}.{wd}.myworkdayjobs.com/en-US/{site}{ext_path}"
+                if job_url in seen_urls:
+                    continue
+                seen_urls.add(job_url)
+                loc = str(post.get("locationsText") or "Portugal").strip()
+                pub_raw = str(post.get("postedOn") or "").replace("Posted ", "").strip()
+                jobs.append(
+                    RawJob(
+                        source=f"Workday ({company})",
+                        source_type="ats",
+                        job_id=ext_path.rstrip("/").split("/")[-1],
+                        title=title,
+                        company=company,
+                        location=loc,
+                        all_locations=[loc],
+                        job_url=job_url,
+                        modality=_infer_modality(loc),
+                        is_remote="remote" in loc.casefold(),
+                        published_at=parse_publication_datetime(pub_raw),
+                        published_raw=pub_raw,
+                    )
+                )
+
+    if CurlAsyncSession is not None:
+        async with CurlAsyncSession(impersonate="chrome") as curl_session:
+            await _run_queries(curl_session)
+    else:
+        await _run_queries(client)
 
     return ScraperBatchResult(
         jobs=jobs,

@@ -63,8 +63,8 @@ LISBOA_PATTERNS = [
     r"\bporto salvo\b",
     r"\bbarcarena\b",
     r"\bist-id\b",
-    r"\binesc-id\b",
-    r"\binesc\b",
+    r"\binesc[- ]id\b",
+    r"\binesc[- ]mn\b",
     r"\bfcul\b",
     r"\biscte\b",
     r"\bchampalimaud\b",
@@ -252,15 +252,14 @@ def classify_geo(
     # Avalia título + localizações combinadas para casos tipo "Software Intern - Lisbon, PT"
     geo_text = f"{loc_norm} {title_norm}"
 
-    # 1. Setúbal / Palmela / Margem Sul (prioridade máxima para o utilizador!)
-    if _any_match(geo_text, SETUBAL_PATTERNS):
+    # 1. Localização explícita primeiro (evita que título tipo "LISBOA 2030" promova Porto a Lisboa)
+    if _any_match(loc_norm, SETUBAL_PATTERNS):
         return GeoZone.SETUBAL_LOCAL, "Localização na Península de Setúbal / Margem Sul."
 
-    # 2. Lisboa & Grande Lisboa
-    if _any_match(geo_text, LISBOA_PATTERNS):
+    if _any_match(loc_norm, LISBOA_PATTERNS):
         return GeoZone.LISBOA_METRO, "Localização na Área Metropolitana de Lisboa."
 
-    # 3. Verificar se menciona explicitamente Portugal (sem cidade específica ou com outra cidade)
+    # 2. Verificar se menciona explicitamente outra cidade portuguesa presencial
     mentions_portugal = bool(re.search(r"\bportugal\b", geo_text)) or bool(
         re.search(r",\s*PT\b|\bPT\b", f"{raw_combined_locs} {title}")
     )
@@ -274,11 +273,18 @@ def classify_geo(
         or _any_match(title_norm, REMOTE_KEYWORDS)
     )
 
-    # Se for outra cidade portuguesa (ex: Porto/Braga/Aveiro) SEM Lisboa/Setúbal e SEM remoto: rejeitar salvo --all-portugal!
+    # Se for outra cidade portuguesa (ex: Porto/Braga/Aveiro) SEM Lisboa/Setúbal na localização e SEM remoto: rejeitar salvo --all-portugal!
     if mentions_other_pt_city and not remote_signal:
         if include_all_portugal:
             return GeoZone.PT_OTHER_CITY, "Outra cidade portuguesa (incluída via --all-portugal)."
         return GeoZone.REJECTED_GEO, "Presencial/híbrido noutra cidade portuguesa (fora de Setúbal/Lisboa)."
+
+    # 3. Se a localização não especificou cidade PT incompatível, aceita pistas de Setúbal/Lisboa no título
+    if _any_match(title_norm, SETUBAL_PATTERNS):
+        return GeoZone.SETUBAL_LOCAL, "Localização na Península de Setúbal / Margem Sul."
+
+    if _any_match(title_norm, LISBOA_PATTERNS):
+        return GeoZone.LISBOA_METRO, "Localização na Área Metropolitana de Lisboa."
 
     # Se menciona explicitamente país/região estrangeira no título ou localização sem mencionar Portugal/Europe/Worldwide
     has_foreign = (

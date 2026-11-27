@@ -5,7 +5,9 @@ from datetime import datetime, timezone
 import httpx
 import pytest
 
+from estagio_radar.date_utils import parse_publication_datetime
 from estagio_radar.filter_engine import evaluate_raw_job
+from estagio_radar.geo import classify_geo
 from estagio_radar.models import GeoZone, RawJob, RoleTier
 from estagio_radar.scrapers.ats_boards import (
     parse_oracle_hcm_json,
@@ -249,3 +251,36 @@ def test_euraxess_non_it_bi_rejected_and_caldas_filtered():
     )
     assert not evaluate_raw_job(caldas, now=NOW, include_all_portugal=False, extra_tech_company_override=True).accepted
     assert evaluate_raw_job(caldas, now=NOW, include_all_portugal=True, extra_tech_company_override=True).geo_zone == GeoZone.PT_OTHER_CITY
+
+
+def test_v41_recruitee_utc_date_inesc_porto_guard_and_pm_intern():
+    # 1. Recruitee UTC date string
+    dt = parse_publication_datetime("2026-11-19 14:34:27 UTC")
+    assert dt is not None
+    assert dt == datetime(2026, 11, 19, 14, 34, 27, tzinfo=timezone.utc)
+
+    # 2. INESC TEC no Porto com "LISBOA 2030" no título NÃO pode entrar como Lisboa
+    zone_porto, _ = classify_geo("Porto, Portugal", title="INESC TEC Research Grant LISBOA 2030")
+    assert zone_porto == GeoZone.REJECTED_GEO
+
+    zone_lisboa, _ = classify_geo("Lisboa, Portugal", title="INESC ID Research Grant")
+    assert zone_lisboa == GeoZone.LISBOA_METRO
+
+    # 3. Product Manager Intern passa, Marketing Manager Intern e Senior PM ficam bloqueados
+    pm_intern = RawJob(
+        source="Greenhouse (Cloudflare)",
+        source_type="ats",
+        job_id="pm1",
+        title="Product Manager Intern (2027) - Lisbon, PT",
+        company="Cloudflare",
+        location="Lisbon, Portugal",
+        job_url="https://boards.greenhouse.io/cloudflare/jobs/pm1",
+        published_at=NOW,
+    )
+    assert evaluate_raw_job(pm_intern, now=NOW, extra_tech_company_override=True).accepted
+
+    mkt_intern = pm_intern.model_copy(update={"title": "Marketing Manager Intern - Lisbon, PT"})
+    assert not evaluate_raw_job(mkt_intern, now=NOW, extra_tech_company_override=True).accepted
+
+    senior_pm = pm_intern.model_copy(update={"title": "Senior Product Manager - Lisbon, PT"})
+    assert not evaluate_raw_job(senior_pm, now=NOW, extra_tech_company_override=True).accepted

@@ -110,8 +110,8 @@ def parse_publication_datetime(value: Any, now: datetime | None = None) -> datet
         if unit == "w":
             return reference - timedelta(days=amount * 7)
 
-    # ISO-8601 (preserva hora exata)
-    iso_candidate = raw.replace("Z", "+00:00")
+    # ISO-8601 (preserva hora exata, normaliza sufixos Z / UTC / GMT)
+    iso_candidate = re.sub(r"\s+(?:UTC|GMT)$", "+00:00", raw, flags=re.IGNORECASE).replace("Z", "+00:00")
     try:
         parsed_iso = datetime.fromisoformat(iso_candidate)
         if parsed_iso.hour == 0 and parsed_iso.minute == 0 and parsed_iso.second == 0 and len(raw) <= 10:

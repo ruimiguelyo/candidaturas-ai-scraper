@@ -16,7 +16,7 @@ from estagio_radar.models import (
     RoleTier,
     ScoreBreakdown,
 )
-from estagio_radar.notifiers.ntfy_notifier import build_ntfy_headers_and_body
+from estagio_radar.notifiers.ntfy_notifier import build_ntfy_headers_and_body, build_ntfy_json_payload
 from estagio_radar.storage import RadarStorage
 
 NOW = datetime(2026, 11, 24, 17, 30, tzinfo=timezone.utc)
@@ -150,3 +150,35 @@ def test_cli_mark_notified_command(tmp_path):
 
     _, new_jobs = storage.upsert_jobs([_sample_job("fp-cli-1")], now=NOW)
     assert new_jobs == []
+
+
+def test_ntfy_json_payload_utf8_actions_and_quiet_hours():
+    pt_job = _sample_job("fp-pt-1").model_copy(
+        update={
+            "title": "BEaPRO | Estágios Profissionais — Público & Júnior (refª 123)",
+            "company": "The Navigator Company",
+            "location": "Setúbal, Portugal",
+            "score": 85.0,
+        }
+    )
+
+    # Dia útil 14:00 UTC -> prioridade alta 4, título/mensagem em UTF-8 e botão Candidatar
+    day_now = datetime(2026, 11, 27, 14, 0, tzinfo=timezone.utc)
+    payload_day = build_ntfy_json_payload(pt_job, topic="topico-secreto", now=day_now)
+    assert payload_day["topic"] == "topico-secreto"
+    assert "Estágios Profissionais" in payload_day["title"]
+    assert "Público & Júnior (refª 123)" in payload_day["title"]
+    assert "Setúbal, Portugal" in payload_day["message"]
+    assert payload_day["priority"] == 4
+    assert payload_day["actions"][0]["label"] == "Candidatar"
+    assert payload_day["actions"][0]["url"] == pt_job.job_url
+
+    # Horário silencioso (03:00 em Lisboa) com score 85 (< 90) -> prioridade baixa 2
+    night_now = datetime(2026, 11, 27, 3, 0, tzinfo=timezone.utc)
+    payload_night = build_ntfy_json_payload(pt_job, topic="topico-secreto", now=night_now)
+    assert payload_night["priority"] == 2
+
+    # Horário silencioso com score >= 90 -> mantém prioridade 4
+    top_job = pt_job.model_copy(update={"score": 92.0})
+    payload_top_night = build_ntfy_json_payload(top_job, topic="topico-secreto", now=night_now)
+    assert payload_top_night["priority"] == 4

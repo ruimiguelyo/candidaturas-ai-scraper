@@ -258,7 +258,7 @@ def _allow_senior_override(title_ascii: str, matched_senior: str) -> bool:
         return True
     if low == "manager" and (
         re.search(r"\b(?:intern(?:ships?)?|estagios?|trainees?)\b", title_ascii, re.I)
-        and re.search(r"\b(?:application|it|software|ai|ia|ml|data|cloud|systems|cyber|infrastructure|digital|automation)\b", title_ascii, re.I)
+        and re.search(r"\b(?:application|it|software|ai|ia|ml|data|cloud|systems|cyber|infrastructure|digital|automation|product|program|technical)\b", title_ascii, re.I)
     ):
         return True
     return False

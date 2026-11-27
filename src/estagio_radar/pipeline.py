@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 import time
 from collections import Counter
 from dataclasses import dataclass, field
@@ -297,9 +298,17 @@ async def run_radar_scan(
         if any(sent_map.values()):
             storage.mark_notified([j.fingerprint for j in active_jobs], now=finished_at)
     elif notify and new_jobs:
-        sent_map = await dispatch_notifications(new_jobs, new_only=True)
-        if any(sent_map.values()):
-            storage.mark_notified([j.fingerprint for j in new_jobs], now=finished_at)
+        skip_consultancies = os.getenv("NOTIFY_SKIP_CONSULTANCIES", "").strip().lower() in {"1", "true", "yes"}
+        targets = new_jobs
+        if skip_consultancies:
+            skipped = [j for j in new_jobs if j.company_profile.is_consultancy]
+            targets = [j for j in new_jobs if not j.company_profile.is_consultancy]
+            if skipped:
+                storage.mark_notified([j.fingerprint for j in skipped], now=finished_at)
+        if targets:
+            sent_map = await dispatch_notifications(targets, new_only=True)
+            if any(sent_map.values()):
+                storage.mark_notified([j.fingerprint for j in targets], now=finished_at)
 
     if console:
         _print_summary(console, health_list, active_jobs, new_jobs, rejections, artifacts, sent_map, duration_ms)
