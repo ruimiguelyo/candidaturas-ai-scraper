@@ -228,6 +228,33 @@ def render_dashboard_html(
     border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; font-size: 12px;
   }}
   .empty {{ text-align: center; padding: 48px 16px; color: var(--muted); background: var(--surface); border-radius: 12px; border: 1px dashed var(--border); }}
+  .modal-backdrop {{
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(2, 6, 23, 0.78); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 16px;
+  }}
+  .modal-backdrop.open {{ display: flex; }}
+  .modal {{
+    width: 100%; max-width: 760px; max-height: 92vh; overflow-y: auto;
+    background: var(--surface); border: 1px solid #334155; border-radius: 16px;
+    padding: 20px 22px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  }}
+  .modal-head {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }}
+  .modal-title {{ font-size: 18px; font-weight: 700; color: #f8fafc; }}
+  .modal-sub {{ font-size: 13px; color: var(--accent); margin-top: 2px; }}
+  .cop-box {{
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px; margin-bottom: 12px;
+  }}
+  .cop-label {{ font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 6px; display: block; }}
+  textarea.cop-ta, input.cop-inp {{
+    width: 100%; background: #0b1120; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; font-family: inherit;
+  }}
+  .cop-actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }}
+  .cop-status {{ margin-top: 10px; padding: 9px 12px; border-radius: 8px; font-size: 12.5px; display: none; }}
+  .cop-status.ok {{ display: block; background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.45); color: #6ee7b7; }}
+  .cop-status.err {{ display: block; background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.45); color: #fca5a5; }}
 </style>
 </head>
 <body>
@@ -286,9 +313,72 @@ def render_dashboard_html(
   <main class="list" id="job-list"></main>
 </div>
 
+<div class="modal-backdrop" id="apply-modal" onclick="if(event.target===this) closeCopilot()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title" id="cop-title">Copiloto 1-Clique</div>
+        <div class="modal-sub" id="cop-sub"></div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="closeCopilot()">✕ Fechar</button>
+    </div>
+
+    <div class="cop-box" id="cop-strategy-box"></div>
+
+    <div class="cop-box">
+      <span class="cop-label">CV Selecionado Automaticamente</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <select id="cop-cv-track" style="max-width:340px" onchange="switchCopilotCv(this.value)">
+          <option value="ai_ml">Applied AI &amp; ML (PDF)</option>
+          <option value="swe">Software Engineering Full-Stack (PDF)</option>
+          <option value="enterprise">Enterprise Systems + AI (SAP/Python/Java PDF)</option>
+        </select>
+        <span id="cop-cv-badge" class="badge badge-new"></span>
+      </div>
+      <div id="cop-cv-reason" style="font-size:12px;color:var(--muted);margin-top:6px"></div>
+    </div>
+
+    <div class="cop-box">
+      <span class="cop-label">Pontos Fortes Alinhados à Vaga</span>
+      <ul id="cop-highlights" style="margin:0 0 0 18px;font-size:12.5px;color:#cbd5e1;line-height:1.45"></ul>
+    </div>
+
+    <div class="cop-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="cop-label" style="margin:0">Nota de Apresentação / Cover Note</span>
+        <button class="btn btn-ghost btn-sm" onclick="copyTextField('cop-cover', 'Nota copiada!')">📋 Copiar Nota</button>
+      </div>
+      <textarea id="cop-cover" class="cop-ta" rows="4"></textarea>
+    </div>
+
+    <div class="cop-actions">
+      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill()">🚀 Abrir &amp; Auto-Preencher no Chrome</button>
+      <button class="btn btn-ghost" onclick="copyDmAndOpenRecruiters()">💬 Copiar DM + Recrutadores LinkedIn</button>
+      <button class="btn btn-ghost" onclick="toggleEmailBox()">✉️ Candidatar por Email</button>
+      <button class="btn btn-ghost" onclick="markAppliedFromCopilot()">✅ Marcar Candidatado</button>
+    </div>
+
+    <div class="cop-status" id="cop-feedback"></div>
+
+    <div class="cop-box" id="cop-email-box" style="display:none;margin-top:12px">
+      <span class="cop-label">Envio Direto por Email (com CV PDF anexado)</span>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input id="cop-email-to" class="cop-inp" placeholder="Para (ex: bolsas@inesc-id.pt)">
+        <input id="cop-email-subj" class="cop-inp" placeholder="Assunto">
+        <textarea id="cop-email-body" class="cop-ta" rows="6"></textarea>
+        <div class="cop-actions" style="margin-top:2px">
+          <button class="btn btn-primary btn-sm" id="cop-btn-send-email" onclick="sendEmailApplication()">📤 Enviar via SMTP + Marcar</button>
+          <a class="btn btn-ghost btn-sm" id="cop-btn-mailto" href="#" target="_blank" rel="noopener">📧 Abrir na App de Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const INTERACTIVE = {mode_flag};
 let JOBS = {jobs_json};
+let CURRENT_KIT = null;
 
 function esc(s) {{
   return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
@@ -447,12 +537,179 @@ function render() {{
           ${{notesHtml}}
         </div>
         <div class="card-actions">
-          <a class="btn btn-primary" href="${{esc(j.job_url)}}" target="_blank" rel="noopener">Candidatar →</a>
+          ${{INTERACTIVE
+            ? `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+                 <button class="btn btn-primary" onclick="openCopilot('${{j.fingerprint}}')">⚡ 1-Clique CV</button>
+                 <a class="btn btn-ghost" href="${{esc(j.job_url)}}" target="_blank" rel="noopener">Abrir →</a>
+               </div>`
+            : `<a class="btn btn-primary" href="${{esc(j.job_url)}}" target="_blank" rel="noopener">Candidatar →</a>`}}
           ${{crmHtml}}
         </div>
       </article>
     `;
   }}).join("");
+}}
+
+function showCopilotFeedback(msg, isErr) {{
+  const el = document.getElementById("cop-feedback");
+  el.textContent = msg;
+  el.className = "cop-status " + (isErr ? "err" : "ok");
+}}
+
+function closeCopilot() {{
+  document.getElementById("apply-modal").classList.remove("open");
+}}
+
+async function openCopilot(fp, overrideTrack) {{
+  const modal = document.getElementById("apply-modal");
+  modal.classList.add("open");
+  document.getElementById("cop-feedback").className = "cop-status";
+  document.getElementById("cop-email-box").style.display = "none";
+  document.getElementById("cop-title").textContent = "A preparar kit de candidatura...";
+  document.getElementById("cop-sub").textContent = "";
+
+  try {{
+    const url = "/api/apply-kit?fingerprint=" + encodeURIComponent(fp) + (overrideTrack ? "&cv_track=" + encodeURIComponent(overrideTrack) : "");
+    const res = await fetch(url);
+    const kit = await res.json();
+    if (!res.ok) {{
+      showCopilotFeedback(kit.error || "Erro ao carregar kit.", true);
+      return;
+    }}
+    CURRENT_KIT = kit;
+    document.getElementById("cop-title").textContent = kit.title || "Candidatura";
+    document.getElementById("cop-sub").textContent = (kit.company || "") + " · Idioma: " + (kit.language === "pt" ? "Português" : "English");
+
+    const strat = kit.strategy || {{}};
+    document.getElementById("cop-strategy-box").innerHTML =
+      `<span class="cop-label">Estratégia Recomendada</span>` +
+      `<div style="font-size:13px;font-weight:600;color:#f8fafc">${{esc(strat.label || "")}}</div>` +
+      `<div style="font-size:12px;color:var(--muted);margin-top:2px">${{esc(strat.hint || "")}}</div>`;
+
+    const cv = kit.cv || {{}};
+    document.getElementById("cop-cv-track").value = cv.track || "ai_ml";
+    const cvBadge = document.getElementById("cop-cv-badge");
+    cvBadge.textContent = (cv.exists ? "✅ " : "⚠️ Em falta: ") + (cv.filename || "CV");
+    cvBadge.className = "badge " + (cv.exists ? "badge-new" : "badge-warn");
+    document.getElementById("cop-cv-reason").textContent = cv.reason || "";
+
+    document.getElementById("cop-highlights").innerHTML = (kit.highlight_bullets || [])
+      .map(b => `<li style="margin-bottom:4px">${{esc(b)}}</li>`).join("");
+
+    document.getElementById("cop-cover").value = kit.short_cover_note || "";
+    document.getElementById("cop-email-to").value = kit.detected_email || "";
+    document.getElementById("cop-email-subj").value = kit.email_subject || "";
+    document.getElementById("cop-email-body").value = kit.email_body || "";
+    document.getElementById("cop-btn-mailto").href = kit.mailto_url || "#";
+
+    if (kit.detected_email || strat.type === "email_or_portal") {{
+      document.getElementById("cop-email-box").style.display = "block";
+    }}
+  }} catch (err) {{
+    showCopilotFeedback("Erro de comunicação local: " + err, true);
+  }}
+}}
+
+async function switchCopilotCv(track) {{
+  if (!CURRENT_KIT) return;
+  await openCopilot(CURRENT_KIT.fingerprint, track);
+}}
+
+async function copyTextField(id, okMsg) {{
+  const val = document.getElementById(id).value;
+  try {{
+    await navigator.clipboard.writeText(val);
+    showCopilotFeedback(okMsg, false);
+  }} catch (e) {{
+    document.getElementById(id).select();
+    showCopilotFeedback("Texto selecionado — usa Ctrl+C.", false);
+  }}
+}}
+
+async function launchAutofill() {{
+  if (!CURRENT_KIT) return;
+  const btn = document.getElementById("cop-btn-autofill");
+  btn.disabled = true;
+  try {{
+    const res = await fetch("/api/autofill", {{
+      method: "POST",
+      headers: {{ "Content-Type": "application/json" }},
+      body: JSON.stringify({{
+        fingerprint: CURRENT_KIT.fingerprint,
+        cv_track: document.getElementById("cop-cv-track").value
+      }})
+    }});
+    const data = await res.json();
+    if (res.ok && data.ok) {{
+      showCopilotFeedback(data.message || "Chrome aberto! Revê e submete quando estiver pronto.", false);
+    }} else {{
+      showCopilotFeedback(data.error || "Erro ao lançar Chrome.", true);
+    }}
+  }} catch (e) {{
+    showCopilotFeedback("Erro ao contactar servidor: " + e, true);
+  }} finally {{
+    btn.disabled = false;
+  }}
+}}
+
+async function copyDmAndOpenRecruiters() {{
+  if (!CURRENT_KIT) return;
+  try {{
+    await navigator.clipboard.writeText(CURRENT_KIT.recruiter_dm || "");
+    showCopilotFeedback("Mensagem DM copiada para o clipboard! A abrir recrutadores no LinkedIn...", false);
+  }} catch (e) {{
+    showCopilotFeedback("A abrir pesquisa de recrutadores no LinkedIn...", false);
+  }}
+  window.open(CURRENT_KIT.recruiter_search_url, "_blank", "noopener");
+}}
+
+function toggleEmailBox() {{
+  const box = document.getElementById("cop-email-box");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}}
+
+async function sendEmailApplication() {{
+  if (!CURRENT_KIT) return;
+  const toEmail = document.getElementById("cop-email-to").value.trim();
+  const subject = document.getElementById("cop-email-subj").value.trim();
+  const body = document.getElementById("cop-email-body").value;
+  const cvTrack = document.getElementById("cop-cv-track").value;
+  const btn = document.getElementById("cop-btn-send-email");
+  btn.disabled = true;
+  try {{
+    const res = await fetch("/api/apply-email", {{
+      method: "POST",
+      headers: {{ "Content-Type": "application/json" }},
+      body: JSON.stringify({{
+        fingerprint: CURRENT_KIT.fingerprint,
+        to_email: toEmail,
+        subject,
+        body,
+        cv_track: cvTrack
+      }})
+    }});
+    const data = await res.json();
+    if (res.ok && data.ok) {{
+      showCopilotFeedback(data.message, false);
+      const today = new Date().toLocaleDateString("pt-PT");
+      const cvName = (CURRENT_KIT.cv && CURRENT_KIT.cv.filename) || "CV";
+      await setStatus(CURRENT_KIT.fingerprint, "applied", `Email enviado para ${{toEmail}} (${{cvName}}) em ${{today}}`);
+    }} else {{
+      showCopilotFeedback(data.error || "Não foi possível enviar via SMTP (usa 'Abrir na App de Email').", true);
+    }}
+  }} catch (e) {{
+    showCopilotFeedback("Erro ao enviar email: " + e, true);
+  }} finally {{
+    btn.disabled = false;
+  }}
+}}
+
+async function markAppliedFromCopilot() {{
+  if (!CURRENT_KIT) return;
+  const today = new Date().toLocaleDateString("pt-PT");
+  const cvName = (CURRENT_KIT.cv && CURRENT_KIT.cv.filename) || "CV";
+  await setStatus(CURRENT_KIT.fingerprint, "applied", `Candidatura enviada com ${{cvName}} em ${{today}}`);
+  showCopilotFeedback("Vaga marcada como Candidatada!", false);
 }}
 
 ["q","f-zone","f-role","f-domain","f-sort","f-hide-cons","f-top-tech"].forEach(id => {{

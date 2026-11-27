@@ -5,6 +5,7 @@ __pycache__/
 .pytest_cache/
 .env
 cv/
+config/candidate_profile.yaml
 data/*.db
 data/*.db-wal
 data/*.db-shm

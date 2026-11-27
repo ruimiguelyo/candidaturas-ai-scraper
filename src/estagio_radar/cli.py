@@ -18,6 +18,8 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.table import Table
 
+from estagio_radar.apply_copilot import DEFAULT_PROFILE_PATH, generate_application_kit, load_candidate_profile
+from estagio_radar.autofill_worker import run_autofill_browser
 from estagio_radar.dashboard import default_scan_runner, serve_dashboard
 from estagio_radar.notifiers.ntfy_notifier import send_ntfy_message
 from estagio_radar.pipeline import run_radar_scan
@@ -231,6 +233,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_ntest = sub.add_parser("notify-test", help="Envia uma notificação de teste via ntfy.sh.")
     p_ntest.add_argument("--db", default=os.getenv("RADAR_DB_PATH", "data/radar.db"))
 
+    # autofill
+    p_auto = sub.add_parser("autofill", help="Abre uma vaga no Chrome e pré-preenche dados + CV PDF sem submeter.")
+    p_auto.add_argument("--fingerprint", required=True)
+    p_auto.add_argument("--cv-track", choices=("ai_ml", "swe", "enterprise"), default=None)
+    p_auto.add_argument("--db", default=os.getenv("RADAR_DB_PATH", "data/radar.db"))
+    p_auto.add_argument("--profile", default=str(DEFAULT_PROFILE_PATH))
+    p_auto.add_argument("--no-keep-open", action="store_true")
+
     return parser
 
 
@@ -387,6 +397,24 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         console.print("[bold red]Falha ao enviar notificação ntfy. Verifica NTFY_TOPIC no .env.[/bold red]")
         return 1
+
+    if args.command == "autofill":
+        storage = RadarStorage(args.db)
+        job = storage.get_job(args.fingerprint)
+        if job is None:
+            console.print(f"[bold red]Vaga não encontrada:[/bold red] {args.fingerprint}")
+            return 1
+        profile = load_candidate_profile(args.profile)
+        kit = generate_application_kit(job, profile, override_track=args.cv_track)
+        res = run_autofill_browser(
+            job,
+            kit,
+            profile,
+            headless=False,
+            keep_open=not args.no_keep_open,
+        )
+        console.print(f"[green]Autofill concluído:[/green] {res}")
+        return 0
 
     if args.command == "status":
         db_parent = Path(args.db).parent

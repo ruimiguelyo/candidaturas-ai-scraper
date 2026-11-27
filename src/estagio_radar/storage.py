@@ -295,42 +295,59 @@ class RadarStorage:
             cp = CompanyProfile.model_validate_json(r["company_profile_json"])
             if hide_consultancies and cp.is_consultancy:
                 continue
-            pub_dt = datetime.fromisoformat(r["published_at"]) if r["published_at"] else None
-            out.append(
-                EnrichedJob(
-                    fingerprint=r["fingerprint"],
-                    title=r["title"],
-                    company=r["company"],
-                    location=r["location"],
-                    job_url=r["job_url"],
-                    canonical_url=r["canonical_url"],
-                    sources=json.loads(r["sources_json"]),
-                    primary_source=r["primary_source"],
-                    source_type=r["source_type"],
-                    modality=r["modality"],
-                    is_remote=bool(r["is_remote"]),
-                    role_tier=r["role_tier"],
-                    domain=r["domain"],
-                    geo_zone=r["geo_zone"],
-                    salary=r["salary"],
-                    published_at=pub_dt,
-                    published_date=r["published_date"] or "",
-                    freshness_label=format_freshness(pub_dt, now),
-                    tags=json.loads(r["tags_json"]),
-                    description_snippet=r["description_snippet"] or "",
-                    applicant_count=r["applicant_count"],
-                    company_profile=cp,
-                    score=r["score"],
-                    score_breakdown=ScoreBreakdown.model_validate_json(r["score_breakdown_json"]),
-                    badges=json.loads(r["badges_json"]),
-                    user_status=r["user_status"],
-                    user_notes=r["user_notes"] or "",
-                    first_seen_at=datetime.fromisoformat(r["first_seen_at"]) if r["first_seen_at"] else None,
-                    last_seen_at=datetime.fromisoformat(r["last_seen_at"]) if r["last_seen_at"] else None,
-                    notified_at=datetime.fromisoformat(r["notified_at"]) if r["notified_at"] else None,
-                )
-            )
+            out.append(self._row_to_enriched_job(r, cp=cp, now=now))
         return out
+
+    def _row_to_enriched_job(
+        self,
+        r: sqlite3.Row,
+        *,
+        cp: CompanyProfile | None = None,
+        now: datetime | None = None,
+    ) -> EnrichedJob:
+        ref = now or datetime.now(timezone.utc)
+        profile = cp or CompanyProfile.model_validate_json(r["company_profile_json"])
+        pub_dt = datetime.fromisoformat(r["published_at"]) if r["published_at"] else None
+        return EnrichedJob(
+            fingerprint=r["fingerprint"],
+            title=r["title"],
+            company=r["company"],
+            location=r["location"],
+            job_url=r["job_url"],
+            canonical_url=r["canonical_url"],
+            sources=json.loads(r["sources_json"]),
+            primary_source=r["primary_source"],
+            source_type=r["source_type"],
+            modality=r["modality"],
+            is_remote=bool(r["is_remote"]),
+            role_tier=r["role_tier"],
+            domain=r["domain"],
+            geo_zone=r["geo_zone"],
+            salary=r["salary"],
+            published_at=pub_dt,
+            published_date=r["published_date"] or "",
+            freshness_label=format_freshness(pub_dt, ref),
+            tags=json.loads(r["tags_json"]),
+            description_snippet=r["description_snippet"] or "",
+            applicant_count=r["applicant_count"],
+            company_profile=profile,
+            score=r["score"],
+            score_breakdown=ScoreBreakdown.model_validate_json(r["score_breakdown_json"]),
+            badges=json.loads(r["badges_json"]),
+            user_status=r["user_status"],
+            user_notes=r["user_notes"] or "",
+            first_seen_at=datetime.fromisoformat(r["first_seen_at"]) if r["first_seen_at"] else None,
+            last_seen_at=datetime.fromisoformat(r["last_seen_at"]) if r["last_seen_at"] else None,
+            notified_at=datetime.fromisoformat(r["notified_at"]) if r["notified_at"] else None,
+        )
+
+    def get_job(self, fingerprint: str) -> EnrichedJob | None:
+        """Obtém uma vaga específica pelo seu fingerprint."""
+        with self._connect() as conn:
+            row = conn.execute("SELECT * FROM jobs WHERE fingerprint = ?", (fingerprint,)).fetchone()
+        if row is None:
+            return None
+        return self._row_to_enriched_job(row)
 
     def record_run(
         self,

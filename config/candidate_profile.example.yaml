@@ -1,0 +1,30 @@
+# Modelo sanitizado de perfil de candidato para o Estágio Radar PT v5.0
+# Copia para config/candidate_profile.yaml (ignorado pelo git) e preenche os teus dados.
+
+first_name: "PrimeiroNome"
+last_name: "Apelido"
+full_name: "Nome Completo"
+email: "teu.email@exemplo.com"
+phone: "+351 912 345 678"
+city: "Setúbal"
+country: "Portugal"
+location: "Setúbal, Portugal"
+
+linkedin_url: "https://www.linkedin.com/in/teu-perfil/"
+github_url: "https://github.com/teu-utilizador"
+portfolio_url: "https://teu-utilizador.github.io/"
+
+university: "Instituto Politécnico de Setúbal (IPS)"
+degree: "BSc in Computer Engineering"
+gpa: "17/20"
+ects: 144
+graduation_year: "2027"
+
+work_authorization_eu: "Yes"
+requires_sponsorship: "No"
+availability: "Immediate — Curricular or Extracurricular Internship (2026/2027)"
+
+cvs:
+  ai_ml: "cv/CV_Applied_AI.pdf"
+  swe: "cv/CV_SWE_FullStack.pdf"
+  enterprise: "cv/CV_Enterprise_Tech.pdf"
