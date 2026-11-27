@@ -241,6 +241,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_auto.add_argument("--tone", choices=("balanced", "concise", "technical"), default="balanced")
     p_auto.add_argument("--db", default=os.getenv("RADAR_DB_PATH", "data/radar.db"))
     p_auto.add_argument("--profile", default=str(DEFAULT_PROFILE_PATH))
+    p_auto.add_argument("--payload-file", default=None)
+    p_auto.add_argument("--skip-ai", action="store_true")
     p_auto.add_argument("--no-keep-open", action="store_true")
 
     # browser-login
@@ -411,6 +413,9 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if args.command == "autofill":
+        import json
+
+        from estagio_radar.apply_copilot import select_best_cv
         from estagio_radar.autofill_worker import AUTOFILL_STATUS_PATH, write_autofill_status
 
         storage = RadarStorage(args.db)
@@ -419,14 +424,32 @@ def main(argv: list[str] | None = None) -> int:
             console.print(f"[bold red]Vaga não encontrada:[/bold red] {args.fingerprint}")
             return 1
         profile = load_candidate_profile(args.profile)
-        kit = generate_application_kit(
-            job,
-            profile,
-            override_track=args.cv_track,
-            fetch_email=True,
-            storage=storage,
-            tone=args.tone,
-        )
+
+        kit: dict[str, Any] | None = None
+        if args.payload_file and Path(args.payload_file).exists():
+            try:
+                kit = json.loads(Path(args.payload_file).read_text(encoding="utf-8"))
+            except Exception:
+                kit = None
+
+        if kit is None:
+            if args.skip_ai:
+                details = storage.get_job_details(args.fingerprint)
+                kit = {
+                    "cv": select_best_cv(job, profile, override_track=args.cv_track),
+                    "external_apply_url": details.get("external_apply_url"),
+                    "short_cover_note": "",
+                    "language": "en",
+                }
+            else:
+                kit = generate_application_kit(
+                    job,
+                    profile,
+                    override_track=args.cv_track,
+                    fetch_email=True,
+                    storage=storage,
+                    tone=args.tone,
+                )
         try:
             res = run_autofill_browser(
                 job,

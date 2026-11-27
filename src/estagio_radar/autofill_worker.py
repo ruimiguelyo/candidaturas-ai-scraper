@@ -125,7 +125,6 @@ def _ensure_cdp_chrome(
         f"--remote-debugging-port={port}",
         "--no-first-run",
         "--no-default-browser-check",
-        "--disable-blink-features=AutomationControlled",
         "--start-maximized",
         initial_url or "about:blank",
     ]
@@ -919,7 +918,7 @@ def open_login_browser(urls: list[str] | None = None, *, user_data_dir: Path | N
     with sync_playwright() as p:
         cdp_url = _ensure_cdp_chrome(prof_dir, CDP_PORT) if user_data_dir is None else None
         if cdp_url:
-            browser = p.chromium.connect_over_cdp(cdp_url)
+            browser = p.chromium.connect_over_cdp(cdp_url, timeout=12000)
             context = browser.contexts[0] if browser.contexts else browser.new_context()
             page = context.new_page()
             try:
@@ -1014,7 +1013,7 @@ def run_autofill_browser(
             cdp_url = _ensure_cdp_chrome(prof_dir, CDP_PORT) if (not headless and user_data_dir is None) else None
             if cdp_url:
                 using_cdp = True
-                browser = p.chromium.connect_over_cdp(cdp_url)
+                browser = p.chromium.connect_over_cdp(cdp_url, timeout=12000)
                 context = browser.contexts[0] if browser.contexts else browser.new_context()
                 page = context.new_page()
                 try:

@@ -172,6 +172,7 @@ def render_dashboard_html(
     border: none; border-radius: 8px; padding: 9px 14px; font-size: 13px;
     font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
   }}
+  .btn:disabled {{ opacity: 0.55; cursor: wait; }}
   .btn-primary {{ background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; }}
   .btn-primary:hover {{ filter: brightness(1.1); }}
   .btn-ghost {{ background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }}
@@ -802,6 +803,7 @@ async function launchAutofill() {{
   }}
   const btn = document.getElementById("cop-btn-autofill");
   btn.disabled = true;
+  showCopilotFeedback("⏳ A abrir separador no Chrome dedicado...", false);
   try {{
     const res = await fetch("/api/autofill", {{
       method: "POST",
@@ -809,7 +811,9 @@ async function launchAutofill() {{
       body: JSON.stringify({{
         fingerprint: CURRENT_KIT.fingerprint,
         cv_track: document.getElementById("cop-cv-track").value,
-        tone: CURRENT_TONE
+        tone: CURRENT_TONE,
+        cover_note: document.getElementById("cop-cover").value,
+        language: CURRENT_KIT.language || "en"
       }})
     }});
     const data = await res.json();

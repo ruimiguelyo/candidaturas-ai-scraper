@@ -15,6 +15,42 @@ from estagio_radar.models import EnrichedJob
 logger = logging.getLogger("estagio_radar.ai_writer")
 
 DEFAULT_GEMINI_MODEL = "gemini-4-hydrogen"
+FALLBACK_GEMINI_MODELS = ("gemini-4-hydrogen", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite")
+
+_TRANSIENT_ERR_RE = re.compile(
+    r"(?:429|503|rate\s*limit|quota|too_many_requests|service_unavailable|high\s+demand|overloaded|timed?\s*out|timeout|temporarily)",
+    re.IGNORECASE,
+)
+
+
+def _candidate_models(preferred: str | None = None) -> list[str]:
+    """Devolve lista ordenada de modelos Gemini atuais sem duplicados (com fallback automático)."""
+    raw = (preferred or os.getenv("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
+    if raw.startswith(("gemini-2.5", "gemini-2.0", "gemini-1.5")):
+        raw = DEFAULT_GEMINI_MODEL
+    ordered: list[str] = [raw]
+    for m in FALLBACK_GEMINI_MODELS:
+        if m not in ordered:
+            ordered.append(m)
+    return ordered
+
+
+def _make_gemini_client(api_key: str, *, timeout_ms: int = 12000) -> Any:
+    """Cria cliente google-genai com attempts=1 para nunca adormecer em Retry-After 429/503."""
+    from google import genai
+    from google.genai import types
+
+    return genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(
+            timeout=timeout_ms,
+            retry_options=types.HttpRetryOptions(attempts=1),
+        ),
+    )
+
+
+def _is_transient_model_error(err: Exception) -> bool:
+    return bool(_TRANSIENT_ERR_RE.search(f"{type(err).__name__}: {err}"))
 
 GENDER_TAG_RE = re.compile(r"\(\s*(?:m/f(?:/d)?|f/m(?:/x|/d|/div\.?)?|h/m)\s*\)", re.IGNORECASE)
 YEAR_NOISE_RE = re.compile(r"\b(?:202[5-9](?:\s*S\d)?)\b", re.IGNORECASE)
@@ -231,33 +267,41 @@ def verify_gemini_api_key(
     model: str | None = None,
     client: Any = None,
 ) -> tuple[bool, str, str]:
-    """Valida em direto uma GEMINI_API_KEY (AQ.* ou AIza*) contra a Interactions API."""
+    """Valida em direto uma GEMINI_API_KEY (AQ.* ou AIza*) contra a Interactions API com fail-fast."""
     clean_key = (api_key or "").strip()
     if not clean_key and client is None:
         return False, DEFAULT_GEMINI_MODEL, "API Key vazia."
 
-    resolved_model = (model or os.getenv("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
-    if resolved_model.startswith(("gemini-2.5", "gemini-2.0", "gemini-1.5")):
-        resolved_model = DEFAULT_GEMINI_MODEL
-
+    models = _candidate_models(model)
+    last_err: Exception | None = None
     try:
         if client is None:
-            from google import genai
+            client = _make_gemini_client(clean_key, timeout_ms=7000)
 
-            client = genai.Client(api_key=clean_key)
-
-        interaction = client.interactions.create(
-            model=resolved_model,
-            input="Responde apenas OK.",
-            store=False,
-        )
-        out_txt = (getattr(interaction, "output_text", None) or "").strip()
-        if not out_txt:
-            return False, resolved_model, "Resposta vazia da API Gemini ao validar a chave."
-        return True, resolved_model, f"Gemini ({resolved_model}) ligado e validado com sucesso!"
+        for candidate in models:
+            try:
+                interaction = client.interactions.create(
+                    model=candidate,
+                    input="Responde apenas OK.",
+                    store=False,
+                    timeout=6.0,
+                )
+                out_txt = (getattr(interaction, "output_text", None) or "").strip()
+                if out_txt:
+                    return True, candidate, f"Gemini ({candidate}) ligado e validado com sucesso!"
+            except Exception as err:
+                last_err = err
+                if _is_transient_model_error(err):
+                    logger.warning("Modelo %s indisponível na validação (%s) — a tentar fallback.", candidate, err)
+                    continue
+                logger.warning("Falha na validação live da Gemini API key (%s): %s", candidate, err)
+                return False, candidate, f"Chave rejeitada pela API Gemini: {err}"
     except Exception as err:
-        logger.warning("Falha na validação live da Gemini API key: %s", err)
-        return False, resolved_model, f"Chave rejeitada pela API Gemini: {err}"
+        last_err = err
+
+    if last_err is not None:
+        return False, models[0], f"Sem resposta válida dos modelos Gemini ({last_err})"
+    return False, models[0], "Resposta vazia da API Gemini ao validar a chave."
 
 
 def generate_copy_with_gemini(
@@ -270,20 +314,17 @@ def generate_copy_with_gemini(
     tone: str = "balanced",
     client: Any = None,
 ) -> tuple[GeneratedApplicationCopy | None, str]:
-    """Gera textos naturais em JSON estruturado usando Gemini Interactions API."""
+    """Gera textos naturais em JSON estruturado usando Gemini Interactions API (com fallback imediato)."""
     api_key = (os.getenv("GEMINI_API_KEY") or "").strip()
     if client is None and not api_key:
         return None, "GEMINI_API_KEY não configurada"
 
-    model = (os.getenv("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
-    if model.startswith(("gemini-2.5", "gemini-2.0", "gemini-1.5")):
-        model = DEFAULT_GEMINI_MODEL
+    models = _candidate_models()
+    last_err: Exception | None = None
 
     try:
         if client is None:
-            from google import genai
-
-            client = genai.Client(api_key=api_key)
+            client = _make_gemini_client(api_key, timeout_ms=12000)
 
         sys_inst, prompt_input = _build_gemini_prompt(
             job=job,
@@ -293,23 +334,35 @@ def generate_copy_with_gemini(
             language=language,
             tone=tone,
         )
-        interaction = client.interactions.create(
-            model=model,
-            system_instruction=sys_inst,
-            input=prompt_input,
-            response_format={
-                "type": "text",
-                "mime_type": "application/json",
-                "schema": GeneratedApplicationCopy.model_json_schema(),
-            },
-            store=False,
-        )
-        raw_out = getattr(interaction, "output_text", None) or ""
-        parsed = GeneratedApplicationCopy.model_validate_json(raw_out)
-        return parsed, model
+        for candidate in models:
+            try:
+                interaction = client.interactions.create(
+                    model=candidate,
+                    system_instruction=sys_inst,
+                    input=prompt_input,
+                    response_format={
+                        "type": "text",
+                        "mime_type": "application/json",
+                        "schema": GeneratedApplicationCopy.model_json_schema(),
+                    },
+                    store=False,
+                    timeout=10.0,
+                )
+                raw_out = getattr(interaction, "output_text", None) or ""
+                parsed = GeneratedApplicationCopy.model_validate_json(raw_out)
+                return parsed, candidate
+            except Exception as err:
+                last_err = err
+                if _is_transient_model_error(err):
+                    logger.warning("Fallback modelo Gemini (%s): %s", candidate, err)
+                    continue
+                logger.warning("Fallback offline (erro Gemini %s): %s", candidate, err)
+                return None, f"Erro Gemini ({err})"
     except Exception as err:
-        logger.warning("Fallback offline (erro Gemini): %s", err)
-        return None, f"Erro Gemini ({err})"
+        last_err = err
+
+    logger.warning("Fallback offline (erro Gemini): %s", last_err)
+    return None, f"Erro Gemini ({last_err})"
 
 
 def answer_form_questions_with_gemini(
@@ -330,12 +383,10 @@ def answer_form_questions_with_gemini(
 
     api_key = (os.getenv("GEMINI_API_KEY") or "").strip()
     if client is not None or api_key:
-        model = (os.getenv("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
+        models = _candidate_models()
         try:
             if client is None:
-                from google import genai
-
-                client = genai.Client(api_key=api_key)
+                client = _make_gemini_client(api_key, timeout_ms=10000)
 
             sys_inst = (
                 "You fill open-ended internship/junior job application questions truthfully and concisely (2-4 sentences per answer). "
@@ -352,35 +403,44 @@ def answer_form_questions_with_gemini(
                 f"Candidate CV:\n{cv_markdown[:3500]}\n\n"
                 f"Questions to answer:\n{q_list}"
             )
-            interaction = client.interactions.create(
-                model=model,
-                system_instruction=sys_inst,
-                input=prompt,
-                response_format={
-                    "type": "text",
-                    "mime_type": "application/json",
-                    "schema": FormAnswersPayload.model_json_schema(),
-                },
-                store=False,
-            )
-            parsed = FormAnswersPayload.model_validate_json(getattr(interaction, "output_text", "") or "{}")
-            if parsed.answers:
-                norm_map = {re.sub(r"\s+", " ", q).strip().casefold(): q for q in clean_qs}
-                mapped: dict[str, str] = {}
-                for item in parsed.answers:
-                    q_raw = (item.question or "").strip()
-                    a_raw = (item.answer or "").strip()
-                    if not q_raw or not a_raw:
+            norm_map = {re.sub(r"\s+", " ", q).strip().casefold(): q for q in clean_qs}
+            for candidate in models:
+                try:
+                    interaction = client.interactions.create(
+                        model=candidate,
+                        system_instruction=sys_inst,
+                        input=prompt,
+                        response_format={
+                            "type": "text",
+                            "mime_type": "application/json",
+                            "schema": FormAnswersPayload.model_json_schema(),
+                        },
+                        store=False,
+                        timeout=8.0,
+                    )
+                    parsed = FormAnswersPayload.model_validate_json(getattr(interaction, "output_text", "") or "{}")
+                    if parsed.answers:
+                        mapped: dict[str, str] = {}
+                        for item in parsed.answers:
+                            q_raw = (item.question or "").strip()
+                            a_raw = (item.answer or "").strip()
+                            if not q_raw or not a_raw:
+                                continue
+                            if q_raw in clean_qs:
+                                mapped[q_raw] = a_raw
+                            else:
+                                q_norm = re.sub(r"\s+", " ", q_raw).strip().casefold()
+                                matched_q = norm_map.get(q_norm)
+                                if matched_q:
+                                    mapped[matched_q] = a_raw
+                        if mapped:
+                            return mapped
+                except Exception as err:
+                    if _is_transient_model_error(err):
+                        logger.warning("Fallback respostas modelo %s: %s", candidate, err)
                         continue
-                    if q_raw in clean_qs:
-                        mapped[q_raw] = a_raw
-                    else:
-                        q_norm = re.sub(r"\s+", " ", q_raw).strip().casefold()
-                        matched_q = norm_map.get(q_norm)
-                        if matched_q:
-                            mapped[matched_q] = a_raw
-                if mapped:
-                    return mapped
+                    logger.warning("Fallback respostas offline (erro Gemini %s): %s", candidate, err)
+                    break
         except Exception as err:
             logger.warning("Fallback respostas offline (erro Gemini): %s", err)
 

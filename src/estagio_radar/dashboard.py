@@ -27,6 +27,7 @@ from estagio_radar.apply_copilot import (
     generate_application_kit,
     list_available_cvs,
     load_candidate_profile,
+    select_best_cv,
     send_application_email,
 )
 from estagio_radar.autofill_worker import read_autofill_status, write_autofill_status
@@ -363,19 +364,35 @@ def make_handler(
             if path == "/api/autofill":
                 fp = str(data.get("fingerprint") or "").strip()
                 cv_track = str(data.get("cv_track") or "").strip() or None
-                tone = str(data.get("tone") or "balanced").strip() or "balanced"
+                cover_note = str(data.get("cover_note") or "").strip()
+                language = str(data.get("language") or "en").strip() or "en"
                 job = storage.get_job(fp)
                 if job is None:
                     self._send_json(HTTPStatus.NOT_FOUND, {"error": "Vaga não encontrada"})
                     return
                 profile = load_candidate_profile(resolved_profile_path)
-                kit = generate_application_kit(
+                cv_info = select_best_cv(
                     job,
                     profile,
                     override_track=cv_track,
                     repo_root=repo_root,
-                    storage=storage,
-                    tone=tone,
+                )
+                details = storage.get_job_details(fp)
+
+                payload_file = repo_root / "data/last_autofill_payload.json"
+                payload_file.parent.mkdir(parents=True, exist_ok=True)
+                payload_file.write_text(
+                    json.dumps(
+                        {
+                            "fingerprint": fp,
+                            "cv": cv_info,
+                            "external_apply_url": details.get("external_apply_url"),
+                            "short_cover_note": cover_note,
+                            "language": language,
+                        },
+                        ensure_ascii=False,
+                    ),
+                    encoding="utf-8",
                 )
 
                 status_file = repo_root / "data/last_autofill.json"
@@ -384,8 +401,8 @@ def make_handler(
                         "status": "starting",
                         "company": job.company,
                         "title": job.title,
-                        "cv_filename": kit["cv"]["filename"],
-                        "message": f"A abrir Chrome dedicado para {job.company} ({kit['cv']['filename']})...",
+                        "cv_filename": cv_info["filename"],
+                        "message": f"A abrir Chrome dedicado para {job.company} ({cv_info['filename']})...",
                     },
                     status_file,
                 )
@@ -393,6 +410,7 @@ def make_handler(
                 py_exe = _resolve_python_exe()
                 cmd = [
                     str(py_exe),
+                    "-u",
                     "-m",
                     "estagio_radar",
                     "autofill",
@@ -402,8 +420,9 @@ def make_handler(
                     str(storage.db_path),
                     "--profile",
                     str(resolved_profile_path),
-                    "--tone",
-                    tone,
+                    "--payload-file",
+                    str(payload_file),
+                    "--skip-ai",
                 ]
                 if cv_track in {"ai_ml", "swe", "enterprise"}:
                     cmd.extend(["--cv-track", cv_track])
@@ -425,8 +444,8 @@ def make_handler(
                         HTTPStatus.OK,
                         {
                             "ok": True,
-                            "message": f"Chrome dedicado a abrir com auto-preenchimento e CV {kit['cv']['filename']}...",
-                            "cv": kit["cv"],
+                            "message": f"Chrome dedicado a abrir com auto-preenchimento e CV {cv_info['filename']}...",
+                            "cv": cv_info,
                         },
                     )
                 except Exception as err:

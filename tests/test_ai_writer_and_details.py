@@ -556,3 +556,105 @@ def test_app_cli_parser_and_open_radar_app_initial_url(tmp_path, monkeypatch):
     assert res["ok"] is True
     assert res["mode"] == "launched_cdp"
     assert calls["initial_url"] == "http://127.0.0.1:8765"
+
+
+def test_gemini_429_immediately_falls_back_to_flash_lite(tmp_path, monkeypatch):
+    profile = _sample_profile(tmp_path)
+    job = _navigator_job()
+    monkeypatch.setenv("GEMINI_API_KEY", "AQ.FakeTestKey123")
+    monkeypatch.delenv("GEMINI_MODEL", raising=False)
+
+    tried_models = []
+
+    class FallbackClient:
+        class interactions:
+            @staticmethod
+            def create(**kwargs):
+                m = kwargs["model"]
+                tried_models.append(m)
+                if m == "gemini-4-hydrogen":
+                    raise RuntimeError("429 too_many_requests Rate limit exceeded retry in 8h")
+                if "schema" in (kwargs.get("response_format") or {}):
+                    payload = {
+                        "natural_role_title": "Programa BEaPRO — People Analytics",
+                        "role_tldr": ["Python + SQL", "Power BI", "Setúbal"],
+                        "short_cover_note": "Olá equipa, candidato-me ao programa BEaPRO em People Analytics.",
+                        "email_subject": "Candidatura BEaPRO",
+                        "email_body": "Segue CV em anexo.",
+                        "recruiter_dm": "Olá! Candidatei-me ao programa BEaPRO.",
+                        "highlight_bullets": ["Python", "PyTorch", "IPS 17/20"],
+                    }
+                    return SimpleNamespace(output_text=json.dumps(payload))
+                return SimpleNamespace(output_text="OK")
+
+    ok, used_model, msg = verify_gemini_api_key("AQ.FakeTestKey123", client=FallbackClient())
+    assert ok is True
+    assert used_model == "gemini-3.5-flash-lite"
+    assert "gemini-3.5-flash-lite" in msg
+    assert tried_models[:2] == ["gemini-4-hydrogen", "gemini-3.5-flash-lite"]
+
+    tried_models.clear()
+    copy_res, gen_model = generate_copy_with_gemini(
+        job=job,
+        description="Python e SQL",
+        cv_markdown="Python",
+        profile=profile,
+        language="pt",
+        client=FallbackClient(),
+    )
+    assert copy_res is not None
+    assert gen_model == "gemini-3.5-flash-lite"
+    assert tried_models[:2] == ["gemini-4-hydrogen", "gemini-3.5-flash-lite"]
+
+
+def test_autofill_endpoint_is_instant_without_calling_gemini(tmp_path, monkeypatch):
+    profile = _sample_profile(tmp_path)
+    prof_path = tmp_path / "candidate_profile.yaml"
+    prof_path.write_text(yaml.safe_dump(profile, allow_unicode=True), encoding="utf-8")
+
+    db = RadarStorage(tmp_path / "radar.db")
+    db.upsert_jobs([_navigator_job()], now=NOW)
+
+    def _boom(*args, **kwargs):
+        raise AssertionError("generate_application_kit must NOT run inside /api/autofill")
+
+    monkeypatch.setattr("estagio_radar.dashboard.generate_application_kit", _boom)
+
+    spawned_cmds = []
+
+    class DummyPopen:
+        def __init__(self, cmd, **kwargs):
+            spawned_cmds.append(cmd)
+
+    monkeypatch.setattr("estagio_radar.dashboard.subprocess.Popen", DummyPopen)
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(db, profile_path=prof_path))
+    port = server.server_address[1]
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    try:
+        req = urllib.request.Request(
+            f"http://127.0.0.1:{port}/api/autofill",
+            data=json.dumps({
+                "fingerprint": "fp-nav-1",
+                "cv_track": "ai_ml",
+                "cover_note": "Nota escrita no modal.",
+                "language": "pt",
+            }).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        resp = json.loads(urllib.request.urlopen(req, timeout=3).read().decode("utf-8"))
+        assert resp["ok"] is True
+        assert resp["cv"]["filename"] == "Rui_Sa_CV_Applied_AI.pdf"
+        assert len(spawned_cmds) == 1
+        cmd = spawned_cmds[0]
+        assert "--skip-ai" in cmd
+        assert "--payload-file" in cmd
+        payload_idx = cmd.index("--payload-file") + 1
+        payload_data = json.loads(Path(cmd[payload_idx]).read_text(encoding="utf-8"))
+        assert payload_data["short_cover_note"] == "Nota escrita no modal."
+        assert payload_data["language"] == "pt"
+    finally:
+        server.shutdown()
+        server.server_close()
