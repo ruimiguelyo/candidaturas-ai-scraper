@@ -1,4 +1,4 @@
-"""Copiloto de candidaturas (v5.0): seleção inteligente de CV, kits personalizados, DM a recrutadores e envio por email."""
+"""Copiloto de candidaturas (v5.1): descrição real, redação natural com Gemini, CV certo e envio por email."""
 
 from __future__ import annotations
 
@@ -14,9 +14,15 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-import httpx
 import yaml
 
+from estagio_radar.ai_writer import (
+    extract_tldr_bullets,
+    generate_copy_with_gemini,
+    load_cv_markdown,
+    parse_natural_role_phrase,
+)
+from estagio_radar.job_details import _filter_email, fetch_job_details
 from estagio_radar.models import DomainCategory, EnrichedJob
 
 logger = logging.getLogger("estagio_radar.apply_copilot")
@@ -31,27 +37,44 @@ CV_TRACK_LABELS = {
 
 SAP_ENTERPRISE_RE = re.compile(r"\b(?:sap|abap|erp|s/4hana|fi/co|sd/mm|mm/srm)\b", re.IGNORECASE)
 PT_SIGNAL_RE = re.compile(
-    r"\b(?:estagio|estágio|estágios|bolsa|investigacao|investigação|júnior|programador|analista|engenharia|informática|informatica)\b",
-    re.IGNORECASE,
-)
-REF_CODE_RE = re.compile(
-    r"((?:BI\|[0-9]{4}/[0-9]+|Ref[ªa.]?\s*[:#\-]?\s*[A-Za-z0-9./_-]{3,40}))",
+    r"\b(?:estagio|estágio|estágios|bolsa|investigacao|investigação|júnior|programador|analista|engenharia|informática|informatica|dados)\b",
     re.IGNORECASE,
 )
 EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
-IGNORED_EMAIL_FRAGMENTS = (
-    "noreply",
-    "no-reply",
-    "donotreply",
-    "privacy@",
-    "gdpr@",
-    "dpo@",
-    "euraxess",
-    "ec.europa.eu",
-    "example.com",
-    "sentry.io",
-    "wixpress.com",
-)
+
+
+def extract_application_email(
+    job_url: str,
+    fallback_text: str = "",
+    *,
+    fetch_page: bool = False,
+) -> str | None:
+    """Compatível com v5.0: extrai email do texto ou página oficial."""
+    direct = _filter_email(fallback_text or "")
+    if direct:
+        return direct
+    if not fetch_page or "linkedin.com" in (job_url or "").casefold():
+        return None
+    from estagio_radar.models import CompanyProfile, GeoZone, RoleTier, ScoreBreakdown
+
+    dummy = EnrichedJob(
+        fingerprint="tmp",
+        title="",
+        company="",
+        location="Portugal",
+        job_url=job_url,
+        canonical_url=job_url,
+        sources=["web"],
+        primary_source="web",
+        role_tier=RoleTier.INTERNSHIP,
+        domain=DomainCategory.SWE,
+        geo_zone=GeoZone.PT_UNSPECIFIED,
+        description_snippet=fallback_text,
+        company_profile=CompanyProfile(company_name="x", normalized_name="x"),
+        score=50.0,
+        score_breakdown=ScoreBreakdown(),
+    )
+    return fetch_job_details(dummy).get("detected_email")
 
 
 def _norm_ascii(text: str) -> str:
@@ -138,9 +161,9 @@ def select_best_cv(
     }
 
 
-def detect_apply_strategy(job: EnrichedJob) -> dict[str, str]:
+def detect_apply_strategy(job: EnrichedJob, external_apply_url: str | None = None) -> dict[str, str]:
     """Classifica o melhor canal de candidatura para a vaga."""
-    url_low = job.job_url.casefold()
+    effective_url = (external_apply_url or job.job_url or "").casefold()
     src_low = job.primary_source.casefold()
 
     ats_domains = (
@@ -161,70 +184,38 @@ def detect_apply_strategy(job: EnrichedJob) -> dict[str, str]:
         "jobs.galp.com",
         "oraclecloud.com",
     )
-    if job.source_type == "ats" or any(dom in url_low for dom in ats_domains) or "avature" in src_low:
+    if external_apply_url and "linkedin.com" not in effective_url:
+        return {
+            "type": "ats_autofill",
+            "label": "ATS / Portal Externo Direto (Sem login LinkedIn!)",
+            "hint": "Link oficial extraído do anúncio — abre direto o formulário da empresa e pré-preenche.",
+        }
+    if job.source_type == "ats" or any(dom in effective_url for dom in ats_domains) or "avature" in src_low:
         return {
             "type": "ats_autofill",
             "label": "ATS Direto — Auto-Preenchimento no Chrome",
-            "hint": "Preenche os dados e anexa o CV PDF certo no formulário oficial da empresa.",
+            "hint": "Preenche os dados, dropdowns, perguntas e anexa o CV PDF certo no formulário oficial.",
         }
 
-    if "euraxess.ec.europa.eu" in url_low or EMAIL_RE.search(job.description_snippet or ""):
+    if "euraxess.ec.europa.eu" in effective_url or EMAIL_RE.search(job.description_snippet or ""):
         return {
             "type": "email_or_portal",
             "label": "Bolsa / Candidatura por Email ou Portal",
-            "hint": "Prepara o email com a referência, nota de motivação e CV em anexo.",
+            "hint": "Prepara o email com a referência, nota de motivação natural e CV em anexo.",
         }
 
-    if "linkedin.com" in url_low:
+    if "linkedin.com" in effective_url:
         return {
             "type": "linkedin_portal",
             "label": "LinkedIn — Candidatar + Abordar Recrutador",
-            "hint": "Abre o anúncio no Chrome (ou Easy Apply se tiveres sessão iniciada) e copia DM para recrutadores.",
+            "hint": "Usa a Extensão no teu Chrome já logado ou faz 'Login Chrome' 1x no perfil persistente.",
         }
 
     return {
         "type": "web_portal",
-        "label": "Portal Web — Abrir & Tentar Auto-Preencher",
-        "hint": "Abre no Chrome e tenta preencher campos standard + anexar CV automaticamente.",
+        "label": "Portal Web — Abrir & Auto-Preencher",
+        "hint": "Abre no Chrome e pré-preenche campos standard + anexa CV automaticamente.",
     }
-
-
-def _filter_valid_email(candidates: list[str]) -> str | None:
-    for email in candidates:
-        low = email.casefold().strip()
-        if any(bad in low for bad in IGNORED_EMAIL_FRAGMENTS):
-            continue
-        if low.endswith((".png", ".jpg", ".jpeg", ".svg", ".webp")):
-            continue
-        return email.strip()
-    return None
-
-
-def extract_application_email(
-    job_url: str,
-    fallback_text: str = "",
-    *,
-    fetch_page: bool = False,
-) -> str | None:
-    """Extrai email de candidatura do snippet ou opcionalmente da página (ex: EURAXESS)."""
-    direct = _filter_valid_email(EMAIL_RE.findall(fallback_text or ""))
-    if direct:
-        return direct
-    if not fetch_page or "linkedin.com" in job_url.casefold():
-        return None
-    try:
-        res = httpx.get(
-            job_url,
-            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
-            follow_redirects=True,
-            timeout=6.0,
-        )
-        if res.status_code == 200:
-            found = EMAIL_RE.findall(res.text)
-            return _filter_valid_email(found)
-    except Exception:
-        return None
-    return None
 
 
 def build_recruiter_search_url(company: str) -> str:
@@ -233,12 +224,14 @@ def build_recruiter_search_url(company: str) -> str:
     return f"https://www.linkedin.com/search/results/people/?keywords={quote(q)}"
 
 
-def _is_portuguese_job(job: EnrichedJob) -> bool:
+def _is_portuguese_job(job: EnrichedJob, description: str = "") -> bool:
     if job.primary_source in {"ITJobs.pt", "Net-Empregos"}:
         return True
     if PT_SIGNAL_RE.search(job.title):
         return True
     if "estagio" in _norm_ascii(job.title) or "júnior" in job.title.casefold():
+        return True
+    if description and re.search(r"\b(?:responsabilidades|requisitos|candidatura|procuramos|estágio)\b", description, re.I):
         return True
     return False
 
@@ -247,39 +240,152 @@ def _domain_highlights(track: str, *, pt: bool) -> list[str]:
     if track == "ai_ml":
         if pt:
             return [
-                "JudgeShift CX: pipeline tipado em Python (PyTorch, Transformers, mypy --strict) + dashboard React a avaliar LLMs com 97,2% de acordo sob stress tests.",
-                "JAX Language Model Lab: Transformer decoder-only de 3,32M parâmetros criado de raiz em JAX/Flax com continual pretraining e replay.",
-                "Base sólida na Deloitte Portugal (início com Python, Java e PyTorch, seguido de engenharia enterprise SAP ABAP) + Licenciatura em Engenharia Informática no IPS (média 17/20, 144 ECTS).",
+                "JudgeShift CX: pipeline tipado em Python (PyTorch, Transformers, mypy --strict) + dashboard React para avaliação de LLMs com 97,2% de consistência.",
+                "JAX Language Model Lab: Transformer de 3,32M parâmetros criado de raiz em JAX/Flax com continual pretraining e replay.",
+                "Deloitte Portugal (4,5 anos — início em Python, Java e PyTorch, seguido de SAP ABAP) + Licenciatura em Eng. Informática no IPS (17/20, 144 ECTS).",
             ]
         return [
-            "JudgeShift CX: typed Python LLM evaluation pipeline (PyTorch, Hugging Face, mypy --strict) + React dashboard retaining 97.2% agreement under verbosity stress tests.",
-            "JAX Language Model Lab: 3.32M-parameter Transformer implemented from scratch in JAX/Flax with jit-compiled Optax training and continual-pretraining replay experiments.",
-            "4.5 years at Deloitte Portugal (started in Python, Java & PyTorch before transitioning to SAP ABAP) + BSc in Computer Engineering at IPS (17/20 GPA, 144 ECTS).",
+            "JudgeShift CX: typed Python LLM evaluation pipeline (PyTorch, Hugging Face, mypy --strict) + React dashboard retaining 97.2% agreement under stress tests.",
+            "JAX Language Model Lab: 3.32M-parameter Transformer implemented from scratch in JAX/Flax with jit-compiled Optax training.",
+            "4.5 years at Deloitte Portugal (started in Python, Java & PyTorch before SAP ABAP) + BSc Computer Engineering at IPS (17/20 GPA, 144 ECTS).",
         ]
     if track == "enterprise":
         if pt:
             return [
-                "4,5 anos full-time na Deloitte Portugal: início em Python, Java e PyTorch, evoluindo para desenvolvimento SAP ABAP e consultoria funcional SD/MM e FI/CO (RCA, UAT e integração).",
-                "Estágio Radar PT: pipeline assíncrono em Python (75+ APIs ATS diretas, SQLite, daemon 24/7, CI/CD e 33+ testes pytest).",
-                "Licenciatura em Engenharia Informática no IPS (média 17/20, 144 ECTS) com projetos modernos em TypeScript/React (SplitFX) e IA aplicada (JudgeShift CX).",
+                "Deloitte Portugal (4,5 anos): início com Python, Java e PyTorch, evoluindo para desenvolvimento SAP ABAP e consultoria funcional SD/MM & FI/CO (RCA e UAT).",
+                "Estágio Radar PT: pipeline assíncrono em Python (75+ APIs ATS diretas, SQLite, daemon 24/7, CI/CD e 38 testes pytest).",
+                "Engenharia Informática no IPS (17/20, 144 ECTS) com projetos modernos em TypeScript/React (SplitFX) e IA aplicada (JudgeShift CX).",
             ]
         return [
-            "4.5 years at Deloitte Portugal: early enterprise/ML work in Python, Java & PyTorch followed by SAP ABAP engineering and SD/MM & FI/CO consulting (RCA, UAT).",
-            "Estágio Radar PT: async Python ingestion pipeline across 75+ direct ATS boards with ETag 304 caching, SQLite persistence, and 33+ automated pytest tests.",
-            "BSc in Computer Engineering at IPS (17/20 GPA, 144 ECTS) combining enterprise delivery rigor with full-stack TypeScript/React (SplitFX) and Applied AI (JudgeShift CX).",
+            "Deloitte Portugal (4.5 yrs): early Python, Java & PyTorch followed by SAP ABAP engineering and SD/MM & FI/CO functional consulting (RCA, UAT).",
+            "Estágio Radar PT: async Python ingestion pipeline across 75+ direct ATS boards with ETag 304 caching, SQLite, and 38 automated tests.",
+            "BSc Computer Engineering at IPS (17/20 GPA, 144 ECTS) bridging enterprise rigor with TypeScript/React (SplitFX) and Applied AI (JudgeShift CX).",
         ]
-    # swe
     if pt:
         return [
-            "Digital Listing Workflow: aplicação full-stack Node.js/TypeScript + PostgreSQL + Prisma ORM + OAuth 2.0 + RBAC com agente local Windows resiliente a falhas.",
-            "SplitFX: aplicação React 19 / TypeScript / Redux Toolkit com aritmética determinística, Jest, Cypress E2E e pipeline CI/CD.",
-            "Deloitte Portugal (4,5 anos, início em Python, Java e PyTorch e evolução para SAP ABAP, RCA e UAT) + Engenharia Informática no IPS (média 17/20).",
+            "Digital Listing Workflow: plataforma full-stack Node.js/TypeScript + PostgreSQL + Prisma ORM + OAuth 2.0 + RBAC e agente local Windows.",
+            "SplitFX: aplicação React 19 / TypeScript / Redux Toolkit com aritmética determinística, Jest, Cypress E2E e CI/CD.",
+            "Deloitte Portugal (4,5 anos — início em Python, Java e PyTorch antes de SAP ABAP, RCA e UAT) + Eng. Informática no IPS (média 17/20).",
         ]
     return [
-        "Digital Listing Workflow: full-stack Node.js/TypeScript web platform + Windows local automation agent backed by PostgreSQL, Prisma ORM, OAuth 2.0, RBAC & Vitest.",
-        "SplitFX: accessible React 19 / TypeScript / Redux Toolkit app with deterministic integer arithmetic, Jest + RTL coverage, and Cypress E2E GitHub Actions CI/CD.",
+        "Digital Listing Workflow: full-stack Node.js/TypeScript web platform + Windows local automation agent backed by PostgreSQL, Prisma ORM, OAuth 2.0 & Vitest.",
+        "SplitFX: accessible React 19 / TypeScript / Redux Toolkit app with deterministic integer arithmetic, Jest + RTL coverage, and Cypress E2E CI/CD.",
         "Deloitte Portugal (4.5 yrs — early Python, Java & PyTorch before SAP ABAP delivery/RCA) + BSc Computer Engineering at IPS (17/20 GPA, 144 ECTS).",
     ]
+
+
+def _trim_dm(text: str, limit: int = 280) -> str:
+    clean = re.sub(r"\s+", " ", text).strip()
+    if len(clean) <= limit:
+        return clean
+    clipped = clean[: limit - 1].rsplit(" ", 1)[0].rstrip(" ,;:-")
+    return clipped + "…"
+
+
+def _build_offline_copy(
+    *,
+    job: EnrichedJob,
+    description: str,
+    profile: dict[str, Any],
+    track: str,
+    pt: bool,
+    tone: str,
+) -> dict[str, Any]:
+    full_name = str(profile.get("full_name") or "Candidate")
+    email = str(profile.get("email") or "")
+    phone = str(profile.get("phone") or "")
+    github = str(profile.get("github_url") or "")
+    linkedin = str(profile.get("linkedin_url") or "")
+
+    role_info = parse_natural_role_phrase(job.title, job.company, pt=pt)
+    role_label = role_info["role_label"]
+    apply_phrase = role_info["apply_phrase"]
+    highlights = _domain_highlights(track, pt=pt)
+    tldr = extract_tldr_bullets(description, pt=pt)
+
+    if pt:
+        if track == "ai_ml":
+            proj_focus = "projetos práticos em Python, PyTorch e JAX (como o JudgeShift CX para avaliação de LLMs e um Transformer criado de raiz)"
+        elif track == "enterprise":
+            proj_focus = "experiência real na Deloitte (início em Python, Java e PyTorch, seguido de SAP ABAP SD/MM e FI/CO) aliada a automação assíncrona em Python"
+        else:
+            proj_focus = "sistemas full-stack em TypeScript, Node.js, React e PostgreSQL, além de pipelines assíncronos em Python com testes automatizados"
+
+        if tone == "concise":
+            short_cover_note = (
+                f"Olá equipa da {job.company}, candidato-me {apply_phrase} por encaixar diretamente no meu foco em {proj_focus}. "
+                f"Estou a terminar Engenharia Informática no IPS (média 17/20, 144 ECTS) após 4,5 anos na Deloitte Portugal, e fico disponível de imediato em Setúbal/Lisboa."
+            )
+        else:
+            short_cover_note = (
+                f"Olá equipa da {job.company}, escrevo para me candidatar {apply_phrase}. "
+                f"Encontro-me a concluir a Licenciatura em Engenharia Informática no IPS (média atual 17/20, 144 ECTS) depois de 4,5 anos na Deloitte Portugal, "
+                f"onde comecei em desenvolvimento com Python, Java e PyTorch antes de seguir para engenharia enterprise SAP ABAP. "
+                f"Hoje trago essa maturidade de produção combinada com {proj_focus}, com disponibilidade imediata para contribuir na região de Setúbal/Lisboa."
+            )
+        email_subject = f"Candidatura — {role_label} ({job.company}) — {full_name}"
+        email_body = (
+            f"Exmos.(as) Senhores(as) da equipa {job.company},\n\n"
+            f"Venho apresentar a minha candidatura {apply_phrase}.\n\n"
+            f"Encontro-me a concluir a Licenciatura em Engenharia Informática no Instituto Politécnico de Setúbal (média 17/20, 144 ECTS), "
+            f"em transição após 4,5 anos de experiência profissional na Deloitte Portugal (início com Python, Java e PyTorch, seguido de desenvolvimento SAP ABAP).\n\n"
+            f"Pontos relevantes do meu percurso:\n"
+            + "\n".join(f"- {h}" for h in highlights)
+            + f"\n\nEnvio o meu CV em anexo e deixo o meu GitHub ({github}) e LinkedIn ({linkedin}).\n"
+            f"Fico inteiramente disponível para uma breve conversa.\n\n"
+            f"Com os melhores cumprimentos,\n{full_name}\n{phone} | {email}"
+        )
+        recruiter_dm = _trim_dm(
+            f"Olá! Candidatei-me {apply_phrase} na {job.company}. "
+            f"Concluo Eng. Informática no IPS (17/20) após 4,5 anos na Deloitte, com projetos em Python/IA e TypeScript ({github}). "
+            f"Podemos falar?"
+        )
+    else:
+        if track == "ai_ml":
+            proj_focus = "hands-on Python, PyTorch, and JAX engineering (JudgeShift CX LLM evaluation and a from-scratch Transformer lab)"
+        elif track == "enterprise":
+            proj_focus = "enterprise engineering at Deloitte (early Python, Java & PyTorch followed by SAP ABAP SD/MM & FI/CO) alongside async Python automation"
+        else:
+            proj_focus = "tested full-stack and backend systems in TypeScript, Node.js, React, PostgreSQL, and async Python"
+
+        if tone == "concise":
+            short_cover_note = (
+                f"Hi {job.company} team, I am applying {apply_phrase} given my focus on {proj_focus}. "
+                f"I am completing a BSc in Computer Engineering at IPS (17/20 GPA, 144 ECTS) after 4.5 years at Deloitte Portugal, with immediate availability in Lisbon/Setúbal."
+            )
+        else:
+            short_cover_note = (
+                f"Hi {job.company} team, I am writing to apply {apply_phrase}. "
+                f"I am currently completing my BSc in Computer Engineering at IPS (17/20 GPA, 144 ECTS, graduating 2027) after 4.5 years at Deloitte Portugal, "
+                f"where I started working with Python, Java, and PyTorch before moving into SAP ABAP delivery and incident RCA. "
+                f"Today I pair that production discipline with {proj_focus}, and I am ready to contribute in Lisbon/Setúbal with full EU work authorization."
+            )
+        email_subject = f"Application: {role_label} ({job.company}) — {full_name}"
+        email_body = (
+            f"Dear {job.company} Hiring Team,\n\n"
+            f"I am writing to apply {apply_phrase}.\n\n"
+            f"I am completing my BSc in Computer Engineering at the Polytechnic Institute of Setúbal (17/20 GPA, 144 ECTS) "
+            f"after 4.5 years of full-time engineering experience at Deloitte Portugal (starting in Python, Java, and PyTorch before transitioning to SAP ABAP).\n\n"
+            f"Key highlights aligned with this opportunity:\n"
+            + "\n".join(f"- {h}" for h in highlights)
+            + f"\n\nMy tailored CV is attached, and my code/portfolio is available at {github} and {linkedin}.\n"
+            f"Thank you for your consideration.\n\n"
+            f"Best regards,\n{full_name}\n{phone} | {email}"
+        )
+        recruiter_dm = _trim_dm(
+            f"Hi! I applied {apply_phrase} at {job.company}. "
+            f"BSc CS student (17/20 GPA) pivoting from 4.5 yrs at Deloitte, with PyTorch/JAX & TypeScript projects ({github}). Glad to connect!"
+        )
+
+    return {
+        "natural_role_title": role_label,
+        "role_tldr": tldr,
+        "highlight_bullets": highlights,
+        "short_cover_note": short_cover_note,
+        "email_subject": email_subject,
+        "email_body": email_body,
+        "recruiter_dm": recruiter_dm,
+    }
 
 
 def generate_application_kit(
@@ -289,117 +395,108 @@ def generate_application_kit(
     override_track: str | None = None,
     fetch_email: bool = False,
     repo_root: Path | None = None,
+    storage: Any = None,
+    tone: str = "balanced",
+    force_refresh: bool = False,
+    gemini_client: Any = None,
 ) -> dict[str, Any]:
-    """Gera kit completo pronto a usar (CV selecionado, nota, email, DM e estratégia)."""
-    full_name = str(profile.get("full_name") or "Candidate")
-    first_name = str(profile.get("first_name") or full_name.split()[0])
-    email = str(profile.get("email") or "")
-    phone = str(profile.get("phone") or "")
-    github = str(profile.get("github_url") or "")
-    linkedin = str(profile.get("linkedin_url") or "")
-
+    """Gera kit completo com descrição real da vaga, limpeza natural ou Gemini AI e estratégia de envio."""
     cv_info = select_best_cv(job, profile, override_track=override_track, repo_root=repo_root)
     track = cv_info["track"]
-    pt = _is_portuguese_job(job)
-    strategy = detect_apply_strategy(job)
-    detected_email = extract_application_email(
-        job.job_url,
-        f"{job.title} {job.description_snippet or ''}",
-        fetch_page=fetch_email,
+
+    cached = storage.get_job_details(job.fingerprint) if storage is not None else {}
+    description = (cached.get("full_description") or "").strip()
+    external_apply_url = cached.get("external_apply_url")
+    detected_email = _filter_email(f"{job.description_snippet or ''} {description}")
+
+    if (fetch_email or force_refresh) and not description:
+        fetched = fetch_job_details(job)
+        description = (fetched.get("description") or job.description_snippet or "").strip()
+        if fetched.get("external_apply_url"):
+            external_apply_url = fetched["external_apply_url"]
+        if fetched.get("detected_email"):
+            detected_email = fetched["detected_email"]
+        if storage is not None and (description or external_apply_url):
+            storage.save_job_details(
+                job.fingerprint,
+                full_description=description or None,
+                external_apply_url=external_apply_url,
+            )
+    elif not description:
+        description = (job.description_snippet or "").strip()
+
+    pt = _is_portuguese_job(job, description)
+    language = "pt" if pt else "en"
+    strategy = detect_apply_strategy(job, external_apply_url=external_apply_url)
+    cv_md = load_cv_markdown(cv_info["path"])
+
+    used_ai = False
+    ai_model = ""
+    ai_status = "Modo offline limpo (adiciona GEMINI_API_KEY para redação adaptativa ao anúncio)"
+
+    ai_copy, ai_info = generate_copy_with_gemini(
+        job=job,
+        description=description,
+        cv_markdown=cv_md,
+        profile=profile,
+        language=language,
+        tone=tone,
+        client=gemini_client,
     )
-
-    ref_match = REF_CODE_RE.search(job.title)
-    ref_tag = f" ({ref_match.group(1).strip()})" if ref_match else ""
-    highlights = _domain_highlights(track, pt=pt)
-
-    if pt:
-        if track == "ai_ml":
-            proj_line = "os projetos JudgeShift CX (avaliação de LLMs em Python/PyTorch) e JAX Language Model Lab (Transformer criado de raiz em JAX/Flax)"
-        elif track == "enterprise":
-            proj_line = "experiência real na Deloitte (início em Python/Java/PyTorch e 4+ anos em SAP ABAP SD/MM & FI/CO) além do pipeline Estágio Radar PT em Python"
-        else:
-            proj_line = "projetos full-stack e backend em TypeScript/Node.js/React (Digital Listing Workflow, SplitFX) e pipelines assíncronos em Python (Estágio Radar PT)"
-
-        short_cover_note = (
-            f"Olá equipa da {job.company}, candidatei-me à vaga '{job.title}' por alinhar diretamente com o meu percurso atual. "
-            f"Frequento a Licenciatura em Engenharia Informática no IPS (média atual 17/20, 144 ECTS) após 4,5 anos de experiência profissional na Deloitte Portugal "
-            f"(onde comecei com Python, Java e PyTorch antes de atuar em engenharia enterprise SAP ABAP), combinando rigor de produção com {proj_line}. "
-            f"Estou disponível de imediato em Setúbal/Lisboa e com enorme motivação para contribuir desde o primeiro dia."
-        )
-        email_subject = f"Candidatura: {job.title}{ref_tag} — {full_name}"
-        email_body = (
-            f"Exmos.(as) Senhores(as) da equipa {job.company},\n\n"
-            f"Venho por este meio apresentar a minha candidatura à oportunidade '{job.title}'{ref_tag}.\n\n"
-            f"Encontro-me a concluir a Licenciatura em Engenharia Informática no Instituto Politécnico de Setúbal (média atual 17/20, 144 ECTS), "
-            f"após 4,5 anos de experiência profissional na Deloitte Portugal (com início em Python, Java e PyTorch, seguido de desenvolvimento enterprise SAP ABAP).\n\n"
-            f"Destaques relevantes para esta vaga:\n"
-            + "\n".join(f"- {h}" for h in highlights)
-            + f"\n\nEnvio o meu CV em anexo e disponibilizo o meu GitHub ({github}) e LinkedIn ({linkedin}).\n"
-            f"Agradeço desde já a atenção e fico inteiramente disponível para entrevista.\n\n"
-            f"Com os melhores cumprimentos,\n{full_name}\n{phone} | {email}"
-        )
-        recruiter_dm = (
-            f"Olá! Acabei de me candidatar à vaga '{job.title}' na {job.company}. "
-            f"Sou estudante de Eng. Informática no IPS (média 17/20) em transição após 4,5 anos na Deloitte, com projetos reais em Python/IA e TypeScript no GitHub ({github}). "
-            f"Se fizer sentido uma breve conversa, terei todo o gosto em partilhar mais detalhes!"
-        )
+    if ai_copy is not None:
+        used_ai = True
+        ai_model = ai_info
+        ai_status = f"Gerado com Gemini ({ai_info})"
+        copy_fields = ai_copy.model_dump()
     else:
-        if track == "ai_ml":
-            proj_line = "building reproducible AI/ML systems such as JudgeShift CX (PyTorch/Transformers LLM evaluation) and JAX Language Model Lab (from-scratch Transformer in JAX/Flax)"
-        elif track == "enterprise":
-            proj_line = "enterprise delivery at Deloitte Portugal (early Python, Java & PyTorch followed by SAP ABAP SD/MM & FI/CO) alongside async Python automation (Estágio Radar PT)"
-        else:
-            proj_line = "shipping tested full-stack and backend systems in TypeScript, Node.js, React, PostgreSQL (Digital Listing Workflow, SplitFX) and async Python (Estágio Radar PT)"
-
-        short_cover_note = (
-            f"Hi {job.company} team, I am excited to apply for '{job.title}'. "
-            f"I am a BSc Computer Engineering student at IPS (17/20 GPA, 144 ECTS, graduating 2027) pivoting from 4.5 years of enterprise software engineering at Deloitte Portugal "
-            f"(starting with Python, Java, and PyTorch before moving into SAP ABAP delivery) while {proj_line}. "
-            f"Based in Setúbal/Lisbon with full EU work authorization, I would love to bring production discipline and strong ownership to {job.company}."
-        )
-        email_subject = f"Application: {job.title}{ref_tag} — {full_name}"
-        email_body = (
-            f"Dear {job.company} Hiring Team,\n\n"
-            f"I am writing to apply for '{job.title}'{ref_tag}.\n\n"
-            f"I am currently completing my BSc in Computer Engineering at the Polytechnic Institute of Setúbal (17/20 GPA, 144 ECTS) "
-            f"after 4.5 years of full-time software engineering at Deloitte Portugal (starting in Python, Java, and PyTorch before working in SAP ABAP enterprise systems).\n\n"
-            f"Key highlights aligned with this role:\n"
-            + "\n".join(f"- {h}" for h in highlights)
-            + f"\n\nMy tailored CV is attached, and my portfolio/code is available at {github} and {linkedin}.\n"
-            f"Thank you for your time and consideration.\n\n"
-            f"Best regards,\n{full_name}\n{phone} | {email}"
-        )
-        recruiter_dm = (
-            f"Hi! I just applied for '{job.title}' at {job.company}. "
-            f"I'm a BSc Computer Engineering student (17/20 GPA) transitioning from 4.5 yrs at Deloitte Portugal, with recent PyTorch/JAX & TypeScript projects on GitHub ({github}). "
-            f"Would be glad to connect if you're reviewing candidates for the team!"
+        if ai_info and not ai_info.startswith("GEMINI_API_KEY"):
+            ai_status = ai_info
+        copy_fields = _build_offline_copy(
+            job=job,
+            description=description,
+            profile=profile,
+            track=track,
+            pt=pt,
+            tone=tone,
         )
 
     mailto_target = detected_email or ""
-    mailto_url = f"mailto:{mailto_target}?subject={quote(email_subject)}&body={quote(email_body)}"
+    mailto_url = (
+        f"mailto:{mailto_target}?subject={quote(copy_fields['email_subject'])}"
+        f"&body={quote(copy_fields['email_body'])}"
+    )
 
     return {
         "fingerprint": job.fingerprint,
         "company": job.company,
         "title": job.title,
+        "natural_role_title": copy_fields["natural_role_title"],
         "job_url": job.job_url,
-        "language": "pt" if pt else "en",
+        "external_apply_url": external_apply_url,
+        "language": language,
+        "tone": tone,
+        "used_ai": used_ai,
+        "ai_model": ai_model,
+        "ai_status": ai_status,
+        "description_length": len(description),
+        "description_preview": description[:650],
+        "role_tldr": copy_fields["role_tldr"],
         "cv": cv_info,
         "available_cvs": list_available_cvs(profile, repo_root=repo_root),
         "strategy": strategy,
-        "highlight_bullets": highlights,
-        "short_cover_note": short_cover_note,
-        "email_subject": email_subject,
-        "email_body": email_body,
-        "recruiter_dm": recruiter_dm,
+        "highlight_bullets": copy_fields["highlight_bullets"],
+        "short_cover_note": copy_fields["short_cover_note"],
+        "email_subject": copy_fields["email_subject"],
+        "email_body": copy_fields["email_body"],
+        "recruiter_dm": copy_fields["recruiter_dm"],
         "recruiter_search_url": build_recruiter_search_url(job.company),
         "detected_email": detected_email,
         "mailto_url": mailto_url,
         "candidate": {
-            "full_name": full_name,
-            "first_name": first_name,
-            "email": email,
-            "phone": phone,
+            "full_name": str(profile.get("full_name") or ""),
+            "first_name": str(profile.get("first_name") or ""),
+            "email": str(profile.get("email") or ""),
+            "phone": str(profile.get("phone") or ""),
         },
     }
 
@@ -424,12 +521,12 @@ def send_application_email(
     smtp_port = int(port_raw) if port_raw.isdigit() else 587
 
     if not (smtp_user and smtp_pass):
-        return False, "SMTP_USER / SMTP_PASS não estão configurados no .env — usa o botão 'Abrir no Email' ou configura uma App Password Gmail."
+        return False, "SMTP_USER / SMTP_PASS não estão configurados no .env — usa o botão 'Abrir na App de Email' ou configura uma App Password Gmail."
 
     if not attachment_path.exists():
         return False, f"CV PDF não encontrado em '{attachment_path}'."
 
-    full_name = str(profile.get("full_name") or "Rui Sá")
+    full_name = str(profile.get("full_name") or "Candidate")
     reply_to = str(profile.get("email") or smtp_user)
 
     msg = MIMEMultipart()

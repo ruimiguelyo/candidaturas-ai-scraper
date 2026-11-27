@@ -1,18 +1,23 @@
-"""Worker Playwright (Human-in-the-Loop) para abrir e auto-preencher formulários ATS no Chrome visível."""
+"""Worker Playwright v2 (Human-in-the-Loop): sessão Chrome persistente, URL externo, cookies, dropdowns e perguntas IA."""
 
 from __future__ import annotations
 
 import logging
 import re
+import tempfile
 from pathlib import Path
 from typing import Any
 
+from estagio_radar.ai_writer import answer_form_questions_with_gemini, load_cv_markdown
 from estagio_radar.models import EnrichedJob
 
 logger = logging.getLogger("estagio_radar.autofill")
 
+CHROME_PROFILE_DIR = Path("data/chrome_copilot_profile")
+
 SUBMIT_BLOCK_RE = re.compile(r"\b(?:submit|send|confirm|finali[sz]e|submeter|enviar candidatura)\b", re.IGNORECASE)
 APPLY_NAV_RE = re.compile(r"\b(?:apply(?:\s+(?:now|for this job|online))?|candidatar(?:-me)?|start application)\b", re.IGNORECASE)
+COOKIE_TEXT_RE = re.compile(r"^(?:accept(?:\s+all(?:\s+cookies)?)?|aceitar(?:\s+tudo|\s+cookies)?|i agree|allow all)$", re.IGNORECASE)
 ATS_FRAME_HINT_RE = re.compile(
     r"(?:greenhouse|ashby|lever|smartrecruiters|recruitee|teamtailor|workday|bamboohr|breezy|successfactors|avature)",
     re.IGNORECASE,
@@ -28,24 +33,24 @@ def _match_field_kind(descriptor: str, tag: str, input_type: str) -> str | None:
             return "resume"
         return "resume_fallback"
 
-    if tag == "textarea" or any(k in low for k in ("cover", "carta", "motivation", "motivacao", "why", "additional", "message", "note", "summary")):
-        if tag == "textarea":
+    if tag == "textarea":
+        if any(k in low for k in ("cover", "carta", "why", "motivation", "motivacao", "additional", "message", "summary")):
             return "cover_note"
-        return None
+        return "open_question"
 
     if input_type in {"hidden", "checkbox", "radio", "submit", "button"}:
         return None
 
-    if "first" in low and "name" in low or "primeiro nome" in low or "fname" in low:
+    if ("first" in low and "name" in low) or "primeiro nome" in low or "fname" in low or "given-name" in low:
         return "first_name"
-    if "last" in low and "name" in low or "apelido" in low or "surname" in low or "lname" in low:
+    if ("last" in low and "name" in low) or "apelido" in low or "surname" in low or "lname" in low or "family-name" in low:
         return "last_name"
-    if "full name" in low or "nome completo" in low or re.search(r"(?:^|\b)(?:name|nome)(?:$|\b)", low):
+    if "full name" in low or "nome completo" in low or re.search(r"(?:^|\b|\|)(?:name|nome)(?:$|\b|\|)", low):
         if not any(b in low for b in ("company", "empresa", "university", "school", "degree", "file")):
             return "full_name"
     if "email" in low or "e-mail" in low or input_type == "email":
         return "email"
-    if "phone" in low or "mobile" in low or "telefone" in low or "telemovel" in low or input_type == "tel":
+    if "phone" in low or "mobile" in low or "telefone" in low or "telemovel" in low or "telemóvel" in low or input_type == "tel":
         return "phone"
     if "linkedin" in low:
         return "linkedin_url"
@@ -54,9 +59,9 @@ def _match_field_kind(descriptor: str, tag: str, input_type: str) -> str | None:
     if any(k in low for k in ("portfolio", "website", "personal site", "blog", "url")):
         if "linkedin" not in low and "github" not in low:
             return "portfolio_url"
-    if any(k in low for k in ("city", "cidade", "location", "localizacao", "morada", "address")):
+    if any(k in low for k in ("city", "cidade", "location", "localizacao", "localização", "morada", "address")):
         return "location"
-    if any(k in low for k in ("university", "school", "college", "faculdade", "universidade", "instituicao")):
+    if any(k in low for k in ("university", "school", "college", "faculdade", "universidade", "instituicao", "instituição")):
         return "university"
     if any(k in low for k in ("degree", "curso", "licenciatura", "major", "field of study")):
         return "degree"
@@ -76,26 +81,126 @@ def _build_field_values(profile: dict[str, Any], kit: dict[str, Any]) -> dict[st
         "github_url": str(profile.get("github_url") or ""),
         "portfolio_url": str(profile.get("portfolio_url") or ""),
         "location": str(profile.get("location") or profile.get("city") or ""),
+        "country": str(profile.get("country") or "Portugal"),
         "university": str(profile.get("university") or ""),
         "degree": str(profile.get("degree") or ""),
-        "graduation_year": str(profile.get("graduation_year") or ""),
+        "graduation_year": str(profile.get("graduation_year") or "2027"),
         "cover_note": str(kit.get("short_cover_note") or ""),
     }
 
 
-def _fill_frame_inputs(frame: Any, values: dict[str, str], cv_path: Path | None) -> tuple[list[str], bool]:
+def _dismiss_cookie_banners(page: Any) -> None:
+    try:
+        for sel in ("#onetrust-accept-btn-handler", "button#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"):
+            el = page.locator(sel).first
+            if el.count() > 0 and el.is_visible():
+                el.click(timeout=1200)
+                page.wait_for_timeout(300)
+                return
+        btns = page.locator("button, a[role='button']")
+        for i in range(min(btns.count(), 30)):
+            b = btns.nth(i)
+            try:
+                txt = (b.inner_text(timeout=250) or "").strip()
+            except Exception:
+                continue
+            if txt and len(txt) <= 28 and COOKIE_TEXT_RE.match(txt):
+                if b.is_visible():
+                    b.click(timeout=1000)
+                    page.wait_for_timeout(300)
+                    break
+    except Exception:
+        pass
+
+
+def _select_matching_option(frame: Any, meta: dict[str, Any], desired_tokens: list[str], fallback_label: str) -> str | None:
+    try:
+        select_loc = frame.locator("select").nth(meta["selectIdx"])
+        options = meta.get("options") or []
+        for tok in desired_tokens:
+            for opt in options:
+                txt = str(opt.get("text") or "").casefold()
+                val = str(opt.get("value") or "")
+                if val and tok.casefold() in txt:
+                    select_loc.select_option(value=val, timeout=1200)
+                    return fallback_label
+    except Exception:
+        return None
+    return None
+
+
+def _fill_selects_and_radios(frame: Any, profile: dict[str, Any]) -> list[str]:
+    filled: list[str] = []
+    try:
+        selects = frame.eval_on_selector_all(
+            "select",
+            """els => els.map((el, idx) => {
+                const id = el.id || "";
+                const labelEl = id ? document.querySelector(`label[for="${CSS.escape(id)}"]`) : null;
+                const cont = el.closest("div, li, fieldset, section, td");
+                const lbl = (labelEl?.innerText || el.closest("label")?.innerText || cont?.querySelector("label, legend")?.innerText || "").trim();
+                const rect = el.getBoundingClientRect();
+                const visible = rect.width > 0 && rect.height > 0;
+                return {
+                    selectIdx: idx,
+                    name: el.getAttribute("name") || "",
+                    id,
+                    label: lbl,
+                    disabled: Boolean(el.disabled),
+                    visible,
+                    options: Array.from(el.options).map(o => ({ value: o.value, text: o.text }))
+                };
+            })""",
+        )
+    except Exception:
+        selects = []
+
+    for meta in selects:
+        if meta.get("disabled") or not meta.get("visible"):
+            continue
+        desc = f"{meta.get('name', '')} | {meta.get('id', '')} | {meta.get('label', '')}".casefold()
+        if any(k in desc for k in ("country", "pais", "país", "nation")):
+            hit = _select_matching_option(frame, meta, ["portugal"], "country")
+        elif any(k in desc for k in ("sponsor", "visa", "visto")):
+            hit = _select_matching_option(frame, meta, ["no", "não", "nao", "do not require"], "sponsorship")
+        elif any(k in desc for k in ("authori", "eligible", "work in", "trabalhar")):
+            hit = _select_matching_option(frame, meta, ["yes", "sim", "authorized"], "work_auth")
+        elif any(k in desc for k in ("graduation", "grad year", "conclus")):
+            hit = _select_matching_option(frame, meta, [str(profile.get("graduation_year") or "2027")], "graduation_year")
+        elif any(k in desc for k in ("degree", "education", "licenciatura", "habilit")):
+            hit = _select_matching_option(frame, meta, ["bachelor", "bsc", "licenciatura"], "degree")
+        elif any(k in desc for k in ("hear about", "source", "como conheceu")):
+            hit = _select_matching_option(frame, meta, ["linkedin", "company", "website", "career"], "source")
+        else:
+            hit = None
+        if hit:
+            filled.append(hit)
+
+    return filled
+
+
+def _fill_frame_inputs(
+    frame: Any,
+    values: dict[str, str],
+    cv_path: Path | None,
+    profile: dict[str, Any],
+) -> tuple[list[str], bool, list[tuple[int, str]]]:
     filled: list[str] = []
     cv_attached = False
+    open_questions: list[tuple[int, str]] = []
+
     try:
         candidates = frame.eval_on_selector_all(
             "input, textarea",
             """els => els.map((el, idx) => {
                 const id = el.id || "";
+                const ariaLblBy = el.getAttribute("aria-labelledby") || "";
+                const refEl = ariaLblBy ? document.getElementById(ariaLblBy.split(/\\s+/)[0]) : null;
                 const labelEl = id ? document.querySelector(`label[for="${CSS.escape(id)}"]`) : null;
                 const parentLabel = el.closest("label");
                 const container = el.closest("div, li, fieldset, section, td");
-                const containerLabel = container ? container.querySelector("label, legend") : null;
-                const labelTxt = (labelEl?.innerText || parentLabel?.innerText || containerLabel?.innerText || "").trim();
+                const containerLabel = container ? container.querySelector("label, legend, span[class*='label' i]") : null;
+                const labelTxt = (labelEl?.innerText || refEl?.innerText || parentLabel?.innerText || containerLabel?.innerText || "").trim();
                 const rect = el.getBoundingClientRect();
                 const visible = el.type === "file" ? true : (rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden");
                 return {
@@ -115,7 +220,7 @@ def _fill_frame_inputs(frame: Any, values: dict[str, str], cv_path: Path | None)
             })""",
         )
     except Exception:
-        return filled, cv_attached
+        return filled, cv_attached, open_questions
 
     locator_all = frame.locator("input, textarea")
     fallback_file_indices: list[int] = []
@@ -139,10 +244,14 @@ def _fill_frame_inputs(frame: Any, values: dict[str, str], cv_path: Path | None)
                 except Exception:
                     pass
             continue
+        if kind == "open_question":
+            q_label = (meta.get("label") or meta.get("ariaLabel") or meta.get("placeholder") or "").strip()
+            if q_label and not str(meta.get("value") or "").strip():
+                open_questions.append((meta["idx"], q_label[:220]))
+            continue
         if kind and values.get(kind) and not str(meta.get("value") or "").strip():
             try:
-                loc = locator_all.nth(meta["idx"])
-                loc.fill(values[kind], timeout=1500)
+                locator_all.nth(meta["idx"]).fill(values[kind], timeout=1500)
                 filled.append(kind)
             except Exception:
                 pass
@@ -155,7 +264,8 @@ def _fill_frame_inputs(frame: Any, values: dict[str, str], cv_path: Path | None)
         except Exception:
             pass
 
-    return filled, cv_attached
+    filled.extend(_fill_selects_and_radios(frame, profile))
+    return filled, cv_attached, open_questions
 
 
 def _maybe_open_apply_view(page: Any) -> None:
@@ -183,9 +293,7 @@ def _maybe_open_apply_view(page: Any) -> None:
                 txt = (el.inner_text(timeout=400) or "").strip()
             except Exception:
                 continue
-            if not txt or len(txt) > 45:
-                continue
-            if SUBMIT_BLOCK_RE.search(txt):
+            if not txt or len(txt) > 45 or SUBMIT_BLOCK_RE.search(txt):
                 continue
             if APPLY_NAV_RE.search(txt):
                 try:
@@ -224,6 +332,62 @@ def _inject_copilot_banner(page: Any, summary: str) -> None:
         pass
 
 
+def _launch_persistent(p: Any, profile_dir: Path, *, headless: bool) -> Any:
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    last_err: Exception | None = None
+    for channel in ("chrome", "msedge", None):
+        try:
+            kwargs: dict[str, Any] = {
+                "user_data_dir": str(profile_dir),
+                "headless": headless,
+                "no_viewport": not headless,
+                "args": ["--disable-blink-features=AutomationControlled"] + ([] if headless else ["--start-maximized"]),
+            }
+            if channel:
+                kwargs["channel"] = channel
+            return p.chromium.launch_persistent_context(**kwargs)
+        except Exception as err:
+            last_err = err
+    raise RuntimeError(f"Não foi possível iniciar o browser persistente Chrome/Edge: {last_err}")
+
+
+def open_login_browser(urls: list[str] | None = None, *, user_data_dir: Path | None = None) -> None:
+    """Abre o perfil Chrome persistente para o utilizador iniciar sessão 1 vez no LinkedIn / portais."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as err:
+        raise RuntimeError("Playwright não instalado neste ambiente.") from err
+
+    targets = urls or [
+        "https://www.linkedin.com/login",
+        "https://www.itjobs.pt/",
+        "https://pt.teamlyzer.com/users/login",
+    ]
+    prof_dir = user_data_dir or CHROME_PROFILE_DIR
+
+    with sync_playwright() as p:
+        context = _launch_persistent(p, prof_dir, headless=False)
+        try:
+            page = context.pages[0] if context.pages else context.new_page()
+            page.goto(targets[0], wait_until="domcontentloaded", timeout=20000)
+            _inject_copilot_banner(
+                page,
+                "Sessão persistente Estágio Radar: inicia sessão no LinkedIn / portais (fica guardado para os auto-preenchimentos). Fecha o browser quando terminares.",
+            )
+            for extra in targets[1:]:
+                tab = context.new_page()
+                tab.goto(extra, wait_until="domcontentloaded", timeout=20000)
+            try:
+                page.wait_for_event("close", timeout=0)
+            except Exception:
+                pass
+        finally:
+            try:
+                context.close()
+            except Exception:
+                pass
+
+
 def run_autofill_browser(
     job: EnrichedJob,
     kit: dict[str, Any],
@@ -232,8 +396,9 @@ def run_autofill_browser(
     headless: bool = False,
     keep_open: bool = True,
     target_url: str | None = None,
+    user_data_dir: Path | None = None,
 ) -> dict[str, Any]:
-    """Abre o Chrome visível na vaga, pré-preenche dados e anexa o CV sem nunca submeter sozinho."""
+    """Abre o Chrome persistente na vaga, fecha cookies, pré-preenche campos/selects/perguntas e anexa o CV."""
     try:
         from playwright.sync_api import sync_playwright
     except ImportError as err:
@@ -241,7 +406,7 @@ def run_autofill_browser(
             "Playwright não instalado neste ambiente. Instala com: uv pip install playwright"
         ) from err
 
-    url = target_url or job.job_url
+    url = target_url or kit.get("external_apply_url") or job.job_url
     cv_raw = str((kit.get("cv") or {}).get("path") or "").strip()
     cv_path = Path(cv_raw) if cv_raw else None
     values = _build_field_values(profile, kit)
@@ -250,63 +415,84 @@ def run_autofill_browser(
     cv_attached = False
     final_url = url
 
-    with sync_playwright() as p:
-        browser = None
-        last_err: Exception | None = None
-        for channel in ("chrome", "msedge", None):
+    temp_ctx = tempfile.TemporaryDirectory() if (headless and user_data_dir is None) else None
+    prof_dir = user_data_dir or (Path(temp_ctx.name) if temp_ctx is not None else CHROME_PROFILE_DIR)
+
+    try:
+        with sync_playwright() as p:
+            context = _launch_persistent(p, prof_dir, headless=headless)
+            page = context.pages[0] if context.pages else context.new_page()
             try:
-                kwargs: dict[str, Any] = {"headless": headless}
-                if not headless:
-                    kwargs["args"] = ["--start-maximized"]
-                if channel:
-                    kwargs["channel"] = channel
-                browser = p.chromium.launch(**kwargs)
-                break
-            except Exception as err:
-                last_err = err
-        if browser is None:
-            raise RuntimeError(f"Não foi possível iniciar o browser Chrome/Edge: {last_err}")
+                page.goto(url, wait_until="domcontentloaded", timeout=22000)
+                page.wait_for_timeout(900)
+                _dismiss_cookie_banners(page)
+                _maybe_open_apply_view(page)
 
-        context = browser.new_context(no_viewport=not headless)
-        page = context.new_page()
-        try:
-            page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            page.wait_for_timeout(900)
-            _maybe_open_apply_view(page)
+                frames_to_scan = [page.main_frame]
+                for fr in page.frames:
+                    if fr == page.main_frame:
+                        continue
+                    if ATS_FRAME_HINT_RE.search(fr.url or "") or fr.url.startswith("file://"):
+                        frames_to_scan.append(fr)
 
-            frames_to_scan = [page.main_frame]
-            for fr in page.frames:
-                if fr == page.main_frame:
-                    continue
-                if ATS_FRAME_HINT_RE.search(fr.url or "") or fr.url.startswith("file://"):
-                    frames_to_scan.append(fr)
+                pending_questions: list[tuple[Any, int, str]] = []
+                for fr in frames_to_scan:
+                    f_names, got_cv, open_qs = _fill_frame_inputs(
+                        fr, values, cv_path if not cv_attached else None, profile
+                    )
+                    filled_all.extend(f_names)
+                    if got_cv:
+                        cv_attached = True
+                    for idx, qtxt in open_qs:
+                        pending_questions.append((fr, idx, qtxt))
 
-            for fr in frames_to_scan:
-                f_names, got_cv = _fill_frame_inputs(fr, values, cv_path if not cv_attached else None)
-                filled_all.extend(f_names)
-                if got_cv:
-                    cv_attached = True
+                if pending_questions:
+                    q_texts = [q for _, _, q in pending_questions]
+                    try:
+                        page_txt = (page.inner_text("body") or "")[:3000]
+                    except Exception:
+                        page_txt = ""
+                    answers = answer_form_questions_with_gemini(
+                        questions=q_texts,
+                        company=job.company,
+                        title=job.title,
+                        page_text=page_txt,
+                        cv_markdown=load_cv_markdown(cv_path) if cv_path else "",
+                        profile=profile,
+                        language=str(kit.get("language") or "en"),
+                    )
+                    for fr, idx, qtxt in pending_questions:
+                        ans = answers.get(qtxt)
+                        if ans:
+                            try:
+                                fr.locator("input, textarea").nth(idx).fill(ans, timeout=1500)
+                                filled_all.append("open_question")
+                            except Exception:
+                                pass
 
-            cv_name = cv_path.name if cv_path else "N/D"
-            unique_fields = list(dict.fromkeys(filled_all))
-            banner_msg = (
-                f"Estágio Radar Copilot: {len(unique_fields)} campo(s) pré-preenchido(s)"
-                + (f" + CV anexado ({cv_name})" if cv_attached else f" (anexa manualmente: {cv_name})")
-                + " — Revê, passa CAPTCHA se existir e clica em Submeter!"
-            )
-            _inject_copilot_banner(page, banner_msg)
-            final_url = page.url
+                cv_name = cv_path.name if cv_path else "N/D"
+                unique_fields = list(dict.fromkeys(filled_all))
+                banner_msg = (
+                    f"Estágio Radar Copilot: {len(unique_fields)} campo(s) ({', '.join(unique_fields[:6])})"
+                    + (f" + CV anexado ({cv_name})" if cv_attached else f" (anexa manualmente: {cv_name})")
+                    + " — Revê e clica em Submeter!"
+                )
+                _inject_copilot_banner(page, banner_msg)
+                final_url = page.url
 
-            if keep_open and not headless:
+                if keep_open and not headless:
+                    try:
+                        page.wait_for_event("close", timeout=0)
+                    except Exception:
+                        pass
+            finally:
                 try:
-                    page.wait_for_event("close", timeout=0)
+                    context.close()
                 except Exception:
                     pass
-        finally:
-            try:
-                browser.close()
-            except Exception:
-                pass
+    finally:
+        if temp_ctx is not None:
+            temp_ctx.cleanup()
 
     return {
         "ok": True,

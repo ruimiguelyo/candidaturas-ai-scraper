@@ -19,7 +19,7 @@ from rich.console import Console
 from rich.table import Table
 
 from estagio_radar.apply_copilot import DEFAULT_PROFILE_PATH, generate_application_kit, load_candidate_profile
-from estagio_radar.autofill_worker import run_autofill_browser
+from estagio_radar.autofill_worker import open_login_browser, run_autofill_browser
 from estagio_radar.dashboard import default_scan_runner, serve_dashboard
 from estagio_radar.notifiers.ntfy_notifier import send_ntfy_message
 from estagio_radar.pipeline import run_radar_scan
@@ -237,9 +237,13 @@ def build_parser() -> argparse.ArgumentParser:
     p_auto = sub.add_parser("autofill", help="Abre uma vaga no Chrome e pré-preenche dados + CV PDF sem submeter.")
     p_auto.add_argument("--fingerprint", required=True)
     p_auto.add_argument("--cv-track", choices=("ai_ml", "swe", "enterprise"), default=None)
+    p_auto.add_argument("--tone", choices=("balanced", "concise", "technical"), default="balanced")
     p_auto.add_argument("--db", default=os.getenv("RADAR_DB_PATH", "data/radar.db"))
     p_auto.add_argument("--profile", default=str(DEFAULT_PROFILE_PATH))
     p_auto.add_argument("--no-keep-open", action="store_true")
+
+    # browser-login
+    sub.add_parser("browser-login", help="Abre o perfil Chrome persistente para iniciar sessão no LinkedIn/portais.")
 
     return parser
 
@@ -405,7 +409,14 @@ def main(argv: list[str] | None = None) -> int:
             console.print(f"[bold red]Vaga não encontrada:[/bold red] {args.fingerprint}")
             return 1
         profile = load_candidate_profile(args.profile)
-        kit = generate_application_kit(job, profile, override_track=args.cv_track)
+        kit = generate_application_kit(
+            job,
+            profile,
+            override_track=args.cv_track,
+            fetch_email=True,
+            storage=storage,
+            tone=args.tone,
+        )
         res = run_autofill_browser(
             job,
             kit,
@@ -414,6 +425,10 @@ def main(argv: list[str] | None = None) -> int:
             keep_open=not args.no_keep_open,
         )
         console.print(f"[green]Autofill concluído:[/green] {res}")
+        return 0
+
+    if args.command == "browser-login":
+        open_login_browser()
         return 0
 
     if args.command == "status":

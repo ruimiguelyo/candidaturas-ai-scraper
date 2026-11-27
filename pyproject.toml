@@ -27,6 +27,9 @@ dev = [
 apply = [
     "playwright>=1.48.0,<2.0",
 ]
+ai = [
+    "google-genai>=3.2.0",
+]
 
 [project.scripts]
 estagio-radar = "estagio_radar.cli:main"

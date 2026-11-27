@@ -86,6 +86,44 @@ class RadarStorage:
                 );
                 """
             )
+            for col_def in ("full_description TEXT", "external_apply_url TEXT"):
+                try:
+                    conn.execute(f"ALTER TABLE jobs ADD COLUMN {col_def}")
+                except sqlite3.OperationalError:
+                    pass
+
+    def get_job_details(self, fingerprint: str) -> dict[str, str | None]:
+        """Devolve descrição completa e URL externa guardadas em cache na BD."""
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT full_description, external_apply_url FROM jobs WHERE fingerprint = ?",
+                (fingerprint,),
+            ).fetchone()
+        if row is None:
+            return {"full_description": None, "external_apply_url": None}
+        return {
+            "full_description": row["full_description"],
+            "external_apply_url": row["external_apply_url"],
+        }
+
+    def save_job_details(
+        self,
+        fingerprint: str,
+        *,
+        full_description: str | None = None,
+        external_apply_url: str | None = None,
+    ) -> None:
+        """Guarda descrição completa e URL de candidatura externa em cache no SQLite."""
+        with self._connect() as conn:
+            conn.execute(
+                """
+                UPDATE jobs
+                SET full_description = COALESCE(?, full_description),
+                    external_apply_url = COALESCE(?, external_apply_url)
+                WHERE fingerprint = ?
+                """,
+                (full_description or None, external_apply_url or None, fingerprint),
+            )
 
     def upsert_jobs(
         self,

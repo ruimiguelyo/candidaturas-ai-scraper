@@ -325,6 +325,11 @@ def render_dashboard_html(
 
     <div class="cop-box" id="cop-strategy-box"></div>
 
+    <div class="cop-box" id="cop-tldr-box" style="display:none">
+      <span class="cop-label">Resumo da Vaga (TL;DR do Anúncio Real)</span>
+      <ul id="cop-tldr" style="margin:0 0 0 18px;font-size:12.5px;color:#e2e8f0;line-height:1.45"></ul>
+    </div>
+
     <div class="cop-box">
       <span class="cop-label">CV Selecionado Automaticamente</span>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
@@ -344,9 +349,15 @@ def render_dashboard_html(
     </div>
 
     <div class="cop-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
         <span class="cop-label" style="margin:0">Nota de Apresentação / Cover Note</span>
-        <button class="btn btn-ghost btn-sm" onclick="copyTextField('cop-cover', 'Nota copiada!')">📋 Copiar Nota</button>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-ghost btn-sm" id="tone-balanced" onclick="switchTone('balanced')">Equilibrado</button>
+          <button class="btn btn-ghost btn-sm" id="tone-concise" onclick="switchTone('concise')">Mais curto</button>
+          <button class="btn btn-ghost btn-sm" id="tone-technical" onclick="switchTone('technical')">Mais técnico</button>
+          <button class="btn btn-ghost btn-sm" onclick="regenerateKit()">🔄 Regenerar</button>
+          <button class="btn btn-ghost btn-sm" onclick="copyTextField('cop-cover', 'Nota copiada!')">📋 Copiar</button>
+        </div>
       </div>
       <textarea id="cop-cover" class="cop-ta" rows="4"></textarea>
     </div>
@@ -375,10 +386,34 @@ def render_dashboard_html(
   </div>
 </div>
 
+<div class="modal-backdrop" id="gemini-modal" onclick="if(event.target===this) closeGeminiModal()">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">🔑 Configurar Google Gemini API (Grátis)</div>
+        <div class="modal-sub">Redação humana em PT-PT/EN e respostas às perguntas das vagas</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="closeGeminiModal()">✕</button>
+    </div>
+    <div class="cop-box">
+      <div style="font-size:12.5px;color:#cbd5e1;line-height:1.5;margin-bottom:10px">
+        1. Cria ou copia uma API key grátis no <a class="tl-link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>.<br>
+        2. Cola abaixo e clica em Guardar — fica só no teu <code>.env</code> local (nunca vai para o Git).
+      </div>
+      <input id="gem-key-input" type="password" class="cop-inp" placeholder="Cola aqui a tua GEMINI_API_KEY (AIza...)">
+      <div class="cop-actions">
+        <button class="btn btn-primary btn-sm" onclick="saveGeminiKey()">💾 Guardar &amp; Ativar Gemini</button>
+      </div>
+      <div class="cop-status" id="gem-feedback"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const INTERACTIVE = {mode_flag};
 let JOBS = {jobs_json};
 let CURRENT_KIT = null;
+let CURRENT_TONE = "balanced";
 
 function esc(s) {{
   return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
@@ -391,10 +426,45 @@ function scoreClass(sc) {{
   return "s-dim";
 }}
 
-function setupInteractiveHeader() {{
+async function setupInteractiveHeader() {{
   if (!INTERACTIVE) return;
   const wrap = document.getElementById("header-actions");
-  wrap.innerHTML = '<button class="btn btn-primary" id="btn-scan">⚡ Atualizar Radar Agora</button>';
+  wrap.innerHTML =
+    '<button class="btn btn-ghost" id="btn-gemini">🔑 Gemini AI</button>' +
+    '<button class="btn btn-ghost" id="btn-browser-login" title="Fazer login 1 vez no LinkedIn e portais no perfil persistente">🔐 Login Chrome</button>' +
+    '<button class="btn btn-primary" id="btn-scan">⚡ Atualizar Radar Agora</button>';
+
+  try {{
+    const pRes = await fetch("/api/profile");
+    const pData = await pRes.json();
+    const gBtn = document.getElementById("btn-gemini");
+    if (pData.gemini_configured) {{
+      gBtn.textContent = "✨ Gemini AI Ativo";
+      gBtn.className = "btn btn-ghost";
+    }} else {{
+      gBtn.textContent = "🔑 Ligar Gemini AI";
+    }}
+  }} catch (_e) {{}}
+
+  document.getElementById("btn-gemini").onclick = () => {{
+    document.getElementById("gem-feedback").className = "cop-status";
+    document.getElementById("gemini-modal").classList.add("open");
+  }};
+
+  document.getElementById("btn-browser-login").onclick = async () => {{
+    const b = document.getElementById("btn-browser-login");
+    b.disabled = true;
+    try {{
+      const res = await fetch("/api/browser-login", {{ method: "POST", body: "{{}}" }});
+      const data = await res.json();
+      alert(data.message || data.error || "Chrome aberto.");
+    }} catch (e) {{
+      alert("Erro: " + e);
+    }} finally {{
+      b.disabled = false;
+    }}
+  }};
+
   document.getElementById("btn-scan").onclick = async () => {{
     const btn = document.getElementById("btn-scan");
     btn.disabled = true;
@@ -412,6 +482,34 @@ function setupInteractiveHeader() {{
       btn.textContent = "⚡ Atualizar Radar Agora";
     }}
   }};
+}}
+
+function closeGeminiModal() {{
+  document.getElementById("gemini-modal").classList.remove("open");
+}}
+
+async function saveGeminiKey() {{
+  const key = document.getElementById("gem-key-input").value.trim();
+  const fb = document.getElementById("gem-feedback");
+  if (!key) {{
+    fb.textContent = "Cola uma API Key válida.";
+    fb.className = "cop-status err";
+    return;
+  }}
+  const res = await fetch("/api/settings/gemini-key", {{
+    method: "POST",
+    headers: {{ "Content-Type": "application/json" }},
+    body: JSON.stringify({{ api_key: key }})
+  }});
+  const data = await res.json();
+  if (res.ok && data.ok) {{
+    fb.textContent = data.message || "Chave guardada!";
+    fb.className = "cop-status ok";
+    document.getElementById("btn-gemini").textContent = "✨ Gemini AI Ativo";
+  }} else {{
+    fb.textContent = data.error || "Erro ao guardar chave.";
+    fb.className = "cop-status err";
+  }}
 }}
 
 async function setStatus(fp, status, notes) {{
@@ -560,16 +658,26 @@ function closeCopilot() {{
   document.getElementById("apply-modal").classList.remove("open");
 }}
 
-async function openCopilot(fp, overrideTrack) {{
+async function openCopilot(fp, overrideTrack, tone, forceRefresh) {{
   const modal = document.getElementById("apply-modal");
   modal.classList.add("open");
+  CURRENT_TONE = tone || CURRENT_TONE || "balanced";
+  ["balanced", "concise", "technical"].forEach(t => {{
+    const el = document.getElementById("tone-" + t);
+    if (el) el.className = "btn btn-ghost btn-sm" + (t === CURRENT_TONE ? " btn-active-saved" : "");
+  }});
+
   document.getElementById("cop-feedback").className = "cop-status";
   document.getElementById("cop-email-box").style.display = "none";
-  document.getElementById("cop-title").textContent = "A preparar kit de candidatura...";
+  document.getElementById("cop-tldr-box").style.display = "none";
+  document.getElementById("cop-title").textContent = "A ler anúncio e preparar candidatura...";
   document.getElementById("cop-sub").textContent = "";
 
   try {{
-    const url = "/api/apply-kit?fingerprint=" + encodeURIComponent(fp) + (overrideTrack ? "&cv_track=" + encodeURIComponent(overrideTrack) : "");
+    let url = "/api/apply-kit?fingerprint=" + encodeURIComponent(fp) + "&tone=" + encodeURIComponent(CURRENT_TONE);
+    if (overrideTrack) url += "&cv_track=" + encodeURIComponent(overrideTrack);
+    if (forceRefresh) url += "&refresh=1";
+
     const res = await fetch(url);
     const kit = await res.json();
     if (!res.ok) {{
@@ -577,14 +685,25 @@ async function openCopilot(fp, overrideTrack) {{
       return;
     }}
     CURRENT_KIT = kit;
-    document.getElementById("cop-title").textContent = kit.title || "Candidatura";
-    document.getElementById("cop-sub").textContent = (kit.company || "") + " · Idioma: " + (kit.language === "pt" ? "Português" : "English");
+    document.getElementById("cop-title").textContent = kit.natural_role_title || kit.title || "Candidatura";
+    const aiBadge = kit.used_ai ? ("✨ " + (kit.ai_model || "Gemini")) : "📝 Modo Offline";
+    const extLink = kit.external_apply_url
+      ? ` · <a class="tl-link" href="${{esc(kit.external_apply_url)}}" target="_blank" rel="noopener">🔗 Link Direto ATS extraído</a>`
+      : "";
+    document.getElementById("cop-sub").innerHTML =
+      `${{esc(kit.company || "")}} · ${{kit.language === "pt" ? "Português" : "English"}} · ${{esc(aiBadge)}}${{extLink}}`;
 
     const strat = kit.strategy || {{}};
     document.getElementById("cop-strategy-box").innerHTML =
       `<span class="cop-label">Estratégia Recomendada</span>` +
       `<div style="font-size:13px;font-weight:600;color:#f8fafc">${{esc(strat.label || "")}}</div>` +
       `<div style="font-size:12px;color:var(--muted);margin-top:2px">${{esc(strat.hint || "")}}</div>`;
+
+    const tldr = kit.role_tldr || [];
+    if (tldr.length) {{
+      document.getElementById("cop-tldr").innerHTML = tldr.map(x => `<li style="margin-bottom:3px">${{esc(x)}}</li>`).join("");
+      document.getElementById("cop-tldr-box").style.display = "block";
+    }}
 
     const cv = kit.cv || {{}};
     document.getElementById("cop-cv-track").value = cv.track || "ai_ml";
@@ -612,7 +731,18 @@ async function openCopilot(fp, overrideTrack) {{
 
 async function switchCopilotCv(track) {{
   if (!CURRENT_KIT) return;
-  await openCopilot(CURRENT_KIT.fingerprint, track);
+  await openCopilot(CURRENT_KIT.fingerprint, track, CURRENT_TONE, false);
+}}
+
+async function switchTone(tone) {{
+  if (!CURRENT_KIT) return;
+  CURRENT_TONE = tone;
+  await openCopilot(CURRENT_KIT.fingerprint, document.getElementById("cop-cv-track").value, tone, false);
+}}
+
+async function regenerateKit() {{
+  if (!CURRENT_KIT) return;
+  await openCopilot(CURRENT_KIT.fingerprint, document.getElementById("cop-cv-track").value, CURRENT_TONE, true);
 }}
 
 async function copyTextField(id, okMsg) {{
@@ -636,7 +766,8 @@ async function launchAutofill() {{
       headers: {{ "Content-Type": "application/json" }},
       body: JSON.stringify({{
         fingerprint: CURRENT_KIT.fingerprint,
-        cv_track: document.getElementById("cop-cv-track").value
+        cv_track: document.getElementById("cop-cv-track").value,
+        tone: CURRENT_TONE
       }})
     }});
     const data = await res.json();

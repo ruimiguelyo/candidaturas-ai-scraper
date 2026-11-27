@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Estágio Radar PT — 1-Click Copilot",
+  "version": "5.1.0",
+  "description": "Preenche candidaturas e anexa o CV certo diretamente no teu Chrome já com sessão iniciada.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["http://127.0.0.1:8765/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Estágio Radar Copilot"
+  }
+}
