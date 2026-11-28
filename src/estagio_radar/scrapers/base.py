@@ -4,8 +4,12 @@ from __future__ import annotations
 
 import asyncio
 import html as html_lib
+import json
+import os
 import re
+import time
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Awaitable, Callable
 
 import bs4
@@ -30,10 +34,53 @@ class ScraperBatchResult:
 
 
 class ETagCache:
-    """Cache em memória de headers ETag/Last-Modified e RawJobs para modo Sniper ao minuto."""
+    """Cache em memória e disco de headers ETag/Last-Modified e RawJobs para Turbo-Sniper."""
 
-    def __init__(self) -> None:
+    def __init__(self, persist_path: str | Path | None = None) -> None:
         self._entries: dict[str, tuple[str | None, str | None, list[RawJob]]] = {}
+        self.persist_path: Path | None = Path(persist_path) if persist_path else None
+        self._dirty = False
+        if self.persist_path and self.persist_path.exists():
+            self._load()
+
+    def _load(self) -> None:
+        if not self.persist_path:
+            return
+        try:
+            data = json.loads(self.persist_path.read_text(encoding="utf-8"))
+            if not isinstance(data, dict):
+                return
+            for url, entry in data.items():
+                if not isinstance(entry, dict):
+                    continue
+                jobs = [RawJob.model_validate(j) for j in (entry.get("jobs") or []) if isinstance(j, dict)]
+                self._entries[str(url)] = (
+                    entry.get("etag"),
+                    entry.get("last_mod"),
+                    jobs,
+                )
+        except Exception:
+            self._entries.clear()
+
+    def save(self) -> None:
+        if not self.persist_path or not self._dirty:
+            return
+        try:
+            self.persist_path.parent.mkdir(parents=True, exist_ok=True)
+            payload = {
+                url: {
+                    "etag": etag,
+                    "last_mod": last_mod,
+                    "jobs": [j.model_dump(mode="json") for j in jobs],
+                }
+                for url, (etag, last_mod, jobs) in self._entries.items()
+            }
+            tmp_path = self.persist_path.with_suffix(".tmp")
+            tmp_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            os.replace(tmp_path, self.persist_path)
+            self._dirty = False
+        except Exception:
+            pass
 
     def request_headers(self, url: str) -> dict[str, str]:
         entry = self._entries.get(url)
@@ -56,6 +103,39 @@ class ETagCache:
         last_mod = headers.get("last-modified") or headers.get("Last-Modified") if headers else None
         if etag or last_mod:
             self._entries[url] = (str(etag) if etag else None, str(last_mod) if last_mod else None, list(jobs))
+            self._dirty = True
+
+
+class DomainCircuitBreaker:
+    """Protege contra HTTP 429 repetidos aplicando cooldown exponencial por domínio."""
+
+    def __init__(self, *, max_cooldown: float = 900.0) -> None:
+        self._max_cooldown = max_cooldown
+        self._state: dict[str, tuple[float, int]] = {}  # domain -> (open_until_mono, strikes)
+
+    def is_open(self, domain: str) -> bool:
+        entry = self._state.get(domain.casefold())
+        if not entry:
+            return False
+        open_until, _strikes = entry
+        return time.monotonic() < open_until
+
+    def remaining_seconds(self, domain: str) -> int:
+        entry = self._state.get(domain.casefold())
+        if not entry:
+            return 0
+        return max(0, int(entry[0] - time.monotonic()))
+
+    def record_rate_limit(self, domain: str, *, base_cooldown: float = 120.0) -> float:
+        key = domain.casefold()
+        _prev_until, prev_strikes = self._state.get(key, (0.0, 0))
+        strikes = prev_strikes + 1
+        cooldown = min(self._max_cooldown, base_cooldown * (2 ** (strikes - 1)))
+        self._state[key] = (time.monotonic() + cooldown, strikes)
+        return cooldown
+
+    def record_success(self, domain: str) -> None:
+        self._state.pop(domain.casefold(), None)
 
 
 async def retry_async(

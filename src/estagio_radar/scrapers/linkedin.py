@@ -14,7 +14,7 @@ from curl_cffi.requests import AsyncSession
 
 from estagio_radar.date_utils import parse_publication_datetime
 from estagio_radar.models import RawJob, SourceHealth
-from estagio_radar.scrapers.base import ScraperBatchResult, clean_html_text
+from estagio_radar.scrapers.base import DomainCircuitBreaker, ScraperBatchResult, clean_html_text
 
 logger = logging.getLogger("estagio_radar.scrapers.linkedin")
 
@@ -87,9 +87,25 @@ async def scrape_linkedin(
     *,
     time_window: str = "r604800",
     enrich_top_details: bool = False,
+    circuit_breaker: DomainCircuitBreaker | None = None,
 ) -> ScraperBatchResult:
     """Executa pesquisas sequenciais no LinkedIn com pacing conservador contra HTTP 429."""
     t0 = time.monotonic()
+    if circuit_breaker and circuit_breaker.is_open("linkedin.com"):
+        rem = circuit_breaker.remaining_seconds("linkedin.com")
+        return ScraperBatchResult(
+            jobs=[],
+            health=SourceHealth(
+                source="LinkedIn",
+                category="linkedin",
+                requests_ok=0,
+                requests_partial=0,
+                requests_failed=0,
+                raw_count=0,
+                duration_ms=int((time.monotonic() - t0) * 1000),
+                warnings=[f"LinkedIn em cooldown anti-429 ({rem}s restantes)."],
+            ),
+        )
     jobs: list[RawJob] = []
     seen_urls: set[str] = set()
     ok = partial = failed = 0
@@ -135,6 +151,8 @@ async def scrape_linkedin(
                         res = await session.get(LINKEDIN_SEARCH_URL, params=params, timeout=15)
                     if res.status_code == 429:
                         rate_limited = True
+                        if circuit_breaker:
+                            circuit_breaker.record_rate_limit("linkedin.com", base_cooldown=180.0)
                         if page_idx > 0 or jobs:
                             partial += 1
                         else:
@@ -146,6 +164,8 @@ async def scrape_linkedin(
                         warnings.append(f"LinkedIn HTTP {res.status_code} para '{kw}'.")
                         break
 
+                    if circuit_breaker:
+                        circuit_breaker.record_success("linkedin.com")
                     parsed = parse_linkedin_cards(res.text, default_location=loc)
                     ok += 1
                     for j in parsed:

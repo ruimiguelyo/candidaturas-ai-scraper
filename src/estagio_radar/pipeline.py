@@ -15,6 +15,12 @@ from typing import Any
 from rich.console import Console
 from rich.table import Table
 
+from estagio_radar.ats_discovery import (
+    DISCOVERED_ATS_PATH,
+    discover_and_persist_ats,
+    load_discovered_ats,
+    merge_sources_with_discovered,
+)
 from estagio_radar.company_intel import CompanyIntelService, base_company_name, normalize_company_key
 from estagio_radar.config_loader import load_companies_config, load_sources_config
 from estagio_radar.date_utils import format_freshness
@@ -25,10 +31,10 @@ from estagio_radar.models import EnrichedJob, FilterDecision, RawJob, SourceHeal
 from estagio_radar.notifiers.dispatcher import dispatch_notifications
 from estagio_radar.scoring import compute_score
 from estagio_radar.scrapers.ats_boards import scrape_all_ats
-from estagio_radar.scrapers.base import ETagCache, ScraperBatchResult
+from estagio_radar.scrapers.base import DomainCircuitBreaker, ETagCache, ScraperBatchResult
 from estagio_radar.scrapers.eu_trackers import scrape_euraxess_pt, scrape_github_trackers
 from estagio_radar.scrapers.linkedin import scrape_linkedin
-from estagio_radar.scrapers.pt_portals import scrape_itjobs, scrape_net_empregos
+from estagio_radar.scrapers.pt_portals import scrape_itjobs, scrape_landing_jobs, scrape_net_empregos
 from estagio_radar.scrapers.remote_eu import scrape_himalayas
 from estagio_radar.scrapers.teamlyzer_jobs import scrape_teamlyzer_jobs
 from estagio_radar.storage import RadarStorage
@@ -42,6 +48,9 @@ SOURCE_HEALTH_PREFIXES = {
     "SmartRecruiters PT": ("SmartRecruiters",),
     "Recruitee ATS": ("Recruitee",),
     "Teamtailor RSS": ("Teamtailor",),
+    "Workable ATS": ("Workable",),
+    "Personio ATS": ("Personio",),
+    "Revolut Direct": ("Revolut",),
     "Workday CXS PT": ("Workday",),
     "Siemens Avature PT": ("Siemens Avature",),
     "SuccessFactors PT": ("SuccessFactors",),
@@ -50,6 +59,7 @@ SOURCE_HEALTH_PREFIXES = {
     "EURAXESS Portugal": ("EURAXESS Portugal",),
     "Teamlyzer Jobs": ("Teamlyzer Jobs",),
     "ITJobs.pt": ("ITJobs.pt",),
+    "Landing.jobs API": ("Landing.jobs",),
     "Net-Empregos": ("Net-Empregos",),
     "LinkedIn": ("LinkedIn",),
     "Himalayas": ("Himalayas",),
@@ -71,7 +81,7 @@ class ScanResult:
 def _build_linkedin_queries(sources_cfg: dict[str, Any], mode: str) -> tuple[list[dict[str, Any]], str]:
     li = sources_cfg.get("linkedin") or {}
     if mode == "sniper":
-        return list(li.get("sniper_queries") or []), "r3600"
+        return list(li.get("sniper_queries") or []), "r1800"
     fast = list(li.get("fast_queries") or [])
     if mode == "fast":
         return fast, "r86400"
@@ -92,20 +102,26 @@ async def run_radar_scan(
     console: Console | None = None,
     allow_teamlyzer_network: bool = True,
     etag_cache: ETagCache | None = None,
+    circuit_breaker: DomainCircuitBreaker | None = None,
+    discovered_ats_path: str | Path | None = None,
+    include_linkedin: bool = True,
 ) -> ScanResult:
-    """Executa recolha em modo sniper, fast ou full e atualiza SQLite + dashboard + alertas."""
+    """Executa recolha em modo sniper (Turbo 90s), fast ou full e atualiza SQLite + dashboard + alertas."""
     started_at = datetime.now(timezone.utc)
     t0 = time.monotonic()
 
-    sources_cfg = load_sources_config()
+    base_sources_cfg = load_sources_config()
+    disc_path = Path(discovered_ats_path) if discovered_ats_path else (Path(db_path).parent / "discovered_ats.json" if Path(db_path).is_absolute() else DISCOVERED_ATS_PATH)
+    sources_cfg = merge_sources_with_discovered(base_sources_cfg, load_discovered_ats(disc_path))
     companies_cfg = load_companies_config()
     hard_excluded = tuple(companies_cfg.get("hard_excluded") or ["deloitte"])
     pure_tech_set = {normalize_company_key(x) for x in (companies_cfg.get("pure_tech_companies") or [])}
+    remote_eu_set = {normalize_company_key(x) for x in (companies_cfg.get("remote_eu_friendly_companies") or [])}
     recency_cfg = sources_cfg.get("recency") or {}
 
     if console:
         console.print(
-            f"[bold cyan]>>> Estágio Radar PT v4.0 ({mode.upper()}) — "
+            f"[bold cyan]>>> Estágio Radar PT v8.0 ({mode.upper()}) — "
             "A recolher ATS diretos, portais PT, Trackers EU e LinkedIn...[/bold cyan]"
         )
 
@@ -116,31 +132,54 @@ async def run_radar_scan(
 
     if mode == "sniper":
         coros = [
-            scrape_all_ats(sources_cfg, etag_cache=etag_cache, include_workday=False),
+            scrape_all_ats(
+                sources_cfg,
+                etag_cache=etag_cache,
+                include_workday=False,
+                include_slow=False,
+                circuit_breaker=circuit_breaker,
+            ),
             scrape_teamlyzer_jobs([e for e in tl_entries if e.get("label") in {"internship", "recent_p1"}]),
             scrape_itjobs(["estagio", "intern"], max_pages=1),
-            scrape_linkedin(li_queries, time_window=li_window, enrich_top_details=False),
         ]
+        if include_linkedin:
+            coros.append(scrape_linkedin(li_queries, time_window=li_window, enrich_top_details=False, circuit_breaker=circuit_breaker))
     elif mode == "fast":
         coros = [
-            scrape_all_ats(sources_cfg, etag_cache=etag_cache),
+            scrape_all_ats(
+                sources_cfg,
+                etag_cache=etag_cache,
+                include_workday=True,
+                include_slow=True,
+                circuit_breaker=circuit_breaker,
+            ),
+            scrape_landing_jobs(max_pages=3),
             scrape_github_trackers(list(sources_cfg.get("github_trackers") or [])),
             scrape_teamlyzer_jobs(tl_entries[:4]),
             scrape_itjobs(it_queries, max_pages=1),
-            scrape_linkedin(li_queries, time_window=li_window, enrich_top_details=False),
         ]
+        if include_linkedin:
+            coros.append(scrape_linkedin(li_queries, time_window=li_window, enrich_top_details=False, circuit_breaker=circuit_breaker))
     else:
         rem_cfg = sources_cfg.get("remote_eu") or {}
         coros = [
-            scrape_all_ats(sources_cfg, etag_cache=etag_cache),
+            scrape_all_ats(
+                sources_cfg,
+                etag_cache=etag_cache,
+                include_workday=True,
+                include_slow=True,
+                circuit_breaker=circuit_breaker,
+            ),
+            scrape_landing_jobs(max_pages=3),
             scrape_github_trackers(list(sources_cfg.get("github_trackers") or [])),
             scrape_euraxess_pt(list(sources_cfg.get("euraxess_pt") or [])),
             scrape_teamlyzer_jobs(tl_entries),
             scrape_itjobs(it_queries, max_pages=int(it_cfg.get("max_pages", 2))),
             scrape_net_empregos(list((sources_cfg.get("net_empregos") or {}).get("searches") or [])),
-            scrape_linkedin(li_queries, time_window=li_window, enrich_top_details=False),
             scrape_himalayas(list(rem_cfg.get("himalayas_queries") or ["AI Intern", "Software Engineer Intern"])),
         ]
+        if include_linkedin:
+            coros.append(scrape_linkedin(li_queries, time_window=li_window, enrich_top_details=False, circuit_breaker=circuit_breaker))
 
     gathered = await asyncio.gather(*coros, return_exceptions=True)
 
@@ -166,7 +205,7 @@ async def run_radar_scan(
 
     for job in raw_jobs:
         if job.source_type == "ats":
-            r_days = int(recency_cfg.get("ats_days", 60))
+            r_days = int(recency_cfg.get("ats_days", 90))
         elif job.source_type == "linkedin":
             r_days = int(recency_cfg.get("linkedin_days", 7))
         else:
@@ -180,6 +219,7 @@ async def run_radar_scan(
             now=started_at,
             include_all_portugal=include_all_portugal,
             extra_tech_company_override=(comp_brand_key in pure_tech_set),
+            remote_eu_friendly=(comp_brand_key in remote_eu_set),
         )
         if dec.accepted:
             accepted_pairs.append((job, dec))
@@ -228,6 +268,9 @@ async def run_radar_scan(
             now=started_at,
             primary_source=job.source,
             source_type=job.source_type,
+            title=job.title,
+            description=job.description or "",
+            tags=job.tags,
         )
         if score < min_score:
             continue
@@ -289,6 +332,19 @@ async def run_radar_scan(
         duration_ms=duration_ms,
         source_health=health_list,
     )
+
+    if etag_cache is not None:
+        etag_cache.save()
+
+    if mode == "full":
+        try:
+            url_pairs = [(j.job_url, j.company) for j in active_jobs if j.job_url]
+            with storage._connect() as conn:
+                for row in conn.execute("SELECT company, external_apply_url FROM jobs WHERE external_apply_url IS NOT NULL AND external_apply_url != ''"):
+                    url_pairs.append((str(row["external_apply_url"]), str(row["company"])))
+            await discover_and_persist_ats(url_pairs, sources_cfg, cache_path=disc_path)
+        except Exception as err:
+            logger.debug("Auto-descoberta ATS no fim do full scan falhou graciosamente: %s", err)
 
     artifacts = export_all_artifacts(active_jobs, rejections, output_dir=output_dir)
 

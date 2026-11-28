@@ -3,8 +3,27 @@
 from __future__ import annotations
 
 from datetime import datetime
+import re
 
 from estagio_radar.date_utils import ensure_utc, format_freshness, utc_now
+
+_CV_STACK_PATTERNS = (
+    ("python", r"\bpython\b"),
+    ("pytorch", r"\bpytorch\b"),
+    ("jax", r"\bjax\b"),
+    ("flax", r"\bflax\b"),
+    ("llm", r"\bllms?\b"),
+    ("genai", r"\bgen[- ]?ai\b"),
+    ("ml", r"\bmachine\s+learning\b"),
+    ("dl", r"\bdeep\s+learning\b"),
+    ("nlp", r"\bnlp\b"),
+    ("typescript", r"\btypescript\b"),
+    ("react", r"\breact\b"),
+    ("sql", r"\bsql\b|\bpostgresql\b"),
+    ("fastapi", r"\bfastapi\b"),
+    ("docker", r"\bdocker\b"),
+    ("sap", r"\bsap\b|\babap\b"),
+)
 from estagio_radar.models import (
     CompanyProfile,
     CompanyType,
@@ -26,6 +45,9 @@ def compute_score(
     now: datetime | None = None,
     primary_source: str = "",
     source_type: str = "",
+    title: str = "",
+    description: str = "",
+    tags: list[str] | None = None,
 ) -> tuple[float, ScoreBreakdown, list[str]]:
     """Calcula pontuação 0-100 e etiquetas visuais para uma vaga qualificada."""
     notes: list[str] = []
@@ -130,7 +152,13 @@ def compute_score(
     else:
         notes.append(f"Frescura ({format_freshness(published_at, reference)}): {fresh_pts:.0f}/20")
 
-    total = round(min(100.0, role_pts + comp_pts + loc_pts + fresh_pts), 1)
+    stack_blob = f"{title} {description} {' '.join(tags or [])}".casefold()
+    stack_hits = [label for label, pat in _CV_STACK_PATTERNS if stack_blob.strip() and re.search(pat, stack_blob)]
+    stack_bonus = min(4.0, float(len(stack_hits))) if len(stack_hits) >= 2 else 0.0
+    if stack_bonus > 0:
+        notes.append(f"Match CV ({', '.join(stack_hits[:4])}): +{stack_bonus:.0f}")
+
+    total = round(min(100.0, role_pts + comp_pts + loc_pts + fresh_pts + stack_bonus), 1)
     breakdown = ScoreBreakdown(
         total=total,
         role_points=round(role_pts, 1),
@@ -141,6 +169,8 @@ def compute_score(
     )
 
     badges: list[str] = []
+    if stack_bonus > 0:
+        badges.append("🎯 STACK MATCH")
     if hours_old is not None and hours_old < 12:
         badges.append("🔥 NOVO")
     if geo_zone == GeoZone.SETUBAL_LOCAL:

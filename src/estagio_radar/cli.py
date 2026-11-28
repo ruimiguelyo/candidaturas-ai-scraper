@@ -24,7 +24,7 @@ from estagio_radar.autofill_worker import open_login_browser, run_autofill_brows
 from estagio_radar.dashboard import default_scan_runner, serve_dashboard
 from estagio_radar.notifiers.ntfy_notifier import send_ntfy_message
 from estagio_radar.pipeline import run_radar_scan
-from estagio_radar.scrapers.base import ETagCache
+from estagio_radar.scrapers.base import DomainCircuitBreaker, ETagCache
 from estagio_radar.storage import RadarStorage
 
 _LOG_STREAM: TextIO | None = None
@@ -199,9 +199,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_scan.add_argument("--cache", default=os.getenv("COMPANY_CACHE_PATH", "data/company_cache.json"))
     p_scan.add_argument("--output-dir", default=os.getenv("RADAR_OUTPUT_DIR", "output"))
 
-    # watch (2 velocidades: Sniper ao minuto + Deep sweep horário + dashboard opcional)
-    p_watch = sub.add_parser("watch", help="Modo contínuo Sniper ao minuto (com cache ETag 304).")
-    p_watch.add_argument("--sniper-interval", type=int, default=5, help="Intervalo Sniper em minutos (predefinição: 5).")
+    # watch (3 velocidades: Turbo-Sniper 90s + Fast sweep 15m + Deep sweep 60m + dashboard opcional)
+    p_watch = sub.add_parser("watch", help="Modo contínuo Turbo-Sniper (com cache ETag 304 em disco).")
+    p_watch.add_argument("--sniper-interval", type=float, default=1.5, help="Intervalo Turbo-Sniper em minutos (predefinição: 1.5 = 90s).")
+    p_watch.add_argument("--fast-interval", type=int, default=15, help="Intervalo Fast sweep (Workday/Landing/Trackers) em minutos (predefinição: 15).")
     p_watch.add_argument("--deep-interval", type=int, default=60, help="Intervalo Deep sweep em minutos (predefinição: 60).")
     p_watch.add_argument("--notify", action="store_true", help="Envia alertas instantâneos para vagas NOVAS.")
     p_watch.add_argument("--hide-consultancies", action="store_true")
@@ -315,22 +316,33 @@ def main(argv: list[str] | None = None) -> int:
                 except OSError as err:
                     console.print(f"[yellow]Aviso: Web UI não iniciado na porta {args.ui_port}: {err}[/yellow]")
 
-            sniper_sec = max(60, args.sniper_interval * 60)
-            deep_sec = max(sniper_sec, args.deep_interval * 60)
+            sniper_sec = max(45.0, float(args.sniper_interval) * 60.0)
+            fast_sec = max(sniper_sec, float(getattr(args, "fast_interval", 15)) * 60.0)
+            deep_sec = max(fast_sec, float(args.deep_interval) * 60.0)
             console.print(
-                f"[bold cyan]Modo Sniper ao Minuto ativo (PID {os.getpid()}):[/bold cyan] "
-                f"ATS + LinkedIn 1h a cada {args.sniper_interval} min | "
-                f"Deep sweep (Trackers EU + EURAXESS + Net-Empregos) a cada {args.deep_interval} min."
+                f"[bold cyan]Turbo-Sniper v8.0 ativo (PID {os.getpid()}):[/bold cyan] "
+                f"ATS rápidos + LinkedIn r1800 a cada {sniper_sec:.0f}s | "
+                f"Fast sweep (Workday/Landing/Trackers) a cada {args.fast_interval} min | "
+                f"Deep sweep a cada {args.deep_interval} min."
             )
             if hasattr(sys.stdout, "flush"):
                 sys.stdout.flush()
-            etag_cache = ETagCache()
+            etag_cache = ETagCache(persist_path=db_parent / "etag_cache.json")
+            circuit_breaker = DomainCircuitBreaker()
 
             async def _loop() -> None:
                 last_deep_ts = 0.0
+                last_fast_ts = 0.0
+                last_li_ts = 0.0
                 while True:
                     now_mono = time.monotonic()
-                    run_mode = "full" if (last_deep_ts == 0.0 or now_mono - last_deep_ts >= deep_sec) else "sniper"
+                    if last_deep_ts == 0.0 or now_mono - last_deep_ts >= deep_sec:
+                        run_mode = "full"
+                    elif now_mono - last_fast_ts >= fast_sec:
+                        run_mode = "fast"
+                    else:
+                        run_mode = "sniper"
+                    run_linkedin = (run_mode != "sniper") or (now_mono - last_li_ts >= 300.0)
                     ts_start = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     console.print(f"[{ts_start}] A iniciar ciclo {run_mode.upper()}...")
                     try:
@@ -344,14 +356,21 @@ def main(argv: list[str] | None = None) -> int:
                             output_dir=args.output_dir,
                             console=console,
                             etag_cache=etag_cache,
+                            circuit_breaker=circuit_breaker,
+                            include_linkedin=run_linkedin,
                         )
+                        if run_linkedin:
+                            last_li_ts = time.monotonic()
                         if run_mode == "full":
                             last_deep_ts = time.monotonic()
+                            last_fast_ts = last_deep_ts
+                        elif run_mode == "fast":
+                            last_fast_ts = time.monotonic()
                     except Exception as err:
                         console.print(f"[red]Erro no ciclo {run_mode}:[/red] {err}")
                     ts_end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     console.print(
-                        f"[{ts_end}] Ciclo {run_mode.upper()} concluído. Próximo sniper em {args.sniper_interval} min."
+                        f"[{ts_end}] Ciclo {run_mode.upper()} concluído. Próximo Turbo-Sniper em {sniper_sec:.0f}s."
                     )
                     if hasattr(sys.stdout, "flush"):
                         sys.stdout.flush()

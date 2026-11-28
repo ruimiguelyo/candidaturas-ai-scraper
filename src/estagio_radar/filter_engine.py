@@ -189,13 +189,14 @@ CYBER_PATTERNS = [
     r"\bcyber[- ]?security\b", r"\bciberseguranca\b", r"\binformation\s+security\b",
     r"\bseguranca\s+(?:da\s+informacao|informatica)\b", r"\bsecurity\s+(?:engineer|analyst|intern|operations)\b",
     r"\bappsec\b", r"\bdevsecops\b", r"\bpentest", r"\bsoc\b", r"\biam\b", r"\binfosec\b",
-    r"\bcloud\s+security\b",
+    r"\bcloud\s+security\b", r"\b(?:it|technology|cloud|cyber)\s+audit\b",
 ]
 
 CLOUD_DEVOPS_PATTERNS = [
     r"\bcloud\b", r"\bdevops\b", r"\bsre\b", r"\bsite\s+reliability\b",
     r"\bplatform\s+engineer", r"\bkubernetes\b", r"\binfrastructure\b", r"\baws\b",
     r"\bazure\b", r"\bgcp\b", r"\bnetwork\s+engineer", r"\bsystems?\s+engineer",
+    r"\bsystems?\s+administrator", r"\bsysadmin\b", r"\badministrador\s+de\s+sistemas\b",
     r"\bsistemas?\s+e\s+redes\b", r"\blinux\b", r"\bterraform\b",
 ]
 
@@ -238,6 +239,11 @@ def _match_any(text: str, patterns: Iterable[str]) -> str | None:
 def _allow_tech_override(title_ascii: str, matched_non_tech: str) -> bool:
     """Evita falsos bloqueios quando o termo aparece num cargo claramente tech/AI."""
     low = matched_non_tech.casefold()
+    if low.startswith("audit") and (
+        re.search(r"\b(?:it|cloud|cyber|security|technology|tech|software|systems|data|ai|ia|ml)\b", title_ascii, re.I)
+        and not re.search(r"\b(?:financial|accounting|vat|tax|internal\s+auditor)\b", title_ascii, re.I)
+    ):
+        return True
     if low == "finance" and re.search(r"\b(?:data|ai|ml|quant|software|engineer|developer)\b", title_ascii, re.I):
         return True
     if low == "sales" and (
@@ -301,13 +307,14 @@ def evaluate_raw_job(
     now: datetime | None = None,
     include_all_portugal: bool = False,
     extra_tech_company_override: bool = False,
+    remote_eu_friendly: bool = False,
 ) -> FilterDecision:
     """Avalia uma vaga bruta e devolve decisão estruturada e auditável."""
-    title_ascii = _ascii(job.title).strip()
+    title_ascii = re.sub(r"_+", " ", _ascii(job.title)).strip()
     company_ascii = _ascii(job.company).strip()
-    seniority_ascii = _ascii(job.seniority or "").strip()
-    emp_type_ascii = _ascii(job.employment_type or "").strip()
-    tags_ascii = _ascii(" ".join(job.tags or []))
+    seniority_ascii = re.sub(r"_+", " ", _ascii(job.seniority or "")).strip()
+    emp_type_ascii = re.sub(r"_+", " ", _ascii(job.employment_type or "")).strip()
+    tags_ascii = re.sub(r"_+", " ", _ascii(" ".join(job.tags or [])))
     desc_ascii = _ascii(job.description or "")
 
     # 1. Exclusões explícitas de empresa
@@ -333,6 +340,7 @@ def evaluate_raw_job(
         description=job.description or "",
         source_type=job.source_type,
         include_all_portugal=include_all_portugal,
+        remote_eu_friendly=remote_eu_friendly,
     )
     if geo_zone == GeoZone.REJECTED_GEO:
         return FilterDecision(
@@ -342,11 +350,13 @@ def evaluate_raw_job(
             geo_zone=geo_zone,
         )
 
-    # 3. Janela temporal
+    # 3. Janela temporal (estágios rolling em ATS diretos toleram até 90d se ativos)
     if recency_days is None:
-        max_days = 14 if job.source_type == "ats" else (7 if job.source_type == "linkedin" else 10)
+        max_days = 90 if job.source_type == "ats" else (7 if job.source_type == "linkedin" else 14)
     else:
         max_days = recency_days
+    if job.source_type == "ats" and _match_any(title_ascii, INTERNSHIP_PATTERNS):
+        max_days = max(max_days, 90)
 
     is_recent, date_reason = recency_check(job.published_at, max_days=max_days, now=now)
     if not is_recent:
@@ -439,6 +449,7 @@ def evaluate_raw_job(
                 r"\bno\s+prior\s+experience\b",
                 r"\bsem\s+experiencia\s+(?:previa|profissional)\b",
                 r"\brecem[- ]licenciad[oa]\b",
+                r"\b(?:new\s+grads?|recent\s+graduates?|university\s+graduates?|entry[- ]level)\b",
             ],
         )
         if desc_entry:

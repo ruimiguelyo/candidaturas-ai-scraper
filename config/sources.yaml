@@ -1,10 +1,13 @@
-# Configuração de fontes verificadas para o Estágio Radar PT v4.0
-# Modo Sniper (ao minuto) + Modo Deep (cobertura total Portugal/Europa)
+# Configuração de fontes verificadas para o Estágio Radar PT v8.0
+# Turbo-Sniper (90s) + Fast Sweep (15m) + Deep Sweep (60m)
 
 recency:
-  ats_days: 60
+  ats_days: 90
   board_days: 14
   linkedin_days: 7
+
+revolut:
+  enabled: true
 
 greenhouse:
   - { slug: "cloudflare", company: "Cloudflare" }
@@ -44,6 +47,8 @@ greenhouse:
   - { slug: "epicgames", company: "Epic Games" }
   - { slug: "discord", company: "Discord" }
   - { slug: "airtable", company: "Airtable" }
+  - { slug: "gocardless", company: "GoCardless" }
+  - { slug: "celonis", company: "Celonis" }
 
 ashby:
   - { slug: "paddle", company: "Paddle" }
@@ -69,15 +74,35 @@ ashby:
   - { slug: "notion", company: "Notion" }
   - { slug: "railway", company: "Railway" }
   - { slug: "ramp", company: "Ramp" }
+  - { slug: "voodoo", company: "Voodoo" }
+  - { slug: "sentry", company: "Sentry" }
+  - { slug: "snyk", company: "Snyk" }
+  - { slug: "synthesia", company: "Synthesia" }
+  - { slug: "wayve", company: "Wayve" }
+  - { slug: "n8n", company: "n8n" }
+  - { slug: "attio", company: "Attio" }
+  - { slug: "modal", company: "Modal" }
+  - { slug: "vanta", company: "Vanta" }
+  - { slug: "harvey", company: "Harvey" }
+  - { slug: "writer", company: "Writer" }
+  - { slug: "poolside", company: "Poolside" }
+  - { slug: "lovable", company: "Lovable" }
+  - { slug: "incident", company: "incident.io" }
+  - { slug: "triggerdev", company: "Trigger.dev" }
+  - { slug: "firecrawl", company: "Firecrawl" }
+  - { slug: "exa", company: "Exa" }
 
 lever:
   - { slug: "farfetch", company: "Farfetch" }
   - { slug: "spotify", company: "Spotify" }
+  - { slug: "anchorage", company: "Anchorage Digital" }
+  - { slug: "kinsta", company: "Kinsta" }
 
 smartrecruiters:
   - { slug: "BoschGroup", company: "Bosch" }
   - { slug: "Continental", company: "Continental" }
   - { slug: "Devoteam", company: "Devoteam" }
+  - { slug: "NatixisInPortugal", company: "Natixis" }
 
 recruitee:
   - { slug: "mbio", company: "Mercedes-Benz.io" }
@@ -88,6 +113,10 @@ teamtailor:
   - { domain: "careers.infraspeak.com", company: "Infraspeak" }
   - { domain: "careers.stratioautomotive.com", company: "Stratio" }
 
+workable: []
+
+personio: []
+
 workday:
   - { tenant: "visa", wd: "wd5", site: "Visa", company: "Visa" }
   - { tenant: "cisco", wd: "wd5", site: "Cisco_Careers", company: "Cisco" }
@@ -96,7 +125,14 @@ workday:
   - { tenant: "philips", wd: "wd3", site: "jobs-and-careers", company: "Philips" }
   - { tenant: "abb", wd: "wd3", site: "External_Career_Page", company: "ABB" }
   - { tenant: "novartis", wd: "wd3", site: "Novartis_Careers", company: "Novartis" }
-  - { tenant: "roche", wd: "wd3", site: "roche-ext", company: "Roche" }
+  - { tenant: "richemont", wd: "wd3", site: "richemont", company: "Richemont" }
+  - { tenant: "citi", wd: "wd5", site: "2", company: "Citi" }
+  - { tenant: "astrazeneca", wd: "wd3", site: "Careers", company: "AstraZeneca" }
+  - { tenant: "mastercard", wd: "wd1", site: "CorporateCareers", company: "Mastercard" }
+  - { tenant: "aptiv", wd: "wd5", site: "APTIV_CAREERS", company: "Aptiv" }
+  - { tenant: "nvidia", wd: "wd5", site: "NVIDIAExternalCareerSite", company: "NVIDIA" }
+  - { tenant: "sanofi", wd: "wd3", site: "SanofiCareers", company: "Sanofi" }
+  - { tenant: "hp", wd: "wd5", site: "ExternalCareerSite", company: "HP" }
 
 siemens_avature:
   base_url: "https://jobs.siemens.com/en_US/externaljobs/SearchJobs"
@@ -139,6 +175,7 @@ linkedin:
   sniper_queries:
     - { keywords: "estagio OR intern OR trainee OR graduate", location: "Lisbon, Portugal", f_E: "", total: 10 }
     - { keywords: "estagio OR intern OR trainee", location: "Setúbal, Portugal", f_E: "", total: 10 }
+    - { keywords: "estagio OR intern OR trainee OR graduate", location: "Portugal", f_E: "", total: 10 }
   fast_queries:
     - { keywords: "estagio", location: "Setúbal, Portugal", f_E: "", total: 10 }
     - { keywords: "Software Engineer Intern", location: "Lisbon, Portugal", f_E: "", total: 10 }

@@ -233,6 +233,7 @@ def classify_geo(
     description: str = "",
     source_type: str = "board",
     include_all_portugal: bool = False,
+    remote_eu_friendly: bool = False,
 ) -> tuple[GeoZone, str]:
     """Classifica compatibilidade geográfica centrada em Setúbal e Lisboa."""
     loc_parts = [location or ""]
@@ -309,6 +310,8 @@ def classify_geo(
                 return GeoZone.REJECTED_GEO, "Remoto com restrição geográfica incompatível."
         if mentions_eu_or_world:
             return GeoZone.REMOTE_PT, "Remoto elegível na Europa / EMEA / Global."
+        if not has_foreign and remote_eu_friendly:
+            return GeoZone.REMOTE_PT, "Remoto em empresa remote-first elegível na UE."
         # "Remote" genérico sem país: só aceitar se vier de fontes portuguesas/europeias
         if source_type == "pt_board":
             return GeoZone.REMOTE_PT, "Remoto em portal português."

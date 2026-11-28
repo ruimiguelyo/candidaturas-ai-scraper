@@ -11,7 +11,7 @@ import bs4
 import httpx
 from curl_cffi.requests import AsyncSession
 
-from estagio_radar.date_utils import parse_publication_datetime
+from estagio_radar.date_utils import parse_publication_datetime, utc_now
 from estagio_radar.models import RawJob, SourceHealth
 from estagio_radar.scrapers.base import DEFAULT_HEADERS, ScraperBatchResult, clean_html_text, retry_async
 
@@ -44,7 +44,7 @@ PT_CITIES = (
 )
 
 
-def parse_itjobs_html(html: str) -> list[RawJob]:
+def parse_itjobs_html(html: str, *, fallback_now: Any = None) -> list[RawJob]:
     soup = bs4.BeautifulSoup(html or "", "lxml")
     jobs: list[RawJob] = []
     seen_ids: set[str] = set()
@@ -121,6 +121,11 @@ def parse_itjobs_html(html: str) -> list[RawJob]:
                 salary = sm.group(1).strip()
 
         full_url = f"{ITJOBS_BASE}{href}" if href.startswith("/") else href
+        pub_dt = parse_publication_datetime(date_str)
+        pub_raw_out = date_str
+        if pub_dt is None and fallback_now is not None:
+            pub_dt = fallback_now
+            pub_raw_out = "Live ITJobs p.1"
         jobs.append(
             RawJob(
                 source="ITJobs.pt",
@@ -134,8 +139,8 @@ def parse_itjobs_html(html: str) -> list[RawJob]:
                 modality=modality,
                 is_remote=is_remote,
                 salary=salary,
-                published_at=parse_publication_datetime(date_str),
-                published_raw=date_str,
+                published_at=pub_dt,
+                published_raw=pub_raw_out,
             )
         )
     return jobs
@@ -164,7 +169,7 @@ async def scrape_itjobs(queries: list[str], *, max_pages: int = 2) -> ScraperBat
                         warnings.append(f"ITJobs '{q}' p{page}: HTTP {res.status_code}")
                         break
                     ok += 1
-                    parsed = parse_itjobs_html(res.text)
+                    parsed = parse_itjobs_html(res.text, fallback_now=utc_now() if page == 1 else None)
                     for j in parsed:
                         if j.job_id not in seen_ids:
                             seen_ids.add(j.job_id)
