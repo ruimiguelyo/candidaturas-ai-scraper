@@ -364,11 +364,12 @@ def render_dashboard_html(
     </div>
 
     <div class="cop-actions">
-      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill(false)">🚀 Auto-Preencher no Chrome Dedicado</button>
-      <button class="btn btn-ghost" id="cop-btn-fill-active" title="Já chegaste ao formulário noutro separador (várias camadas / login)? Preenche-o já sem recarregar!" onclick="launchAutofill(true)">🧲 Preencher Separador Aberto</button>
-      <button class="btn btn-ghost" onclick="copyDmAndOpenRecruiters()">💬 Copiar DM + Recrutadores LinkedIn</button>
-      <button class="btn btn-ghost" onclick="toggleEmailBox()">✉️ Candidatar por Email</button>
+      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill()">🚀 Auto-Preencher &amp; Anexar CV</button>
       <button class="btn btn-ghost" onclick="markAppliedFromCopilot()">✅ Marcar Candidatado</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+      <button class="btn btn-ghost btn-sm" onclick="copyDmAndOpenRecruiters()">💬 Copiar DM + Recrutadores</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleEmailBox()">✉️ Email direto</button>
     </div>
 
     <div class="cop-status" id="cop-feedback"></div>
@@ -796,21 +797,17 @@ async function pollAutofillStatus(attemptsLeft) {{
   AUTOFILL_POLL_TIMER = setTimeout(() => pollAutofillStatus(attemptsLeft - 1), 1000);
 }}
 
-async function launchAutofill(useActiveTab) {{
+async function launchAutofill() {{
   if (!CURRENT_KIT) return;
   if (AUTOFILL_POLL_TIMER) {{
     clearTimeout(AUTOFILL_POLL_TIMER);
     AUTOFILL_POLL_TIMER = null;
   }}
-  const btn = document.getElementById(useActiveTab ? "cop-btn-fill-active" : "cop-btn-autofill");
-  const endpoint = useActiveTab ? "/api/autofill-active-tab" : "/api/autofill";
+  const btn = document.getElementById("cop-btn-autofill");
   btn.disabled = true;
-  showCopilotFeedback(
-    useActiveTab ? "⏳ A preencher o separador aberto no Chrome..." : "⏳ A abrir separador no Chrome dedicado...",
-    false
-  );
+  showCopilotFeedback("⏳ A preencher formulário e anexar CV no Chrome dedicado...", false);
   try {{
-    const res = await fetch(endpoint, {{
+    const res = await fetch("/api/autofill", {{
       method: "POST",
       headers: {{ "Content-Type": "application/json" }},
       body: JSON.stringify({{

@@ -21,6 +21,7 @@ from estagio_radar.ai_writer import (
 )
 from estagio_radar.apply_copilot import generate_application_kit
 from estagio_radar.autofill_worker import (
+    _find_matching_open_tab,
     _launch_persistent,
     _pick_active_application_tab,
     _run_linkedin_easy_apply_assistant,
@@ -765,3 +766,126 @@ def test_autofill_active_tab_endpoint_and_tab_picker(tmp_path, monkeypatch):
     finally:
         server.shutdown()
         server.server_close()
+
+
+def test_form_with_bottom_recaptcha_still_fills_unsolved_and_solved(tmp_path):
+    pytest.importorskip("playwright")
+    profile = _sample_profile(tmp_path)
+    job = EnrichedJob(
+        fingerprint="fp-rev-1",
+        title="Graduate Programme 2027: Applied AI Engineer",
+        company="Revolut",
+        location="Lisbon / Remote",
+        job_url="https://www.linkedin.com/jobs/view/revolut-4478449395",
+        canonical_url="https://www.linkedin.com/jobs/view/revolut-4478449395",
+        sources=["LinkedIn"],
+        primary_source="LinkedIn",
+        source_type="linkedin",
+        role_tier=RoleTier.INTERNSHIP,
+        domain=DomainCategory.AI_ML,
+        geo_zone=GeoZone.REMOTE_PT,
+        company_profile=CompanyProfile(company_name="Revolut", normalized_name="revolut"),
+        score=88.0,
+        score_breakdown=ScoreBreakdown(total=88.0),
+    )
+    kit = generate_application_kit(job, profile, fetch_email=False)
+
+    def _write_revolut_page(path: Path, token_value: str) -> None:
+        path.write_text(
+            f"""<!doctype html>
+            <html><body>
+              <form>
+                <div>CV / Resume <input type="file" name="file" aria-label="Click to attach document" style="display:none"></div>
+                <input type="text" placeholder="Full name">
+                <input type="text" placeholder="Email">
+                <input type="tel" name="phoneNumber" placeholder="Phone number">
+                <input type="text" placeholder="Link to your LinkedIn profile (optional)">
+                <input type="text" placeholder="Links to your Github, portfolio, etc. (optional)">
+                <iframe src="https://www.google.com/recaptcha/api2/anchor?k=demo" width="304" height="78"></iframe>
+                <textarea id="g-recaptcha-response" name="g-recaptcha-response">{token_value}</textarea>
+              </form>
+            </body></html>""",
+            encoding="utf-8",
+        )
+
+    unsolved_page = tmp_path / "revolut_unsolved.html"
+    _write_revolut_page(unsolved_page, "")
+    res_unsolved = run_autofill_browser(
+        job,
+        kit,
+        profile,
+        headless=True,
+        keep_open=False,
+        target_url=unsolved_page.as_uri(),
+        user_data_dir=tmp_path / "chrome_rev_1",
+    )
+    assert res_unsolved["status"] == "done"
+    assert res_unsolved["cv_attached"] is True
+    assert res_unsolved["captcha_detected"] is True
+    assert "CAPTCHA" in res_unsolved["message"]
+    assert {"full_name", "email", "phone", "linkedin_url", "github_url", "cv_pdf"}.issubset(
+        set(res_unsolved["filled_fields"])
+    )
+
+    solved_page = tmp_path / "revolut_solved.html"
+    _write_revolut_page(solved_page, "03AFcWeA8xDemoSolvedRecaptchaTokenValue1234567890")
+    res_solved = run_autofill_browser(
+        job,
+        kit,
+        profile,
+        headless=True,
+        keep_open=False,
+        target_url=solved_page.as_uri(),
+        user_data_dir=tmp_path / "chrome_rev_2",
+    )
+    assert res_solved["status"] == "done"
+    assert res_solved["cv_attached"] is True
+    assert res_solved["captcha_detected"] is False
+    assert {"full_name", "email", "phone", "linkedin_url", "github_url", "cv_pdf"}.issubset(
+        set(res_solved["filled_fields"])
+    )
+
+
+def test_find_matching_open_tab_reuses_same_company_and_ignores_others():
+    pages = [
+        SimpleNamespace(url="about:blank"),
+        SimpleNamespace(url="http://127.0.0.1:8765/"),
+        SimpleNamespace(url="https://www.linkedin.com/jobs/view/revolut-4478449395/"),
+        SimpleNamespace(url="https://www.revolut.com/careers/apply/d149dd16/"),
+    ]
+    revolut_job = EnrichedJob(
+        fingerprint="fp-rev",
+        title="Applied AI",
+        company="Revolut",
+        location="Remote",
+        job_url="https://www.linkedin.com/jobs/view/revolut-4478449395",
+        canonical_url="https://www.linkedin.com/jobs/view/revolut-4478449395",
+        sources=["LinkedIn"],
+        primary_source="LinkedIn",
+        source_type="linkedin",
+        role_tier=RoleTier.INTERNSHIP,
+        domain=DomainCategory.AI_ML,
+        geo_zone=GeoZone.REMOTE_PT,
+        company_profile=CompanyProfile(company_name="Revolut", normalized_name="revolut"),
+        score=88.0,
+        score_breakdown=ScoreBreakdown(total=88.0),
+    )
+    picked_rev = _find_matching_open_tab(pages, revolut_job, revolut_job.job_url)
+    assert picked_rev is not None
+    assert picked_rev.url == "https://www.revolut.com/careers/apply/d149dd16/"
+
+    # LinkedIn fallback quando só o separador do mesmo LinkedIn job ID está aberto
+    li_only = _find_matching_open_tab(pages[:3], revolut_job, revolut_job.job_url)
+    assert li_only is not None
+    assert "4478449395" in li_only.url
+
+    # Outra empresa NÃO reutiliza o separador da Revolut
+    cf_job = revolut_job.model_copy(
+        update={
+            "fingerprint": "fp-cf",
+            "company": "Cloudflare",
+            "job_url": "https://boards.greenhouse.io/cloudflare/jobs/999",
+            "canonical_url": "https://boards.greenhouse.io/cloudflare/jobs/999",
+        }
+    )
+    assert _find_matching_open_tab(pages, cf_job, cf_job.job_url) is None

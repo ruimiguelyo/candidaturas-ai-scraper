@@ -305,6 +305,35 @@ def _detect_captcha(page: Any) -> bool:
     return False
 
 
+def _has_unsolved_captcha(page: Any) -> bool:
+    """Devolve True apenas se existir CAPTCHA visível ainda sem token resolvido."""
+    if not _detect_captcha(page):
+        return False
+    frames = [page.main_frame, *[fr for fr in page.frames if fr != page.main_frame]]
+    for fr in frames:
+        try:
+            is_solved = fr.evaluate(
+                """() => {
+                    const sels = [
+                        "textarea[name='g-recaptcha-response']",
+                        "input[name='cf-turnstile-response']",
+                        "textarea[name='h-captcha-response']"
+                    ];
+                    for (const s of sels) {
+                        for (const el of document.querySelectorAll(s)) {
+                            if ((el.value || "").trim().length > 20) return true;
+                        }
+                    }
+                    return false;
+                }"""
+            )
+            if is_solved:
+                return False
+        except Exception:
+            continue
+    return True
+
+
 def _match_rule_for_descriptor(desc: str, profile: dict[str, Any]) -> tuple[list[str], str] | None:
     low = desc.casefold()
     if any(k in low for k in ("country", "pais", "país", "nation")):
@@ -589,6 +618,13 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
                         break
                 if matched:
                     break
+            if not matched:
+                try:
+                    kb = getattr(frame, "keyboard", None) or getattr(getattr(frame, "page", None), "keyboard", None)
+                    if kb is not None:
+                        kb.press("Escape")
+                except Exception:
+                    pass
         except Exception:
             continue
     return filled
@@ -842,7 +878,9 @@ def _follow_apply_hops(page: Any, context: Any, *, max_hops: int = 4) -> Any:
     """Segue até max_hops camadas (mesmo separador ou novo separador) até alcançar o formulário."""
     for _hop in range(max_hops):
         _dismiss_cookie_banners(page)
-        if _detect_captcha(page) or _has_real_application_form(page):
+        if _has_real_application_form(page):
+            return page
+        if _has_unsolved_captcha(page):
             return page
 
         low_url = (page.url or "").casefold()
@@ -1165,6 +1203,72 @@ def open_radar_app(
         return {"ok": True, "mode": "fallback_webbrowser", "url": dashboard_url}
 
 
+_GENERIC_COMPANY_WORDS = {
+    "company", "portugal", "group", "solutions", "technologies", "services",
+    "software", "systems", "labs", "tech", "limited", "inc", "lda", "sa", "the",
+}
+
+
+def _get_or_open_page(context: Any) -> Any:
+    """Reutiliza separador about:blank vazio antes de criar um novo separador."""
+    for pg in context.pages:
+        url = (getattr(pg, "url", "") or "").strip()
+        if url in ("", "about:blank"):
+            return pg
+    return context.new_page()
+
+
+def _find_matching_open_tab(
+    pages: list[Any],
+    job: EnrichedJob,
+    target_url: str,
+    dashboard_port: int = 8765,
+) -> Any | None:
+    """Deteta separador já aberto desta vaga/empresa para preencher no sítio sem recarregar."""
+    dash_prefixes = (f"http://127.0.0.1:{dashboard_port}", f"http://localhost:{dashboard_port}")
+
+    raw_comp = (job.company or "").casefold()
+    comp_slug = re.sub(r"[^a-z0-9]+", "", raw_comp)
+    comp_tokens = {
+        w for w in re.split(r"[^a-z0-9]+", raw_comp)
+        if len(w) >= 4 and w not in _GENERIC_COMPANY_WORDS
+    }
+    if len(comp_slug) >= 4:
+        comp_tokens.add(comp_slug)
+
+    li_job_ids: set[str] = set()
+    for u in (target_url or "", job.job_url or ""):
+        m = re.search(r"(\d{8,12})", u)
+        if m:
+            li_job_ids.add(m.group(1))
+
+    target_hosts: set[str] = set()
+    for u in (target_url or "", job.job_url or ""):
+        host = (urlparse(u).netloc or "").casefold().removeprefix("www.")
+        if host and "linkedin.com" not in host:
+            target_hosts.add(host)
+
+    candidates: list[tuple[int, Any]] = []
+    for pg in pages:
+        url = (getattr(pg, "url", "") or "").strip()
+        low = url.casefold()
+        if not low or low.startswith(("about:blank", "chrome://", "devtools://", *dash_prefixes)):
+            continue
+        if "linkedin.com" in low:
+            if any(jid in low for jid in li_job_ids):
+                candidates.append((2, pg))
+            continue
+        pg_host = (urlparse(low).netloc or "").removeprefix("www.")
+        if (pg_host and pg_host in target_hosts) or any(tok in low for tok in comp_tokens):
+            candidates.append((3, pg))
+
+    if not candidates:
+        return None
+    max_prio = max(p for p, _ in candidates)
+    matching = [pg for p, pg in candidates if p == max_prio]
+    return matching[-1]
+
+
 def open_login_browser(urls: list[str] | None = None, *, user_data_dir: Path | None = None) -> None:
     """Abre o perfil Chrome dedicado para iniciar sessão 1 vez no LinkedIn / portais."""
     try:
@@ -1184,7 +1288,7 @@ def open_login_browser(urls: list[str] | None = None, *, user_data_dir: Path | N
         if cdp_url:
             browser = p.chromium.connect_over_cdp(cdp_url, timeout=12000)
             context = browser.contexts[0] if browser.contexts else browser.new_context()
-            page = context.new_page()
+            page = _get_or_open_page(context)
             try:
                 page.bring_to_front()
             except Exception:
@@ -1237,12 +1341,16 @@ def _fill_current_page(
     filled_all: list[str] = []
     cv_attached = False
     captcha_detected = False
+    blocking_captcha = False
     needs_login = False
     stopped_before_submit = False
     steps_completed = 0
 
     _dismiss_cookie_banners(page)
-    if _detect_captcha(page):
+    has_form = _has_real_application_form(page)
+
+    if not has_form and _has_unsolved_captcha(page):
+        blocking_captcha = True
         captcha_detected = True
         _inject_copilot_banner(
             page,
@@ -1273,11 +1381,14 @@ def _fill_current_page(
             cv_attached = bool(easy_res.get("cv_attached"))
             stopped_before_submit = bool(easy_res.get("stopped_before_submit"))
             captcha_detected = bool(easy_res.get("captcha_detected"))
+            blocking_captcha = captcha_detected
             steps_completed = int(easy_res.get("steps_completed") or 0)
         else:
-            if follow_hops:
+            if follow_hops and not has_form:
                 page = _follow_apply_hops(page, context, max_hops=4)
-            if _detect_captcha(page):
+                has_form = _has_real_application_form(page)
+            if not has_form and _has_unsolved_captcha(page):
+                blocking_captcha = True
                 captcha_detected = True
             else:
                 frames_to_scan = [page.main_frame]
@@ -1312,24 +1423,30 @@ def _fill_current_page(
                             cv_path=cv_path,
                         )
                     )
+                captcha_detected = _has_unsolved_captcha(page)
 
         unique_fields = list(dict.fromkeys(filled_all))
-        if captcha_detected:
+        if blocking_captcha:
             _inject_copilot_banner(
                 page,
                 "⚠️ Verificação anti-bot/CAPTCHA detetada — completa manualmente na janela para continuar.",
                 tone="warn",
             )
         else:
+            tail_txt = (
+                " — Marca o CAPTCHA em baixo e clica em Submeter!"
+                if captcha_detected
+                else " — Parado antes de Submeter. Revê e clica para enviar!"
+            )
             banner_msg = (
                 f"Estágio Radar Copilot: {len(unique_fields)} campo(s) ({', '.join(unique_fields[:6])})"
                 + (f" + CV anexado ({cv_name})" if cv_attached else f" (anexa manualmente: {cv_name or 'CV PDF'})")
-                + " — Parado antes de Submeter. Revê e clica para enviar!"
+                + tail_txt
             )
             _inject_copilot_banner(page, banner_msg)
 
     unique_fields = list(dict.fromkeys(filled_all))
-    if captcha_detected:
+    if blocking_captcha:
         status_code = "captcha_blocked"
         msg = "⚠️ Verificação CAPTCHA/anti-bot detetada na página — completa manualmente no Chrome."
     elif needs_login:
@@ -1338,7 +1455,10 @@ def _fill_current_page(
     else:
         status_code = "done"
         cv_txt = f" + CV {cv_name} anexado!" if cv_attached else f" (anexa manualmente: {cv_name or 'CV'})"
-        msg = f"✅ {len(unique_fields)} campo(s) preenchidos{cv_txt} Revê e clica em Submeter."
+        if captcha_detected:
+            msg = f"✅ {len(unique_fields)} campo(s) preenchidos{cv_txt} Só falta marcar o CAPTCHA em baixo e clicar em Submeter."
+        else:
+            msg = f"✅ {len(unique_fields)} campo(s) preenchidos{cv_txt} Revê e clica em Submeter."
 
     return {
         "ok": True,
@@ -1514,7 +1634,13 @@ def run_autofill_browser(
                 using_cdp = True
                 browser = p.chromium.connect_over_cdp(cdp_url, timeout=12000)
                 context = browser.contexts[0] if browser.contexts else browser.new_context()
-                page = context.new_page()
+                existing_tab = _find_matching_open_tab(list(context.pages), job, url)
+                if existing_tab is not None:
+                    page = existing_tab
+                    navigated = False
+                else:
+                    page = _get_or_open_page(context)
+                    navigated = True
                 try:
                     page.bring_to_front()
                 except Exception:
@@ -1522,10 +1648,12 @@ def run_autofill_browser(
             else:
                 context = _launch_persistent(p, prof_dir, headless=headless)
                 page = context.pages[0] if context.pages else context.new_page()
+                navigated = True
 
             try:
-                page.goto(url, wait_until="domcontentloaded", timeout=22000)
-                page.wait_for_timeout(900)
+                if navigated:
+                    page.goto(url, wait_until="domcontentloaded", timeout=22000)
+                    page.wait_for_timeout(900)
                 result = _fill_current_page(
                     page,
                     context,
