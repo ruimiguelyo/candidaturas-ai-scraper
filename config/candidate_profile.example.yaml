@@ -23,6 +23,12 @@ graduation_year: "2027"
 work_authorization_eu: "Yes"
 requires_sponsorship: "No"
 availability: "Immediate — Curricular or Extracurricular Internship (2026/2027)"
+preferred_locations:
+  - "Lisbon"
+  - "Setúbal"
+  - "Portugal"
+  - "Remote"
+pronouns: ""
 
 cvs:
   ai_ml: "cv/CV_Applied_AI.pdf"

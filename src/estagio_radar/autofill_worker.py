@@ -334,20 +334,47 @@ def _has_unsolved_captcha(page: Any) -> bool:
     return True
 
 
+_SENSITIVE_SKIP_RE = re.compile(
+    r"(?:gender|ethnicity|ethnic|race|disabilit|veteran|sexual\s+orient|transcript|consent|privacy|terms|gdpr|rgpd|competition|conference|met\s+at|pronoun)",
+    re.IGNORECASE,
+)
+
+
 def _match_rule_for_descriptor(desc: str, profile: dict[str, Any]) -> tuple[list[str], str] | None:
     low = desc.casefold()
-    if any(k in low for k in ("country", "pais", "país", "nation")):
-        return ([str(profile.get("country") or "Portugal"), "portugal"], "country")
+    if "pronoun" in low:
+        p_val = str(profile.get("pronouns") or "").strip()
+        if not p_val:
+            return None
+        return ([p_val], "pronouns")
+    if _SENSITIVE_SKIP_RE.search(low):
+        return None
+
+    if any(k in low for k in ("phone country code", "country code", "indicativo")):
+        return (["portugal", "+351"], "phone_country")
+    if any(k in low for k in ("preferred work location", "work location", "office location")):
+        locs = [str(x).casefold() for x in (profile.get("preferred_locations") or []) if str(x).strip()]
+        return (locs or ["lisbon", "lisboa", "portugal", "remote"], "preferred_location")
+    if re.search(r"previous(?:ly)?\s+(?:been\s+)?employed", low) or any(
+        k in low for k in ("worked for", "worked at", "former employee", "já trabalhou")
+    ):
+        return (["no", "não", "nao"], "prev_employed")
+    if any(k in low for k in ("hear about", "how did you hear", "source", "como conheceu", "where did you find")):
+        return (["linkedin", "job board", "company", "website", "career"], "source")
     if any(k in low for k in ("sponsor", "visa", "visto")):
         return (["no", "não", "nao", "do not require"], "sponsorship")
     if any(k in low for k in ("authori", "eligible", "right to work", "work in", "trabalhar", "eu citizen")):
         return (["yes", "sim", "authorized"], "work_auth")
+    if any(k in low for k in ("full duration", "available for the full", "disponibilidade total")):
+        return (["yes", "sim"], "availability")
+    if any(k in low for k in ("preferred start date", "start date", "when can you start", "data de início")):
+        return (["immediate", "asap", "soon", "2026", "2027", "flexible", "summer", "fall", "autumn", "sep"], "start_date")
+    if any(k in low for k in ("current country", "country of residence", "country", "pais", "país", "nation")) and "phone" not in low:
+        return ([str(profile.get("country") or "Portugal"), "portugal"], "country")
     if any(k in low for k in ("graduation", "grad year", "conclus")):
         return ([str(profile.get("graduation_year") or "2027")], "graduation_year")
     if any(k in low for k in ("degree", "education", "licenciatura", "habilit")):
-        return (["bachelor", "bsc", "licenciatura"], "degree")
-    if any(k in low for k in ("hear about", "source", "como conheceu")):
-        return (["linkedin", "company", "website", "career"], "source")
+        return (["bachelor", "bsc", "licenciatura", "undergraduate"], "degree")
     return None
 
 
@@ -554,14 +581,26 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
             """els => els.map((el, idx) => {
                 const rect = el.getBoundingClientRect();
                 const visible = rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden";
-                const cont = el.closest("div, fieldset, section, label");
-                const parentTxt = (cont?.innerText || "").replace(/\\s+/g, " ").trim().slice(0, 140);
+                let ancTxt = "";
+                let anc = el.parentElement;
+                for (let step = 0; step < 4 && anc && anc !== document.body && anc.tagName !== "FORM"; step++) {
+                    const fieldCount = anc.querySelectorAll("input, button, select, textarea").length;
+                    if (step > 0 && fieldCount > 4) break;
+                    const t = (anc.innerText || "").replace(/\\s+/g, " ").trim();
+                    if (t && t.length >= 12 && t.length <= 220) {
+                        ancTxt = t;
+                        if (!/^(select one|select|choose|selecionar)$/i.test(t)) break;
+                    }
+                    anc = anc.parentElement;
+                }
+                const prevSib = el.closest("div")?.previousElementSibling;
+                const prevTxt = (prevSib?.innerText || "").replace(/\\s+/g, " ").trim().slice(0, 180);
                 return {
                     btnIdx: idx,
                     aria: el.getAttribute("aria-label") || "",
                     value: el.value || "",
                     text: (el.innerText || "").replace(/\\s+/g, " ").trim(),
-                    parentText: parentTxt,
+                    parentText: [prevTxt, ancTxt].filter(Boolean).join(" | ").slice(0, 320),
                     disabled: Boolean(el.disabled),
                     visible
                 };
@@ -571,20 +610,26 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
         return filled
 
     locator_all = frame.locator("input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]")
+    placeholder_vals = {"", "select", "select...", "select one", "choose", "selecionar", "--"}
+
     for meta in triggers:
         if meta.get("disabled") or not meta.get("visible"):
             continue
-        desc = f"{meta.get('aria', '')} | {meta.get('parentText', '')}".casefold()
-        if any(k in desc for k in ("phone country code", "country code", "indicativo")):
-            tokens = ["portugal", "+351"]
-            field_tag = "phone_country"
-        elif any(k in desc for k in ("current country", "country of residence", "country")) and "phone" not in desc:
-            cur = f"{meta.get('value', '')} {meta.get('text', '')}".casefold()
+        aria_txt = str(meta.get("aria") or "").strip()
+        desc = f"{aria_txt} | {meta.get('parentText', '')}".strip()
+        rule = (_match_rule_for_descriptor(aria_txt, profile) if aria_txt else None) or _match_rule_for_descriptor(desc, profile)
+        if rule is None:
+            continue
+        tokens, field_tag = rule
+
+        cur = f"{meta.get('value', '')} {meta.get('text', '')}".strip().casefold()
+        if field_tag == "country":
             if "portugal" in cur:
                 continue
-            tokens = [str(profile.get("country") or "Portugal"), "portugal"]
-            field_tag = "country"
-        else:
+        elif field_tag == "phone_country":
+            if "+351" in cur or "portugal" in cur:
+                continue
+        elif cur not in placeholder_vals:
             continue
 
         try:
@@ -592,18 +637,26 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
             if hasattr(frame, "wait_for_timeout"):
                 frame.wait_for_timeout(250)
             search_inp = frame.locator(
-                "[role='dialog'] input[type='text'], [role='dialog'] input[type='search'], "
-                "[role='listbox'] input, input[placeholder*='search' i], input[aria-label*='search' i]"
+                "[role='dialog'] input:not([type='button']):not([type='submit']):not([type='hidden']), "
+                "[role='listbox'] input:not([type='button']):not([type='submit']):not([type='hidden']), "
+                "input[type='search'], "
+                "input[type='text'][placeholder*='search' i], "
+                "input[type='text'][aria-label*='search' i]"
             ).first
             if search_inp.count() > 0 and search_inp.is_visible():
-                search_inp.fill("Portugal", timeout=1000)
+                search_inp.fill(tokens[0], timeout=1000)
                 if hasattr(frame, "wait_for_timeout"):
                     frame.wait_for_timeout(250)
 
-            opts = frame.locator("[role='option'], [role='listbox'] li, [role='listbox'] button, [role='dialog'] li, [role='dialog'] button")
+            opts = frame.locator(
+                "[role='option'], [role='listbox'] li, [role='listbox'] button, "
+                "[role='dialog'] li, [role='dialog'] button, [class*='option' i], "
+                "[class*='menu' i] [role='menuitem'], [class*='menu' i] li"
+            )
             matched = False
             for tok in tokens:
-                for i in range(min(opts.count(), 40)):
+                tok_re = re.compile(rf"(?<!\w){re.escape(tok.casefold())}(?!\w)")
+                for i in range(min(opts.count(), 45)):
                     opt = opts.nth(i)
                     try:
                         if not opt.is_visible():
@@ -611,7 +664,7 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
                         o_txt = (opt.inner_text(timeout=200) or "").strip().casefold()
                     except Exception:
                         continue
-                    if tok.casefold() in o_txt and len(o_txt) <= 80:
+                    if tok_re.search(o_txt) and len(o_txt) <= 95:
                         opt.click(timeout=1200)
                         filled.append(field_tag)
                         matched = True
@@ -630,6 +683,61 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
     return filled
 
 
+_REFILL_KINDS = {
+    "full_name",
+    "first_name",
+    "last_name",
+    "email",
+    "phone",
+    "linkedin_url",
+    "github_url",
+    "portfolio_url",
+}
+
+
+def _scan_input_candidates(frame: Any) -> list[dict[str, Any]]:
+    return frame.eval_on_selector_all(
+        "input, textarea",
+        """els => els.map((el, idx) => {
+            const id = el.id || "";
+            const ariaLblBy = el.getAttribute("aria-labelledby") || "";
+            const refEl = ariaLblBy ? document.getElementById(ariaLblBy.split(/\\s+/)[0]) : null;
+            const labelEl = id ? document.querySelector(`label[for="${CSS.escape(id)}"]`) : null;
+            const parentLabel = el.closest("label");
+            const container = el.closest("div, li, fieldset, section, td");
+            const containerLabel = container ? container.querySelector("label, legend, span[class*='label' i]") : null;
+            const labelTxt = (labelEl?.innerText || refEl?.innerText || parentLabel?.innerText || containerLabel?.innerText || "").trim();
+            const rect = el.getBoundingClientRect();
+            let ancestorVisible = true;
+            let anc = el.parentElement;
+            while (anc && anc !== document.body && anc !== document.documentElement) {
+                const st = getComputedStyle(anc);
+                if (st.display === "none" || st.visibility === "hidden") {
+                    ancestorVisible = false;
+                    break;
+                }
+                anc = anc.parentElement;
+            }
+            const visible = el.type === "file" ? ancestorVisible : (rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden" && ancestorVisible);
+            return {
+                idx,
+                tag: el.tagName.toLowerCase(),
+                type: (el.getAttribute("type") || "text").toLowerCase(),
+                role: (el.getAttribute("role") || "").toLowerCase(),
+                name: el.getAttribute("name") || "",
+                id,
+                placeholder: el.getAttribute("placeholder") || "",
+                ariaLabel: el.getAttribute("aria-label") || "",
+                autocomplete: el.getAttribute("autocomplete") || "",
+                label: labelTxt,
+                value: el.value || "",
+                disabled: Boolean(el.disabled || el.readOnly),
+                visible
+            };
+        })""",
+    )
+
+
 def _fill_frame_inputs(
     frame: Any,
     values: dict[str, str],
@@ -640,80 +748,60 @@ def _fill_frame_inputs(
     cv_attached = False
     open_questions: list[tuple[int, str]] = []
 
+    try:
+        candidates = _scan_input_candidates(frame)
+    except Exception:
+        return filled, cv_attached, open_questions
+
+    locator_all = frame.locator("input, textarea")
+
+    # Pass 0: Anexar CV PDF PRIMEIRO e aguardar o parser assíncrono do ATS (ex: Revolut/Lever)
+    if cv_path and cv_path.exists():
+        file_indices: list[tuple[int, str]] = []
+        for meta in candidates:
+            if meta.get("disabled") or not meta.get("visible") or meta.get("type") != "file":
+                continue
+            descriptor = " | ".join(
+                str(meta.get(k) or "") for k in ("name", "id", "placeholder", "ariaLabel", "autocomplete", "label")
+            )
+            kind = _match_field_kind(descriptor, meta["tag"], meta["type"])
+            if kind in {"resume", "resume_fallback"}:
+                file_indices.append((0 if kind == "resume" else 1, meta["idx"]))
+        for _prio, f_idx in sorted(file_indices):
+            try:
+                locator_all.nth(f_idx).set_input_files(str(cv_path))
+                cv_attached = True
+                filled.append("cv_pdf")
+                break
+            except Exception:
+                continue
+
+        if cv_attached and hasattr(frame, "wait_for_timeout"):
+            fr_url = (getattr(frame, "url", "") or "").casefold()
+            wait_ms = 450 if fr_url.startswith("file://") else 1500
+            frame.wait_for_timeout(wait_ms)
+            try:
+                candidates = _scan_input_candidates(frame)
+                locator_all = frame.locator("input, textarea")
+            except Exception:
+                pass
+
+    # Pass 1: Dropdowns customizados (+351, Current country, Heard from, Previous employment...)
     custom_filled = _fill_custom_button_dropdowns(frame, profile)
     filled.extend(custom_filled)
     local_values = dict(values)
     if "phone_country" in custom_filled and local_values.get("phone"):
         local_values["phone"] = re.sub(r"^(?:\+351|00351)\s*", "", local_values["phone"]).strip()
 
-    try:
-        candidates = frame.eval_on_selector_all(
-            "input, textarea",
-            """els => els.map((el, idx) => {
-                const id = el.id || "";
-                const ariaLblBy = el.getAttribute("aria-labelledby") || "";
-                const refEl = ariaLblBy ? document.getElementById(ariaLblBy.split(/\\s+/)[0]) : null;
-                const labelEl = id ? document.querySelector(`label[for="${CSS.escape(id)}"]`) : null;
-                const parentLabel = el.closest("label");
-                const container = el.closest("div, li, fieldset, section, td");
-                const containerLabel = container ? container.querySelector("label, legend, span[class*='label' i]") : null;
-                const labelTxt = (labelEl?.innerText || refEl?.innerText || parentLabel?.innerText || containerLabel?.innerText || "").trim();
-                const rect = el.getBoundingClientRect();
-                let ancestorVisible = true;
-                let anc = el.parentElement;
-                while (anc && anc !== document.body && anc !== document.documentElement) {
-                    const st = getComputedStyle(anc);
-                    if (st.display === "none" || st.visibility === "hidden") {
-                        ancestorVisible = false;
-                        break;
-                    }
-                    anc = anc.parentElement;
-                }
-                const visible = el.type === "file" ? ancestorVisible : (rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden" && ancestorVisible);
-                return {
-                    idx,
-                    tag: el.tagName.toLowerCase(),
-                    type: (el.getAttribute("type") || "text").toLowerCase(),
-                    role: (el.getAttribute("role") || "").toLowerCase(),
-                    name: el.getAttribute("name") || "",
-                    id,
-                    placeholder: el.getAttribute("placeholder") || "",
-                    ariaLabel: el.getAttribute("aria-label") || "",
-                    autocomplete: el.getAttribute("autocomplete") || "",
-                    label: labelTxt,
-                    value: el.value || "",
-                    disabled: Boolean(el.disabled || el.readOnly),
-                    visible
-                };
-            })""",
-        )
-    except Exception:
-        return filled, cv_attached, open_questions
-
-    locator_all = frame.locator("input, textarea")
-    fallback_file_indices: list[int] = []
-
     for meta in candidates:
         if meta.get("disabled") or not meta.get("visible"):
             continue
-        if meta.get("role") == "combobox":
+        if meta.get("type") == "file" or meta.get("role") == "combobox":
             continue
         descriptor = " | ".join(
             str(meta.get(k) or "") for k in ("name", "id", "placeholder", "ariaLabel", "autocomplete", "label")
         )
         kind = _match_field_kind(descriptor, meta["tag"], meta["type"])
-        if kind == "resume_fallback":
-            fallback_file_indices.append(meta["idx"])
-            continue
-        if kind == "resume":
-            if cv_path and cv_path.exists() and not cv_attached:
-                try:
-                    locator_all.nth(meta["idx"]).set_input_files(str(cv_path))
-                    cv_attached = True
-                    filled.append("cv_pdf")
-                except Exception:
-                    pass
-            continue
         if kind == "open_question":
             q_label = (meta.get("label") or meta.get("ariaLabel") or meta.get("placeholder") or "").strip()
             if q_label and not str(meta.get("value") or "").strip():
@@ -726,17 +814,36 @@ def _fill_frame_inputs(
             except Exception:
                 pass
 
-    if not cv_attached and fallback_file_indices and cv_path and cv_path.exists():
-        try:
-            locator_all.nth(fallback_file_indices[0]).set_input_files(str(cv_path))
-            cv_attached = True
-            filled.append("cv_pdf")
-        except Exception:
-            pass
-
     filled.extend(_fill_selects(frame, profile))
     filled.extend(_fill_comboboxes(frame, profile))
     filled.extend(_fill_radio_groups(frame, profile))
+
+    # Pass 2: Repor campos padrão apagados tardiamente pelo parser React após o upload do CV
+    if cv_attached and hasattr(frame, "wait_for_timeout"):
+        frame.wait_for_timeout(350)
+        try:
+            refill_candidates = _scan_input_candidates(frame)
+            refill_loc = frame.locator("input, textarea")
+            for meta in refill_candidates:
+                if meta.get("disabled") or not meta.get("visible"):
+                    continue
+                if meta.get("type") in {"file", "hidden", "checkbox", "radio", "submit", "button"}:
+                    continue
+                if str(meta.get("value") or "").strip():
+                    continue
+                descriptor = " | ".join(
+                    str(meta.get(k) or "") for k in ("name", "id", "placeholder", "ariaLabel", "autocomplete", "label")
+                )
+                kind = _match_field_kind(descriptor, meta["tag"], meta["type"])
+                if kind in _REFILL_KINDS and local_values.get(kind):
+                    try:
+                        refill_loc.nth(meta["idx"]).fill(local_values[kind], timeout=1500)
+                        filled.append(kind)
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+
     return filled, cv_attached, open_questions
 
 

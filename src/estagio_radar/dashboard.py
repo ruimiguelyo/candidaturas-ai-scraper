@@ -31,6 +31,7 @@ from estagio_radar.apply_copilot import (
     send_application_email,
 )
 from estagio_radar.autofill_worker import read_autofill_status, write_autofill_status
+from estagio_radar.cv_tailor import generate_tailored_cv_pdf
 from estagio_radar.exporters import render_dashboard_html
 from estagio_radar.models import CompanyProfile, DomainCategory, EnrichedJob, GeoZone, RoleTier, ScoreBreakdown
 from estagio_radar.storage import RadarStorage
@@ -189,16 +190,28 @@ def make_handler(
                 )
                 return
             if path == "/api/cv-file":
+                fp = (qs.get("fingerprint") or [""])[0].strip()
                 track = (qs.get("track") or [""])[0].strip()
-                if track not in {"ai_ml", "swe", "enterprise"}:
+                if fp:
+                    job = storage.get_job(fp)
+                    if job is not None and job.tailored_cv_path and Path(job.tailored_cv_path).exists():
+                        self._send_pdf(Path(job.tailored_cv_path))
+                        return
+                if track and track not in {"ai_ml", "swe", "enterprise"}:
                     self._send_json(HTTPStatus.BAD_REQUEST, {"error": "track inválido (usar ai_ml, swe ou enterprise)"})
                     return
+                if not track:
+                    track = "ai_ml"
                 profile = load_candidate_profile(resolved_profile_path)
                 cv_meta = next((c for c in list_available_cvs(profile, repo_root=repo_root) if c["track"] == track), None)
                 if not cv_meta or not cv_meta["exists"]:
                     self._send_json(HTTPStatus.NOT_FOUND, {"error": "Ficheiro CV PDF não encontrado"})
                     return
                 self._send_pdf(Path(cv_meta["path"]))
+                return
+            if path == "/api/followups":
+                due = [j.model_dump(mode="json") for j in storage.list_due_followups()]
+                self._send_json(HTTPStatus.OK, {"count": len(due), "jobs": due})
                 return
             if path == "/api/apply-kit":
                 fp = (qs.get("fingerprint") or [""])[0].strip()
@@ -244,14 +257,91 @@ def make_handler(
                 fp = str(data.get("fingerprint") or "").strip()
                 status = str(data.get("status") or "").strip()
                 notes = data.get("notes")
+                recruiter_contact = data.get("recruiter_contact")
                 try:
                     updated = storage.update_job_status(
-                        fp, status, str(notes) if notes is not None else None
+                        fp,
+                        status,
+                        str(notes) if notes is not None else None,
+                        recruiter_contact=str(recruiter_contact) if recruiter_contact is not None else None,
                     )
                 except ValueError as err:
                     self._send_json(HTTPStatus.BAD_REQUEST, {"error": str(err)})
                     return
-                self._send_json(HTTPStatus.OK, {"ok": updated})
+                refreshed = storage.get_job(fp) if updated else None
+                self._send_json(
+                    HTTPStatus.OK,
+                    {
+                        "ok": updated,
+                        "applied_at": refreshed.applied_at.isoformat() if refreshed and refreshed.applied_at else None,
+                        "followup_at": refreshed.followup_at.isoformat() if refreshed and refreshed.followup_at else None,
+                    },
+                )
+                return
+
+            if path == "/api/followup-done":
+                fp = str(data.get("fingerprint") or "").strip()
+                snooze_days = int(data.get("snooze_days") or 7)
+                note = data.get("note")
+                ok = storage.mark_followup_done(
+                    fp,
+                    snooze_days=snooze_days,
+                    note=str(note) if note is not None else None,
+                )
+                refreshed = storage.get_job(fp) if ok else None
+                self._send_json(
+                    HTTPStatus.OK,
+                    {
+                        "ok": ok,
+                        "followup_at": refreshed.followup_at.isoformat() if refreshed and refreshed.followup_at else None,
+                    },
+                )
+                return
+
+            if path == "/api/tailor-cv":
+                fp = str(data.get("fingerprint") or "").strip()
+                cv_track = str(data.get("cv_track") or "").strip() or None
+                job = storage.get_job(fp)
+                if job is None:
+                    self._send_json(HTTPStatus.NOT_FOUND, {"error": "Vaga não encontrada"})
+                    return
+                profile = load_candidate_profile(resolved_profile_path)
+                base_cv = select_best_cv(job, profile, override_track=cv_track, repo_root=repo_root)
+                if not base_cv["exists"]:
+                    self._send_json(HTTPStatus.BAD_REQUEST, {"error": "CV base PDF em falta para adaptar."})
+                    return
+                details = storage.get_job_details(fp)
+                description = (details.get("full_description") or job.description_snippet or "").strip()
+                try:
+                    res = generate_tailored_cv_pdf(
+                        job,
+                        base_cv_pdf=Path(base_cv["path"]),
+                        description=description,
+                        profile=profile,
+                        out_dir=repo_root / "data/tailored_cvs",
+                    )
+                    storage.save_tailored_cv(fp, res["path"])
+                    self._send_json(
+                        HTTPStatus.OK,
+                        {
+                            "ok": True,
+                            "cv": {
+                                "track": base_cv["track"],
+                                "label": f"CV Adaptado ({res['filename']})",
+                                "path": res["path"],
+                                "filename": res["filename"],
+                                "exists": True,
+                                "tailored": True,
+                                "reason": f"Adaptado com {res['model']} ({len(res['matched_keywords'])} keywords)",
+                            },
+                            "matched_keywords": res["matched_keywords"],
+                            "headline": res["headline"],
+                            "model": res["model"],
+                            "preview_url": f"/api/cv-file?fingerprint={fp}",
+                        },
+                    )
+                except Exception as err:
+                    self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"Falha ao adaptar CV: {err}"})
                 return
 
             if path == "/api/answer-questions":
@@ -365,6 +455,7 @@ def make_handler(
                 active_tab_only = path == "/api/autofill-active-tab"
                 fp = str(data.get("fingerprint") or "").strip()
                 cv_track = str(data.get("cv_track") or "").strip() or None
+                use_tailored = bool(data.get("use_tailored", True))
                 cover_note = str(data.get("cover_note") or "").strip()
                 language = str(data.get("language") or "en").strip() or "en"
                 job = storage.get_job(fp)
@@ -378,6 +469,16 @@ def make_handler(
                     override_track=cv_track,
                     repo_root=repo_root,
                 )
+                if use_tailored and job.tailored_cv_path and Path(job.tailored_cv_path).exists():
+                    t_path = Path(job.tailored_cv_path)
+                    cv_info = {
+                        **cv_info,
+                        "label": f"CV Adaptado ({t_path.name})",
+                        "path": str(t_path),
+                        "filename": t_path.name,
+                        "exists": True,
+                        "tailored": True,
+                    }
                 details = storage.get_job_details(fp)
 
                 payload_file = repo_root / "data/last_autofill_payload.json"

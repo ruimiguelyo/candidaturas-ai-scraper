@@ -86,7 +86,14 @@ class RadarStorage:
                 );
                 """
             )
-            for col_def in ("full_description TEXT", "external_apply_url TEXT"):
+            for col_def in (
+                "full_description TEXT",
+                "external_apply_url TEXT",
+                "applied_at TEXT",
+                "followup_at TEXT",
+                "recruiter_contact TEXT DEFAULT ''",
+                "tailored_cv_path TEXT",
+            ):
                 try:
                     conn.execute(f"ALTER TABLE jobs ADD COLUMN {col_def}")
                 except sqlite3.OperationalError:
@@ -144,7 +151,8 @@ class RadarStorage:
             existing_rows = {
                 row["fingerprint"]: dict(row)
                 for row in conn.execute(
-                    "SELECT fingerprint, user_status, user_notes, first_seen_at, notified_at FROM jobs"
+                    "SELECT fingerprint, user_status, user_notes, first_seen_at, notified_at, "
+                    "applied_at, followup_at, recruiter_contact, tailored_cv_path FROM jobs"
                 ).fetchall()
             }
 
@@ -154,6 +162,10 @@ class RadarStorage:
                 user_status = prev["user_status"] if prev else "new"
                 user_notes = prev["user_notes"] if prev else ""
                 notified_iso = prev["notified_at"] if prev else None
+                applied_iso = prev["applied_at"] if prev else None
+                followup_iso = prev["followup_at"] if prev else None
+                recruiter_contact = (prev["recruiter_contact"] or "") if prev else ""
+                tailored_cv_path = prev["tailored_cv_path"] if prev else None
 
                 conn.execute(
                     """
@@ -229,6 +241,10 @@ class RadarStorage:
                     update={
                         "user_status": user_status,
                         "user_notes": user_notes,
+                        "applied_at": datetime.fromisoformat(applied_iso) if applied_iso else None,
+                        "followup_at": datetime.fromisoformat(followup_iso) if followup_iso else None,
+                        "recruiter_contact": recruiter_contact,
+                        "tailored_cv_path": tailored_cv_path,
                         "first_seen_at": datetime.fromisoformat(first_seen_iso),
                         "last_seen_at": ref,
                         "notified_at": datetime.fromisoformat(notified_iso) if notified_iso else None,
@@ -277,21 +293,104 @@ class RadarStorage:
             )
             return int(cur.rowcount or 0)
 
-    def update_job_status(self, fingerprint: str, status: str, notes: str | None = None) -> bool:
+    def update_job_status(
+        self,
+        fingerprint: str,
+        status: str,
+        notes: str | None = None,
+        *,
+        recruiter_contact: str | None = None,
+        now: datetime | None = None,
+    ) -> bool:
         if status not in VALID_USER_STATUSES:
             raise ValueError(f"Estado inválido: {status}")
+        ref = now or datetime.now(timezone.utc)
+        ref_iso = ref.isoformat()
+        followup_default = (ref + timedelta(days=5)).isoformat()
+
         with self._connect() as conn:
-            if notes is None:
-                cur = conn.execute(
-                    "UPDATE jobs SET user_status = ? WHERE fingerprint = ?",
-                    (status, fingerprint),
-                )
-            else:
-                cur = conn.execute(
-                    "UPDATE jobs SET user_status = ?, user_notes = ? WHERE fingerprint = ?",
-                    (status, notes, fingerprint),
-                )
+            row = conn.execute(
+                "SELECT applied_at, followup_at, user_notes, recruiter_contact FROM jobs WHERE fingerprint = ?",
+                (fingerprint,),
+            ).fetchone()
+            if row is None:
+                return False
+
+            applied_iso = row["applied_at"]
+            followup_iso = row["followup_at"]
+            if status == "applied":
+                if not applied_iso:
+                    applied_iso = ref_iso
+                if not followup_iso:
+                    followup_iso = followup_default
+            elif status == "interview":
+                followup_iso = None
+            elif status in {"new", "ignored"}:
+                followup_iso = None
+
+            new_notes = row["user_notes"] if notes is None else notes
+            new_contact = row["recruiter_contact"] if recruiter_contact is None else recruiter_contact
+            cur = conn.execute(
+                """
+                UPDATE jobs
+                SET user_status = ?, user_notes = ?, applied_at = ?, followup_at = ?, recruiter_contact = ?
+                WHERE fingerprint = ?
+                """,
+                (status, new_notes, applied_iso, followup_iso, new_contact or "", fingerprint),
+            )
             return cur.rowcount > 0
+
+    def mark_followup_done(
+        self,
+        fingerprint: str,
+        *,
+        snooze_days: int = 7,
+        note: str | None = None,
+        now: datetime | None = None,
+    ) -> bool:
+        """Agenda próximo follow-up (ex: +7 dias) ou regista nota de contacto."""
+        ref = now or datetime.now(timezone.utc)
+        next_iso = (ref + timedelta(days=snooze_days)).isoformat() if snooze_days > 0 else None
+        stamp = ref.strftime("%d/%m")
+        with self._connect() as conn:
+            row = conn.execute("SELECT user_notes FROM jobs WHERE fingerprint = ?", (fingerprint,)).fetchone()
+            if row is None:
+                return False
+            cur_notes = (row["user_notes"] or "").strip()
+            extra = (note or f"Follow-up enviado ({stamp})").strip()
+            merged_notes = f"{cur_notes} | {extra}".strip(" |") if cur_notes else extra
+            cur = conn.execute(
+                "UPDATE jobs SET followup_at = ?, user_notes = ? WHERE fingerprint = ?",
+                (next_iso, merged_notes, fingerprint),
+            )
+            return cur.rowcount > 0
+
+    def save_tailored_cv(self, fingerprint: str, pdf_path: str) -> bool:
+        """Associa o caminho do CV PDF adaptado a 1 página à vaga."""
+        with self._connect() as conn:
+            cur = conn.execute(
+                "UPDATE jobs SET tailored_cv_path = ? WHERE fingerprint = ?",
+                (pdf_path, fingerprint),
+            )
+            return cur.rowcount > 0
+
+    def list_due_followups(self, now: datetime | None = None) -> list[EnrichedJob]:
+        """Lista vagas em 'applied' cujo follow-up de 5 dias já venceu."""
+        ref = now or datetime.now(timezone.utc)
+        ref_iso = ref.isoformat()
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT * FROM jobs
+                WHERE is_active = 1
+                  AND user_status = 'applied'
+                  AND followup_at IS NOT NULL
+                  AND followup_at <= ?
+                ORDER BY followup_at ASC, score DESC
+                """,
+                (ref_iso,),
+            ).fetchall()
+        return [self._row_to_enriched_job(r, now=ref) for r in rows]
 
     def list_jobs(
         self,
@@ -346,6 +445,11 @@ class RadarStorage:
         ref = now or datetime.now(timezone.utc)
         profile = cp or CompanyProfile.model_validate_json(r["company_profile_json"])
         pub_dt = datetime.fromisoformat(r["published_at"]) if r["published_at"] else None
+        keys = set(r.keys())
+        applied_iso = r["applied_at"] if "applied_at" in keys else None
+        followup_iso = r["followup_at"] if "followup_at" in keys else None
+        recruiter_contact = (r["recruiter_contact"] or "") if "recruiter_contact" in keys else ""
+        tailored_cv_path = r["tailored_cv_path"] if "tailored_cv_path" in keys else None
         return EnrichedJob(
             fingerprint=r["fingerprint"],
             title=r["title"],
@@ -374,6 +478,10 @@ class RadarStorage:
             badges=json.loads(r["badges_json"]),
             user_status=r["user_status"],
             user_notes=r["user_notes"] or "",
+            applied_at=datetime.fromisoformat(applied_iso) if applied_iso else None,
+            followup_at=datetime.fromisoformat(followup_iso) if followup_iso else None,
+            recruiter_contact=recruiter_contact,
+            tailored_cv_path=tailored_cv_path,
             first_seen_at=datetime.fromisoformat(r["first_seen_at"]) if r["first_seen_at"] else None,
             last_seen_at=datetime.fromisoformat(r["last_seen_at"]) if r["last_seen_at"] else None,
             notified_at=datetime.fromisoformat(r["notified_at"]) if r["notified_at"] else None,

@@ -220,7 +220,13 @@ def detect_apply_strategy(job: EnrichedJob, external_apply_url: str | None = Non
 
 def build_recruiter_search_url(company: str) -> str:
     """Gera link direto no LinkedIn para encontrar recrutadores/managers da empresa em PT."""
-    q = f"{company} recruiter OR talent OR engineering manager Portugal"
+    q = f"{company} recruiter OR talent acquisition OR university recruiting Portugal"
+    return f"https://www.linkedin.com/search/results/people/?keywords={quote(q)}"
+
+
+def build_hiring_manager_search_url(company: str) -> str:
+    """Gera link direto no LinkedIn para encontrar Engineering/AI Managers da equipa."""
+    q = f"{company} engineering manager OR head of ai OR tech lead Portugal"
     return f"https://www.linkedin.com/search/results/people/?keywords={quote(q)}"
 
 
@@ -430,6 +436,21 @@ def generate_application_kit(
     strategy = detect_apply_strategy(job, external_apply_url=external_apply_url)
     cv_md = load_cv_markdown(cv_info["path"])
 
+    tailored_meta = None
+    if not override_track and getattr(job, "tailored_cv_path", None):
+        t_path = Path(str(job.tailored_cv_path))
+        if t_path.exists():
+            tailored_meta = {
+                "track": cv_info["track"],
+                "label": f"CV Adaptado à Vaga ({t_path.name})",
+                "path": str(t_path),
+                "filename": t_path.name,
+                "exists": True,
+                "tailored": True,
+                "reason": "PDF de 1 página adaptado aos requisitos reais desta vaga",
+            }
+            cv_info = tailored_meta
+
     used_ai = False
     ai_model = ""
     ai_status = "Modo offline limpo (adiciona GEMINI_API_KEY para redação adaptativa ao anúncio)"
@@ -460,6 +481,19 @@ def generate_application_kit(
             tone=tone,
         )
 
+    role_phrase = parse_natural_role_phrase(job.title, job.company, pt=pt)["apply_phrase"]
+    full_name = str(profile.get("full_name") or "Candidate")
+    if pt:
+        followup_dm = _trim_dm(
+            f"Olá! Enviei candidatura {role_phrase} na {job.company} há alguns dias e continuo muito entusiasmado com o projeto. "
+            f"Há alguma atualização sobre os próximos passos? Obrigado, {full_name.split()[0]}!"
+        )
+    else:
+        followup_dm = _trim_dm(
+            f"Hi! I applied {role_phrase} at {job.company} a few days ago and remain very excited about the team's work. "
+            f"Could you share any update on the timeline? Best, {full_name.split()[0]}"
+        )
+
     mailto_target = detected_email or ""
     mailto_url = (
         f"mailto:{mailto_target}?subject={quote(copy_fields['email_subject'])}"
@@ -482,6 +516,7 @@ def generate_application_kit(
         "description_preview": description[:650],
         "role_tldr": copy_fields["role_tldr"],
         "cv": cv_info,
+        "tailored_cv": tailored_meta,
         "available_cvs": list_available_cvs(profile, repo_root=repo_root),
         "strategy": strategy,
         "highlight_bullets": copy_fields["highlight_bullets"],
@@ -489,9 +524,14 @@ def generate_application_kit(
         "email_subject": copy_fields["email_subject"],
         "email_body": copy_fields["email_body"],
         "recruiter_dm": copy_fields["recruiter_dm"],
+        "followup_dm": followup_dm,
         "recruiter_search_url": build_recruiter_search_url(job.company),
+        "hiring_manager_search_url": build_hiring_manager_search_url(job.company),
         "detected_email": detected_email,
         "mailto_url": mailto_url,
+        "user_status": job.user_status,
+        "followup_at": job.followup_at.isoformat() if job.followup_at else None,
+        "applied_at": job.applied_at.isoformat() if job.applied_at else None,
         "candidate": {
             "full_name": str(profile.get("full_name") or ""),
             "first_name": str(profile.get("first_name") or ""),

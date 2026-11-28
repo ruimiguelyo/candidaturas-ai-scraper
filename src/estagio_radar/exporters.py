@@ -294,6 +294,13 @@ def render_dashboard_html(
       <option value="CLOUD_DEVOPS">☁️ Cloud / DevOps / SRE</option>
       <option value="EMBEDDED">⚙️ Embedded / Robotics</option>
     </select>
+    <select id="f-status">
+      <option value="">📌 Todos os Estados</option>
+      <option value="saved">⭐ Guardadas</option>
+      <option value="applied">✅ Candidatadas</option>
+      <option value="followup_due">🔔 Follow-up Pendente (+5d)</option>
+      <option value="interview">🎤 Entrevistas</option>
+    </select>
     <select id="f-sort">
       <option value="score">Ordenar: Melhor Score (0–100)</option>
       <option value="fresh">Ordenar: Mais Recentes</option>
@@ -310,6 +317,7 @@ def render_dashboard_html(
     </label>
   </section>
 
+  <div id="followup-banner" class="cop-status" style="margin:0 0 12px;cursor:pointer" onclick="document.getElementById('f-status').value='followup_due';render()"></div>
   <div id="count-bar" style="font-size:13px;color:var(--muted);margin-bottom:10px"></div>
   <main class="list" id="job-list"></main>
 </div>
@@ -334,12 +342,14 @@ def render_dashboard_html(
     <div class="cop-box">
       <span class="cop-label">CV Selecionado Automaticamente</span>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-        <select id="cop-cv-track" style="max-width:340px" onchange="switchCopilotCv(this.value)">
+        <select id="cop-cv-track" style="max-width:300px" onchange="switchCopilotCv(this.value)">
           <option value="ai_ml">Applied AI &amp; ML (PDF)</option>
           <option value="swe">Software Engineering Full-Stack (PDF)</option>
           <option value="enterprise">Enterprise Systems + AI (SAP/Python/Java PDF)</option>
         </select>
         <span id="cop-cv-badge" class="badge badge-new"></span>
+        <button class="btn btn-ghost btn-sm" id="cop-btn-tailor" onclick="tailorCvForCurrentJob()">✨ Adaptar CV (1 pág.)</button>
+        <a class="btn btn-ghost btn-sm" id="cop-cv-preview" href="#" target="_blank" rel="noopener">👁️ Ver PDF</a>
       </div>
       <div id="cop-cv-reason" style="font-size:12px;color:var(--muted);margin-top:6px"></div>
     </div>
@@ -368,7 +378,10 @@ def render_dashboard_html(
       <button class="btn btn-ghost" onclick="markAppliedFromCopilot()">✅ Marcar Candidatado</button>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-      <button class="btn btn-ghost btn-sm" onclick="copyDmAndOpenRecruiters()">💬 Copiar DM + Recrutadores</button>
+      <button class="btn btn-ghost btn-sm" onclick="copyDmAndOpenRecruiters()">💬 DM Recrutador</button>
+      <button class="btn btn-ghost btn-sm" onclick="openHiringManagers()">🧑‍💻 Hiring Manager</button>
+      <button class="btn btn-ghost btn-sm" onclick="copyFollowupDm()">🔔 Copiar Follow-up (5d)</button>
+      <button class="btn btn-ghost btn-sm" id="cop-btn-followup-done" style="display:none" onclick="markFollowupDoneFromCopilot()">✓ Follow-up Feito</button>
       <button class="btn btn-ghost btn-sm" onclick="toggleEmailBox()">✉️ Email direto</button>
     </div>
 
@@ -534,12 +547,24 @@ async function setStatus(fp, status, notes) {{
   }}
   render();
   if (INTERACTIVE) {{
-    await fetch("/api/status", {{
-      method: "POST",
-      headers: {{ "Content-Type": "application/json" }},
-      body: JSON.stringify({{ fingerprint: fp, status, notes }})
-    }});
+    try {{
+      const res = await fetch("/api/status", {{
+        method: "POST",
+        headers: {{ "Content-Type": "application/json" }},
+        body: JSON.stringify({{ fingerprint: fp, status, notes }})
+      }});
+      const upd = await res.json();
+      if (job && upd) {{
+        if (upd.applied_at !== undefined) job.applied_at = upd.applied_at;
+        if (upd.followup_at !== undefined) job.followup_at = upd.followup_at;
+        render();
+      }}
+    }} catch (_e) {{}}
   }}
+}}
+
+function isFollowupDue(job, nowIso) {{
+  return Boolean(job && job.user_status === "applied" && job.followup_at && job.followup_at <= nowIso);
 }}
 
 function renderKpis(allJobs) {{
@@ -560,10 +585,26 @@ function renderKpis(allJobs) {{
 
 function render() {{
   renderKpis(JOBS);
+  const nowIso = new Date().toISOString();
+  const dueFollowups = JOBS.filter(j => isFollowupDue(j, nowIso));
+  const fbEl = document.getElementById("followup-banner");
+  if (INTERACTIVE && fbEl) {{
+    if (dueFollowups.length > 0) {{
+      fbEl.textContent = `🔔 Tens ${{dueFollowups.length}} candidatura(s) há +5 dias à espera de resposta — clica aqui para filtrar e fazer follow-up!`;
+      fbEl.className = "cop-status ok";
+      fbEl.style.background = "rgba(245, 158, 11, 0.16)";
+      fbEl.style.borderColor = "rgba(245, 158, 11, 0.55)";
+      fbEl.style.color = "#fcd34d";
+    }} else {{
+      fbEl.className = "cop-status";
+    }}
+  }}
+
   const q = document.getElementById("q").value.trim().toLowerCase();
   const zone = document.getElementById("f-zone").value;
   const role = document.getElementById("f-role").value;
   const domain = document.getElementById("f-domain").value;
+  const statusFilter = document.getElementById("f-status") ? document.getElementById("f-status").value : "";
   const hideCons = document.getElementById("f-hide-cons").checked;
   const onlyTopTech = document.getElementById("f-top-tech").checked;
   const sortBy = document.getElementById("f-sort").value;
@@ -572,6 +613,11 @@ function render() {{
     if (zone && j.geo_zone !== zone) return false;
     if (role && j.role_tier !== role) return false;
     if (domain && j.domain !== domain) return false;
+    if (statusFilter === "followup_due") {{
+      if (!isFollowupDue(j, nowIso)) return false;
+    }} else if (statusFilter && j.user_status !== statusFilter) {{
+      return false;
+    }}
     if (hideCons && j.company_profile?.is_consultancy) return false;
     if (onlyTopTech && (j.company_profile?.is_consultancy || !["S","A"].includes(j.company_profile?.company_tier))) return false;
     if (q) {{
@@ -614,7 +660,7 @@ function render() {{
     const badgesHtml = (j.badges || []).map(b => {{
       const cls = b.includes("CONSULTORA") ? "badge badge-warn" : (b.includes("NOVO") ? "badge badge-new" : "badge");
       return `<span class="${{cls}}">${{esc(b)}}</span>`;
-    }}).join("");
+    }}).join("") + (isFollowupDue(j, nowIso) ? '<span class="badge badge-warn">🔔 Follow-up</span>' : "");
 
     const bd = j.score_breakdown || {{}};
     const bdLine = `Cargo ${{bd.role_points||0}}/30 · Empresa ${{bd.company_points||0}}/30 · Zona ${{bd.location_points||0}}/20 · Frescura ${{bd.freshness_points||0}}/20`;
@@ -725,6 +771,16 @@ async function openCopilot(fp, overrideTrack, tone, forceRefresh) {{
     cvBadge.textContent = (cv.exists ? "✅ " : "⚠️ Em falta: ") + (cv.filename || "CV");
     cvBadge.className = "badge " + (cv.exists ? "badge-new" : "badge-warn");
     document.getElementById("cop-cv-reason").textContent = cv.reason || "";
+    const prevLink = document.getElementById("cop-cv-preview");
+    if (prevLink) {{
+      prevLink.href = cv.tailored
+        ? `/api/cv-file?fingerprint=${{encodeURIComponent(kit.fingerprint)}}`
+        : `/api/cv-file?track=${{encodeURIComponent(cv.track || "ai_ml")}}`;
+    }}
+    const fDoneBtn = document.getElementById("cop-btn-followup-done");
+    if (fDoneBtn) {{
+      fDoneBtn.style.display = kit.user_status === "applied" ? "inline-flex" : "none";
+    }}
 
     document.getElementById("cop-highlights").innerHTML = (kit.highlight_bullets || [])
       .map(b => `<li style="margin-bottom:4px">${{esc(b)}}</li>`).join("");
@@ -797,6 +853,43 @@ async function pollAutofillStatus(attemptsLeft) {{
   AUTOFILL_POLL_TIMER = setTimeout(() => pollAutofillStatus(attemptsLeft - 1), 1000);
 }}
 
+async function tailorCvForCurrentJob() {{
+  if (!CURRENT_KIT) return;
+  const btn = document.getElementById("cop-btn-tailor");
+  btn.disabled = true;
+  btn.textContent = "⏳ A adaptar 1 pág...";
+  showCopilotFeedback("⏳ A gerar CV PDF de 1 página adaptado aos requisitos desta vaga...", false);
+  try {{
+    const res = await fetch("/api/tailor-cv", {{
+      method: "POST",
+      headers: {{ "Content-Type": "application/json" }},
+      body: JSON.stringify({{
+        fingerprint: CURRENT_KIT.fingerprint,
+        cv_track: document.getElementById("cop-cv-track").value
+      }})
+    }});
+    const data = await res.json();
+    if (res.ok && data.ok && data.cv) {{
+      CURRENT_KIT.cv = data.cv;
+      const cvBadge = document.getElementById("cop-cv-badge");
+      cvBadge.textContent = "✅ " + data.cv.filename;
+      cvBadge.className = "badge badge-new";
+      document.getElementById("cop-cv-reason").textContent = data.cv.reason || "";
+      const prevLink = document.getElementById("cop-cv-preview");
+      if (prevLink && data.preview_url) prevLink.href = data.preview_url;
+      const kws = (data.matched_keywords || []).join(", ");
+      showCopilotFeedback(`✨ CV adaptado pronto (${{data.cv.filename}})${{kws ? " · Keywords: " + kws : ""}}. Clica em Auto-Preencher!`, false);
+    }} else {{
+      showCopilotFeedback(data.error || "Não foi possível adaptar o CV.", true);
+    }}
+  }} catch (e) {{
+    showCopilotFeedback("Erro ao adaptar CV: " + e, true);
+  }} finally {{
+    btn.disabled = false;
+    btn.textContent = "✨ Adaptar CV (1 pág.)";
+  }}
+}}
+
 async function launchAutofill() {{
   if (!CURRENT_KIT) return;
   if (AUTOFILL_POLL_TIMER) {{
@@ -813,6 +906,7 @@ async function launchAutofill() {{
       body: JSON.stringify({{
         fingerprint: CURRENT_KIT.fingerprint,
         cv_track: document.getElementById("cop-cv-track").value,
+        use_tailored: Boolean(CURRENT_KIT.cv && CURRENT_KIT.cv.tailored),
         tone: CURRENT_TONE,
         cover_note: document.getElementById("cop-cover").value,
         language: CURRENT_KIT.language || "en"
@@ -836,11 +930,50 @@ async function copyDmAndOpenRecruiters() {{
   if (!CURRENT_KIT) return;
   try {{
     await navigator.clipboard.writeText(CURRENT_KIT.recruiter_dm || "");
-    showCopilotFeedback("Mensagem DM copiada para o clipboard! A abrir recrutadores no LinkedIn...", false);
+    showCopilotFeedback("DM para recrutador copiada! A abrir pesquisa no LinkedIn...", false);
   }} catch (e) {{
     showCopilotFeedback("A abrir pesquisa de recrutadores no LinkedIn...", false);
   }}
   window.open(CURRENT_KIT.recruiter_search_url, "_blank", "noopener");
+}}
+
+async function openHiringManagers() {{
+  if (!CURRENT_KIT) return;
+  try {{
+    await navigator.clipboard.writeText(CURRENT_KIT.recruiter_dm || "");
+    showCopilotFeedback("DM copiada! A abrir Engineering/AI Managers no LinkedIn...", false);
+  }} catch (e) {{}}
+  window.open(CURRENT_KIT.hiring_manager_search_url || CURRENT_KIT.recruiter_search_url, "_blank", "noopener");
+}}
+
+async function copyFollowupDm() {{
+  if (!CURRENT_KIT) return;
+  try {{
+    await navigator.clipboard.writeText(CURRENT_KIT.followup_dm || CURRENT_KIT.recruiter_dm || "");
+    showCopilotFeedback("Mensagem de follow-up (5 dias) copiada para o clipboard!", false);
+  }} catch (e) {{
+    showCopilotFeedback("Não foi possível copiar automaticamente.", true);
+  }}
+}}
+
+async function markFollowupDoneFromCopilot() {{
+  if (!CURRENT_KIT) return;
+  try {{
+    const res = await fetch("/api/followup-done", {{
+      method: "POST",
+      headers: {{ "Content-Type": "application/json" }},
+      body: JSON.stringify({{ fingerprint: CURRENT_KIT.fingerprint, snooze_days: 7 }})
+    }});
+    const data = await res.json();
+    const job = JOBS.find(j => j.fingerprint === CURRENT_KIT.fingerprint);
+    if (job && data.followup_at !== undefined) {{
+      job.followup_at = data.followup_at;
+    }}
+    render();
+    showCopilotFeedback("Follow-up registado! Próximo lembrete adiado 7 dias.", false);
+  }} catch (e) {{
+    showCopilotFeedback("Erro ao registar follow-up: " + e, true);
+  }}
 }}
 
 function toggleEmailBox() {{
@@ -892,7 +1025,7 @@ async function markAppliedFromCopilot() {{
   showCopilotFeedback("Vaga marcada como Candidatada!", false);
 }}
 
-["q","f-zone","f-role","f-domain","f-sort","f-hide-cons","f-top-tech"].forEach(id => {{
+["q","f-zone","f-role","f-domain","f-status","f-sort","f-hide-cons","f-top-tech"].forEach(id => {{
   document.getElementById(id).addEventListener("input", render);
   document.getElementById(id).addEventListener("change", render);
 }});

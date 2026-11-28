@@ -135,6 +135,10 @@ class EnrichedJob(BaseModel):
     badges: list[str] = Field(default_factory=list)
     user_status: str = "new"  # new | saved | applied | interview | ignored
     user_notes: str = ""
+    applied_at: Optional[datetime] = None
+    followup_at: Optional[datetime] = None
+    recruiter_contact: str = ""
+    tailored_cv_path: Optional[str] = None
     first_seen_at: Optional[datetime] = None
     last_seen_at: Optional[datetime] = None
     notified_at: Optional[datetime] = None
