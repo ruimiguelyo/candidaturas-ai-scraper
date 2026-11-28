@@ -14,6 +14,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qs, urlparse
 
 from estagio_radar.ai_writer import answer_form_questions_with_gemini, load_cv_markdown
 from estagio_radar.models import EnrichedJob
@@ -28,7 +29,14 @@ SUBMIT_BLOCK_RE = re.compile(
     r"\b(?:submit(?:\s+application)?|send(?:\s+application)?|confirm|finali[sz]e|submeter(?:\s+candidatura)?|enviar\s+candidatura)\b",
     re.IGNORECASE,
 )
-APPLY_NAV_RE = re.compile(r"\b(?:apply(?:\s+(?:now|for this job|online))?|candidatar(?:-me)?|start application)\b", re.IGNORECASE)
+APPLY_NAV_RE = re.compile(
+    r"\b(?:apply(?:\s+(?:now|for\s+this\s+(?:role|job|position)|online|externally|on\s+company(?:\s+site)?))?|candidatar(?:-me|-se)?|candidate-se|start\s+application|iniciar\s+candidatura|prosseguir\s+para\s+candidatura)\b",
+    re.IGNORECASE,
+)
+APPLY_SKIP_RE = re.compile(
+    r"\b(?:clicou\s+em|anunciar|post\s+a\s+job|sign\s+up|log\s+in|iniciar\s+sess|premium|alerta|alert|privacy|privacidade|cookies?)\b",
+    re.IGNORECASE,
+)
 EASY_APPLY_BTN_RE = re.compile(r"\b(?:easy\s+apply|candidatura\s+simplificada)\b", re.IGNORECASE)
 NEXT_STEP_RE = re.compile(r"^(?:next|seguinte|continue(?:\s+to\s+next\s+step)?|continuar|review|rever)$", re.IGNORECASE)
 COOKIE_TEXT_RE = re.compile(
@@ -155,6 +163,8 @@ def _ensure_cdp_chrome(
 
 def _match_field_kind(descriptor: str, tag: str, input_type: str) -> str | None:
     low = descriptor.casefold()
+    if "recaptcha" in low or "h-captcha" in low or "turnstile" in low:
+        return None
     if input_type == "file":
         if any(k in low for k in ("photo", "avatar", "picture", "image", "cover_letter", "cover letter", "carta")):
             return None
@@ -243,26 +253,43 @@ def _dismiss_cookie_banners(page: Any) -> None:
 
 
 def _detect_captcha(page: Any) -> bool:
-    """Deteta CAPTCHAs / anti-bot visíveis sem nunca tentar resolvê-los nem contorná-los."""
+    """Deteta CAPTCHAs bloqueantes visíveis sem falsos positivos em badges invisíveis e sem nunca contornar."""
     frames = [page.main_frame, *[fr for fr in page.frames if fr != page.main_frame]]
     for fr in frames:
         try:
-            loc = fr.locator(CAPTCHA_SELECTOR)
-            for idx in range(min(loc.count(), 6)):
-                try:
-                    if loc.nth(idx).is_visible():
-                        return True
-                except Exception:
-                    continue
-        except Exception:
-            pass
-        try:
-            has_challenge_txt = fr.evaluate(
+            has_blocking_widget = fr.evaluate(
                 """() => {
+                    const isVisible = (el) => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.width <= 0 || rect.height <= 0) return false;
+                        const st = getComputedStyle(el);
+                        return st.visibility !== "hidden" && st.display !== "none" && st.opacity !== "0";
+                    };
+                    const iframes = document.querySelectorAll(
+                        "iframe[src*='recaptcha'], iframe[src*='hcaptcha'], iframe[src*='turnstile'], iframe[src*='challenges.cloudflare.com'], iframe[title*='recaptcha' i], iframe[title*='hcaptcha' i]"
+                    );
+                    for (const ifr of iframes) {
+                        if (!isVisible(ifr)) continue;
+                        const src = (ifr.getAttribute("src") || "").toLowerCase();
+                        const title = (ifr.getAttribute("title") || "").toLowerCase();
+                        if (src.includes("recaptcha")) {
+                            if (src.includes("size=invisible") || ifr.closest(".grecaptcha-badge")) continue;
+                        }
+                        if (src.includes("recaptcha") || src.includes("hcaptcha") || src.includes("turnstile") || src.includes("challenges.cloudflare.com") || title.includes("recaptcha") || title.includes("hcaptcha")) {
+                            return true;
+                        }
+                    }
+                    const widgets = document.querySelectorAll(".h-captcha, .cf-turnstile, .g-recaptcha");
+                    for (const w of widgets) {
+                        if (!isVisible(w)) continue;
+                        if (w.classList.contains("g-recaptcha") && (w.getAttribute("data-size") || "").toLowerCase() === "invisible") {
+                            continue;
+                        }
+                        return true;
+                    }
                     const els = document.querySelectorAll("h1, h2, p, label, div[class*='challenge' i], div[class*='captcha' i]");
                     for (const el of els) {
-                        const rect = el.getBoundingClientRect();
-                        if (rect.width <= 0 || rect.height <= 0) continue;
+                        if (!isVisible(el)) continue;
                         const txt = (el.innerText || "").trim();
                         if (txt && txt.length <= 220 && /(verify you are human|confirm you are human|não sou um robô|i['’]?m not a robot)/i.test(txt)) {
                             return true;
@@ -271,7 +298,7 @@ def _detect_captcha(page: Any) -> bool:
                     return false;
                 }"""
             )
-            if has_challenge_txt:
+            if has_blocking_widget:
                 return True
         except Exception:
             pass
@@ -489,6 +516,84 @@ def _fill_radio_groups(frame: Any, profile: dict[str, Any]) -> list[str]:
     return filled
 
 
+def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[str]:
+    """Preenche seletores customizados (<input type='button'> / button[aria-haspopup]) estilo Revolut/React."""
+    filled: list[str] = []
+    try:
+        triggers = frame.eval_on_selector_all(
+            "input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]",
+            """els => els.map((el, idx) => {
+                const rect = el.getBoundingClientRect();
+                const visible = rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden";
+                const cont = el.closest("div, fieldset, section, label");
+                const parentTxt = (cont?.innerText || "").replace(/\\s+/g, " ").trim().slice(0, 140);
+                return {
+                    btnIdx: idx,
+                    aria: el.getAttribute("aria-label") || "",
+                    value: el.value || "",
+                    text: (el.innerText || "").replace(/\\s+/g, " ").trim(),
+                    parentText: parentTxt,
+                    disabled: Boolean(el.disabled),
+                    visible
+                };
+            })""",
+        )
+    except Exception:
+        return filled
+
+    locator_all = frame.locator("input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]")
+    for meta in triggers:
+        if meta.get("disabled") or not meta.get("visible"):
+            continue
+        desc = f"{meta.get('aria', '')} | {meta.get('parentText', '')}".casefold()
+        if any(k in desc for k in ("phone country code", "country code", "indicativo")):
+            tokens = ["portugal", "+351"]
+            field_tag = "phone_country"
+        elif any(k in desc for k in ("current country", "country of residence", "country")) and "phone" not in desc:
+            cur = f"{meta.get('value', '')} {meta.get('text', '')}".casefold()
+            if "portugal" in cur:
+                continue
+            tokens = [str(profile.get("country") or "Portugal"), "portugal"]
+            field_tag = "country"
+        else:
+            continue
+
+        try:
+            locator_all.nth(meta["btnIdx"]).click(timeout=1200)
+            if hasattr(frame, "wait_for_timeout"):
+                frame.wait_for_timeout(250)
+            search_inp = frame.locator(
+                "[role='dialog'] input[type='text'], [role='dialog'] input[type='search'], "
+                "[role='listbox'] input, input[placeholder*='search' i], input[aria-label*='search' i]"
+            ).first
+            if search_inp.count() > 0 and search_inp.is_visible():
+                search_inp.fill("Portugal", timeout=1000)
+                if hasattr(frame, "wait_for_timeout"):
+                    frame.wait_for_timeout(250)
+
+            opts = frame.locator("[role='option'], [role='listbox'] li, [role='listbox'] button, [role='dialog'] li, [role='dialog'] button")
+            matched = False
+            for tok in tokens:
+                for i in range(min(opts.count(), 40)):
+                    opt = opts.nth(i)
+                    try:
+                        if not opt.is_visible():
+                            continue
+                        o_txt = (opt.inner_text(timeout=200) or "").strip().casefold()
+                    except Exception:
+                        continue
+                    if tok.casefold() in o_txt and len(o_txt) <= 80:
+                        opt.click(timeout=1200)
+                        filled.append(field_tag)
+                        matched = True
+                        break
+                if matched:
+                    break
+        except Exception:
+            continue
+    return filled
+
+
 def _fill_frame_inputs(
     frame: Any,
     values: dict[str, str],
@@ -498,6 +603,12 @@ def _fill_frame_inputs(
     filled: list[str] = []
     cv_attached = False
     open_questions: list[tuple[int, str]] = []
+
+    custom_filled = _fill_custom_button_dropdowns(frame, profile)
+    filled.extend(custom_filled)
+    local_values = dict(values)
+    if "phone_country" in custom_filled and local_values.get("phone"):
+        local_values["phone"] = re.sub(r"^(?:\+351|00351)\s*", "", local_values["phone"]).strip()
 
     try:
         candidates = frame.eval_on_selector_all(
@@ -572,9 +683,9 @@ def _fill_frame_inputs(
             if q_label and not str(meta.get("value") or "").strip():
                 open_questions.append((meta["idx"], q_label[:220]))
             continue
-        if kind and values.get(kind) and not str(meta.get("value") or "").strip():
+        if kind and local_values.get(kind) and not str(meta.get("value") or "").strip():
             try:
-                locator_all.nth(meta["idx"]).fill(values[kind], timeout=1500)
+                locator_all.nth(meta["idx"]).fill(local_values[kind], timeout=1500)
                 filled.append(kind)
             except Exception:
                 pass
@@ -630,43 +741,196 @@ def _fill_pending_questions(
     return filled
 
 
-def _maybe_open_apply_view(page: Any) -> None:
-    """Se ainda não houver inputs visíveis, clica no botão 'Apply / Candidatar' (NUNCA em Submit)."""
-    try:
-        has_inputs = page.locator("input[type='email'], input[type='file'], form input[name*='name' i]").count() > 0
-        if has_inputs:
-            return
-    except Exception:
-        return
+def _has_real_application_form(page: Any) -> bool:
+    """Deteta se a página (ou iframe ATS) já mostra o formulário real de candidatura."""
+    frames = [page.main_frame]
+    for fr in page.frames:
+        if fr != page.main_frame and (ATS_FRAME_HINT_RE.search(fr.url or "") or fr.url.startswith("file://")):
+            frames.append(fr)
 
-    try:
-        if "jobs.lever.co" in page.url.casefold() and not page.url.rstrip("/").endswith("/apply"):
-            page.goto(page.url.rstrip("/") + "/apply", wait_until="domcontentloaded", timeout=12000)
-            return
-    except Exception:
-        pass
+    for fr in frames:
+        try:
+            has_form = fr.evaluate(
+                """() => {
+                    const isVisible = (el) => {
+                        let anc = el.parentElement;
+                        while (anc && anc !== document.body && anc !== document.documentElement) {
+                            const st = getComputedStyle(anc);
+                            if (st.display === "none" || st.visibility === "hidden") return false;
+                            anc = anc.parentElement;
+                        }
+                        if (el.type === "file") return true;
+                        const rect = el.getBoundingClientRect();
+                        return rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden";
+                    };
+                    let hasFile = false;
+                    let hasPassword = false;
+                    let matchedInputs = 0;
+                    for (const el of document.querySelectorAll("input, textarea")) {
+                        if (el.disabled || !isVisible(el)) continue;
+                        const tp = (el.getAttribute("type") || "text").toLowerCase();
+                        if (tp === "file") { hasFile = true; continue; }
+                        if (tp === "password") { hasPassword = true; continue; }
+                        if (["hidden", "checkbox", "radio", "submit", "button", "search"].includes(tp)) continue;
+                        const desc = [
+                            el.name, el.id, el.placeholder, el.getAttribute("aria-label"), el.getAttribute("autocomplete")
+                        ].join(" ").toLowerCase();
+                        if (/(?:full\\s*name|first\\s*name|last\\s*name|email|e-mail|phone|telem|linkedin|github|portfolio|cover|carta)/.test(desc) || tp === "email" || tp === "tel") {
+                            matchedInputs += 1;
+                        }
+                    }
+                    if (hasPassword && !hasFile) return false;
+                    return hasFile || matchedInputs >= 2;
+                }"""
+            )
+            if has_form:
+                return True
+        except Exception:
+            continue
+    return False
 
+
+def _extract_linkedin_external_apply_url(page: Any) -> str | None:
+    """Extrai o link direto da empresa dentro do botão 'Candidatar-se' do LinkedIn."""
     try:
-        candidates = page.locator("a, button")
-        count = min(candidates.count(), 45)
-        for i in range(count):
-            el = candidates.nth(i)
+        hrefs = page.eval_on_selector_all(
+            "a[href]",
+            """els => els.map(el => {
+                const rect = el.getBoundingClientRect();
+                const visible = rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden";
+                return {
+                    visible,
+                    aria: el.getAttribute("aria-label") || "",
+                    text: (el.innerText || "").replace(/\\s+/g, " ").trim(),
+                    href: el.getAttribute("href") || ""
+                };
+            })""",
+        )
+    except Exception:
+        return None
+
+    candidates: list[tuple[int, str]] = []
+    for item in hrefs:
+        if not item.get("visible"):
+            continue
+        blob = f"{item.get('aria', '')} {item.get('text', '')}".strip()
+        if not blob or len(blob) > 65:
+            continue
+        if APPLY_SKIP_RE.search(blob) or SUBMIT_BLOCK_RE.search(blob):
+            continue
+        if not APPLY_NAV_RE.search(blob):
+            continue
+        href = str(item.get("href") or "").strip()
+        if not href:
+            continue
+        if "/safety/go/" in href or "/redir/redirect" in href:
+            qs = parse_qs(urlparse(href).query)
+            ext = (qs.get("url") or [""])[0].strip()
+            if ext.startswith("http"):
+                prio = 2 if re.search(r"empresa|company|external", blob, re.I) else 1
+                candidates.append((prio, ext))
+        elif href.startswith("http") and "linkedin.com" not in href.casefold():
+            candidates.append((1, href))
+
+    if not candidates:
+        return None
+    candidates.sort(key=lambda pair: pair[0], reverse=True)
+    return candidates[0][1]
+
+
+def _follow_apply_hops(page: Any, context: Any, *, max_hops: int = 4) -> Any:
+    """Segue até max_hops camadas (mesmo separador ou novo separador) até alcançar o formulário."""
+    for _hop in range(max_hops):
+        _dismiss_cookie_banners(page)
+        if _detect_captcha(page) or _has_real_application_form(page):
+            return page
+
+        low_url = (page.url or "").casefold()
+        if "linkedin.com/jobs" in low_url:
+            ext_url = _extract_linkedin_external_apply_url(page)
+            if ext_url:
+                try:
+                    page.goto(ext_url, wait_until="domcontentloaded", timeout=22000)
+                    page.wait_for_timeout(900)
+                    continue
+                except Exception:
+                    pass
+
+        if "jobs.lever.co" in low_url and not page.url.rstrip("/").endswith("/apply"):
             try:
-                txt = (el.inner_text(timeout=400) or "").strip()
+                page.goto(page.url.rstrip("/") + "/apply", wait_until="domcontentloaded", timeout=15000)
+                page.wait_for_timeout(700)
+                continue
+            except Exception:
+                pass
+
+        try:
+            clickable = page.locator(".jobs-apply-button, [data-testid*='apply' i], a, button")
+            count = min(clickable.count(), 60)
+        except Exception:
+            break
+
+        chosen = None
+        for i in range(count):
+            el = clickable.nth(i)
+            try:
+                if not el.is_visible():
+                    continue
+                txt = re.sub(r"\s+", " ", (el.inner_text(timeout=250) or "")).strip()
+                aria = re.sub(r"\s+", " ", (el.get_attribute("aria-label") or "")).strip()
             except Exception:
                 continue
-            if not txt or len(txt) > 45 or SUBMIT_BLOCK_RE.search(txt):
+            blob = f"{txt} {aria}".strip()
+            if not blob or len(blob) > 65:
                 continue
-            if APPLY_NAV_RE.search(txt):
+            if SUBMIT_BLOCK_RE.search(blob) or APPLY_SKIP_RE.search(blob):
+                continue
+            if APPLY_NAV_RE.search(blob):
+                chosen = el
+                break
+
+        if chosen is None:
+            break
+
+        prev_pages = list(context.pages)
+        prev_url = page.url
+        try:
+            chosen.click(timeout=2500)
+        except Exception:
+            break
+
+        advanced = False
+        for _tick in range(10):
+            page.wait_for_timeout(250)
+            new_tabs = [pg for pg in context.pages if pg not in prev_pages]
+            if new_tabs:
+                page = new_tabs[-1]
                 try:
-                    if el.is_visible():
-                        el.click(timeout=2000)
-                        page.wait_for_timeout(1000)
-                        break
+                    page.wait_for_load_state("domcontentloaded", timeout=18000)
                 except Exception:
-                    continue
-    except Exception:
-        pass
+                    pass
+                try:
+                    page.bring_to_front()
+                except Exception:
+                    pass
+                page.wait_for_timeout(800)
+                advanced = True
+                break
+            if page.url != prev_url:
+                try:
+                    page.wait_for_load_state("domcontentloaded", timeout=15000)
+                except Exception:
+                    pass
+                page.wait_for_timeout(800)
+                advanced = True
+                break
+            if _has_real_application_form(page):
+                advanced = True
+                break
+
+        if not advanced:
+            break
+    return page
 
 
 def _has_easy_apply_trigger(page: Any) -> Any | None:
@@ -957,6 +1221,248 @@ def open_login_browser(urls: list[str] | None = None, *, user_data_dir: Path | N
                 pass
 
 
+def _fill_current_page(
+    page: Any,
+    context: Any,
+    *,
+    job: EnrichedJob,
+    kit: dict[str, Any],
+    profile: dict[str, Any],
+    cv_path: Path | None,
+    values: dict[str, str],
+    follow_hops: bool = True,
+) -> dict[str, Any]:
+    """Executa deteção de CAPTCHA/login, saltos multi-camada, Easy Apply e preenchimento de formulário."""
+    cv_name = cv_path.name if cv_path else ""
+    filled_all: list[str] = []
+    cv_attached = False
+    captcha_detected = False
+    needs_login = False
+    stopped_before_submit = False
+    steps_completed = 0
+
+    _dismiss_cookie_banners(page)
+    if _detect_captcha(page):
+        captcha_detected = True
+        _inject_copilot_banner(
+            page,
+            "⚠️ Verificação anti-bot/CAPTCHA detetada — completa manualmente na janela antes de continuar.",
+            tone="warn",
+        )
+    elif _is_linkedin_login_wall(page):
+        needs_login = True
+        _inject_copilot_banner(
+            page,
+            "🔐 Inicia sessão no LinkedIn 1 vez neste Chrome dedicado — fica guardado para sempre!",
+            tone="warn",
+        )
+    else:
+        easy_res = {"triggered": False}
+        if "linkedin.com" in (page.url or "").casefold() or _has_easy_apply_trigger(page) is not None:
+            easy_res = _run_linkedin_easy_apply_assistant(
+                page,
+                job=job,
+                kit=kit,
+                profile=profile,
+                values=values,
+                cv_path=cv_path,
+            )
+
+        if easy_res.get("triggered"):
+            filled_all.extend(easy_res.get("filled_fields") or [])
+            cv_attached = bool(easy_res.get("cv_attached"))
+            stopped_before_submit = bool(easy_res.get("stopped_before_submit"))
+            captcha_detected = bool(easy_res.get("captcha_detected"))
+            steps_completed = int(easy_res.get("steps_completed") or 0)
+        else:
+            if follow_hops:
+                page = _follow_apply_hops(page, context, max_hops=4)
+            if _detect_captcha(page):
+                captcha_detected = True
+            else:
+                frames_to_scan = [page.main_frame]
+                for fr in page.frames:
+                    if fr == page.main_frame:
+                        continue
+                    if ATS_FRAME_HINT_RE.search(fr.url or "") or fr.url.startswith("file://"):
+                        frames_to_scan.append(fr)
+
+                pending_questions: list[tuple[Any, int, str]] = []
+                for fr in frames_to_scan:
+                    f_names, got_cv, open_qs = _fill_frame_inputs(
+                        fr,
+                        values,
+                        cv_path if not cv_attached else None,
+                        profile,
+                    )
+                    filled_all.extend(f_names)
+                    if got_cv:
+                        cv_attached = True
+                    for idx, qtxt in open_qs:
+                        pending_questions.append((fr, idx, qtxt))
+
+                if pending_questions:
+                    filled_all.extend(
+                        _fill_pending_questions(
+                            page,
+                            pending_questions,
+                            job=job,
+                            kit=kit,
+                            profile=profile,
+                            cv_path=cv_path,
+                        )
+                    )
+
+        unique_fields = list(dict.fromkeys(filled_all))
+        if captcha_detected:
+            _inject_copilot_banner(
+                page,
+                "⚠️ Verificação anti-bot/CAPTCHA detetada — completa manualmente na janela para continuar.",
+                tone="warn",
+            )
+        else:
+            banner_msg = (
+                f"Estágio Radar Copilot: {len(unique_fields)} campo(s) ({', '.join(unique_fields[:6])})"
+                + (f" + CV anexado ({cv_name})" if cv_attached else f" (anexa manualmente: {cv_name or 'CV PDF'})")
+                + " — Parado antes de Submeter. Revê e clica para enviar!"
+            )
+            _inject_copilot_banner(page, banner_msg)
+
+    unique_fields = list(dict.fromkeys(filled_all))
+    if captcha_detected:
+        status_code = "captcha_blocked"
+        msg = "⚠️ Verificação CAPTCHA/anti-bot detetada na página — completa manualmente no Chrome."
+    elif needs_login:
+        status_code = "needs_login"
+        msg = "🔐 Faz login 1 vez no LinkedIn na janela que abriu — fica guardado para sempre."
+    else:
+        status_code = "done"
+        cv_txt = f" + CV {cv_name} anexado!" if cv_attached else f" (anexa manualmente: {cv_name or 'CV'})"
+        msg = f"✅ {len(unique_fields)} campo(s) preenchidos{cv_txt} Revê e clica em Submeter."
+
+    return {
+        "ok": True,
+        "status": status_code,
+        "company": job.company,
+        "title": job.title,
+        "filled_fields": unique_fields,
+        "cv_attached": cv_attached,
+        "cv_filename": cv_name,
+        "url": page.url,
+        "captcha_detected": captcha_detected,
+        "needs_login": needs_login,
+        "stopped_before_submit": stopped_before_submit,
+        "steps_completed": steps_completed,
+        "message": msg,
+    }
+
+
+def _pick_active_application_tab(pages: list[Any], dashboard_port: int = 8765) -> Any | None:
+    """Seleciona o separador aberto do formulário (prioriza sites externos vs LinkedIn/Dashboard)."""
+    candidates: list[tuple[int, Any]] = []
+    dash_prefixes = (f"http://127.0.0.1:{dashboard_port}", f"http://localhost:{dashboard_port}")
+    for pg in pages:
+        url = (getattr(pg, "url", "") or "").strip()
+        low = url.casefold()
+        if not low or low.startswith(("about:blank", "chrome://", "devtools://", *dash_prefixes)):
+            continue
+        prio = 1 if "linkedin.com" in low else 2
+        candidates.append((prio, pg))
+    if not candidates:
+        return None
+    max_prio = max(p for p, _ in candidates)
+    matching = [pg for p, pg in candidates if p == max_prio]
+    return matching[-1]
+
+
+def run_autofill_active_tab(
+    job: EnrichedJob,
+    kit: dict[str, Any],
+    profile: dict[str, Any],
+    *,
+    port: int = CDP_PORT,
+    status_path: Path | None = AUTOFILL_STATUS_PATH,
+) -> dict[str, Any]:
+    """Preenche o separador externo que o utilizador já tem aberto no Chrome dedicado."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as err:
+        raise RuntimeError("Playwright não instalado neste ambiente.") from err
+
+    cv_raw = str((kit.get("cv") or {}).get("path") or "").strip()
+    cv_path = Path(cv_raw) if cv_raw else None
+    cv_name = cv_path.name if cv_path else ""
+    values = _build_field_values(profile, kit)
+
+    if status_path is not None:
+        write_autofill_status(
+            {
+                "status": "running",
+                "company": job.company,
+                "title": job.title,
+                "cv_filename": cv_name,
+                "message": f"A preencher separador aberto de {job.company}...",
+            },
+            status_path,
+        )
+
+    if not _cdp_endpoint_ready(port):
+        err_res = {
+            "ok": False,
+            "status": "error",
+            "message": "Abre primeiro o Chrome dedicado pelo atalho do Desktop ou botão Auto-Preencher.",
+        }
+        if status_path is not None:
+            write_autofill_status(err_res, status_path)
+        return err_res
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.connect_over_cdp(f"http://127.0.0.1:{port}", timeout=12000)
+            context = browser.contexts[0] if browser.contexts else browser.new_context()
+            page = _pick_active_application_tab(list(context.pages))
+            if page is None:
+                err_res = {
+                    "ok": False,
+                    "status": "error",
+                    "message": "Nenhum separador de vaga aberto encontrado no Chrome dedicado.",
+                }
+                if status_path is not None:
+                    write_autofill_status(err_res, status_path)
+                return err_res
+
+            try:
+                page.bring_to_front()
+            except Exception:
+                pass
+            result = _fill_current_page(
+                page,
+                context,
+                job=job,
+                kit=kit,
+                profile=profile,
+                cv_path=cv_path,
+                values=values,
+                follow_hops=True,
+            )
+            if status_path is not None:
+                write_autofill_status(result, status_path)
+            return result
+    except Exception as err:
+        if status_path is not None:
+            write_autofill_status(
+                {
+                    "status": "error",
+                    "company": job.company,
+                    "title": job.title,
+                    "error": str(err),
+                    "message": f"Erro ao preencher separador aberto: {err}",
+                },
+                status_path,
+            )
+        raise
+
+
 def run_autofill_browser(
     job: EnrichedJob,
     kit: dict[str, Any],
@@ -968,7 +1474,7 @@ def run_autofill_browser(
     user_data_dir: Path | None = None,
     status_path: Path | None = AUTOFILL_STATUS_PATH,
 ) -> dict[str, Any]:
-    """Abre a vaga no Chrome dedicado, fecha cookies, pré-preenche ATS/Easy Apply e anexa CV sem submeter."""
+    """Abre a vaga no Chrome dedicado, segue saltos multi-camada e pré-preenche ATS/Easy Apply + CV."""
     try:
         from playwright.sync_api import sync_playwright
     except ImportError as err:
@@ -996,14 +1502,7 @@ def run_autofill_browser(
             track_status,
         )
 
-    filled_all: list[str] = []
-    cv_attached = False
-    final_url = url
-    captcha_detected = False
-    needs_login = False
-    stopped_before_submit = False
-    steps_completed = 0
-
+    result: dict[str, Any] = {}
     temp_ctx = tempfile.TemporaryDirectory() if (headless and user_data_dir is None) else None
     prof_dir = user_data_dir or (Path(temp_ctx.name) if temp_ctx is not None else CHROME_PROFILE_DIR)
     using_cdp = False
@@ -1027,95 +1526,16 @@ def run_autofill_browser(
             try:
                 page.goto(url, wait_until="domcontentloaded", timeout=22000)
                 page.wait_for_timeout(900)
-                _dismiss_cookie_banners(page)
-
-                if _detect_captcha(page):
-                    captcha_detected = True
-                    _inject_copilot_banner(
-                        page,
-                        "⚠️ Verificação anti-bot/CAPTCHA detetada — completa manualmente na janela antes de continuar.",
-                        tone="warn",
-                    )
-                elif _is_linkedin_login_wall(page):
-                    needs_login = True
-                    _inject_copilot_banner(
-                        page,
-                        "🔐 Inicia sessão no LinkedIn 1 vez neste Chrome dedicado — fica guardado para sempre!",
-                        tone="warn",
-                    )
-                else:
-                    easy_res = {"triggered": False}
-                    if "linkedin.com" in page.url.casefold() or _has_easy_apply_trigger(page) is not None:
-                        easy_res = _run_linkedin_easy_apply_assistant(
-                            page,
-                            job=job,
-                            kit=kit,
-                            profile=profile,
-                            values=values,
-                            cv_path=cv_path,
-                        )
-
-                    if easy_res.get("triggered"):
-                        filled_all.extend(easy_res.get("filled_fields") or [])
-                        cv_attached = bool(easy_res.get("cv_attached"))
-                        stopped_before_submit = bool(easy_res.get("stopped_before_submit"))
-                        captcha_detected = bool(easy_res.get("captcha_detected"))
-                        steps_completed = int(easy_res.get("steps_completed") or 0)
-                    else:
-                        _maybe_open_apply_view(page)
-                        if _detect_captcha(page):
-                            captcha_detected = True
-                        else:
-                            frames_to_scan = [page.main_frame]
-                            for fr in page.frames:
-                                if fr == page.main_frame:
-                                    continue
-                                if ATS_FRAME_HINT_RE.search(fr.url or "") or fr.url.startswith("file://"):
-                                    frames_to_scan.append(fr)
-
-                            pending_questions: list[tuple[Any, int, str]] = []
-                            for fr in frames_to_scan:
-                                f_names, got_cv, open_qs = _fill_frame_inputs(
-                                    fr,
-                                    values,
-                                    cv_path if not cv_attached else None,
-                                    profile,
-                                )
-                                filled_all.extend(f_names)
-                                if got_cv:
-                                    cv_attached = True
-                                for idx, qtxt in open_qs:
-                                    pending_questions.append((fr, idx, qtxt))
-
-                            if pending_questions:
-                                filled_all.extend(
-                                    _fill_pending_questions(
-                                        page,
-                                        pending_questions,
-                                        job=job,
-                                        kit=kit,
-                                        profile=profile,
-                                        cv_path=cv_path,
-                                    )
-                                )
-
-                    unique_fields = list(dict.fromkeys(filled_all))
-                    if captcha_detected:
-                        _inject_copilot_banner(
-                            page,
-                            "⚠️ Verificação anti-bot/CAPTCHA detetada — completa manualmente na janela para continuar.",
-                            tone="warn",
-                        )
-                    else:
-                        banner_msg = (
-                            f"Estágio Radar Copilot: {len(unique_fields)} campo(s) ({', '.join(unique_fields[:6])})"
-                            + (f" + CV anexado ({cv_name})" if cv_attached else f" (anexa manualmente: {cv_name or 'CV PDF'})")
-                            + " — Parado antes de Submeter. Revê e clica para enviar!"
-                        )
-                        _inject_copilot_banner(page, banner_msg)
-
-                final_url = page.url
-
+                result = _fill_current_page(
+                    page,
+                    context,
+                    job=job,
+                    kit=kit,
+                    profile=profile,
+                    cv_path=cv_path,
+                    values=values,
+                    follow_hops=True,
+                )
                 if not using_cdp and keep_open and not headless:
                     try:
                         page.wait_for_event("close", timeout=0)
@@ -1134,7 +1554,7 @@ def run_autofill_browser(
                     "status": "error",
                     "company": job.company,
                     "title": job.title,
-                    "url": final_url,
+                    "url": url,
                     "error": str(err),
                     "message": f"Erro ao auto-preencher: {err}",
                 },
@@ -1145,33 +1565,6 @@ def run_autofill_browser(
         if temp_ctx is not None:
             temp_ctx.cleanup()
 
-    unique_fields = list(dict.fromkeys(filled_all))
-    if captcha_detected:
-        status_code = "captcha_blocked"
-        msg = "⚠️ Verificação CAPTCHA/anti-bot detetada na página — completa manualmente no Chrome."
-    elif needs_login:
-        status_code = "needs_login"
-        msg = "🔐 Faz login 1 vez no LinkedIn na janela que abriu — fica guardado para sempre."
-    else:
-        status_code = "done"
-        cv_txt = f" + CV {cv_name} anexado!" if cv_attached else f" (anexa manualmente: {cv_name or 'CV'})"
-        msg = f"✅ {len(unique_fields)} campo(s) preenchidos{cv_txt} Revê e clica em Submeter."
-
-    result = {
-        "ok": True,
-        "status": status_code,
-        "company": job.company,
-        "title": job.title,
-        "filled_fields": unique_fields,
-        "cv_attached": cv_attached,
-        "cv_filename": cv_name,
-        "url": final_url,
-        "captcha_detected": captcha_detected,
-        "needs_login": needs_login,
-        "stopped_before_submit": stopped_before_submit,
-        "steps_completed": steps_completed,
-        "message": msg,
-    }
     if track_status is not None:
         write_autofill_status(result, track_status)
     return result

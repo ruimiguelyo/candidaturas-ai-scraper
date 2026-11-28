@@ -361,7 +361,8 @@ def make_handler(
                 )
                 return
 
-            if path == "/api/autofill":
+            if path in {"/api/autofill", "/api/autofill-active-tab"}:
+                active_tab_only = path == "/api/autofill-active-tab"
                 fp = str(data.get("fingerprint") or "").strip()
                 cv_track = str(data.get("cv_track") or "").strip() or None
                 cover_note = str(data.get("cover_note") or "").strip()
@@ -395,6 +396,11 @@ def make_handler(
                     encoding="utf-8",
                 )
 
+                start_msg = (
+                    f"A preencher separador aberto de {job.company} ({cv_info['filename']})..."
+                    if active_tab_only
+                    else f"A abrir Chrome dedicado para {job.company} ({cv_info['filename']})..."
+                )
                 status_file = repo_root / "data/last_autofill.json"
                 write_autofill_status(
                     {
@@ -402,7 +408,7 @@ def make_handler(
                         "company": job.company,
                         "title": job.title,
                         "cv_filename": cv_info["filename"],
-                        "message": f"A abrir Chrome dedicado para {job.company} ({cv_info['filename']})...",
+                        "message": start_msg,
                     },
                     status_file,
                 )
@@ -424,6 +430,8 @@ def make_handler(
                     str(payload_file),
                     "--skip-ai",
                 ]
+                if active_tab_only:
+                    cmd.append("--active-tab")
                 if cv_track in {"ai_ml", "swe", "enterprise"}:
                     cmd.extend(["--cv-track", cv_track])
 
@@ -444,7 +452,7 @@ def make_handler(
                         HTTPStatus.OK,
                         {
                             "ok": True,
-                            "message": f"Chrome dedicado a abrir com auto-preenchimento e CV {cv_info['filename']}...",
+                            "message": start_msg,
                             "cv": cv_info,
                         },
                     )

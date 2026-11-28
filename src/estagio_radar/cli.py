@@ -243,6 +243,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_auto.add_argument("--profile", default=str(DEFAULT_PROFILE_PATH))
     p_auto.add_argument("--payload-file", default=None)
     p_auto.add_argument("--skip-ai", action="store_true")
+    p_auto.add_argument("--active-tab", action="store_true")
     p_auto.add_argument("--no-keep-open", action="store_true")
 
     # browser-login
@@ -416,7 +417,11 @@ def main(argv: list[str] | None = None) -> int:
         import json
 
         from estagio_radar.apply_copilot import select_best_cv
-        from estagio_radar.autofill_worker import AUTOFILL_STATUS_PATH, write_autofill_status
+        from estagio_radar.autofill_worker import (
+            AUTOFILL_STATUS_PATH,
+            run_autofill_active_tab,
+            write_autofill_status,
+        )
 
         storage = RadarStorage(args.db)
         job = storage.get_job(args.fingerprint)
@@ -451,13 +456,16 @@ def main(argv: list[str] | None = None) -> int:
                     tone=args.tone,
                 )
         try:
-            res = run_autofill_browser(
-                job,
-                kit,
-                profile,
-                headless=False,
-                keep_open=not args.no_keep_open,
-            )
+            if args.active_tab:
+                res = run_autofill_active_tab(job, kit, profile)
+            else:
+                res = run_autofill_browser(
+                    job,
+                    kit,
+                    profile,
+                    headless=False,
+                    keep_open=not args.no_keep_open,
+                )
             console.print(f"[green]Autofill concluído:[/green] {res}")
             return 0
         except Exception as err:

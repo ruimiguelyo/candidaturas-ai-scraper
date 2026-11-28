@@ -22,6 +22,7 @@ from estagio_radar.ai_writer import (
 from estagio_radar.apply_copilot import generate_application_kit
 from estagio_radar.autofill_worker import (
     _launch_persistent,
+    _pick_active_application_tab,
     _run_linkedin_easy_apply_assistant,
     open_radar_app,
     read_autofill_status,
@@ -655,6 +656,112 @@ def test_autofill_endpoint_is_instant_without_calling_gemini(tmp_path, monkeypat
         payload_data = json.loads(Path(cmd[payload_idx]).read_text(encoding="utf-8"))
         assert payload_data["short_cover_note"] == "Nota escrita no modal."
         assert payload_data["language"] == "pt"
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+def test_playwright_v3_multihop_new_tab_and_revolut_style_form(tmp_path):
+    pytest.importorskip("playwright")
+    profile = _sample_profile(tmp_path)
+    job = _navigator_job()
+    kit = generate_application_kit(job, profile, fetch_email=False)
+
+    page3 = tmp_path / "page3_revolut_form.html"
+    page3.write_text(
+        """<!doctype html>
+        <html><body>
+          <form>
+            <div>CV / Resume <input type="file" name="file" aria-label="Click to attach document" style="display:none"></div>
+            <input type="text" placeholder="Full name">
+            <input type="text" placeholder="Email">
+            <input type="tel" name="phoneNumber" placeholder="Phone number">
+            <input type="text" placeholder="Link to your LinkedIn profile (optional)">
+            <input type="text" placeholder="Links to your Github, portfolio, etc. (optional)">
+            <textarea id="g-recaptcha-response" name="g-recaptcha-response" style="display:none"></textarea>
+          </form>
+        </body></html>""",
+        encoding="utf-8",
+    )
+    page2 = tmp_path / "page2_revolut_job.html"
+    page2.write_text(
+        f"""<!doctype html>
+        <html><body>
+          <h1>Graduate Programme 2027: Applied AI Engineer</h1>
+          <button onclick="location.href='{page3.name}'">Apply for this role</button>
+        </body></html>""",
+        encoding="utf-8",
+    )
+    page1 = tmp_path / "page1_linkedin_stub.html"
+    page1.write_text(
+        f"""<!doctype html>
+        <html><body>
+          <a href="#">Clicou em candidatar-se</a>
+          <a href="#" aria-label="Anunciar vaga">Anunciar vaga</a>
+          <a aria-label="Candidatar-se no site da empresa" target="_blank" href="{page2.name}">Candidatar-se</a>
+        </body></html>""",
+        encoding="utf-8",
+    )
+
+    res = run_autofill_browser(
+        job,
+        kit,
+        profile,
+        headless=True,
+        keep_open=False,
+        target_url=page1.as_uri(),
+        user_data_dir=tmp_path / "chrome_hops",
+    )
+    assert res["ok"] is True
+    assert res["captcha_detected"] is False
+    assert res["cv_attached"] is True
+    assert res["url"].endswith("page3_revolut_form.html")
+    assert {"full_name", "email", "phone", "linkedin_url", "github_url", "cv_pdf"}.issubset(set(res["filled_fields"]))
+
+
+def test_autofill_active_tab_endpoint_and_tab_picker(tmp_path, monkeypatch):
+    pages = [
+        SimpleNamespace(url="http://127.0.0.1:8765/"),
+        SimpleNamespace(url="https://www.linkedin.com/jobs/view/123/"),
+        SimpleNamespace(url="https://www.revolut.com/careers/apply/abc/"),
+    ]
+    picked = _pick_active_application_tab(pages)
+    assert picked.url == "https://www.revolut.com/careers/apply/abc/"
+
+    profile = _sample_profile(tmp_path)
+    prof_path = tmp_path / "candidate_profile.yaml"
+    prof_path.write_text(yaml.safe_dump(profile, allow_unicode=True), encoding="utf-8")
+    db = RadarStorage(tmp_path / "radar.db")
+    db.upsert_jobs([_navigator_job()], now=NOW)
+
+    spawned_cmds = []
+
+    class DummyPopen:
+        def __init__(self, cmd, **kwargs):
+            spawned_cmds.append(cmd)
+
+    monkeypatch.setattr("estagio_radar.dashboard.subprocess.Popen", DummyPopen)
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(db, profile_path=prof_path))
+    port = server.server_address[1]
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    try:
+        req = urllib.request.Request(
+            f"http://127.0.0.1:{port}/api/autofill-active-tab",
+            data=json.dumps({
+                "fingerprint": "fp-nav-1",
+                "cv_track": "ai_ml",
+                "cover_note": "Nota para separador aberto.",
+                "language": "en",
+            }).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        resp = json.loads(urllib.request.urlopen(req, timeout=3).read().decode("utf-8"))
+        assert resp["ok"] is True
+        assert "--active-tab" in spawned_cmds[0]
+        assert "--skip-ai" in spawned_cmds[0]
     finally:
         server.shutdown()
         server.server_close()

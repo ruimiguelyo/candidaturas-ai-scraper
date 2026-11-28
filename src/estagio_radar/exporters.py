@@ -364,7 +364,8 @@ def render_dashboard_html(
     </div>
 
     <div class="cop-actions">
-      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill()">🚀 Auto-Preencher no Chrome Dedicado</button>
+      <button class="btn btn-primary" id="cop-btn-autofill" onclick="launchAutofill(false)">🚀 Auto-Preencher no Chrome Dedicado</button>
+      <button class="btn btn-ghost" id="cop-btn-fill-active" title="Já chegaste ao formulário noutro separador (várias camadas / login)? Preenche-o já sem recarregar!" onclick="launchAutofill(true)">🧲 Preencher Separador Aberto</button>
       <button class="btn btn-ghost" onclick="copyDmAndOpenRecruiters()">💬 Copiar DM + Recrutadores LinkedIn</button>
       <button class="btn btn-ghost" onclick="toggleEmailBox()">✉️ Candidatar por Email</button>
       <button class="btn btn-ghost" onclick="markAppliedFromCopilot()">✅ Marcar Candidatado</button>
@@ -795,17 +796,21 @@ async function pollAutofillStatus(attemptsLeft) {{
   AUTOFILL_POLL_TIMER = setTimeout(() => pollAutofillStatus(attemptsLeft - 1), 1000);
 }}
 
-async function launchAutofill() {{
+async function launchAutofill(useActiveTab) {{
   if (!CURRENT_KIT) return;
   if (AUTOFILL_POLL_TIMER) {{
     clearTimeout(AUTOFILL_POLL_TIMER);
     AUTOFILL_POLL_TIMER = null;
   }}
-  const btn = document.getElementById("cop-btn-autofill");
+  const btn = document.getElementById(useActiveTab ? "cop-btn-fill-active" : "cop-btn-autofill");
+  const endpoint = useActiveTab ? "/api/autofill-active-tab" : "/api/autofill";
   btn.disabled = true;
-  showCopilotFeedback("⏳ A abrir separador no Chrome dedicado...", false);
+  showCopilotFeedback(
+    useActiveTab ? "⏳ A preencher o separador aberto no Chrome..." : "⏳ A abrir separador no Chrome dedicado...",
+    false
+  );
   try {{
-    const res = await fetch("/api/autofill", {{
+    const res = await fetch(endpoint, {{
       method: "POST",
       headers: {{ "Content-Type": "application/json" }},
       body: JSON.stringify({{
@@ -818,7 +823,7 @@ async function launchAutofill() {{
     }});
     const data = await res.json();
     if (res.ok && data.ok) {{
-      showCopilotFeedback(data.message || "Chrome dedicado a abrir! A acompanhar preenchimento...", false);
+      showCopilotFeedback(data.message || "Chrome dedicado a preencher! A acompanhar...", false);
       AUTOFILL_POLL_TIMER = setTimeout(() => pollAutofillStatus(35), 900);
     }} else {{
       showCopilotFeedback(data.error || "Erro ao lançar Chrome dedicado.", true);
