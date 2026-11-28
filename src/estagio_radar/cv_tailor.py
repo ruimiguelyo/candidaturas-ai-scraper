@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import re
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -69,8 +70,13 @@ class TailoredCvPatch(BaseModel):
 
 
 def _slug_token(text: str, *, default: str = "Job") -> str:
-    clean = re.sub(r"[^A-Za-z0-9]+", "_", (text or "").strip()).strip("_")
-    return (clean[:24] or default)
+    ascii_text = (
+        unicodedata.normalize("NFKD", text or "")
+        .encode("ascii", "ignore")
+        .decode("ascii")
+    )
+    clean = re.sub(r"[^A-Za-z0-9]+", "_", ascii_text.strip()).strip("_")
+    return clean[:24] or default
 
 
 def _extract_project_titles(html_text: str) -> list[str]:
@@ -290,11 +296,12 @@ def generate_tailored_cv_pdf(
     last_tok = _slug_token(str(profile.get("last_name") or ""), default="")
     name_prefix = f"{first_tok}_{last_tok}" if last_tok else first_tok
     comp_slug = _slug_token(job.company, default="Company")
-    stem = f"{name_prefix}_CV_{comp_slug}_{job.fingerprint[:6]}"
+    job_dir = out_dir / f"{comp_slug}_{job.fingerprint[:6]}"
+    job_dir.mkdir(parents=True, exist_ok=True)
+    stem = f"{name_prefix}_CV"
 
-    out_dir.mkdir(parents=True, exist_ok=True)
-    tailored_html_path = out_dir / f"{stem}.html"
-    tailored_pdf_path = out_dir / f"{stem}.pdf"
+    tailored_html_path = job_dir / f"{stem}.html"
+    tailored_pdf_path = job_dir / f"{stem}.pdf"
 
     tailored_html_path.write_text(tailored_html, encoding="utf-8")
     render_html_to_one_page_pdf(tailored_html_path, tailored_pdf_path)

@@ -335,7 +335,7 @@ def _has_unsolved_captcha(page: Any) -> bool:
 
 
 _SENSITIVE_SKIP_RE = re.compile(
-    r"(?:gender|ethnicity|ethnic|race|disabilit|veteran|sexual\s+orient|transcript|consent|privacy|terms|gdpr|rgpd|competition|conference|met\s+at|pronoun)",
+    r"(?:gender|ethnicity|ethnic|race|disabilit|veteran|sexual\s+orient|transcript|consent|privacy|terms|gdpr|rgpd|competition|olympiad|conference|met\s+at)",
     re.IGNORECASE,
 )
 
@@ -354,25 +354,33 @@ def _match_rule_for_descriptor(desc: str, profile: dict[str, Any]) -> tuple[list
         return (["portugal", "+351"], "phone_country")
     if any(k in low for k in ("preferred work location", "work location", "office location")):
         locs = [str(x).casefold() for x in (profile.get("preferred_locations") or []) if str(x).strip()]
-        return (locs or ["lisbon", "lisboa", "portugal", "remote"], "preferred_location")
+        return (locs or ["lisbon", "lisboa", "portugal - remote", "portugal"], "preferred_location")
     if re.search(r"previous(?:ly)?\s+(?:been\s+)?employed", low) or any(
         k in low for k in ("worked for", "worked at", "former employee", "já trabalhou")
     ):
         return (["no", "não", "nao"], "prev_employed")
     if any(k in low for k in ("hear about", "how did you hear", "source", "como conheceu", "where did you find")):
-        return (["linkedin", "job board", "company", "website", "career"], "source")
+        return (["job portal", "linkedin", "job board", "company", "website", "career"], "source")
+    if any(k in low for k in ("university", "universidade", "college", "graduated from", "about to graduate")):
+        uni = str(profile.get("university") or "Polytechnic Institute of Setúbal").strip()
+        return ([uni, "setubal", "setúbal", "ips", "other – not listed", "other - not listed", "other"], "university")
+    if any(k in low for k in ("graduation", "grad year", "conclus")):
+        return ([str(profile.get("graduation_year") or "2027")], "graduation_year")
+    if any(k in low for k in ("faculty", "faculdade", "department", "field of study", "major")):
+        return (
+            ["computer science", "computer engineering", "informatics", "software", "engineering", "information technology", "stem", "technology", "other"],
+            "faculty",
+        )
+    if any(k in low for k in ("full duration", "available for the full", "disponibilidade total")):
+        return (["yes", "sim"], "availability")
+    if any(k in low for k in ("preferred start date", "start date", "when can you start", "data de início")):
+        return (["2027", "2026", "immediate", "asap", "flexible", "september", "summer", "autumn", "fall", "soon"], "start_date")
     if any(k in low for k in ("sponsor", "visa", "visto")):
         return (["no", "não", "nao", "do not require"], "sponsorship")
     if any(k in low for k in ("authori", "eligible", "right to work", "work in", "trabalhar", "eu citizen")):
         return (["yes", "sim", "authorized"], "work_auth")
-    if any(k in low for k in ("full duration", "available for the full", "disponibilidade total")):
-        return (["yes", "sim"], "availability")
-    if any(k in low for k in ("preferred start date", "start date", "when can you start", "data de início")):
-        return (["immediate", "asap", "soon", "2026", "2027", "flexible", "summer", "fall", "autumn", "sep"], "start_date")
     if any(k in low for k in ("current country", "country of residence", "country", "pais", "país", "nation")) and "phone" not in low:
         return ([str(profile.get("country") or "Portugal"), "portugal"], "country")
-    if any(k in low for k in ("graduation", "grad year", "conclus")):
-        return ([str(profile.get("graduation_year") or "2027")], "graduation_year")
     if any(k in low for k in ("degree", "education", "licenciatura", "habilit")):
         return (["bachelor", "bsc", "licenciatura", "undergraduate"], "degree")
     return None
@@ -572,35 +580,235 @@ def _fill_radio_groups(frame: Any, profile: dict[str, Any]) -> list[str]:
     return filled
 
 
+_DROPDOWN_SEARCH_SELECTOR = (
+    "[data-rui='dropdown'] input:not([type='button']):not([type='submit']):not([type='hidden']):not([type='checkbox']):not([type='radio']), "
+    "[role='dialog'] input:not([type='button']):not([type='submit']):not([type='hidden']):not([type='checkbox']):not([type='radio']), "
+    "[role='listbox'] input:not([type='button']):not([type='submit']):not([type='hidden']):not([type='checkbox']):not([type='radio']), "
+    "input[type='search']"
+)
+_DROPDOWN_OPTION_SELECTOR = (
+    "[data-rui='dropdown'] [role='option'], [role='listbox'] [role='option'], "
+    "[role='option'], [role='listbox'] li, [role='listbox'] button, "
+    "[role='dialog'] li, [role='dialog'] button, [class*='option' i], "
+    "[class*='menu' i] [role='menuitem'], [class*='menu' i] li"
+)
+_FOREIGN_REMOTE_HINTS = (
+    "poland",
+    "spain",
+    "uk",
+    "united kingdom",
+    "london",
+    "dubai",
+    "barcelona",
+    "madrid",
+    "krakow",
+    "france",
+    "germany",
+    "berlin",
+    "paris",
+    "us",
+    "usa",
+)
+
+
+def _press_escape(frame: Any) -> None:
+    try:
+        kb = getattr(frame, "keyboard", None) or getattr(getattr(frame, "page", None), "keyboard", None)
+        if kb is not None:
+            kb.press("Escape")
+    except Exception:
+        pass
+
+
+def _has_phone_country_code_selected(frame: Any, code: str = "+351") -> bool:
+    try:
+        return bool(
+            frame.evaluate(
+                """(code) => {
+                    const btns = document.querySelectorAll("input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]");
+                    for (const el of btns) {
+                        const r = el.getBoundingClientRect();
+                        if (r.width <= 0 || r.height <= 0) continue;
+                        const aria = (el.getAttribute("aria-label") || "").toLowerCase();
+                        const val = (el.value || el.innerText || "").trim().toLowerCase();
+                        if ((aria.includes("phone") || aria.includes("country code") || val.startsWith("+")) && val.includes(code.toLowerCase())) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }""",
+                code,
+            )
+        )
+    except Exception:
+        return False
+
+
+def _find_visible_dropdown_search(frame: Any) -> Any:
+    search_locs = frame.locator(_DROPDOWN_SEARCH_SELECTOR)
+    try:
+        cnt = min(search_locs.count(), 12)
+    except Exception:
+        return None
+    for i in range(cnt):
+        cand = search_locs.nth(i)
+        try:
+            if not cand.is_visible():
+                continue
+            box = cand.bounding_box()
+            if box and box.get("width", 0) > 0 and box.get("height", 0) > 0:
+                return cand
+        except Exception:
+            continue
+    return None
+
+
+def _is_multiselect_open(frame: Any, field_tag: str) -> bool:
+    if field_tag == "preferred_location":
+        return True
+    try:
+        return bool(
+            frame.evaluate(
+                """() => {
+                    if (document.querySelector("[role='listbox'][aria-multiselectable='true']")) return true;
+                    const cbs = document.querySelectorAll("[data-rui='dropdown'] input[type='checkbox'], [role='listbox'] input[type='checkbox']");
+                    for (const cb of cbs) {
+                        const r = cb.getBoundingClientRect();
+                        if (r.width > 0 && r.height > 0) return true;
+                    }
+                    return false;
+                }"""
+            )
+        )
+    except Exception:
+        return False
+
+
+def _dropdown_search_queries(field_tag: str, tokens: list[str]) -> list[str]:
+    if field_tag in {"phone_country", "country"}:
+        return ["Portugal"]
+    if field_tag == "university":
+        return ["Setubal", "Setúbal", "Other"]
+    return [t for t in tokens[:4] if t]
+
+
+def _location_option_allowed(o_txt: str, tok_low: str) -> bool:
+    if tok_low != "remote":
+        return True
+    if o_txt == "remote":
+        return True
+    if any(ok in o_txt for ok in ("portugal", "lisbon", "lisboa", "porto", "europe", "eu")):
+        return True
+    return not any(re.search(rf"(?<!\w){re.escape(bad)}(?!\w)", o_txt) for bad in _FOREIGN_REMOTE_HINTS)
+
+
+def _visible_option_entries(opts: Any) -> list[tuple[Any, str]]:
+    entries: list[tuple[Any, str]] = []
+    try:
+        cnt = min(opts.count(), 80)
+    except Exception:
+        return entries
+    for i in range(cnt):
+        opt = opts.nth(i)
+        try:
+            if not opt.is_visible():
+                continue
+            raw = opt.inner_text(timeout=200) or ""
+            o_txt = re.sub(r"\s+", " ", raw).strip().casefold()
+            if o_txt and len(o_txt) <= 160:
+                entries.append((opt, o_txt))
+        except Exception:
+            continue
+    return entries
+
+
+def _click_matching_dropdown_options(
+    frame: Any,
+    opts: Any,
+    tokens: list[str],
+    field_tag: str,
+    *,
+    multiselect: bool,
+    clicked_texts: set[str],
+    max_clicks: int = 2,
+) -> int:
+    clicks = 0
+    entries = _visible_option_entries(opts)
+    for tok in tokens:
+        tok_low = tok.casefold()
+        tok_re = re.compile(rf"(?<!\w){re.escape(tok_low)}(?!\w)")
+        # 2 passes: exact match first (e.g. "No" before "Yes, ..."), then word-boundary match
+        for exact_only in (True, False):
+            for opt, o_txt in entries:
+                if o_txt in clicked_texts:
+                    continue
+                if exact_only and o_txt != tok_low:
+                    continue
+                if not exact_only and not tok_re.search(o_txt):
+                    continue
+                if field_tag == "preferred_location" and not _location_option_allowed(o_txt, tok_low):
+                    continue
+                try:
+                    opt.click(timeout=1200)
+                    clicked_texts.add(o_txt)
+                    clicks += 1
+                    if not multiselect or clicks >= max_clicks:
+                        return clicks
+                    if hasattr(frame, "wait_for_timeout"):
+                        frame.wait_for_timeout(150)
+                except Exception:
+                    continue
+    return clicks
+
+
 def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[str]:
     """Preenche seletores customizados (<input type='button'> / button[aria-haspopup]) estilo Revolut/React."""
     filled: list[str] = []
+    trigger_selector = "input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]"
     try:
         triggers = frame.eval_on_selector_all(
-            "input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]",
+            trigger_selector,
             """els => els.map((el, idx) => {
                 const rect = el.getBoundingClientRect();
                 const visible = rect.width > 0 && rect.height > 0 && getComputedStyle(el).visibility !== "hidden";
-                let ancTxt = "";
-                let anc = el.parentElement;
-                for (let step = 0; step < 4 && anc && anc !== document.body && anc.tagName !== "FORM"; step++) {
-                    const fieldCount = anc.querySelectorAll("input, button, select, textarea").length;
-                    if (step > 0 && fieldCount > 4) break;
-                    const t = (anc.innerText || "").replace(/\\s+/g, " ").trim();
-                    if (t && t.length >= 12 && t.length <= 220) {
-                        ancTxt = t;
-                        if (!/^(select one|select|choose|selecionar)$/i.test(t)) break;
+                const isGeneric = t => !t || /^(select one|select|select\\.\\.\\.|choose|selecionar|--)$/i.test(t);
+                const lbl = el.closest("label");
+                const lblTxt = (lbl?.innerText || "").replace(/\\s+/g, " ").trim();
+                let parentText = "";
+                if (!isGeneric(lblTxt)) {
+                    parentText = lblTxt;
+                } else {
+                    let prevTxt = "";
+                    const lblPrev = lbl ? lbl.previousElementSibling : null;
+                    if (lblPrev && !lblPrev.querySelector("input, select, textarea, button")) {
+                        prevTxt = (lblPrev.innerText || "").replace(/\\s+/g, " ").trim().slice(0, 180);
                     }
-                    anc = anc.parentElement;
+                    if (!prevTxt) {
+                        const divPrev = el.closest("div")?.previousElementSibling;
+                        if (divPrev && !divPrev.querySelector("input, select, textarea, button")) {
+                            prevTxt = (divPrev.innerText || "").replace(/\\s+/g, " ").trim().slice(0, 180);
+                        }
+                    }
+                    let ancTxt = "";
+                    let anc = el.parentElement;
+                    for (let step = 0; step < 5 && anc && anc !== document.body && anc.tagName !== "FORM"; step++) {
+                        const fieldCount = anc.querySelectorAll("input, button, select, textarea").length;
+                        if (step > 0 && fieldCount > 4) break;
+                        const t = (anc.innerText || "").replace(/\\s+/g, " ").trim();
+                        if (t && t.length >= 12 && t.length <= 220) {
+                            ancTxt = t;
+                            if (!isGeneric(t)) break;
+                        }
+                        anc = anc.parentElement;
+                    }
+                    parentText = (prevTxt || ancTxt).slice(0, 320);
                 }
-                const prevSib = el.closest("div")?.previousElementSibling;
-                const prevTxt = (prevSib?.innerText || "").replace(/\\s+/g, " ").trim().slice(0, 180);
                 return {
                     btnIdx: idx,
                     aria: el.getAttribute("aria-label") || "",
                     value: el.value || "",
                     text: (el.innerText || "").replace(/\\s+/g, " ").trim(),
-                    parentText: [prevTxt, ancTxt].filter(Boolean).join(" | ").slice(0, 320),
+                    parentText,
                     disabled: Boolean(el.disabled),
                     visible
                 };
@@ -609,7 +817,7 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
     except Exception:
         return filled
 
-    locator_all = frame.locator("input[type='button'], button[aria-haspopup], [role='button'][aria-expanded]")
+    locator_all = frame.locator(trigger_selector)
     placeholder_vals = {"", "select", "select...", "select one", "choose", "selecionar", "--"}
 
     for meta in triggers:
@@ -632,54 +840,127 @@ def _fill_custom_button_dropdowns(frame: Any, profile: dict[str, Any]) -> list[s
         elif cur not in placeholder_vals:
             continue
 
+        btn = locator_all.nth(meta["btnIdx"])
         try:
-            locator_all.nth(meta["btnIdx"]).click(timeout=1200)
+            btn.scroll_into_view_if_needed(timeout=1500)
+            try:
+                btn.click(timeout=1200)
+            except Exception:
+                btn.click(timeout=1200, force=True)
             if hasattr(frame, "wait_for_timeout"):
-                frame.wait_for_timeout(250)
-            search_inp = frame.locator(
-                "[role='dialog'] input:not([type='button']):not([type='submit']):not([type='hidden']), "
-                "[role='listbox'] input:not([type='button']):not([type='submit']):not([type='hidden']), "
-                "input[type='search'], "
-                "input[type='text'][placeholder*='search' i], "
-                "input[type='text'][aria-label*='search' i]"
-            ).first
-            if search_inp.count() > 0 and search_inp.is_visible():
-                search_inp.fill(tokens[0], timeout=1000)
-                if hasattr(frame, "wait_for_timeout"):
-                    frame.wait_for_timeout(250)
+                frame.wait_for_timeout(280)
 
-            opts = frame.locator(
-                "[role='option'], [role='listbox'] li, [role='listbox'] button, "
-                "[role='dialog'] li, [role='dialog'] button, [class*='option' i], "
-                "[class*='menu' i] [role='menuitem'], [class*='menu' i] li"
+            opts = frame.locator(_DROPDOWN_OPTION_SELECTOR)
+            multiselect = _is_multiselect_open(frame, field_tag)
+            clicked_texts: set[str] = set()
+            total_clicks = _click_matching_dropdown_options(
+                frame,
+                opts,
+                tokens,
+                field_tag,
+                multiselect=multiselect,
+                clicked_texts=clicked_texts,
+                max_clicks=2,
             )
-            matched = False
-            for tok in tokens:
-                tok_re = re.compile(rf"(?<!\w){re.escape(tok.casefold())}(?!\w)")
-                for i in range(min(opts.count(), 45)):
-                    opt = opts.nth(i)
+
+            search_inp = _find_visible_dropdown_search(frame)
+            if search_inp is not None and (total_clicks == 0 or (multiselect and total_clicks < 2)):
+                for query in _dropdown_search_queries(field_tag, tokens):
                     try:
-                        if not opt.is_visible():
-                            continue
-                        o_txt = (opt.inner_text(timeout=200) or "").strip().casefold()
+                        search_inp.fill(query, timeout=1000)
+                        if hasattr(frame, "wait_for_timeout"):
+                            frame.wait_for_timeout(280)
+                        total_clicks += _click_matching_dropdown_options(
+                            frame,
+                            opts,
+                            tokens,
+                            field_tag,
+                            multiselect=multiselect,
+                            clicked_texts=clicked_texts,
+                            max_clicks=max(1, 2 - total_clicks),
+                        )
+                        if (not multiselect and total_clicks > 0) or total_clicks >= 2:
+                            break
                     except Exception:
                         continue
-                    if tok_re.search(o_txt) and len(o_txt) <= 95:
-                        opt.click(timeout=1200)
-                        filled.append(field_tag)
-                        matched = True
-                        break
-                if matched:
-                    break
-            if not matched:
-                try:
-                    kb = getattr(frame, "keyboard", None) or getattr(getattr(frame, "page", None), "keyboard", None)
-                    if kb is not None:
-                        kb.press("Escape")
-                except Exception:
-                    pass
+
+            if total_clicks > 0:
+                filled.append(field_tag)
+                if hasattr(frame, "wait_for_timeout"):
+                    frame.wait_for_timeout(150)
+                if multiselect:
+                    _press_escape(frame)
+                    if hasattr(frame, "wait_for_timeout"):
+                        frame.wait_for_timeout(180)
+                else:
+                    try:
+                        if frame.locator("[data-rui='dropdown'], [role='listbox']").first.is_visible():
+                            _press_escape(frame)
+                    except Exception:
+                        pass
+            else:
+                _press_escape(frame)
         except Exception:
+            _press_escape(frame)
             continue
+    return filled
+
+
+def _fill_checkbox_groups(frame: Any, profile: dict[str, Any]) -> list[str]:
+    """Preenche checkboxes de preferências configuradas (ex: pronomes no perfil local)."""
+    pronouns = str(profile.get("pronouns") or "").strip()
+    if not pronouns:
+        return []
+    filled: list[str] = []
+    try:
+        checks = frame.eval_on_selector_all(
+            "input[type='checkbox']",
+            """els => els.map((el, idx) => {
+                const lbl = el.closest("label");
+                const id = el.id || "";
+                const forLbl = id ? document.querySelector(`label[for="${CSS.escape(id)}"]`) : null;
+                const txt = (lbl?.innerText || forLbl?.innerText || el.parentElement?.innerText || "").replace(/\\s+/g, " ").trim();
+                let q = "";
+                let cur = lbl || el;
+                for (let s = 0; s < 5 && cur; s++) {
+                    const prev = cur.previousElementSibling;
+                    if (prev && !prev.querySelector("input, select, textarea, button")) {
+                        const pt = (prev.innerText || "").replace(/\\s+/g, " ").trim();
+                        if (pt.length > 4) { q = pt.slice(0, 160); break; }
+                    }
+                    cur = cur.parentElement;
+                }
+                const rect = (lbl || el).getBoundingClientRect();
+                return {
+                    idx,
+                    checked: Boolean(el.checked),
+                    disabled: Boolean(el.disabled),
+                    visible: rect.width > 0 && rect.height > 0,
+                    label: txt,
+                    question: q
+                };
+            })""",
+        )
+    except Exception:
+        return filled
+
+    cb_locs = frame.locator("input[type='checkbox']")
+    target = pronouns.casefold()
+    for meta in checks:
+        if meta.get("checked") or meta.get("disabled") or not meta.get("visible"):
+            continue
+        q_low = str(meta.get("question") or "").casefold()
+        if any(bad in q_low for bad in ("consent", "terms", "privacy", "gdpr", "rgpd")):
+            continue
+        if "pronoun" not in q_low:
+            continue
+        if str(meta.get("label") or "").strip().casefold() == target:
+            try:
+                cb_locs.nth(meta["idx"]).check(force=True, timeout=1200)
+                filled.append("pronouns")
+                break
+            except Exception:
+                continue
     return filled
 
 
@@ -790,7 +1071,8 @@ def _fill_frame_inputs(
     custom_filled = _fill_custom_button_dropdowns(frame, profile)
     filled.extend(custom_filled)
     local_values = dict(values)
-    if "phone_country" in custom_filled and local_values.get("phone"):
+    has_pt_phone_code = ("phone_country" in custom_filled) or _has_phone_country_code_selected(frame, "+351")
+    if has_pt_phone_code and local_values.get("phone"):
         local_values["phone"] = re.sub(r"^(?:\+351|00351)\s*", "", local_values["phone"]).strip()
 
     for meta in candidates:
@@ -802,12 +1084,19 @@ def _fill_frame_inputs(
             str(meta.get(k) or "") for k in ("name", "id", "placeholder", "ariaLabel", "autocomplete", "label")
         )
         kind = _match_field_kind(descriptor, meta["tag"], meta["type"])
+        cur_val = str(meta.get("value") or "").strip()
         if kind == "open_question":
             q_label = (meta.get("label") or meta.get("ariaLabel") or meta.get("placeholder") or "").strip()
-            if q_label and not str(meta.get("value") or "").strip():
+            if q_label and not cur_val:
                 open_questions.append((meta["idx"], q_label[:220]))
             continue
-        if kind and local_values.get(kind) and not str(meta.get("value") or "").strip():
+        should_clean_pt_phone = (
+            kind == "phone"
+            and has_pt_phone_code
+            and bool(cur_val)
+            and bool(re.match(r"^(?:\+351|00351)", cur_val))
+        )
+        if kind and local_values.get(kind) and (not cur_val or should_clean_pt_phone):
             try:
                 locator_all.nth(meta["idx"]).fill(local_values[kind], timeout=1500)
                 filled.append(kind)
@@ -817,6 +1106,7 @@ def _fill_frame_inputs(
     filled.extend(_fill_selects(frame, profile))
     filled.extend(_fill_comboboxes(frame, profile))
     filled.extend(_fill_radio_groups(frame, profile))
+    filled.extend(_fill_checkbox_groups(frame, profile))
 
     # Pass 2: Repor campos padrão apagados tardiamente pelo parser React após o upload do CV
     if cv_attached and hasattr(frame, "wait_for_timeout"):
