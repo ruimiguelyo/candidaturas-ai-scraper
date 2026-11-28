@@ -6,7 +6,7 @@ import logging
 import os
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -85,6 +85,19 @@ class FormAnswersPayload(BaseModel):
         default_factory=list,
         description="Lista de respostas às perguntas do formulário.",
     )
+
+
+class UnstuckActionChoice(BaseModel):
+    """Decisão estruturada do Gemini para desbloquear páginas ATS intermédias sem nunca submeter."""
+
+    action: Literal["click", "wait_for_human", "done"] = Field(
+        description="click se existir botão seguro que avance para o formulário; wait_for_human se exigir login/código/CAPTCHA; done se não houver ação."
+    )
+    element_index: int | None = Field(
+        default=None,
+        description="Índice exato (campo idx) do elemento clicável a escolher quando action == 'click'.",
+    )
+    reason: str = Field(default="", description="Razão curta da escolha.")
 
 
 def parse_natural_role_phrase(raw_title: str, company: str, *, pt: bool) -> dict[str, str]:
@@ -471,3 +484,78 @@ def answer_form_questions_with_gemini(
                     f"(early Python, Java, and PyTorch before SAP ABAP delivery) and shipped tested AI/Full-Stack projects on GitHub."
                 )
     return out
+
+
+def pick_unstuck_action_with_gemini(
+    *,
+    url: str,
+    title: str,
+    headings: str,
+    body_excerpt: str,
+    clickables: list[dict[str, Any]],
+    client: Any = None,
+) -> dict[str, Any]:
+    """Escolhe de forma estruturada o próximo clique seguro num portal desconhecido (nunca Submit/Login)."""
+    fallback: dict[str, Any] = {"action": "wait_for_human", "element_index": None, "reason": "no_api_key"}
+    if not clickables:
+        return {"action": "done", "element_index": None, "reason": "no_clickables"}
+
+    api_key = (os.getenv("GEMINI_API_KEY") or "").strip()
+    if client is None and not api_key:
+        return fallback
+
+    try:
+        active_client = client or _make_gemini_client(api_key, timeout_ms=7000)
+        models = _candidate_models()
+        trimmed = clickables[:25]
+        opt_lines = "\n".join(
+            f"idx={c.get('idx')}: tag={c.get('tag')} text={c.get('text')!r} aria={c.get('aria')!r} dataAuto={c.get('dataAuto')!r}"
+            for c in trimmed
+        )
+        sys_inst = (
+            "You are a browser navigation assistant helping advance past intermediate job-portal gates "
+            "to reach the actual job application form.\n"
+            "STRICT SAFETY RULES:\n"
+            "1. Choose action='click' ONLY for a safe navigation button/link in CLICKABLES that advances toward the application form "
+            "(e.g., Apply, Apply Manually, Autofill with Resume, Continue as Guest, Continue/Next on intro screens, Start Application, Dismiss cookie/promo modal).\n"
+            "2. NEVER select final Submit/Send Application, Sign In / OAuth Login (e.g. Apply with LinkedIn/Indeed/Google), "
+            "'Use my last application', Privacy/Terms/Alerts/Share, Back, or Cancel.\n"
+            "3. If the screen requires entering a password, logging into an account, email OTP verification code, or solving a CAPTCHA, return action='wait_for_human'."
+        )
+        prompt = (
+            f"URL: {url[:240]}\n"
+            f"TITLE: {title[:160]}\n"
+            f"HEADINGS: {headings[:300]}\n"
+            f"BODY EXCERPT:\n{body_excerpt[:900]}\n\n"
+            f"CLICKABLES:\n{opt_lines}"
+        )
+        for candidate in models:
+            try:
+                interaction = active_client.interactions.create(
+                    model=candidate,
+                    system_instruction=sys_inst,
+                    input=prompt,
+                    response_format={
+                        "type": "text",
+                        "mime_type": "application/json",
+                        "schema": UnstuckActionChoice.model_json_schema(),
+                    },
+                    store=False,
+                    timeout=6.0,
+                )
+                raw_out = getattr(interaction, "output_text", "") or "{}"
+                choice = UnstuckActionChoice.model_validate_json(raw_out)
+                return {
+                    "action": choice.action,
+                    "element_index": choice.element_index,
+                    "reason": (choice.reason or "").strip()[:160],
+                }
+            except Exception as err:
+                if _is_transient_model_error(err):
+                    logger.warning("Fallback unstuck modelo %s: %s", candidate, err)
+                    continue
+                logger.warning("Fallback unstuck Gemini (%s): %s", candidate, err)
+                break
+    except Exception as err:
+        logger.warning("Erro Gemini unstuck: %s", err)
+    return {"action": "wait_for_human", "element_index": None, "reason": "gemini_error"}

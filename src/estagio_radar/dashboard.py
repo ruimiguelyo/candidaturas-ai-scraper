@@ -114,6 +114,7 @@ def make_handler(
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self.send_header("Access-Control-Allow-Private-Network", "true")
 
         def _send_json(self, status: int, payload: Any) -> None:
             body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -454,6 +455,20 @@ def make_handler(
             if path in {"/api/autofill", "/api/autofill-active-tab"}:
                 active_tab_only = path == "/api/autofill-active-tab"
                 fp = str(data.get("fingerprint") or "").strip()
+                payload_dir = storage.db_path.parent if storage.db_path.is_absolute() else (repo_root / "data")
+                payload_file = payload_dir / "last_autofill_payload.json"
+                if active_tab_only and not fp and payload_file.exists():
+                    try:
+                        saved_payload = json.loads(payload_file.read_text(encoding="utf-8"))
+                        fp = str(saved_payload.get("fingerprint") or "").strip()
+                    except Exception:
+                        fp = ""
+                if not fp and (repo_root / "data/last_autofill_payload.json").exists() and active_tab_only:
+                    try:
+                        saved_payload = json.loads((repo_root / "data/last_autofill_payload.json").read_text(encoding="utf-8"))
+                        fp = str(saved_payload.get("fingerprint") or "").strip()
+                    except Exception:
+                        fp = ""
                 cv_track = str(data.get("cv_track") or "").strip() or None
                 use_tailored = bool(data.get("use_tailored", True))
                 cover_note = str(data.get("cover_note") or "").strip()
@@ -481,7 +496,6 @@ def make_handler(
                     }
                 details = storage.get_job_details(fp)
 
-                payload_file = repo_root / "data/last_autofill_payload.json"
                 payload_file.parent.mkdir(parents=True, exist_ok=True)
                 payload_file.write_text(
                     json.dumps(
@@ -502,7 +516,7 @@ def make_handler(
                     if active_tab_only
                     else f"A abrir Chrome dedicado para {job.company} ({cv_info['filename']})..."
                 )
-                status_file = repo_root / "data/last_autofill.json"
+                status_file = payload_dir / "last_autofill.json"
                 write_autofill_status(
                     {
                         "status": "starting",
